@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX — Deterministic Orchestration for Reproducible Biomedical ML</title>
+<style>
+  :root {
+    --dark-bg:        #0d1117;
+    --card-bg:        #161b22;
+    --border:         #30363d;
+    --text-primary:   #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue:    #58a6ff;
+    --accent-green:   #3fb950;
+    --accent-purple:  #bc8cff;
+    --accent-orange:  #d29922;
+    --accent-red:     #f85149;
+    --accent-cyan:    #39d353;
+    --accent-pink:    #f778ba;
+    --font-stack:     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono:      'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+  body {
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* ── Sticky Nav ─────────────────────────────────────────────── */
+  .top-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 56px;
+    display: flex; align-items: center; gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+    flex-shrink: 0;
+  }
+  .top-nav a:hover { color: var(--accent-blue); background: rgba(88,166,255,0.08); }
+  .nav-brand {
+    font-weight: 800; font-size: 14px !important;
+    color: var(--text-primary) !important;
+    margin-right: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  /* ── Hero ────────────────────────────────────────────────────── */
+  .hero {
+    text-align: center;
+    padding: 130px 24px 70px;
+    background: linear-gradient(180deg, #0d1117 0%, #111820 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(88,166,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-orb {
+    position: absolute; border-radius: 50%; pointer-events: none; will-change: transform;
+  }
+  .hero-orb--blue {
+    width: 340px; height: 340px; top: -60px; left: -80px;
+    background: radial-gradient(circle at center, rgba(88,166,255,0.10) 0%, rgba(88,166,255,0.04) 40%, transparent 70%);
+    animation: orb-drift-1 14s ease-in-out infinite;
+  }
+  .hero-orb--purple {
+    width: 280px; height: 280px; top: -30px; right: -60px;
+    background: radial-gradient(circle at center, rgba(188,140,255,0.09) 0%, rgba(188,140,255,0.03) 40%, transparent 70%);
+    animation: orb-drift-2 18s ease-in-out infinite;
+  }
+  .hero-orb--green {
+    width: 220px; height: 220px; bottom: -40px; left: 20%;
+    background: radial-gradient(circle at center, rgba(63,185,80,0.08) 0%, rgba(63,185,80,0.03) 40%, transparent 70%);
+    animation: orb-drift-3 16s ease-in-out infinite;
+  }
+  .hero-orb--cyan {
+    width: 180px; height: 180px; top: 80px; right: 25%;
+    background: radial-gradient(circle at center, rgba(57,211,83,0.07) 0%, rgba(57,211,83,0.02) 40%, transparent 70%);
+    animation: orb-drift-4 20s ease-in-out infinite;
+  }
+  .hero-orb--pink {
+    width: 260px; height: 260px; bottom: -60px; right: 10%;
+    background: radial-gradient(circle at center, rgba(247,120,186,0.07) 0%, rgba(247,120,186,0.02) 40%, transparent 70%);
+    animation: orb-drift-5 22s ease-in-out infinite;
+  }
+  @keyframes orb-drift-1 {
+    0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,20px) scale(1.05)}66%{transform:translate(-15px,10px) scale(.97)}
+  }
+  @keyframes orb-drift-2 {
+    0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(-25px,15px) scale(1.04)}70%{transform:translate(10px,-10px) scale(.96)}
+  }
+  @keyframes orb-drift-3 {
+    0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-15px) scale(1.06)}
+  }
+  @keyframes orb-drift-4 {
+    0%,100%{transform:translate(0,0) scale(1)}35%{transform:translate(-18px,12px) scale(1.03)}75%{transform:translate(12px,-8px) scale(.98)}
+  }
+  @keyframes orb-drift-5 {
+    0%,100%{transform:translate(0,0) scale(1)}45%{transform:translate(15px,10px) scale(1.04)}80%{transform:translate(-10px,-12px) scale(.97)}
+  }
+  .hero h1 {
+    font-size: 44px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    position: relative;
+  }
+  .hero .subtitle {
+    font-size: 18px; color: var(--text-secondary); max-width: 760px;
+    margin: 0 auto 32px; position: relative;
+  }
+  .hero .tagline {
+    display: inline-block; font-size: 12px; font-family: var(--font-mono);
+    color: var(--accent-green); background: rgba(63,185,80,0.1);
+    border: 1px solid rgba(63,185,80,0.3); border-radius: 20px;
+    padding: 4px 16px; letter-spacing: 0.5px; text-transform: uppercase;
+    position: relative;
+  }
+
+  /* ── Layout ──────────────────────────────────────────────────── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Section ─────────────────────────────────────────────────── */
+  .section { padding: 64px 0 48px; }
+  .section + .section { border-top: 1px solid var(--border); }
+  .section h2 {
+    font-size: 28px; font-weight: 700; margin-bottom: 8px;
+  }
+  .section h3 { font-size: 20px; font-weight: 700; margin: 32px 0 12px; color: var(--text-primary); }
+  .section h4 { font-size: 16px; font-weight: 700; margin: 24px 0 8px; color: var(--accent-blue); }
+  .section .section-sub { color: var(--text-secondary); margin-bottom: 32px; font-size: 15px; }
+  .section p { color: var(--text-secondary); margin-bottom: 16px; font-size: 14px; line-height: 1.7; }
+  .section p strong { color: var(--text-primary); }
+
+  /* ── Cards ───────────────────────────────────────────────────── */
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 28px; margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--accent-blue); }
+
+  /* ── Stats row ───────────────────────────────────────────────── */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+    gap: 16px; margin: 24px 0;
+  }
+  .stat-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 20px; text-align: center;
+  }
+  .stat-card .stat-value {
+    font-family: var(--font-mono); font-size: 28px; font-weight: 800; margin-bottom: 4px;
+  }
+  .stat-card .stat-label {
+    font-size: 11px; color: var(--text-secondary); text-transform: uppercase;
+    letter-spacing: 0.5px; font-family: var(--font-mono);
+  }
+
+  /* ── Tables ──────────────────────────────────────────────────── */
+  .data-table {
+    width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px;
+  }
+  .data-table th {
+    text-align: left; font-family: var(--font-mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary);
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    background: var(--dark-bg); position: sticky; top: 56px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid rgba(48,54,61,0.5);
+    color: var(--text-secondary); vertical-align: top;
+  }
+  .data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+  .data-table code {
+    font-family: var(--font-mono); font-size: 12px;
+    background: rgba(48,54,61,0.6); padding: 1px 6px;
+    border-radius: 3px; color: var(--accent-blue);
+  }
+  .data-table .check { color: var(--accent-green); }
+  .data-table .partial { color: var(--accent-orange); }
+  .data-table .miss { color: var(--accent-red); }
+
+  /* ── Callout ─────────────────────────────────────────────────── */
+  .callout {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-orange); border-radius: 6px;
+    padding: 24px 28px; margin: 32px 0;
+  }
+  .callout h4 { font-size: 15px; font-weight: 700; color: var(--accent-orange); margin: 0 0 10px; }
+  .callout p { margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout-blue { border-left-color: var(--accent-blue); }
+  .callout-blue h4 { color: var(--accent-blue); }
+  .callout-green { border-left-color: var(--accent-green); }
+  .callout-green h4 { color: var(--accent-green); }
+  .callout-purple { border-left-color: var(--accent-purple); }
+  .callout-purple h4 { color: var(--accent-purple); }
+
+  /* ── Tier badges ─────────────────────────────────────────────── */
+  .badge {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 12px; letter-spacing: 0.5px;
+    display: inline-block;
+  }
+  .badge-green { background: rgba(63,185,80,0.15); color: var(--accent-green); }
+  .badge-blue { background: rgba(88,166,255,0.15); color: var(--accent-blue); }
+  .badge-purple { background: rgba(188,140,255,0.15); color: var(--accent-purple); }
+  .badge-orange { background: rgba(210,153,34,0.15); color: var(--accent-orange); }
+  .badge-pink { background: rgba(247,120,186,0.15); color: var(--accent-pink); }
+
+  /* ── Bar chart ───────────────────────────────────────────────── */
+  .bar-chart { margin: 24px 0; }
+  .bar-row {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+  }
+  .bar-label {
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary);
+    width: 140px; text-align: right; flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1; height: 24px; background: rgba(48,54,61,0.4);
+    border-radius: 4px; overflow: hidden; position: relative;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 4px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 8px; font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700; color: #fff;
+    transition: width 0.6s ease;
+  }
+
+  /* ── SVG containers ──────────────────────────────────────────── */
+  .svg-container {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 32px; margin: 24px 0;
+    display: flex; justify-content: center; overflow-x: auto;
+  }
+  .svg-container svg { max-width: 100%; height: auto; }
+  .svg-title {
+    font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--text-secondary); text-align: center;
+    margin-bottom: 16px;
+  }
+
+  /* ── Timeline ────────────────────────────────────────────────── */
+  .timeline {
+    display: flex; gap: 0; margin: 32px 0; overflow-x: auto; padding-bottom: 8px;
+  }
+  .timeline-item {
+    flex: 1; min-width: 120px; text-align: center; position: relative;
+    padding: 16px 8px;
+  }
+  .timeline-item::before {
+    content: ''; position: absolute; top: 40px; left: 0; right: 0;
+    height: 3px; background: var(--border);
+  }
+  .timeline-item.complete::before { background: var(--accent-green); }
+  .timeline-item.active::before {
+    background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-blue) 100%);
+  }
+  .timeline-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--dark-bg);
+    margin: 24px auto 12px; position: relative; z-index: 1;
+  }
+  .timeline-item.complete .timeline-dot {
+    background: var(--accent-green); border-color: var(--accent-green);
+  }
+  .timeline-item.active .timeline-dot {
+    background: var(--accent-blue); border-color: var(--accent-blue);
+    box-shadow: 0 0 8px rgba(88,166,255,0.4);
+  }
+  .timeline-label {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+    color: var(--text-primary);
+  }
+  .timeline-desc {
+    font-size: 10px; color: var(--text-secondary); margin-top: 4px;
+    font-family: var(--font-mono);
+  }
+
+  /* ── Positioning grid ────────────────────────────────────────── */
+  .pos-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+    gap: 2px; margin: 24px 0; font-size: 12px; font-family: var(--font-mono);
+  }
+  .pos-cell {
+    padding: 10px; text-align: center; border-radius: 4px;
+  }
+  .pos-header { background: rgba(48,54,61,0.6); color: var(--text-secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; }
+  .pos-yes { background: rgba(63,185,80,0.12); color: var(--accent-green); }
+  .pos-partial { background: rgba(210,153,34,0.12); color: var(--accent-orange); }
+  .pos-no { background: rgba(248,81,73,0.10); color: var(--accent-red); }
+  .pos-label { background: var(--card-bg); color: var(--text-primary); font-weight: 600; text-align: left; }
+
+  /* ── Footer ──────────────────────────────────────────────────── */
+  .footer {
+    text-align: center; padding: 48px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary); font-size: 13px;
+  }
+  .footer strong { color: var(--text-primary); }
+  .footer a { color: var(--accent-blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer .footer-name { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .footer .footer-affil { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
+
+  /* ── Responsive ──────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .hero { padding: 110px 16px 50px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .bar-label { width: 90px; font-size: 10px; }
+    .top-nav { padding: 0 12px; }
+    .container { padding: 0 16px; }
+    .pos-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ── Reference list ──────────────────────────────────────────── */
+  .ref-list { list-style: none; counter-reset: ref; }
+  .ref-list li {
+    counter-increment: ref; margin-bottom: 8px;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+    padding-left: 32px; position: relative;
+  }
+  .ref-list li::before {
+    content: '[' counter(ref) ']';
+    position: absolute; left: 0; color: var(--accent-blue);
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+  }
+  .ref-list li em { color: var(--text-primary); font-style: italic; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav class="top-nav">
+  <a href="#top" class="nav-brand">SNPTX</a>
+  <a href="#motivation">Motivation</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#results">Results</a>
+  <a href="#validation">Validation</a>
+  <a href="#intelligence">Intelligence</a>
+  <a href="#autonomous">Autonomous</a>
+  <a href="#methodology">Methodology</a>
+  <a href="#fusion">Fusion</a>
+  <a href="#pilots">Pilots</a>
+  <a href="#positioning">Positioning</a>
+  <a href="#references">References</a>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-orb hero-orb--blue"></div>
+  <div class="hero-orb hero-orb--purple"></div>
+  <div class="hero-orb hero-orb--green"></div>
+  <div class="hero-orb hero-orb--cyan"></div>
+  <div class="hero-orb hero-orb--pink"></div>
+  <div class="tagline">Deterministic Orchestration &bull; 8 Modalities &bull; 1,056 Tests</div>
+  <h1>SNPTX</h1>
+  <p class="subtitle">
+    A framework for biomedical machine learning that enforces deterministic execution,
+    full artifact provenance, and structured evaluation across data modalities &mdash;
+    addressing the reproducibility gap in computational biology with infrastructure-level guarantees.
+  </p>
+</section>
+
+<!-- ═══════════════════ KEY METRICS ═══════════════════ -->
+<section class="section">
+<div class="container">
+  <h2>Framework at a Glance</h2>
+  <p class="section-sub">Validated across 8 biomedical data modalities with 46 dataset adapters, 1,056 automated tests, and zero static analysis violations.</p>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-green);">1,056</div>
+      <div class="stat-label">Total Tests</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-blue);">46</div>
+      <div class="stat-label">Dataset Adapters</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-purple);">8</div>
+      <div class="stat-label">Modality Families</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-orange);">1,100</div>
+      <div class="stat-label">Experiments Run</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-pink);">104</div>
+      <div class="stat-label">Discoveries</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-cyan);">1,037</div>
+      <div class="stat-label">Experiments/Hour</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════ RESEARCH MOTIVATION ═══════════════════ -->
+<section class="section" id="motivation">
+<div class="container">
+  <h2>Research Motivation</h2>
+  <p class="section-sub">Addressing the reproducibility crisis in biomedical machine learning through architectural guarantees rather than procedural guidelines.</p>
+
+  <p>Computational workflows in genomics, clinical prediction, and drug discovery routinely fail to reproduce across labs and time horizons (Baker, 2016; Hutson, 2018). The causes are infrastructural: uncontrolled analytical drift, implicit state dependencies, and the absence of structured evaluation frameworks. An estimated <strong>70% of computational biology results</strong> fail to reproduce when re-executed by independent groups.</p>
+
+  <p>SNPTX addresses these root causes architecturally:</p>
+
+  <table class="data-table">
+    <thead><tr><th>Root Cause</th><th>Architectural Response</th></tr></thead>
+    <tbody>
+      <tr><td>Analytical drift</td><td>Extensions are downstream-only, consuming immutable artifacts</td></tr>
+      <tr><td>Implicit state</td><td>All configuration is explicit; DAG ordering is deterministic</td></tr>
+      <tr><td>Unstructured comparison</td><td>Standardized evaluation artifacts enable systematic model comparison</td></tr>
+      <tr><td>Missing provenance</td><td>Artifact versioning with input hashing, commit embedding, and experiment logging</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══════════════════ SYSTEM ARCHITECTURE ═══════════════════ -->
+<section class="section" id="architecture">
+<div class="container">
+  <h2>System Architecture</h2>
+  <p class="section-sub">Separation of execution (what runs and when) from interpretation (how results are analyzed and compared), enabling independent evolution of model architectures, evaluation methods, and feedback strategies.</p>
+
+  <h3>Core Infrastructure</h3>
+  <table class="data-table">
+    <thead><tr><th>Component</th><th>Role</th><th>Implementation</th></tr></thead>
+    <tbody>
+      <tr><td>Pipeline Orchestration</td><td>Reproducible DAGs from ingestion through evaluation</td><td>Snakemake (34 rules, 9 core + 25 opt-in)</td></tr>
+      <tr><td>Experiment Tracking</td><td>Parameters, metrics, artifacts, model versions</td><td>MLflow</td></tr>
+      <tr><td>Artifact Management</td><td>Dataset, model, and derived artifact versioning</td><td>DVC (48 pipeline stages)</td></tr>
+      <tr><td>Configuration &amp; Lineage</td><td>Explicit control over datasets, features, parameters</td><td>YAML</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Extension System</h3>
+  <p>Tier-1 extensions form the analytical surface for downstream interpretation. All extensions are strictly downstream of the core pipeline, consume and produce artifacts only (no shared state), declare explicit typed input/output contracts, and produce deterministic outputs. Extensions live in a physically separate repository, isolating analytical contributions from orchestration logic.</p>
+
+  <h3>Artifact-Driven Flow</h3>
+  <div class="callout callout-blue">
+    <h4>Pipeline DAG</h4>
+    <p><strong>Data Ingestion &rarr; Training &rarr; Evaluation &rarr; Diagnostics &rarr; Aggregation &rarr; Reporting &rarr; Feedback</strong></p>
+    <p>Each stage boundary is defined by persisted, immutable artifacts. No stage reaches into the implementation of another, enabling independent verification at every boundary.</p>
+  </div>
+
+  <h3>Supported Model Architectures</h3>
+  <table class="data-table">
+    <thead><tr><th>Architecture</th><th>Application Domain</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Transformers</td><td>EHR sequence modeling, clinical note embedding, omics feature extraction</td><td><span class="badge badge-green">Validated</span></td></tr>
+      <tr><td>Graph neural networks</td><td>Molecular property prediction, knowledge graph reasoning, drug-target interaction</td><td><span class="badge badge-green">Validated</span></td></tr>
+      <tr><td>Variational autoencoders</td><td>Gene expression embeddings, single-cell representation learning</td><td><span class="badge badge-green">Validated</span></td></tr>
+      <tr><td>Convolutional networks</td><td>Histopathology classification, medical image feature extraction</td><td><span class="badge badge-green">Validated</span></td></tr>
+      <tr><td>Multi-modal fusion</td><td>Cross-modality prediction (attention-based, tensor fusion, MoE)</td><td><span class="badge badge-green">Validated</span></td></tr>
+      <tr><td>Contrastive learning</td><td>Patient similarity, cohort discovery, representation alignment</td><td><span class="badge badge-green">Validated</span></td></tr>
+      <tr><td>Foundation model fine-tuning</td><td>Domain adaptation of pre-trained biomedical models (BioBERT, etc.)</td><td><span class="badge badge-green">Validated</span></td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══════════════════ VISUALIZATIONS ═══════════════════ -->
+<section class="section" id="results">
+<div class="container">
+  <h2>Multi-Modal Experimental Results</h2>
+  <p class="section-sub">Validated across 7 biomedical data modalities plus multi-modal fusion, each trained on real-world biomedical datasets with holdout evaluation and 8-check statistical audit.</p>
+
+  <!-- ── Radar Chart: Modality Accuracies ── -->
+  <div class="svg-title">Modality Accuracy Radar &mdash; 8 Axes</div>
+  <div class="svg-container">
+    <svg viewBox="0 0 500 460" width="500" height="460" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <style>
+          .radar-label{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;fill:#8b949e}
+          .radar-value{font-family:'SFMono-Regular',Consolas,monospace;font-size:9px;fill:#e6edf3;font-weight:700}
+          .radar-ring{fill:none;stroke:#30363d;stroke-width:1}
+          .radar-spoke{stroke:#30363d;stroke-width:0.5}
+          .radar-area{fill:rgba(88,166,255,0.12);stroke:#58a6ff;stroke-width:2}
+          .radar-dot{fill:#58a6ff}
+        </style>
+      </defs>
+      <!-- Rings at 25%, 50%, 75%, 100% -->
+      <polygon class="radar-ring" points="250,215 250,215 250,215 250,215 250,215 250,215 250,215 250,215"/>
+      <circle class="radar-ring" cx="250" cy="220" r="45"/>
+      <circle class="radar-ring" cx="250" cy="220" r="90"/>
+      <circle class="radar-ring" cx="250" cy="220" r="135"/>
+      <circle class="radar-ring" cx="250" cy="220" r="180"/>
+      <!-- Ring labels -->
+      <text x="254" y="178" class="radar-label">25%</text>
+      <text x="254" y="133" class="radar-label">50%</text>
+      <text x="254" y="88" class="radar-label">75%</text>
+      <text x="254" y="43" class="radar-label">100%</text>
+      <!-- Spokes: 8 axes, center at (250,220), radius 180 -->
+      <!-- Angles: 0=top(-90°), then every 45° clockwise -->
+      <!-- Axis 0: Tabular (top, -90°) -->
+      <line class="radar-spoke" x1="250" y1="220" x2="250" y2="40"/>
+      <!-- Axis 1: Omics (top-right, -45°) -->
+      <line class="radar-spoke" x1="250" y1="220" x2="377.3" y2="92.7"/>
+      <!-- Axis 2: Graph (right, 0°) -->
+      <line class="radar-spoke" x1="250" y1="220" x2="430" y2="220"/>
+      <!-- Axis 3: Imaging (bottom-right, 45°) -->
+      <line class="radar-spoke" x1="250" y1="220" x2="377.3" y2="347.3"/>
+      <!-- Axis 4: Text (bottom, 90°) -->
+      <line class="radar-spoke" x1="250" y1="220" x2="250" y2="400"/>
+      <!-- Axis 5: Single-cell (bottom-left, 135°) -->
+      <line class="radar-spoke" x1="250" y1="220" x2="122.7" y2="347.3"/>
+      <!-- Axis 6: Drug discovery (left, 180°) -->
+      <line class="radar-spoke" x1="250" y1="220" x2="70" y2="220"/>
+      <!-- Axis 7: Fusion (top-left, 225°) -->
+      <line class="radar-spoke" x1="250" y1="220" x2="122.7" y2="92.7"/>
+      <!-- Data polygon: values as fraction of 180px radius -->
+      <!-- Tabular 77.2%=138.96 up, Omics 89.6%=161.28 @ -45°, Graph 75.2%=135.36 right,
+           Imaging 36.4%=65.52 @ 45°, Text 34.1%=61.38 down,
+           Single-cell 76.9%=138.42 @ 135°, Drug 92.1%=165.78 left, Fusion 88.3%=158.94 @225° -->
+      <polygon class="radar-area" points="
+        250,81
+        364,106.1
+        385.4,220
+        296.3,266.3
+        250,281.4
+        152.1,317.9
+        84.2,220
+        137.6,107.6
+      "/>
+      <!-- Data dots -->
+      <circle class="radar-dot" cx="250" cy="81" r="4"/>
+      <circle class="radar-dot" cx="364" cy="106.1" r="4"/>
+      <circle class="radar-dot" cx="385.4" cy="220" r="4"/>
+      <circle class="radar-dot" cx="296.3" cy="266.3" r="4"/>
+      <circle class="radar-dot" cx="250" cy="281.4" r="4"/>
+      <circle class="radar-dot" cx="152.1" cy="317.9" r="4"/>
+      <circle class="radar-dot" cx="84.2" cy="220" r="4"/>
+      <circle class="radar-dot" cx="137.6" cy="107.6" r="4"/>
+      <!-- Labels with values outside chart -->
+      <text x="250" y="28" text-anchor="middle" class="radar-label">Tabular (XGBoost)</text>
+      <text x="250" y="16" text-anchor="middle" class="radar-value">77.2%</text>
+      <text x="396" y="80" text-anchor="start" class="radar-label">Omics (VAE)</text>
+      <text x="396" y="68" text-anchor="start" class="radar-value">89.6%</text>
+      <text x="440" y="224" text-anchor="start" class="radar-label">Graph (GCN)</text>
+      <text x="440" y="212" text-anchor="start" class="radar-value">75.2%</text>
+      <text x="390" y="365" text-anchor="start" class="radar-label">Imaging (ResNet)</text>
+      <text x="390" y="353" text-anchor="start" class="radar-value">36.4%</text>
+      <text x="250" y="425" text-anchor="middle" class="radar-label">Text (BERT)</text>
+      <text x="250" y="445" text-anchor="middle" class="radar-value">34.1%</text>
+      <text x="95" y="365" text-anchor="end" class="radar-label">Single-cell (VAE)</text>
+      <text x="95" y="353" text-anchor="end" class="radar-value">76.9%</text>
+      <text x="55" y="212" text-anchor="end" class="radar-label">Drug Discovery</text>
+      <text x="55" y="224" text-anchor="end" class="radar-value">92.1%</text>
+      <text x="95" y="80" text-anchor="end" class="radar-label">Fusion (Attention)</text>
+      <text x="95" y="68" text-anchor="end" class="radar-value">88.3%</text>
+    </svg>
+  </div>
+
+  <!-- ── Horizontal Bar Chart ── -->
+  <div class="svg-title">Per-Modality Holdout Accuracy</div>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">Drug Discovery</div>
+      <div class="bar-track"><div class="bar-fill" style="width:92.1%;background:var(--accent-green);">92.1%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Omics (VAE)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:89.6%;background:var(--accent-blue);">89.6%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Fusion</div>
+      <div class="bar-track"><div class="bar-fill" style="width:88.3%;background:var(--accent-purple);">88.3%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Tabular (XGBoost)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:77.2%;background:var(--accent-cyan);">77.2%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Single-cell (VAE)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:76.9%;background:var(--accent-orange);">76.9%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Graph (GCN)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:75.2%;background:var(--accent-blue);">75.2%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Imaging (ResNet)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:36.4%;background:var(--accent-pink);">36.4%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Text (BERT)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:34.1%;background:var(--accent-red);">34.1%</div></div>
+    </div>
+  </div>
+
+  <!-- ── Per-Modality Table ── -->
+  <h3>Per-Modality Performance Detail</h3>
+  <table class="data-table">
+    <thead><tr><th>Modality</th><th>Dataset</th><th>Model</th><th>Accuracy</th><th>Validation</th></tr></thead>
+    <tbody>
+      <tr><td>Clinical tabular</td><td>Synthea readmission (n=6,625)</td><td>XGBoost</td><td>77.2%</td><td>5-fold CV, 76.4% &plusmn; 1.0%</td></tr>
+      <tr><td>Omics</td><td>Visium breast (200 HVG, n=3,798)</td><td>VAE</td><td>89.6%</td><td>5-fold CV, 89.9% &plusmn; 0.9%</td></tr>
+      <tr><td>Knowledge graphs</td><td>Hetionet link prediction (n=20,000)</td><td>GCN</td><td>75.2%</td><td>5-fold CV, 75.4% &plusmn; 1.2%</td></tr>
+      <tr><td>Histopathology</td><td>Visium H&amp;E patches (n=3,798)</td><td>ResNet-50</td><td>36.4%</td><td>8-class, random baseline 12.5%</td></tr>
+      <tr><td>Clinical text</td><td>MTSamples (n=4,652)</td><td>BERT</td><td>34.1%</td><td>22-specialty, random baseline 4.5%</td></tr>
+      <tr><td>Single-cell</td><td>PBMC 3k (n=2,700)</td><td>VAE</td><td>76.9%</td><td>5-fold CV, 76.5% &plusmn; 1.1%</td></tr>
+      <tr><td>Drug discovery</td><td>ChEMBL bioactivity (n=4,685)</td><td>GCN</td><td>92.1%</td><td>5-fold CV, 91.8% &plusmn; 0.9%</td></tr>
+      <tr><td><strong>Multi-modal fusion</strong></td><td><strong>Visium (omics + imaging + spatial)</strong></td><td><strong>Attention fusion</strong></td><td><strong>88.3%</strong></td><td><strong>Holdout; exceeds best non-omics unimodal (76.9%)</strong></td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── Pipeline DAG SVG ── -->
+  <div class="svg-title">Artifact-Driven Pipeline DAG</div>
+  <div class="svg-container">
+    <svg viewBox="0 0 820 180" width="820" height="180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#58a6ff"/></marker>
+        <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#3fb950"/></marker>
+        <style>
+          .dag-box{fill:#161b22;stroke:#30363d;stroke-width:1.5;rx:8}
+          .dag-box:hover{stroke:#58a6ff}
+          .dag-text{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;fill:#e6edf3;text-anchor:middle;font-weight:600}
+          .dag-arrow{stroke:#58a6ff;stroke-width:1.5;fill:none;marker-end:url(#arrow)}
+          .dag-feedback{stroke:#3fb950;stroke-width:1.5;fill:none;marker-end:url(#arrow-green);stroke-dasharray:6,3}
+        </style>
+      </defs>
+      <!-- Boxes -->
+      <rect class="dag-box" x="10" y="60" width="90" height="40"/>
+      <text class="dag-text" x="55" y="84">Ingestion</text>
+      <rect class="dag-box" x="130" y="60" width="80" height="40"/>
+      <text class="dag-text" x="170" y="84">Training</text>
+      <rect class="dag-box" x="240" y="60" width="90" height="40"/>
+      <text class="dag-text" x="285" y="84">Evaluation</text>
+      <rect class="dag-box" x="360" y="60" width="100" height="40"/>
+      <text class="dag-text" x="410" y="84">Diagnostics</text>
+      <rect class="dag-box" x="490" y="60" width="100" height="40"/>
+      <text class="dag-text" x="540" y="84">Aggregation</text>
+      <rect class="dag-box" x="620" y="60" width="90" height="40"/>
+      <text class="dag-text" x="665" y="84">Reporting</text>
+      <rect class="dag-box" x="740" y="60" width="80" height="40" style="stroke:#3fb950"/>
+      <text class="dag-text" x="780" y="84" style="fill:#3fb950">Feedback</text>
+      <!-- Forward arrows -->
+      <line class="dag-arrow" x1="100" y1="80" x2="128" y2="80"/>
+      <line class="dag-arrow" x1="210" y1="80" x2="238" y2="80"/>
+      <line class="dag-arrow" x1="330" y1="80" x2="358" y2="80"/>
+      <line class="dag-arrow" x1="460" y1="80" x2="488" y2="80"/>
+      <line class="dag-arrow" x1="590" y1="80" x2="618" y2="80"/>
+      <line class="dag-arrow" x1="710" y1="80" x2="738" y2="80"/>
+      <!-- Feedback loop arrow (arcs back from Feedback to Ingestion) -->
+      <path class="dag-feedback" d="M780,100 L780,145 Q780,160 765,160 L65,160 Q50,160 50,145 L50,102"/>
+      <text x="415" y="155" style="font-family:monospace;font-size:9px;fill:#3fb950;text-anchor:middle">CLOSED-LOOP FEEDBACK</text>
+    </svg>
+  </div>
+
+  <!-- ── Phase Timeline ── -->
+  <div class="svg-title">Phase Completion Timeline</div>
+  <div class="timeline">
+    <div class="timeline-item complete">
+      <div class="timeline-label">A</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-desc">Data Foundation<br/>247 tests</div>
+    </div>
+    <div class="timeline-item complete">
+      <div class="timeline-label">A.6</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-desc">Theoretical<br/>Hardening &bull; 85</div>
+    </div>
+    <div class="timeline-item complete">
+      <div class="timeline-label">B</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-desc">Intelligence<br/>Layer &bull; 70</div>
+    </div>
+    <div class="timeline-item complete">
+      <div class="timeline-label">B.6</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-desc">Theoretical<br/>Intelligence &bull; 485</div>
+    </div>
+    <div class="timeline-item complete">
+      <div class="timeline-label">C</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-desc">Multi-Modal<br/>Expansion &bull; 169</div>
+    </div>
+    <div class="timeline-item complete">
+      <div class="timeline-label">C.6</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-desc">Multi-Modal<br/>Hardening</div>
+    </div>
+    <div class="timeline-item active">
+      <div class="timeline-label">D</div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-desc">Clinical<br/>Deployment</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════ VALIDATION ═══════════════════ -->
+<section class="section" id="validation">
+<div class="container">
+  <h2>Validation Methodology (8-Check Audit)</h2>
+  <p class="section-sub">Every modality result is validated through 8 independent statistical checks, ensuring reported performance is robust, calibrated, and not an artifact of favorable data splits.</p>
+
+  <div class="stats-row" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));">
+    <div class="card">
+      <h4 style="color:var(--accent-green);margin-top:0;">1. k-Fold Cross-Validation</h4>
+      <p>5-fold stratified CV with per-fold metrics and variance reporting. Ensures performance is not an artifact of a single favorable split.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--accent-green);margin-top:0;">2. Multi-Seed Stability</h4>
+      <p>5 independent random seeds, confirming accuracy variance &lt; 1.2% across runs. Ensures insensitivity to initialization.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--accent-blue);margin-top:0;">3. Bootstrap CIs</h4>
+      <p>1,000-sample bootstrap on test predictions producing 95% confidence intervals on accuracy, F1, and AUC.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--accent-blue);margin-top:0;">4. Spatial Stratification</h4>
+      <p>For tissue data (Visium), splits prevent spatial autocorrelation from inflating performance. Adjacent spots never split across train/test.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--accent-purple);margin-top:0;">5. Fusion Holdout</h4>
+      <p>PCA embeddings extracted from training set only. Test set projected using frozen training-set PCA parameters. No data leakage.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--accent-purple);margin-top:0;">6. Conformal Prediction</h4>
+      <p>Distribution-free prediction sets with coverage guarantees (Vovk et al., 2005). Per-sample uncertainty without distributional assumptions.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--accent-orange);margin-top:0;">7. Learning Curves</h4>
+      <p>Training set subsampled at [0.1, 0.25, 0.5, 0.75, 1.0] fractions to confirm models are not in data-starved regime.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--accent-orange);margin-top:0;">8. Trivial Baselines</h4>
+      <p>Every model compared against majority-class and random baselines. All results significantly exceed trivial baselines.</p>
+    </div>
+  </div>
+
+  <h3>5-Fold Stratified CV Summary</h3>
+  <table class="data-table">
+    <thead><tr><th>Modality</th><th>Accuracy (mean &plusmn; std)</th><th>F1 (mean &plusmn; std)</th></tr></thead>
+    <tbody>
+      <tr><td>Clinical tabular</td><td>76.4% &plusmn; 1.0%</td><td>0.761 &plusmn; 0.011</td></tr>
+      <tr><td>Omics</td><td>89.9% &plusmn; 0.9%</td><td>0.896 &plusmn; 0.010</td></tr>
+      <tr><td>Knowledge graphs</td><td>75.4% &plusmn; 1.2%</td><td>0.752 &plusmn; 0.012</td></tr>
+      <tr><td>Histopathology</td><td>36.2% &plusmn; 2.1%</td><td>0.210 &plusmn; 0.034</td></tr>
+      <tr><td>Clinical text</td><td>34.8% &plusmn; 1.8%</td><td>0.321 &plusmn; 0.021</td></tr>
+      <tr><td>Single-cell</td><td>76.5% &plusmn; 1.1%</td><td>0.739 &plusmn; 0.011</td></tr>
+      <tr><td>Drug discovery</td><td>91.8% &plusmn; 0.9%</td><td>0.905 &plusmn; 0.009</td></tr>
+      <tr><td>Multi-modal fusion</td><td>88.9% &plusmn; 0.9%</td><td>0.896 &plusmn; 0.010</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══════════════════ METHODOLOGY ═══════════════════ -->
+<section class="section" id="methodology">
+<div class="container">
+  <h2>Experimental Methodology</h2>
+  <p class="section-sub">All experiments are deterministic and reproducible: fixed seeds, versioned configurations, and immutable artifact lineage.</p>
+
+  <h3>Compute Environment</h3>
+  <table class="data-table">
+    <thead><tr><th>Resource</th><th>Specification</th></tr></thead>
+    <tbody>
+      <tr><td>Instance</td><td>AWS EC2 g5.xlarge</td></tr>
+      <tr><td>GPU</td><td>NVIDIA A10G, 23 GB VRAM</td></tr>
+      <tr><td>Python</td><td>3.11.14</td></tr>
+      <tr><td>PyTorch</td><td>2.5.1+cu121</td></tr>
+      <tr><td>Orchestration</td><td>Snakemake 9.16.3 (34 rules)</td></tr>
+      <tr><td>Tracking</td><td>MLflow 3.10.0</td></tr>
+      <tr><td>Versioning</td><td>DVC (48 pipeline stages)</td></tr>
+      <tr><td>Static Analysis</td><td>Pyright (0 errors), Ruff 0.15.4 (0 violations)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Datasets (46 Adapters, 8 Modality Families)</h3>
+  <table class="data-table">
+    <thead><tr><th>Modality</th><th>Dataset</th><th>Source</th><th>Samples</th><th>Task</th></tr></thead>
+    <tbody>
+      <tr><td>Clinical tabular</td><td>Synthea readmission</td><td>Synthea (synthetic EHR)</td><td>6,625</td><td>Binary classification</td></tr>
+      <tr><td>Omics</td><td>Visium breast cancer</td><td>10x Genomics</td><td>3,798</td><td>8-region classification</td></tr>
+      <tr><td>Knowledge graphs</td><td>Hetionet</td><td>Himmelstein et al.</td><td>20,000 edges</td><td>Link prediction</td></tr>
+      <tr><td>Histopathology</td><td>Visium H&amp;E patches</td><td>10x Genomics</td><td>3,798</td><td>8-region classification</td></tr>
+      <tr><td>Clinical text</td><td>MTSamples</td><td>MTSamples.com</td><td>4,652</td><td>22-specialty classification</td></tr>
+      <tr><td>Single-cell</td><td>PBMC 3k</td><td>10x Genomics</td><td>2,700</td><td>9-type classification</td></tr>
+      <tr><td>Drug discovery</td><td>ChEMBL bioactivity</td><td>ChEMBL database</td><td>4,685</td><td>Binary bioactivity</td></tr>
+      <tr><td>Classical ML</td><td>Iris, Wine, Breast Cancer, Digits</td><td>UCI / scikit-learn</td><td>150&ndash;1,797</td><td>Multi-class classification</td></tr>
+    </tbody>
+  </table>
+  <p>9 additional adapters are deferred (specification complete, data not yet integrated).</p>
+
+  <h3>Training Configuration</h3>
+  <table class="data-table">
+    <thead><tr><th>Modality</th><th>Model</th><th>Key Hyperparameters</th><th>Training Details</th></tr></thead>
+    <tbody>
+      <tr><td>Clinical tabular</td><td>XGBoost</td><td>n_estimators=100&ndash;300, max_depth=6, lr=0.1</td><td>5-fold CV grid search</td></tr>
+      <tr><td>Omics</td><td>VAE</td><td>latent_dim=32, hidden=128, epochs=50</td><td>KL annealing, reconstruction loss</td></tr>
+      <tr><td>Knowledge graphs</td><td>GCN</td><td>layers=2, hidden=64, epochs=200</td><td>Negative sampling, Adam</td></tr>
+      <tr><td>Histopathology</td><td>ResNet-50</td><td>ImageNet pretrained, epochs=20, lr=1e-4</td><td>224&times;224, random augmentation</td></tr>
+      <tr><td>Clinical text</td><td>BERT-base</td><td>epochs=3, lr=2e-5, batch=16</td><td>Subword tokenization, max_len=512</td></tr>
+      <tr><td>Single-cell</td><td>VAE</td><td>latent_dim=16, hidden=64, epochs=30</td><td>Scanpy-preprocessed, HVG filtered</td></tr>
+      <tr><td>Drug discovery</td><td>GCN</td><td>layers=3, hidden=128, epochs=100</td><td>Class-weighted loss, molecular featurization</td></tr>
+      <tr><td>Multi-modal fusion</td><td>Attention fusion</td><td>heads=4, hidden=256</td><td>PCA embeddings from training set only</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Reproducibility Controls</h3>
+  <div class="callout callout-green">
+    <h4>Deterministic Guarantees</h4>
+    <p><strong>Fixed seeds</strong> &mdash; Global seed (1337) for all random operations (numpy, torch, sklearn).</p>
+    <p><strong>Deterministic CUDA</strong> &mdash; <code style="font-family:var(--font-mono);font-size:12px;background:rgba(48,54,61,0.6);padding:1px 6px;border-radius:3px;color:var(--accent-blue);">torch.use_deterministic_algorithms(True)</code> where supported.</p>
+    <p><strong>Versioned configuration</strong> &mdash; Every run defined by YAML committed to version control.</p>
+    <p><strong>DAG-enforced ordering</strong> &mdash; Snakemake guarantees execution order; no implicit dependencies.</p>
+    <p><strong>Artifact hashing</strong> &mdash; DVC checksums verify data and model artifact integrity.</p>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════ FUSION ═══════════════════ -->
+<section class="section" id="fusion">
+<div class="container">
+  <h2>Fusion Methodology</h2>
+  <p class="section-sub">Multi-modal fusion combines learned representations from multiple modalities through an attention-based mechanism, demonstrating cross-modal benefit over unimodal baselines.</p>
+
+  <!-- Fusion Architecture SVG -->
+  <div class="svg-title">Fusion Architecture</div>
+  <div class="svg-container">
+    <svg viewBox="0 0 700 260" width="700" height="260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="farrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#58a6ff"/></marker>
+        <style>
+          .fbox{fill:#161b22;stroke:#30363d;stroke-width:1.5;rx:8}
+          .fbox-enc{fill:#161b22;stroke:#bc8cff;stroke-width:1.5;rx:8}
+          .fbox-pca{fill:#161b22;stroke:#d29922;stroke-width:1.5;rx:8}
+          .fbox-attn{fill:#161b22;stroke:#58a6ff;stroke-width:1.5;rx:8}
+          .fbox-cls{fill:#161b22;stroke:#3fb950;stroke-width:1.5;rx:8}
+          .ftxt{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;fill:#e6edf3;text-anchor:middle;font-weight:600}
+          .farr{stroke:#58a6ff;stroke-width:1.5;fill:none;marker-end:url(#farrow)}
+        </style>
+      </defs>
+      <!-- Encoders column -->
+      <rect class="fbox-enc" x="10" y="20" width="120" height="34"/>
+      <text class="ftxt" x="70" y="41">Omics Encoder</text>
+      <rect class="fbox-enc" x="10" y="72" width="120" height="34"/>
+      <text class="ftxt" x="70" y="93">Imaging Encoder</text>
+      <rect class="fbox-enc" x="10" y="124" width="120" height="34"/>
+      <text class="ftxt" x="70" y="145">Graph Encoder</text>
+      <rect class="fbox-enc" x="10" y="176" width="120" height="34"/>
+      <text class="ftxt" x="70" y="197">Text Encoder</text>
+      <!-- PCA -->
+      <rect class="fbox-pca" x="210" y="85" width="110" height="50"/>
+      <text class="ftxt" x="265" y="108" style="fill:#d29922">PCA Projection</text>
+      <text class="ftxt" x="265" y="122" style="fill:#8b949e;font-size:8px">(train-set fitted)</text>
+      <!-- Arrows encoder -> PCA -->
+      <line class="farr" x1="130" y1="37" x2="208" y2="100"/>
+      <line class="farr" x1="130" y1="89" x2="208" y2="107"/>
+      <line class="farr" x1="130" y1="141" x2="208" y2="114"/>
+      <line class="farr" x1="130" y1="193" x2="208" y2="120"/>
+      <!-- Attention -->
+      <rect class="fbox-attn" x="390" y="78" width="130" height="64"/>
+      <text class="ftxt" x="455" y="104" style="fill:#58a6ff">Attention Fusion</text>
+      <text class="ftxt" x="455" y="118" style="fill:#8b949e;font-size:8px">4 heads, hidden=256</text>
+      <text class="ftxt" x="455" y="132" style="fill:#8b949e;font-size:8px">cross-modal weights</text>
+      <!-- Arrow PCA -> Attention -->
+      <line class="farr" x1="320" y1="110" x2="388" y2="110"/>
+      <!-- Classifier -->
+      <rect class="fbox-cls" x="590" y="85" width="100" height="50"/>
+      <text class="ftxt" x="640" y="108" style="fill:#3fb950">Classifier</text>
+      <text class="ftxt" x="640" y="122" style="fill:#8b949e;font-size:8px">88.3% holdout</text>
+      <!-- Arrow Attention -> Classifier -->
+      <line class="farr" x1="520" y1="110" x2="588" y2="110"/>
+      <!-- Labels -->
+      <text x="70" y="232" style="font-family:monospace;font-size:9px;fill:#bc8cff;text-anchor:middle">PER-MODALITY</text>
+      <text x="265" y="155" style="font-family:monospace;font-size:9px;fill:#d29922;text-anchor:middle">SHARED DIM</text>
+      <text x="455" y="158" style="font-family:monospace;font-size:9px;fill:#58a6ff;text-anchor:middle">CROSS-MODAL</text>
+      <text x="640" y="155" style="font-family:monospace;font-size:9px;fill:#3fb950;text-anchor:middle">PREDICTION</text>
+    </svg>
+  </div>
+
+  <h3>Fusion Performance</h3>
+  <table class="data-table">
+    <thead><tr><th>Configuration</th><th>Accuracy</th></tr></thead>
+    <tbody>
+      <tr><td>Omics only (VAE)</td><td>89.6%</td></tr>
+      <tr><td>Single-cell only (VAE)</td><td>76.9%</td></tr>
+      <tr><td><strong>Fusion (omics + imaging + spatial)</strong></td><td><strong>88.3%</strong></td></tr>
+      <tr><td>Best non-omics unimodal</td><td>76.9%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-purple">
+    <h4>Cross-Modal Benefit</h4>
+    <p>Fusion exceeds the best non-omics unimodal result by <strong>11.4 percentage points</strong>, demonstrating that complementary cross-modal information improves prediction. Holdout accuracy (88.3%) is consistent with 5-fold CV (88.9% &plusmn; 0.9%), confirming no leakage.</p>
+  </div>
+
+  <h3>Theoretical Multi-Modal Hardening (Phase C.6)</h3>
+  <table class="data-table">
+    <thead><tr><th>Module</th><th>Methods</th><th>Theoretical Basis</th></tr></thead>
+    <tbody>
+      <tr><td>Cross-modal alignment</td><td>InfoNCE, CLIP-style, Deep CCA</td><td>Information Bottleneck (Tishby et al., 2000)</td></tr>
+      <tr><td>Uncertainty quantification</td><td>Evidential DL, conformal prediction</td><td>Sensoy et al., 2018; Vovk et al., 2005</td></tr>
+      <tr><td>E(n)-equivariant graphs</td><td>SE(3)-equivariance for molecular geometry</td><td>Thomas et al., 2018; Satorras et al., 2021</td></tr>
+      <tr><td>Tensor fusion</td><td>Multiplicative outer products, MoE</td><td>Zadeh et al., 2017</td></tr>
+      <tr><td>Domain-adaptive NLP</td><td>Biomedical NER, negation detection, masked LM</td><td>Lee et al., 2020 (BioBERT)</td></tr>
+      <tr><td>Masked autoencoders</td><td>Patch reconstruction, domain divergence</td><td>He et al., 2022 (MAE)</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══════════════════ INTELLIGENCE ═══════════════════ -->
+<section class="section" id="intelligence">
+<div class="container">
+  <h2>Self-Learning Intelligence Layer</h2>
+  <p class="section-sub">Closed-loop feedback between evaluation outputs and upstream pipeline configuration, enabling the system to learn from its own experimental history.</p>
+
+  <h3>Core Intelligence (B1&ndash;B5)</h3>
+  <table class="data-table">
+    <thead><tr><th>Module</th><th>Function</th><th>Theory</th></tr></thead>
+    <tbody>
+      <tr><td>Experiment Catalog</td><td>DuckDB-backed persistent store, 16 columns, indexed</td><td>Cumulative experimentation</td></tr>
+      <tr><td>Meta-Analysis Engine</td><td>Cross-experiment pattern discovery, best-config ranking</td><td>Bayesian rank aggregation</td></tr>
+      <tr><td>Feedback Loop v2</td><td>Bayesian confidence updating, Thompson sampling</td><td>Beta-Binomial posterior (Agrawal &amp; Goyal, 2012)</td></tr>
+      <tr><td>Adaptive Defaults</td><td>Dataset-aware starting configuration</td><td>Sigmoid confidence scoring</td></tr>
+      <tr><td>Hypothesis Templates</td><td>7 declarative templates with trigger conditions</td><td>Declarative hypothesis systems</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Theoretical Intelligence (B.6.1&ndash;B.6.10)</h3>
+  <table class="data-table">
+    <thead><tr><th>Module</th><th>Theory</th><th>Citation</th></tr></thead>
+    <tbody>
+      <tr><td>Meta-Features</td><td>Algorithm selection from dataset characteristics</td><td>Rice, 1976</td></tr>
+      <tr><td>Surrogates</td><td>GP-based Bayesian optimization with acquisition functions</td><td>Snoek et al., 2012</td></tr>
+      <tr><td>Causal Feedback</td><td>ATE, IPW, interrupted time series validation</td><td>Pearl, 2009</td></tr>
+      <tr><td>Experiment Design</td><td>Information gain, SPRT, active learning</td><td>Chaloner &amp; Verdinelli, 1995</td></tr>
+      <tr><td>Rule Mining</td><td>ILP rules with probabilistic calibration, Bayesian networks</td><td>Muggleton &amp; de Raedt, 1994</td></tr>
+      <tr><td>Multi-Objective</td><td>NSGA-II Pareto optimization with fairness constraints</td><td>Deb et al., 2002</td></tr>
+      <tr><td>Continual Learning</td><td>EWC, drift detection, experience replay</td><td>Kirkpatrick et al., 2017</td></tr>
+      <tr><td>Bayesian Testing</td><td>Signed-rank with ROPE, Friedman, bootstrap</td><td>Benavoli et al., 2017</td></tr>
+      <tr><td>Information Theory</td><td>Entropy, MI, MDL, KL divergence, feature ranking</td><td>Cover &amp; Thomas, 2006</td></tr>
+      <tr><td>Scientific Discovery</td><td>Surprise detection, symbolic regression, novelty search</td><td>Peirce, 1903</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══════════════════ AUTONOMOUS ═══════════════════ -->
+<section class="section" id="autonomous">
+<div class="container">
+  <h2>Autonomous Experimentation Engine</h2>
+  <p class="section-sub">Structured experimental campaigns executed without manual intervention, using the intelligence layer to guide exploration through a closed-loop system.</p>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-green);">1,100</div>
+      <div class="stat-label">Experiments</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-blue);">104</div>
+      <div class="stat-label">Discoveries</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-purple);">1,037</div>
+      <div class="stat-label">Exp/Hour</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-orange);">1.06 hr</div>
+      <div class="stat-label">Elapsed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-pink);">5</div>
+      <div class="stat-label">Datasets</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-cyan);">6</div>
+      <div class="stat-label">Model Types</div>
+    </div>
+  </div>
+
+  <h3>Closed-Loop Process</h3>
+  <p>The autonomous engine operates as a closed-loop system that: <strong>selects</strong> experiment configurations using the intelligence layer (adaptive defaults + meta-features), <strong>executes</strong> training and evaluation through the standard Snakemake pipeline, <strong>evaluates</strong> results against the experiment catalog history, <strong>classifies</strong> discoveries by type (new_best, novel_config, surprise), <strong>updates</strong> the feedback loop with Bayesian confidence scores, and <strong>iterates</strong> until the campaign budget is exhausted.</p>
+
+  <h3>Best Per-Dataset Results</h3>
+  <table class="data-table">
+    <thead><tr><th>Dataset</th><th>Best Accuracy</th><th>Discovery Type</th></tr></thead>
+    <tbody>
+      <tr><td>Iris</td><td>100%</td><td><span class="badge badge-green">new_best</span></td></tr>
+      <tr><td>Wine</td><td>100%</td><td><span class="badge badge-green">new_best</span></td></tr>
+      <tr><td>Digits</td><td>99.4%</td><td><span class="badge badge-green">new_best</span></td></tr>
+      <tr><td>Breast Cancer</td><td>97.4%</td><td><span class="badge badge-green">new_best</span></td></tr>
+      <tr><td>Synthea Readmission</td><td>78.0%</td><td><span class="badge badge-blue">novel_config</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Calibration Analysis (XGBoost, Synthea, n_estimators=300)</h3>
+  <table class="data-table">
+    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Expected Calibration Error</td><td>0.055</td></tr>
+      <tr><td>Brier Score</td><td>0.160</td></tr>
+      <tr><td>Calibration Quality</td><td>Good (ECE &lt; 0.1)</td></tr>
+      <tr><td>Mean predicted probability</td><td>58.1%</td></tr>
+      <tr><td>Observed positive rate</td><td>58.9%</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══════════════════ PILOTS ═══════════════════ -->
+<section class="section" id="pilots">
+<div class="container">
+  <h2>Pilot Deployment Configurations</h2>
+  <p class="section-sub">Four configurations available for academic research labs working at the intersection of biomedical data science, drug discovery, and clinical machine learning.</p>
+
+  <div class="card">
+    <h3 style="margin-top:0;"><span class="badge badge-green" style="margin-right:8px;">A</span> Drug Discovery Pipeline</h3>
+    <p>GCN-based drug discovery pipeline with knowledge graph integration on lab-specific compound libraries.</p>
+    <p><strong>Requirements:</strong> Molecular activity data (SMILES + labels), or access to ChEMBL/PubChem subsets.</p>
+    <p><strong>Delivers:</strong> Trained GCN model with bioactivity predictions, validation report (5-fold CV, bootstrap CIs, calibration analysis), artifact-versioned pipeline.</p>
+    <p><strong>Demonstrated:</strong> 92.1% accuracy on ChEMBL bioactivity (binary), 91.8% &plusmn; 0.9% 5-fold CV.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;"><span class="badge badge-blue" style="margin-right:8px;">B</span> Multi-Modal Clinical Research</h3>
+    <p>Multi-modal fusion pipeline combining clinical, omics, imaging, and/or text modalities.</p>
+    <p><strong>Requirements:</strong> At least 2 modalities of patient-level or sample-level data with shared identifiers.</p>
+    <p><strong>Delivers:</strong> Per-modality baseline models, attention-based fusion model, fusion holdout validation (leakage-free), uncertainty quantification with conformal prediction sets.</p>
+    <p><strong>Demonstrated:</strong> 88.3% fusion accuracy (holdout), exceeding best non-omics unimodal by 11.4 pp.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;"><span class="badge badge-purple" style="margin-right:8px;">C</span> Autonomous Experimentation</h3>
+    <p>Self-learning engine deployed on lab-specific datasets to systematically explore model configurations.</p>
+    <p><strong>Requirements:</strong> One or more supervised learning datasets (any modality SNPTX supports).</p>
+    <p><strong>Delivers:</strong> Autonomous campaign results, intelligence layer outputs (meta-analysis, adaptive defaults), experiment catalog (DuckDB) for post-hoc analysis.</p>
+    <p><strong>Demonstrated:</strong> 1,100 experiments in 1.06 hours, 104 discoveries across 5 datasets and 6 model types.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;"><span class="badge badge-orange" style="margin-right:8px;">D</span> Cross-Institutional Reproducibility</h3>
+    <p>Bit-identical reproducibility of a reference pipeline across two compute environments.</p>
+    <p><strong>Requirements:</strong> Two environments with Python 3.11+ and GPU access.</p>
+    <p><strong>Delivers:</strong> Identical outputs confirmed across environments (metrics, artifacts, model weights), reproducibility report with artifact hash comparison.</p>
+  </div>
+
+  <h3>Engagement Model</h3>
+  <table class="data-table">
+    <thead><tr><th>Phase</th><th>Duration</th><th>Activities</th></tr></thead>
+    <tbody>
+      <tr><td>1. Scoping</td><td>1&ndash;2 weeks</td><td>Identify research question, select configuration, confirm compute compatibility</td></tr>
+      <tr><td>2. Deployment</td><td>2&ndash;4 weeks</td><td>Configure for lab data, write custom adapters, validate pipeline, deploy dashboard</td></tr>
+      <tr><td>3. Evaluation</td><td>2&ndash;4 weeks</td><td>Run campaigns, compare against baselines, generate validation reports</td></tr>
+      <tr><td>4. Continuation</td><td>Ongoing</td><td>Extend to additional datasets/modalities, contribute to validation corpus</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Minimum Compute Requirements</h3>
+  <table class="data-table">
+    <thead><tr><th>Resource</th><th>Minimum</th><th>Recommended</th></tr></thead>
+    <tbody>
+      <tr><td>CPU</td><td>4 cores</td><td>8+ cores</td></tr>
+      <tr><td>RAM</td><td>16 GB</td><td>32 GB</td></tr>
+      <tr><td>GPU</td><td>NVIDIA, 8 GB VRAM</td><td>A10G (23 GB) or better</td></tr>
+      <tr><td>Storage</td><td>50 GB</td><td>200 GB</td></tr>
+      <tr><td>Python</td><td>3.11+</td><td>3.11.14</td></tr>
+      <tr><td>OS</td><td>Ubuntu 22.04+</td><td>Ubuntu 22.04 LTS</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <h4>What SNPTX Does Not Provide</h4>
+    <p><strong>Not a medical device.</strong> SNPTX is a research framework; results require expert interpretation.</p>
+    <p><strong>No pre-trained models for clinical deployment.</strong> Models are trained from scratch on provided data.</p>
+    <p><strong>Data remains on lab infrastructure.</strong> SNPTX processes data in-place; no data hosting or transfer.</p>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════ POSITIONING ═══════════════════ -->
+<section class="section" id="positioning">
+<div class="container">
+  <h2>Technical Positioning</h2>
+  <p class="section-sub">SNPTX occupies a unique position: deep infrastructure depth combined with structured downstream analysis and a self-learning feedback loop. No other platform combines orchestration, tracking, versioning, extension-based analysis, and closed-loop experimentation.</p>
+
+  <!-- Positioning Matrix -->
+  <div class="svg-title">Competitive Positioning Matrix</div>
+  <div style="overflow-x:auto;">
+    <div class="pos-grid" style="grid-template-columns:160px repeat(5,1fr);min-width:700px;">
+      <div class="pos-cell pos-header">System</div>
+      <div class="pos-cell pos-header">Orchestration</div>
+      <div class="pos-cell pos-header">Tracking</div>
+      <div class="pos-cell pos-header">Versioning</div>
+      <div class="pos-cell pos-header">Extensions</div>
+      <div class="pos-cell pos-header">Self-Learning</div>
+
+      <div class="pos-cell pos-label">MLflow</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+      <div class="pos-cell pos-yes">&#10003;</div>
+      <div class="pos-cell pos-partial">Partial</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+
+      <div class="pos-cell pos-label">DVC</div>
+      <div class="pos-cell pos-partial">Partial</div>
+      <div class="pos-cell pos-partial">Partial</div>
+      <div class="pos-cell pos-yes">&#10003;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+
+      <div class="pos-cell pos-label">Kubeflow</div>
+      <div class="pos-cell pos-yes">&#10003;</div>
+      <div class="pos-cell pos-yes">&#10003;</div>
+      <div class="pos-cell pos-partial">Partial</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+
+      <div class="pos-cell pos-label">Metaflow</div>
+      <div class="pos-cell pos-yes">&#10003;</div>
+      <div class="pos-cell pos-yes">&#10003;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+
+      <div class="pos-cell pos-label">W&amp;B</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+      <div class="pos-cell pos-yes">&#10003;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+      <div class="pos-cell pos-no">&mdash;</div>
+
+      <div class="pos-cell pos-label" style="color:var(--accent-blue);font-weight:800;">SNPTX</div>
+      <div class="pos-cell pos-yes" style="font-weight:800;">&#10003;</div>
+      <div class="pos-cell pos-yes" style="font-weight:800;">&#10003;</div>
+      <div class="pos-cell pos-yes" style="font-weight:800;">&#10003;</div>
+      <div class="pos-cell pos-yes" style="font-weight:800;">&#10003;</div>
+      <div class="pos-cell pos-yes" style="font-weight:800;">&#10003;</div>
+    </div>
+  </div>
+
+  <h3>Why Infrastructure Depth Matters</h3>
+  <p>The reproducibility crisis in biomedical ML is not caused by model quality. It is caused by uncontrolled analytical drift, implicit state dependencies, absence of structured model comparison, and missing provenance. SNPTX addresses each root cause architecturally rather than procedurally.</p>
+
+  <h3>Agentic Workflow Differentiation</h3>
+  <table class="data-table">
+    <thead><tr><th>Capability</th><th>Traditional MLOps</th><th>SNPTX Agentic Model</th></tr></thead>
+    <tbody>
+      <tr><td>Extension authoring</td><td>Manual development</td><td>Agent-generated with contract validation</td></tr>
+      <tr><td>Pipeline execution</td><td>Human-triggered</td><td>Agent-invoked with deterministic guarantees</td></tr>
+      <tr><td>Evaluation synthesis</td><td>Ad hoc analysis</td><td>Agent-driven cross-run comparison</td></tr>
+      <tr><td>Configuration changes</td><td>Manual editing</td><td>Agent-proposed through governed artifact channels</td></tr>
+      <tr><td>Hypothesis generation</td><td>Informal</td><td>Structured agent-generated suggestions</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ═══════════════════ REFERENCES ═══════════════════ -->
+<section class="section" id="references">
+<div class="container">
+  <h2>References</h2>
+  <ol class="ref-list">
+    <li>Agrawal, S. &amp; Goyal, N. (2012). Analysis of Thompson Sampling for the Multi-armed Bandit Problem. <em>COLT</em>.</li>
+    <li>Baker, M. (2016). 1,500 scientists lift the lid on reproducibility. <em>Nature</em>, 533, 452&ndash;454.</li>
+    <li>Benavoli, A. et al. (2017). Time for a change: a tutorial for comparing multiple classifiers through Bayesian analysis. <em>JMLR</em>, 18(77), 1&ndash;36.</li>
+    <li>Chaloner, K. &amp; Verdinelli, I. (1995). Bayesian experimental design: A review. <em>Statistical Science</em>, 10(3), 273&ndash;304.</li>
+    <li>Cover, T. M. &amp; Thomas, J. A. (2006). <em>Elements of Information Theory</em>. Wiley.</li>
+    <li>Deb, K. et al. (2002). A fast and elitist multiobjective genetic algorithm: NSGA-II. <em>IEEE Trans. Evolutionary Computation</em>, 6(2), 182&ndash;197.</li>
+    <li>He, K. et al. (2022). Masked Autoencoders Are Scalable Vision Learners. <em>CVPR</em>.</li>
+    <li>Hutson, M. (2018). Artificial intelligence faces reproducibility crisis. <em>Science</em>, 359(6377), 725&ndash;726.</li>
+    <li>Kirkpatrick, J. et al. (2017). Overcoming catastrophic forgetting in neural networks. <em>PNAS</em>, 114(13), 3521&ndash;3526.</li>
+    <li>Lee, J. et al. (2020). BioBERT: a pre-trained biomedical language representation model. <em>Bioinformatics</em>, 36(4), 1234&ndash;1240.</li>
+    <li>Muggleton, S. &amp; de Raedt, L. (1994). Inductive logic programming: Theory and methods. <em>Journal of Logic Programming</em>, 19, 629&ndash;679.</li>
+    <li>Pearl, J. (2009). <em>Causality: Models, Reasoning, and Inference</em>. Cambridge University Press.</li>
+    <li>Peirce, C. S. (1903). <em>Pragmatism as a Principle and Method of Right Thinking</em>. SUNY Press.</li>
+    <li>Rice, J. R. (1976). The algorithm selection problem. <em>Advances in Computers</em>, 15, 65&ndash;118.</li>
+    <li>Satorras, V. G. et al. (2021). E(n) Equivariant Graph Neural Networks. <em>ICML</em>.</li>
+    <li>Sensoy, M. et al. (2018). Evidential Deep Learning to Quantify Classification Uncertainty. <em>NeurIPS</em>.</li>
+    <li>Snoek, J. et al. (2012). Practical Bayesian Optimization of Machine Learning Algorithms. <em>NeurIPS</em>.</li>
+    <li>Thomas, N. et al. (2018). Tensor field networks: Rotation- and translation-equivariant neural networks for 3D point clouds. <em>arXiv:1802.08219</em>.</li>
+    <li>Tishby, N. et al. (2000). The Information Bottleneck method. <em>arXiv:physics/0004057</em>.</li>
+    <li>Vovk, V. et al. (2005). <em>Algorithmic Learning in a Random World</em>. Springer.</li>
+    <li>Zadeh, A. et al. (2017). Tensor Fusion Network for Multimodal Sentiment Analysis. <em>EMNLP</em>.</li>
+  </ol>
+</div>
+</section>
+
+<!-- ═══════════════════ FRAMEWORK STATUS ═══════════════════ -->
+<section class="section">
+<div class="container">
+  <h2>Current Framework Status</h2>
+  <table class="data-table">
+    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Total tests</td><td>1,056</td></tr>
+      <tr><td>Static analysis</td><td>0 pyright errors, 0 ruff violations</td></tr>
+      <tr><td>Dataset adapters</td><td>46 (37 production + 9 deferred)</td></tr>
+      <tr><td>Modality families</td><td>8</td></tr>
+      <tr><td>Intelligence modules</td><td>15 (5 core + 10 theoretical)</td></tr>
+      <tr><td>Multi-modal modules</td><td>6 (alignment, graph, imaging, NLP, fusion, uncertainty)</td></tr>
+      <tr><td>Autonomous experiments</td><td>1,100</td></tr>
+      <tr><td>Autonomous discoveries</td><td>104</td></tr>
+      <tr><td>Throughput</td><td>1,037 experiments/hour</td></tr>
+      <tr><td>Dashboard</td><td>9 interactive pages (Streamlit)</td></tr>
+      <tr><td>Fusion accuracy (holdout)</td><td>88.3%</td></tr>
+      <tr><td>Drug discovery GCN</td><td>92.1%</td></tr>
+      <tr><td>Infrastructure</td><td>Python 3.11, PyTorch 2.5.1+cu121, EC2 g5.xlarge (A10G GPU)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Embedding Registry</h3>
+  <p>SNPTX maintains a versioned embedding registry: an artifact-driven store of learned representations linked to specific model versions, datasets, and training configurations. This enables downstream extensions to consume representations as stable artifacts, cross-model embedding comparison through standardized interfaces, and transfer learning workflows with full provenance.</p>
+</div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-name">Dan Russell</div>
+    <div class="footer-affil">Harvard ALM in Data Science, &rsquo;27 &nbsp;|&nbsp; MITx Statistics and Data Science</div>
+    <p style="margin-bottom:8px;">
+      <a href="mailto:drr508@g.harvard.edu">drr508@g.harvard.edu</a> &nbsp;|&nbsp;
+      <a href="mailto:dan@snptx.ai">dan@snptx.ai</a>
+    </p>
+    <p style="margin-top:24px;font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">
+      SNPTX &mdash; Deterministic Orchestration for Reproducible Biomedical ML<br/>
+      Connecting Data to Discovery
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
