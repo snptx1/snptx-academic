@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX Technical Positioning</title>
+<style>
+  :root {
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-purple: #bc8cff;
+    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(88,166,255,0.08), transparent 28%),
+      radial-gradient(circle at top right, rgba(188,140,255,0.07), transparent 24%),
+      linear-gradient(180deg, #0d1117 0%, #0f1620 100%);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding: 12px 0 16px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
+    scrollbar-width: none;
+  }
+
+  .top-nav::-webkit-scrollbar { display: none; }
+
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(48,54,61,0.9);
+    background: rgba(22,27,34,0.82);
+  }
+
+  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+
+  .top-nav a:hover,
+  .top-nav a.active {
+    color: var(--text-primary);
+    border-color: rgba(88,166,255,0.32);
+    background: rgba(88,166,255,0.14);
+  }
+
+  .page-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    max-width: 840px;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .draft {
+    background: rgba(13,17,23,0.72);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+  }
+
+  .draft-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(22,27,34,0.88);
+  }
+
+  .draft-meta h2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .draft-meta p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    max-width: 760px;
+  }
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    background: rgba(88,166,255,0.10);
+    border: 1px solid rgba(88,166,255,0.28);
+    border-radius: 999px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+
+  .positioning-stage {
+    position: relative;
+    padding: 38px 32px 40px;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
+      radial-gradient(circle at 84% 16%, rgba(188,140,255,0.16), transparent 24%),
+      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .positioning-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: rgba(63,185,80,0.75);
+  }
+
+  .positioning-header {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 22px;
+  }
+
+  .positioning-header h3 {
+    font-size: 48px;
+    line-height: 1.03;
+    letter-spacing: -0.05em;
+    max-width: 860px;
+    margin-bottom: 16px;
+  }
+
+  .positioning-lede {
+    max-width: 860px;
+    color: var(--text-secondary);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .positioning-summary,
+  .positioning-matrix-card,
+  .positioning-argument,
+  .positioning-table-card,
+  .positioning-detail-card,
+  .positioning-note {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  }
+
+  .positioning-summary,
+  .positioning-matrix-card,
+  .positioning-argument,
+  .positioning-table-card,
+  .positioning-detail-card,
+  .positioning-note {
+    padding: 16px;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .positioning-summary .label { color: var(--accent-green); }
+  .positioning-summary h4,
+  .positioning-matrix-head h4,
+  .positioning-argument h4,
+  .positioning-table-head h4,
+  .positioning-detail-card h4 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .positioning-summary ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .positioning-summary li {
+    position: relative;
+    padding-left: 14px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .positioning-summary li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-green);
+  }
+
+  .positioning-matrix-card,
+  .positioning-argument,
+  .positioning-table-card,
+  .positioning-note {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 18px;
+  }
+
+  .positioning-matrix-head,
+  .positioning-table-head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .positioning-matrix-head .label,
+  .positioning-table-head .label { color: var(--accent-blue); }
+
+  .positioning-matrix-head p,
+  .positioning-argument p,
+  .positioning-table-head p,
+  .positioning-detail-card p,
+  .positioning-note p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .pos-grid-wrap {
+    overflow-x: auto;
+  }
+
+  .pos-grid {
+    display: grid;
+    grid-template-columns: 160px repeat(5, 1fr);
+    min-width: 700px;
+    border: 1px solid rgba(48,54,61,0.85);
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(13,17,23,0.56);
+  }
+
+  .pos-cell {
+    padding: 14px 12px;
+    border-top: 1px solid rgba(48,54,61,0.55);
+    border-left: 1px solid rgba(48,54,61,0.55);
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: center;
+    color: var(--text-secondary);
+  }
+
+  .pos-grid > :nth-child(-n + 6) {
+    border-top: none;
+  }
+
+  .pos-grid > :nth-child(6n + 1) {
+    border-left: none;
+    text-align: left;
+  }
+
+  .pos-header {
+    background: rgba(13,17,23,0.9);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .pos-label {
+    color: var(--text-primary);
+    font-weight: 600;
+    text-align: left;
+  }
+
+  .pos-yes {
+    color: var(--accent-green);
+    font-weight: 800;
+  }
+
+  .pos-no {
+    color: #ff7b72;
+    font-weight: 800;
+  }
+
+  .pos-partial {
+    color: var(--accent-orange);
+    font-weight: 700;
+  }
+
+  .positioning-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(48,54,61,0.85);
+    background: rgba(13,17,23,0.56);
+  }
+
+  .positioning-table th,
+  .positioning-table td {
+    text-align: left;
+    padding: 13px 14px;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .positioning-table th {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: rgba(13,17,23,0.9);
+    border-bottom: 1px solid rgba(48,54,61,0.85);
+  }
+
+  .positioning-table td {
+    color: var(--text-secondary);
+    border-top: 1px solid rgba(48,54,61,0.55);
+  }
+
+  .positioning-table tbody tr:first-child td {
+    border-top: none;
+  }
+
+  .positioning-detail-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .positioning-detail-card:nth-child(1) .label { color: var(--accent-blue); }
+  .positioning-detail-card:nth-child(2) .label { color: var(--accent-green); }
+  .positioning-detail-card:nth-child(3) .label { color: var(--accent-purple); }
+
+  .positioning-note {
+    background: rgba(22,27,34,0.62);
+    border-color: rgba(88,166,255,0.18);
+    margin-bottom: 0;
+  }
+
+  .positioning-note .label { color: var(--accent-blue); }
+
+  @media (max-width: 1100px) {
+    .positioning-header,
+    .positioning-detail-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    body {
+      padding: 24px 14px 40px;
+    }
+
+    .draft-meta {
+      display: block;
+    }
+
+    .draft-meta .badge {
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .positioning-stage {
+      padding: 28px 20px 32px;
+    }
+
+    .positioning-header h3 {
+      font-size: 34px;
+    }
+
+    .positioning-lede {
+      font-size: 16px;
+    }
+
+    .positioning-table,
+    .positioning-table thead,
+    .positioning-table tbody,
+    .positioning-table tr,
+    .positioning-table th,
+    .positioning-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .positioning-table thead {
+      display: none;
+    }
+
+    .positioning-table tr {
+      border-top: 1px solid rgba(48,54,61,0.55);
+    }
+
+    .positioning-table tbody tr:first-child {
+      border-top: none;
+    }
+
+    .positioning-table td {
+      border-top: none;
+      padding: 10px 12px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX academic sections">
+      <a href="../index.html" class="nav-brand">SNPTX</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="motivation.html">Motivation</a>
+      <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="intelligence.html">Intelligence</a>
+      <a href="autonomous.html">Autonomous</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="fusion.html">Fusion</a>
+      <a href="pilots.html">Pilots</a>
+      <a href="positioning.html" class="active">Positioning</a>
+      <a href="limitations.html">Limitations</a>
+      <a href="references.html">References</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>SNPTX Technical Positioning</h1>
+      <p>Comparative positioning for pilot-stage biomedical ML infrastructure with explicit capability boundaries.</p>
+    </header>
+
+    <article class="draft">
+      <div class="draft-meta">
+        <div>
+          <h2>Positioning</h2>
+          <p>Why SNPTX is differentiated by orchestration depth, governed extension workflows, and bounded self-learning support.</p>
+        </div>
+        <div class="badge">Comparative View</div>
+      </div>
+
+      <section class="positioning-stage" id="positioning">
+        <div class="positioning-header">
+          <div>
+            <div class="eyebrow">Pre-deployment research positioning with explicit capability boundaries</div>
+            <h3>Technical Positioning</h3>
+            <p class="positioning-lede">SNPTX is positioned as a pre-deployment research framework: deep orchestration and extension governance with explicit transparency about partial modules and roadmap scope. This section frames the system comparatively, not just descriptively.</p>
+          </div>
+
+          <aside class="positioning-summary">
+            <div class="label">Positioning summary</div>
+            <h4>What this section establishes</h4>
+            <ul>
+              <li>SNPTX is differentiated primarily through orchestration depth, governance, and bounded self-learning support.</li>
+              <li>The positioning claim is comparative and transparent about partial capabilities rather than overstating parity across all categories.</li>
+              <li>The agentic workflow model is presented as a disciplined operational distinction, not as an unbounded autonomy claim.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="positioning-matrix-card">
+          <div class="positioning-matrix-head">
+            <div class="label">Comparative frame</div>
+            <h4>Competitive positioning matrix</h4>
+            <p>The live matrix is preserved here as the core comparative artifact for the positioning section.</p>
+          </div>
+
+          <div class="pos-grid-wrap">
+            <div class="pos-grid" aria-label="Competitive positioning matrix">
+              <div class="pos-cell pos-header">System</div>
+              <div class="pos-cell pos-header">Orchestration</div>
+              <div class="pos-cell pos-header">Tracking</div>
+              <div class="pos-cell pos-header">Versioning</div>
+              <div class="pos-cell pos-header">Extensions</div>
+              <div class="pos-cell pos-header">Self-Learning</div>
+
+              <div class="pos-cell pos-label">MLflow</div>
+              <div class="pos-cell pos-no">&times;</div>
+              <div class="pos-cell pos-yes">&#10003;</div>
+              <div class="pos-cell pos-partial">Partial</div>
+              <div class="pos-cell pos-no">&times;</div>
+              <div class="pos-cell pos-no">&times;</div>
+
+              <div class="pos-cell pos-label">DVC</div>
+              <div class="pos-cell pos-partial">Partial</div>
+              <div class="pos-cell pos-partial">Partial</div>
+              <div class="pos-cell pos-yes">&#10003;</div>
+              <div class="pos-cell pos-no">&times;</div>
+              <div class="pos-cell pos-no">&times;</div>
+
+              <div class="pos-cell pos-label">Kubeflow</div>
+              <div class="pos-cell pos-yes">&#10003;</div>
+              <div class="pos-cell pos-yes">&#10003;</div>
+              <div class="pos-cell pos-partial">Partial</div>
+              <div class="pos-cell pos-no">&times;</div>
+              <div class="pos-cell pos-no">&times;</div>
+
+              <div class="pos-cell pos-label">Metaflow</div>
+              <div class="pos-cell pos-yes">&#10003;</div>
+              <div class="pos-cell pos-yes">&#10003;</div>
+              <div class="pos-cell pos-no">&times;</div>
+              <div class="pos-cell pos-no">&times;</div>
+              <div class="pos-cell pos-no">&times;</div>
+
+              <div class="pos-cell pos-label">W&amp;B</div>
+              <div class="pos-cell pos-no">&times;</div>
+              <div class="pos-cell pos-yes">&#10003;</div>
+              <div class="pos-cell pos-no">&times;</div>
+              <div class="pos-cell pos-no">&times;</div>
+              <div class="pos-cell pos-no">&times;</div>
+
+              <div class="pos-cell pos-label" style="color:var(--accent-blue);font-weight:800;">SNPTX</div>
+              <div class="pos-cell pos-yes" style="font-weight:800;">&#10003;</div>
+              <div class="pos-cell pos-yes" style="font-weight:800;">&#10003;</div>
+              <div class="pos-cell pos-partial" style="font-weight:800;">Partial</div>
+              <div class="pos-cell pos-yes" style="font-weight:800;">&#10003;</div>
+              <div class="pos-cell pos-partial" style="font-weight:800;">Partial</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="positioning-argument">
+          <div class="label" style="color: var(--accent-green);">Argument</div>
+          <h4>Why infrastructure depth matters</h4>
+          <p>The reproducibility crisis in biomedical ML is not caused by model quality. It is caused by uncontrolled analytical drift, implicit state dependencies, absence of structured model comparison, and missing provenance. SNPTX addresses each root cause architecturally rather than procedurally.</p>
+        </div>
+
+        <div class="positioning-table-card">
+          <div class="positioning-table-head">
+            <div class="label">Workflow distinction</div>
+            <h4>Agentic workflow differentiation</h4>
+            <p>The live comparison table is preserved here as the clearest statement of how SNPTX differs operationally from traditional MLOps toolchains.</p>
+          </div>
+
+          <table class="positioning-table" aria-label="Agentic workflow differentiation">
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th>Traditional MLOps</th>
+                <th>SNPTX Agentic Model</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Extension authoring</td><td>Manual development</td><td>Agent-generated with contract validation</td></tr>
+              <tr><td>Pipeline execution</td><td>Human-triggered</td><td>Agent-invoked with deterministic controls</td></tr>
+              <tr><td>Evaluation synthesis</td><td>Ad hoc analysis</td><td>Agent-driven cross-run comparison</td></tr>
+              <tr><td>Configuration changes</td><td>Manual editing</td><td>Agent-proposed through governed artifact channels</td></tr>
+              <tr><td>Hypothesis generation</td><td>Informal</td><td>Structured agent-generated suggestions</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="positioning-detail-grid">
+          <div class="positioning-detail-card">
+            <div class="label">Comparative honesty</div>
+            <h4>Why partial matters</h4>
+            <p>The positioning matrix is credible because it records partial capability where that is the accurate state instead of flattening everything into binary yes-or-no claims.</p>
+          </div>
+          <div class="positioning-detail-card">
+            <div class="label">Core thesis</div>
+            <h4>What the section argues</h4>
+            <p>The main claim is that infrastructure design, provenance, and governed execution are the actual leverage points for biomedical ML reproducibility.</p>
+          </div>
+          <div class="positioning-detail-card">
+            <div class="label">Section role</div>
+            <h4>How Positioning supports the page</h4>
+            <p>This section situates SNPTX among existing systems while clarifying that its strongest differentiator is the combination of orchestration depth and governed agentic workflow support.</p>
+          </div>
+        </div>
+
+      </section>
+    </article>
+  </div>
+</body>
+</html>

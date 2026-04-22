@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX Pilot Configurations</title>
+<style>
+  :root {
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-purple: #bc8cff;
+    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(88,166,255,0.08), transparent 28%),
+      radial-gradient(circle at top right, rgba(188,140,255,0.07), transparent 24%),
+      linear-gradient(180deg, #0d1117 0%, #0f1620 100%);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding: 12px 0 16px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
+    scrollbar-width: none;
+  }
+
+  .top-nav::-webkit-scrollbar { display: none; }
+
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(48,54,61,0.9);
+    background: rgba(22,27,34,0.82);
+  }
+
+  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+
+  .top-nav a:hover,
+  .top-nav a.active {
+    color: var(--text-primary);
+    border-color: rgba(88,166,255,0.32);
+    background: rgba(88,166,255,0.14);
+  }
+
+  .page-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    max-width: 840px;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .draft {
+    background: rgba(13,17,23,0.72);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+  }
+
+  .draft-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(22,27,34,0.88);
+  }
+
+  .draft-meta h2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .draft-meta p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    max-width: 760px;
+  }
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    background: rgba(88,166,255,0.10);
+    border: 1px solid rgba(88,166,255,0.28);
+    border-radius: 999px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+
+  .pilots-stage {
+    position: relative;
+    padding: 38px 32px 40px;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
+      radial-gradient(circle at 84% 16%, rgba(210,153,34,0.12), transparent 24%),
+      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .pilots-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: rgba(63,185,80,0.75);
+  }
+
+  .pilots-header {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 22px;
+  }
+
+  .pilots-header h3 {
+    font-size: 48px;
+    line-height: 1.03;
+    letter-spacing: -0.05em;
+    max-width: 860px;
+    margin-bottom: 16px;
+  }
+
+  .pilots-lede {
+    max-width: 860px;
+    color: var(--text-secondary);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .pilots-summary,
+  .pilot-card,
+  .pilots-table-card,
+  .pilots-detail-card,
+  .pilots-callout,
+  .pilots-note {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  }
+
+  .pilots-summary,
+  .pilot-card,
+  .pilots-table-card,
+  .pilots-detail-card,
+  .pilots-callout,
+  .pilots-note {
+    padding: 16px;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .pilots-summary .label { color: var(--accent-green); }
+  .pilots-summary h4,
+  .pilot-card h4,
+  .pilots-table-head h4,
+  .pilots-detail-card h4,
+  .pilots-callout h4 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .pilots-summary ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .pilots-summary li {
+    position: relative;
+    padding-left: 14px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .pilots-summary li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-green);
+  }
+
+  .pilots-grid,
+  .pilots-detail-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .pilots-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pilots-detail-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pilot-card h4 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .pilot-card p,
+  .pilots-table-head p,
+  .pilots-detail-card p,
+  .pilots-callout p,
+  .pilots-note p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.65;
+    margin-top: 8px;
+  }
+
+  .pilot-card p:first-of-type,
+  .pilots-callout p:first-of-type,
+  .pilots-note p:first-of-type {
+    margin-top: 0;
+  }
+
+  .pilot-card strong,
+  .pilots-callout strong {
+    color: var(--text-primary);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    white-space: nowrap;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .tag.green {
+    color: var(--accent-green);
+    background: rgba(63,185,80,0.12);
+    border: 1px solid rgba(63,185,80,0.35);
+  }
+
+  .tag.blue {
+    color: var(--accent-blue);
+    background: rgba(88,166,255,0.12);
+    border: 1px solid rgba(88,166,255,0.35);
+  }
+
+  .tag.purple {
+    color: var(--accent-purple);
+    background: rgba(188,140,255,0.12);
+    border: 1px solid rgba(188,140,255,0.35);
+  }
+
+  .tag.orange {
+    color: #f2cc60;
+    background: rgba(210,153,34,0.12);
+    border: 1px solid rgba(210,153,34,0.35);
+  }
+
+  .pilots-table-card {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 18px;
+  }
+
+  .pilots-table-head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .pilots-table-head .label { color: var(--accent-blue); }
+
+  .pilots-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(48,54,61,0.85);
+    background: rgba(13,17,23,0.56);
+  }
+
+  .pilots-table th,
+  .pilots-table td {
+    text-align: left;
+    padding: 13px 14px;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .pilots-table th {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: rgba(13,17,23,0.9);
+    border-bottom: 1px solid rgba(48,54,61,0.85);
+  }
+
+  .pilots-table td {
+    color: var(--text-secondary);
+    border-top: 1px solid rgba(48,54,61,0.55);
+  }
+
+  .pilots-table tbody tr:first-child td {
+    border-top: none;
+  }
+
+  .pilots-detail-card:nth-child(1) .label { color: var(--accent-blue); }
+  .pilots-detail-card:nth-child(2) .label { color: var(--accent-green); }
+  .pilots-detail-card:nth-child(3) .label { color: var(--accent-orange); }
+
+  .pilots-callout,
+  .pilots-note {
+    position: relative;
+    z-index: 1;
+    background: rgba(22,27,34,0.62);
+    border-color: rgba(88,166,255,0.18);
+    margin-bottom: 18px;
+  }
+
+  .pilots-callout .label,
+  .pilots-note .label { color: var(--accent-blue); }
+
+  .pilots-note {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 1100px) {
+    .pilots-header,
+    .pilots-grid,
+    .pilots-detail-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    body {
+      padding: 24px 14px 40px;
+    }
+
+    .draft-meta {
+      display: block;
+    }
+
+    .draft-meta .badge {
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .pilots-stage {
+      padding: 28px 20px 32px;
+    }
+
+    .pilots-header h3 {
+      font-size: 34px;
+    }
+
+    .pilots-lede {
+      font-size: 16px;
+    }
+
+    .pilots-table,
+    .pilots-table thead,
+    .pilots-table tbody,
+    .pilots-table tr,
+    .pilots-table th,
+    .pilots-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .pilots-table thead {
+      display: none;
+    }
+
+    .pilots-table tr {
+      border-top: 1px solid rgba(48,54,61,0.55);
+    }
+
+    .pilots-table tbody tr:first-child {
+      border-top: none;
+    }
+
+    .pilots-table td {
+      border-top: none;
+      padding: 10px 12px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX academic sections">
+      <a href="../index.html" class="nav-brand">SNPTX</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="motivation.html">Motivation</a>
+      <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="intelligence.html">Intelligence</a>
+      <a href="autonomous.html">Autonomous</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="fusion.html">Fusion</a>
+      <a href="pilots.html" class="active">Pilots</a>
+      <a href="positioning.html">Positioning</a>
+      <a href="limitations.html">Limitations</a>
+      <a href="references.html">References</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>SNPTX Pilot Configurations</h1>
+      <p>Pilot-ready engagement models aligned to concrete lab workflows, requirements, and bounded deliverables.</p>
+    </header>
+
+    <article class="draft">
+      <div class="draft-meta">
+        <div>
+          <h2>Pilots</h2>
+          <p>Four pilot configurations map requirements, outputs, and demonstrated evidence to distinct research settings.</p>
+        </div>
+        <div class="badge">Pilot Ready</div>
+      </div>
+
+      <section class="pilots-stage" id="pilots">
+        <div class="pilots-header">
+          <div>
+            <div class="eyebrow">Bounded pilot configurations for academic research workflows</div>
+            <h3>Pilot Deployment Configurations</h3>
+            <p class="pilots-lede">Four pilot configurations are presented for academic research labs. Demonstration status is shown explicitly to distinguish validated workflows from proposed pilot protocols, keeping the pilot discussion aligned with the document’s broader evidence-boundary discipline.</p>
+          </div>
+
+          <aside class="pilots-summary">
+            <div class="label">Pilot summary</div>
+            <h4>What this section establishes</h4>
+            <ul>
+              <li>The live page presents four bounded pilot models rather than a single universal deployment story.</li>
+              <li>Each pilot is tied to explicit requirements, deliverables, and demonstrated evidence where available.</li>
+              <li>Infrastructure limits and non-claims are stated directly to keep pilot positioning research-facing.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="pilots-grid">
+          <div class="pilot-card">
+            <h4><span class="tag green">A</span>Drug Discovery Pipeline</h4>
+            <p>GCN-based drug discovery pipeline with knowledge graph integration on lab-specific compound libraries.</p>
+            <p><strong>Requirements:</strong> Molecular activity data (SMILES + labels), or access to ChEMBL/PubChem subsets.</p>
+            <p><strong>Delivers:</strong> Trained GCN model with bioactivity predictions, validation report (5-fold CV, bootstrap CIs, calibration analysis), artifact-versioned pipeline.</p>
+            <p><strong>Demonstrated:</strong> 97.5% accuracy on ChEMBL bioactivity (binary), 97.2% &plusmn; 0.6% 5-fold CV.</p>
+          </div>
+
+          <div class="pilot-card">
+            <h4><span class="tag blue">B</span>Multi-Modal Clinical Research</h4>
+            <p>Multi-modal fusion pipeline combining clinical, omics, imaging, and/or text modalities.</p>
+            <p><strong>Requirements:</strong> At least 2 modalities of patient-level or sample-level data with shared identifiers.</p>
+            <p><strong>Delivers:</strong> Per-modality baseline models, attention-based fusion model, fusion holdout validation (leakage-free), uncertainty quantification with conformal prediction sets.</p>
+            <p><strong>Demonstrated:</strong> 93.0% fusion accuracy (val), integrating omics (92.8%), vision PCA, and spatial features on Visium breast tissue.</p>
+          </div>
+
+          <div class="pilot-card">
+            <h4><span class="tag purple">C</span>Autonomous Experimentation</h4>
+            <p>Self-learning engine deployed on lab-specific datasets to systematically explore model configurations.</p>
+            <p><strong>Requirements:</strong> One or more supervised learning datasets (any modality SNPTX supports).</p>
+            <p><strong>Delivers:</strong> Autonomous campaign results, intelligence layer outputs (meta-analysis, adaptive defaults), experiment catalog (DuckDB) for post-hoc analysis.</p>
+            <p><strong>Demonstrated:</strong> 1,100 experiments in 1.06 hours, 104 discoveries across 5 datasets and 6 model types.</p>
+          </div>
+
+          <div class="pilot-card">
+            <h4><span class="tag orange">D</span>Cross-Institutional Reproducibility <span class="tag orange" style="margin-left:8px; margin-right:0;">Roadmap</span></h4>
+            <p>Proposed protocol for cross-site reproducibility validation of a reference pipeline across two compute environments.</p>
+            <p><strong>Requirements:</strong> Two environments with Python 3.11+ and GPU access.</p>
+            <p><strong>Target Deliverable:</strong> Reproducibility report with artifact hash comparison and metric drift analysis across sites.</p>
+            <p><strong>Current Status:</strong> Within-environment reproducibility controls are validated; cross-institution trial execution is pending.</p>
+          </div>
+        </div>
+
+        <div class="pilots-table-card">
+          <div class="pilots-table-head">
+            <div class="label">Operational model</div>
+            <h4>Engagement model</h4>
+            <p>The live engagement table is preserved here as the phased delivery pattern for research-facing pilot work.</p>
+          </div>
+
+          <table class="pilots-table" aria-label="Pilot engagement model">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Duration</th>
+                <th>Activities</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1. Scoping</td><td>1&ndash;2 weeks</td><td>Identify research question, select configuration, confirm compute compatibility</td></tr>
+              <tr><td>2. Deployment</td><td>2&ndash;4 weeks</td><td>Configure for lab data, write custom adapters, validate pipeline, deploy dashboard</td></tr>
+              <tr><td>3. Evaluation</td><td>2&ndash;4 weeks</td><td>Run campaigns, compare against baselines, generate validation reports</td></tr>
+              <tr><td>4. Continuation</td><td>Ongoing</td><td>Extend to additional datasets/modalities, contribute to validation corpus</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pilots-table-card">
+          <div class="pilots-table-head">
+            <div class="label">Infrastructure floor</div>
+            <h4>Minimum compute requirements</h4>
+            <p>The live compute table is preserved here as the baseline environment definition for pilot execution.</p>
+          </div>
+
+          <table class="pilots-table" aria-label="Minimum compute requirements">
+            <thead>
+              <tr>
+                <th>Resource</th>
+                <th>Minimum</th>
+                <th>Recommended</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>CPU</td><td>4 cores</td><td>8+ cores</td></tr>
+              <tr><td>RAM</td><td>16 GB</td><td>32 GB</td></tr>
+              <tr><td>GPU</td><td>NVIDIA, 8 GB VRAM</td><td>A10G (23 GB) or better</td></tr>
+              <tr><td>Storage</td><td>50 GB</td><td>200 GB</td></tr>
+              <tr><td>Python</td><td>3.11+</td><td>3.11.14</td></tr>
+              <tr><td>OS</td><td>Ubuntu 22.04+</td><td>Ubuntu 22.04 LTS</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pilots-detail-grid">
+          <div class="pilots-detail-card">
+            <div class="label">Configuration logic</div>
+            <h4>Why there are four pilot paths</h4>
+            <p>The pilot section works best when it offers bounded entry points aligned to different research needs instead of collapsing all use cases into one generic deployment story.</p>
+          </div>
+          <div class="pilots-detail-card">
+            <div class="label">Demonstration discipline</div>
+            <h4>What is validated versus proposed</h4>
+            <p>Three pilot patterns are tied to live demonstrated evidence, while cross-institution reproducibility remains explicitly marked as roadmap work.</p>
+          </div>
+          <div class="pilots-detail-card">
+            <div class="label">Section role</div>
+            <h4>How Pilots supports the page</h4>
+            <p>This section translates the technical platform into concrete lab-facing engagement models while preserving the document’s non-clinical, pre-deployment positioning.</p>
+          </div>
+        </div>
+
+        <div class="pilots-callout">
+          <div class="label">Scope limits</div>
+          <h4>What SNPTX does not provide</h4>
+          <p><strong>Not a medical device.</strong> SNPTX is a research framework; results require expert interpretation.</p>
+          <p><strong>No pre-trained models for clinical deployment.</strong> Models are trained from scratch on provided data.</p>
+          <p><strong>Data remains on lab infrastructure.</strong> SNPTX processes data in-place; no data hosting or transfer.</p>
+        </div>
+
+      </section>
+    </article>
+  </div>
+</body>
+</html>

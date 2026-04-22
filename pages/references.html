@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX References</title>
+<style>
+  :root {
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top left, rgba(88,166,255,0.08), transparent 28%), radial-gradient(circle at top right, rgba(210,153,34,0.08), transparent 22%), linear-gradient(180deg, #0d1117 0%, #0f1620 100%); color: var(--text-primary); font-family: var(--font-stack); line-height: 1.6; padding: 40px 24px 80px; }
+  .page { max-width: 1180px; margin: 0 auto; }
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding: 12px 0 16px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
+    scrollbar-width: none;
+  }
+  .top-nav::-webkit-scrollbar { display: none; }
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(48,54,61,0.9);
+    background: rgba(22,27,34,0.82);
+  }
+  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+  .top-nav a:hover,
+  .top-nav a.active {
+    color: var(--text-primary);
+    border-color: rgba(88,166,255,0.32);
+    background: rgba(88,166,255,0.14);
+  }
+  .page-header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .page-header h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+  .page-header p { max-width: 840px; color: var(--text-secondary); font-size: 15px; }
+  .draft { background: rgba(13,17,23,0.72); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.28); }
+  .draft-meta { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); background: rgba(22,27,34,0.88); }
+  .draft-meta h2 { font-size: 18px; font-weight: 700; }
+  .draft-meta p { color: var(--text-secondary); font-size: 13px; max-width: 760px; }
+  .badge { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-blue); background: rgba(88,166,255,0.10); border: 1px solid rgba(88,166,255,0.28); border-radius: 999px; padding: 5px 10px; white-space: nowrap; }
+  .stage { position: relative; padding: 38px 32px 40px; background: radial-gradient(circle at 12% 16%, rgba(88,166,255,0.16), transparent 30%), radial-gradient(circle at 84% 16%, rgba(210,153,34,0.10), transparent 24%), linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%); overflow: hidden; }
+  .stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%); }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-green); }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: rgba(63,185,80,0.75); }
+  .header { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr); gap: 24px; align-items: start; margin-bottom: 22px; }
+  .header h3 { font-size: 48px; line-height: 1.03; letter-spacing: -0.05em; max-width: 860px; margin-bottom: 16px; }
+  .lede { max-width: 860px; color: var(--text-secondary); font-size: 17px; line-height: 1.75; }
+  .summary, .refs-card, .note, .detail-card { background: rgba(22,27,34,0.82); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 18px 40px rgba(0,0,0,0.18); padding: 16px; }
+  .summary, .refs-card, .note { position: relative; z-index: 1; }
+  .label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .summary .label { color: var(--accent-green); }
+  .refs-card .label, .note .label { color: var(--accent-blue); }
+  .summary h4, .refs-card h4, .detail-card h4 { font-size: 15px; margin-bottom: 10px; }
+  .summary ul { list-style: none; display: grid; gap: 10px; }
+  .summary li { position: relative; padding-left: 14px; color: var(--text-secondary); font-size: 13px; line-height: 1.55; }
+  .summary li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-green); }
+  .refs-card p, .detail-card p, .note p { color: var(--text-secondary); font-size: 13px; line-height: 1.65; }
+  .ref-list { margin-left: 22px; display: grid; gap: 10px; }
+  .ref-list li { color: var(--text-secondary); padding-left: 4px; }
+  .ref-list em { color: var(--text-primary); }
+  .detail-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+  .detail-card:nth-child(1) .label { color: var(--accent-blue); }
+  .detail-card:nth-child(2) .label { color: var(--accent-green); }
+  .detail-card:nth-child(3) .label { color: var(--accent-orange); }
+  .note { background: rgba(22,27,34,0.62); border-color: rgba(88,166,255,0.18); margin-top: 18px; }
+  @media (max-width: 1100px) { .header, .detail-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) {
+    body { padding: 24px 14px 40px; }
+    .draft-meta { display: block; }
+    .draft-meta .badge { display: inline-block; margin-bottom: 12px; }
+    .stage { padding: 28px 20px 32px; }
+    .header h3 { font-size: 34px; }
+    .lede { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX academic sections">
+      <a href="../index.html" class="nav-brand">SNPTX</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="motivation.html">Motivation</a>
+      <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="intelligence.html">Intelligence</a>
+      <a href="autonomous.html">Autonomous</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="fusion.html">Fusion</a>
+      <a href="pilots.html">Pilots</a>
+      <a href="positioning.html">Positioning</a>
+      <a href="limitations.html">Limitations</a>
+      <a href="references.html" class="active">References</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>SNPTX References</h1>
+      <p>Reference base supporting the framework’s claims about reproducibility, multimodal learning, and governed experimentation.</p>
+    </header>
+
+    <article class="draft">
+      <div class="draft-meta">
+        <div>
+          <h2>References</h2>
+          <p>The bibliography grounding both implemented capabilities and theory-backed roadmap directions.</p>
+        </div>
+        <div class="badge">Bibliography</div>
+      </div>
+
+      <section class="stage" id="references">
+        <div class="header">
+          <div>
+            <div class="eyebrow">Theoretical grounding for the platform, workflow, and roadmap claims</div>
+            <h3>References</h3>
+            <p class="lede">The bibliography supports the document’s claims about reproducibility, experimental design, multi-modal learning, uncertainty, graph methods, and biomedical foundation models.</p>
+          </div>
+          <aside class="summary">
+            <div class="label">Reference summary</div>
+            <h4>What this section establishes</h4>
+            <ul>
+              <li>The document’s conceptual claims are tied to identifiable literature across reproducibility, optimization, causal inference, and multimodal learning.</li>
+              <li>The bibliography mixes foundational theory, modern machine learning methods, and biomedical domain references.</li>
+              <li>This page is scoped to the reference list itself and deliberately excludes the later framework-status material in the live file.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="refs-card">
+          <div class="label">Bibliography</div>
+          <h4>Live reference list</h4>
+          <p style="margin-bottom:14px;">The live references are preserved here in full.</p>
+          <ol class="ref-list">
+            <li>Agrawal, S. &amp; Goyal, N. (2012). Analysis of Thompson Sampling for the Multi-armed Bandit Problem. <em>COLT</em>.</li>
+            <li>Baker, M. (2016). 1,500 scientists lift the lid on reproducibility. <em>Nature</em>, 533, 452&ndash;454.</li>
+            <li>Benavoli, A. et al. (2017). Time for a change: a tutorial for comparing multiple classifiers through Bayesian analysis. <em>JMLR</em>, 18(77), 1&ndash;36.</li>
+            <li>Chaloner, K. &amp; Verdinelli, I. (1995). Bayesian experimental design: A review. <em>Statistical Science</em>, 10(3), 273&ndash;304.</li>
+            <li>Cover, T. M. &amp; Thomas, J. A. (2006). <em>Elements of Information Theory</em>. Wiley.</li>
+            <li>Deb, K. et al. (2002). A fast and elitist multiobjective genetic algorithm: NSGA-II. <em>IEEE Trans. Evolutionary Computation</em>, 6(2), 182&ndash;197.</li>
+            <li>He, K. et al. (2022). Masked Autoencoders Are Scalable Vision Learners. <em>CVPR</em>.</li>
+            <li>Hutson, M. (2018). Artificial intelligence faces reproducibility crisis. <em>Science</em>, 359(6377), 725&ndash;726.</li>
+            <li>Kirkpatrick, J. et al. (2017). Overcoming catastrophic forgetting in neural networks. <em>PNAS</em>, 114(13), 3521&ndash;3526.</li>
+            <li>Lee, J. et al. (2020). BioBERT: a pre-trained biomedical language representation model. <em>Bioinformatics</em>, 36(4), 1234&ndash;1240.</li>
+            <li>Muggleton, S. &amp; de Raedt, L. (1994). Inductive logic programming: Theory and methods. <em>Journal of Logic Programming</em>, 19, 629&ndash;679.</li>
+            <li>Pearl, J. (2009). <em>Causality: Models, Reasoning, and Inference</em>. Cambridge University Press.</li>
+            <li>Peirce, C. S. (1903). <em>Pragmatism as a Principle and Method of Right Thinking</em>. SUNY Press.</li>
+            <li>Rice, J. R. (1976). The algorithm selection problem. <em>Advances in Computers</em>, 15, 65&ndash;118.</li>
+            <li>Satorras, V. G. et al. (2021). E(n) Equivariant Graph Neural Networks. <em>ICML</em>.</li>
+            <li>Sensoy, M. et al. (2018). Evidential Deep Learning to Quantify Classification Uncertainty. <em>NeurIPS</em>.</li>
+            <li>Snoek, J. et al. (2012). Practical Bayesian Optimization of Machine Learning Algorithms. <em>NeurIPS</em>.</li>
+            <li>Thomas, N. et al. (2018). Tensor field networks: Rotation- and translation-equivariant neural networks for 3D point clouds. <em>arXiv:1802.08219</em>.</li>
+            <li>Tishby, N. et al. (2000). The Information Bottleneck method. <em>arXiv:physics/0004057</em>.</li>
+            <li>Vovk, V. et al. (2005). <em>Algorithmic Learning in a Random World</em>. Springer.</li>
+            <li>Zadeh, A. et al. (2017). Tensor Fusion Network for Multimodal Sentiment Analysis. <em>EMNLP</em>.</li>
+            <li>Zitnik, M. &amp; Leskovec, J. (2017). Predicting multicellular function through multi-layer tissue networks. <em>Bioinformatics</em>, 33(14), i190&ndash;i198.</li>
+            <li>Zitnik, M. et al. (2018). Modeling polypharmacy side effects with graph convolutional networks. <em>Bioinformatics</em>, 34(13), i457&ndash;i466.</li>
+            <li>Huang, K. et al. (2023). Zero-shot prediction of therapeutic use with geometric deep learning and clinician centered design. <em>Nature Medicine</em>.</li>
+            <li>Barabasi, A.-L. et al. (2011). Network medicine: a network-based approach to human disease. <em>Nature Reviews Genetics</em>, 12(1), 56&ndash;68.</li>
+          </ol>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="label">Coverage</div>
+            <h4>What domains are represented</h4>
+            <p>The bibliography spans reproducibility, Bayesian design, causal inference, graph learning, multimodal fusion, uncertainty, and biomedical foundation-model-adjacent work.</p>
+          </div>
+          <div class="detail-card">
+            <div class="label">Document role</div>
+            <h4>Why this page matters</h4>
+            <p>The references page anchors the stronger conceptual and roadmap sections in explicit literature rather than leaving them as unsupported design claims.</p>
+          </div>
+          <div class="detail-card">
+            <div class="label">Scope control</div>
+            <h4>What is excluded here</h4>
+            <p>This page intentionally stops at the bibliography and does not include the later framework-status table or footer content from the full academic site.</p>
+          </div>
+        </div>
+
+      </section>
+    </article>
+  </div>
+</body>
+</html>

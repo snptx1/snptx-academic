@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX Research Motivation</title>
+<style>
+  :root {
+    --dark-bg: #0d1117;
+    --panel-bg: #161b22;
+    --panel-elevated: #111821;
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-purple: #bc8cff;
+    --accent-red: #f85149;
+    --accent-cyan: #39c5cf;
+    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(88,166,255,0.08), transparent 28%),
+      radial-gradient(circle at top right, rgba(188,140,255,0.07), transparent 24%),
+      linear-gradient(180deg, #0d1117 0%, #0f1620 100%);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding: 12px 0 16px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
+    scrollbar-width: none;
+  }
+
+  .top-nav::-webkit-scrollbar { display: none; }
+
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(48,54,61,0.9);
+    background: rgba(22,27,34,0.82);
+  }
+
+  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+
+  .top-nav a:hover,
+  .top-nav a.active {
+    color: var(--text-primary);
+    border-color: rgba(88,166,255,0.32);
+    background: rgba(88,166,255,0.14);
+  }
+
+  .page-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    max-width: 840px;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .draft {
+    background: rgba(13,17,23,0.72);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+  }
+
+  .draft-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(22,27,34,0.88);
+  }
+
+  .draft-meta h2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .draft-meta p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    max-width: 760px;
+  }
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    background: rgba(88,166,255,0.10);
+    border: 1px solid rgba(88,166,255,0.28);
+    border-radius: 999px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+
+  .motivation-stage {
+    position: relative;
+    padding: 38px 32px 40px;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
+      radial-gradient(circle at 84% 16%, rgba(63,185,80,0.12), transparent 24%),
+      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .motivation-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: rgba(63,185,80,0.75);
+  }
+
+  .motivation-header {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 22px;
+  }
+
+  .motivation-header h3 {
+    font-size: 48px;
+    line-height: 1.03;
+    letter-spacing: -0.05em;
+    max-width: 760px;
+    margin-bottom: 16px;
+  }
+
+  .motivation-lede {
+    max-width: 800px;
+    color: var(--text-secondary);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .motivation-summary,
+  .signal-card,
+  .motivation-visual-card,
+  .motivation-table-card,
+  .motivation-detail-card,
+  .citation-card {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  }
+
+  .motivation-summary {
+    padding: 18px;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .motivation-summary .label { color: var(--accent-green); }
+  .motivation-summary h4 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .motivation-summary ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .motivation-summary li {
+    position: relative;
+    padding-left: 14px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .motivation-summary li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-green);
+  }
+
+  .signal-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .signal-card {
+    padding: 16px;
+  }
+
+  .signal-card:nth-child(1) .label { color: var(--accent-blue); }
+  .signal-card:nth-child(2) .label { color: var(--accent-orange); }
+  .signal-card:nth-child(3) .label { color: var(--accent-purple); }
+  .signal-card:nth-child(4) .label { color: var(--accent-red); }
+
+  .signal-card h4 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .signal-card p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .motivation-main-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .motivation-visual-card,
+  .motivation-table-card {
+    padding: 18px;
+  }
+
+  .motivation-visual-head,
+  .motivation-table-head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .motivation-visual-head .label { color: var(--accent-blue); }
+  .motivation-table-head .label { color: var(--accent-purple); }
+
+  .motivation-visual-head h4,
+  .motivation-table-head h4 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .motivation-visual-head p,
+  .motivation-table-head p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .control-flow {
+    display: grid;
+    gap: 12px;
+  }
+
+  .flow-row {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) 54px minmax(0, 1.08fr);
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .flow-card {
+    position: relative;
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid rgba(48,54,61,0.85);
+    background: rgba(13,17,23,0.6);
+    min-height: 116px;
+  }
+
+  .flow-card.failure::before,
+  .flow-card.response::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    bottom: -1px;
+    width: 3px;
+    border-radius: 12px 0 0 12px;
+  }
+
+  .flow-card.failure::before { background: var(--accent-red); }
+  .flow-card.response::before { background: var(--accent-blue); }
+
+  .flow-card .mini-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .flow-card h5 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .flow-card p {
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--accent-cyan);
+    border: 1px dashed rgba(57,197,207,0.4);
+    border-radius: 999px;
+    background: rgba(57,197,207,0.06);
+    min-height: 116px;
+  }
+
+  .response-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(48,54,61,0.85);
+  }
+
+  .response-table th,
+  .response-table td {
+    text-align: left;
+    padding: 13px 14px;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .response-table th {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: rgba(13,17,23,0.85);
+    border-bottom: 1px solid rgba(48,54,61,0.85);
+  }
+
+  .response-table td {
+    color: var(--text-secondary);
+    border-top: 1px solid rgba(48,54,61,0.55);
+  }
+
+  .response-table tbody tr:first-child td {
+    border-top: none;
+  }
+
+  .response-table td:first-child {
+    color: var(--text-primary);
+    width: 38%;
+  }
+
+  .motivation-detail-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .motivation-detail-card {
+    padding: 16px;
+  }
+
+  .motivation-detail-card:nth-child(1) .label { color: var(--accent-blue); }
+  .motivation-detail-card:nth-child(2) .label { color: var(--accent-green); }
+  .motivation-detail-card:nth-child(3) .label { color: var(--accent-orange); }
+
+  .motivation-detail-card h4 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .motivation-detail-card p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .citation-card {
+    position: relative;
+    z-index: 1;
+    padding: 16px;
+    background: rgba(22,27,34,0.62);
+    border-color: rgba(88,166,255,0.18);
+  }
+
+  .citation-card .label {
+    color: var(--accent-blue);
+  }
+
+  .citation-card p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .citation-card strong {
+    color: var(--text-primary);
+  }
+
+  @media (max-width: 1080px) {
+    .motivation-header,
+    .motivation-main-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .signal-grid,
+    .motivation-detail-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    body {
+      padding: 24px 14px 40px;
+    }
+
+    .draft-meta {
+      display: block;
+    }
+
+    .draft-meta .badge {
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .motivation-stage {
+      padding: 28px 20px 32px;
+    }
+
+    .motivation-header h3 {
+      font-size: 34px;
+    }
+
+    .motivation-lede {
+      font-size: 16px;
+    }
+
+    .signal-grid,
+    .motivation-detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .flow-row {
+      grid-template-columns: 1fr;
+    }
+
+    .flow-arrow {
+      min-height: 42px;
+    }
+
+    .response-table,
+    .response-table thead,
+    .response-table tbody,
+    .response-table tr,
+    .response-table th,
+    .response-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .response-table thead {
+      display: none;
+    }
+
+    .response-table tr {
+      border-top: 1px solid rgba(48,54,61,0.55);
+    }
+
+    .response-table tbody tr:first-child {
+      border-top: none;
+    }
+
+    .response-table td {
+      border-top: none;
+      padding: 10px 12px;
+    }
+
+    .response-table td:first-child {
+      width: 100%;
+      padding-bottom: 4px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX academic sections">
+      <a href="../index.html" class="nav-brand">SNPTX</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="motivation.html" class="active">Motivation</a>
+      <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="intelligence.html">Intelligence</a>
+      <a href="autonomous.html">Autonomous</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="fusion.html">Fusion</a>
+      <a href="pilots.html">Pilots</a>
+      <a href="positioning.html">Positioning</a>
+      <a href="limitations.html">Limitations</a>
+      <a href="references.html">References</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>SNPTX Research Motivation</h1>
+      <p>Problem framing for why reproducibility in multi-modal biomedical machine learning is primarily an infrastructure challenge.</p>
+    </header>
+
+    <article class="draft">
+      <div class="draft-meta">
+        <div>
+          <h2>Research Motivation</h2>
+          <p>Why reproducibility failures in biomedical machine learning require a systems response rather than workflow discipline alone.</p>
+        </div>
+        <div class="badge">Research Need</div>
+      </div>
+
+      <section class="motivation-stage" id="motivation">
+        <div class="motivation-header">
+          <div>
+            <div class="eyebrow">Research motivation for multi-modal biomedical machine learning</div>
+            <h3>Reproducibility Breaks for Structural Reasons</h3>
+            <p class="motivation-lede">Computational workflows in genomics, clinical prediction, and drug discovery often fail to reproduce across labs and time horizons. In multi-modal biomedical work, this problem compounds because graph-derived features, clinical tabular records, imaging pipelines, molecular structure, and downstream interpretation must all move through the same analytical system without a consistent execution boundary.</p>
+          </div>
+
+          <aside class="motivation-summary">
+            <div class="label">Motivation summary</div>
+            <h4>Why this section exists</h4>
+            <ul>
+              <li>Reproducibility failures are usually rooted in workflow structure, not only in weak reporting discipline.</li>
+              <li>Multi-modal biomedical pipelines increase the number of hidden state transitions and comparison failures.</li>
+              <li>SNPTX frames the response as execution control, explicit artifacts, and auditable analytical attachment.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="signal-grid">
+          <div class="signal-card">
+            <div class="label">Failure mode</div>
+            <h4>Analytical drift</h4>
+            <p>Interpretation code, exploratory analyses, and follow-on modeling often modify workflow state after primary execution has already occurred.</p>
+          </div>
+          <div class="signal-card">
+            <div class="label">Failure mode</div>
+            <h4>Implicit state</h4>
+            <p>Configuration choices, environment assumptions, and stage ordering frequently remain distributed across scripts, notebooks, and operator memory.</p>
+          </div>
+          <div class="signal-card">
+            <div class="label">Failure mode</div>
+            <h4>Unstructured comparison</h4>
+            <p>Cross-modal evaluation becomes difficult when outputs are not normalized into a stable set of comparison artifacts.</p>
+          </div>
+          <div class="signal-card">
+            <div class="label">Failure mode</div>
+            <h4>Missing provenance</h4>
+            <p>Runs may produce useful outputs, but without persistent linkage to artifacts, commit context, and reporting surfaces those results remain hard to audit.</p>
+          </div>
+        </div>
+
+        <div class="motivation-main-grid">
+          <div class="motivation-visual-card">
+            <div class="motivation-visual-head">
+              <div class="label">Problem to control path</div>
+              <h4>From reproducibility failure to architectural control</h4>
+              <p>The motivation section should show that each recurring failure mode has a corresponding structural response inside the framework rather than relying on informal operator discipline alone.</p>
+            </div>
+
+            <div class="control-flow">
+              <div class="flow-row">
+                <div class="flow-card failure">
+                  <div class="mini-label">Observed risk</div>
+                  <h5>Downstream analysis mutates core workflow outputs</h5>
+                  <p>Extensions, notebooks, or ad hoc interpretation steps can alter state after the main pipeline has run, making later comparisons unreliable.</p>
+                </div>
+                <div class="flow-arrow">CONTROL</div>
+                <div class="flow-card response">
+                  <div class="mini-label">Architectural response</div>
+                  <h5>Downstream-only extension boundary</h5>
+                  <p>Extensions consume persisted artifacts rather than rewriting upstream execution state, keeping analytical attachment separate from the core path.</p>
+                </div>
+              </div>
+
+              <div class="flow-row">
+                <div class="flow-card failure">
+                  <div class="mini-label">Observed risk</div>
+                  <h5>Configuration and ordering remain partially implicit</h5>
+                  <p>When execution logic is scattered across manual scripts, reproducibility depends on operator recollection instead of explicit system behavior.</p>
+                </div>
+                <div class="flow-arrow">CONTROL</div>
+                <div class="flow-card response">
+                  <div class="mini-label">Architectural response</div>
+                  <h5>Explicit configuration and ordered execution</h5>
+                  <p>Configuration is declared up front and execution moves through a deterministic stage order, reducing hidden transition points across modalities.</p>
+                </div>
+              </div>
+
+              <div class="flow-row">
+                <div class="flow-card failure">
+                  <div class="mini-label">Observed risk</div>
+                  <h5>Model comparison lacks a stable evaluative surface</h5>
+                  <p>Graph, omics, imaging, clinical tabular, text, and fusion models are hard to compare when evaluation outputs are inconsistent.</p>
+                </div>
+                <div class="flow-arrow">CONTROL</div>
+                <div class="flow-card response">
+                  <div class="mini-label">Architectural response</div>
+                  <h5>Standardized evaluation artifacts</h5>
+                  <p>Comparative metrics and persisted result objects give different modalities a common surface for evaluation and reporting.</p>
+                </div>
+              </div>
+
+              <div class="flow-row">
+                <div class="flow-card failure">
+                  <div class="mini-label">Observed risk</div>
+                  <h5>Useful runs remain weakly auditable after reporting</h5>
+                  <p>Without durable linkage to artifacts and source state, later review cannot reliably reconstruct what generated the reported result.</p>
+                </div>
+                <div class="flow-arrow">CONTROL</div>
+                <div class="flow-card response">
+                  <div class="mini-label">Architectural response</div>
+                  <h5>Run logging and artifact-linked reporting</h5>
+                  <p>Run logging, artifact hashing, and report-level commit embedding increase traceability, while full run-level commit linkage remains part of the roadmap.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="motivation-table-card">
+            <div class="motivation-table-head">
+              <div class="label">Root cause matrix</div>
+              <h4>Architectural response map</h4>
+              <p>The original Motivation table is retained here, but elevated into the same section language used in the hero and architecture drafts.</p>
+            </div>
+
+            <table class="response-table" aria-label="Research motivation architectural response map">
+              <thead>
+                <tr>
+                  <th>Root cause</th>
+                  <th>Architectural response</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Analytical drift</td>
+                  <td>Extensions remain downstream-only and consume immutable artifacts rather than mutating upstream workflow state.</td>
+                </tr>
+                <tr>
+                  <td>Implicit state</td>
+                  <td>Configuration is explicit and DAG ordering is deterministic at the execution level.</td>
+                </tr>
+                <tr>
+                  <td>Unstructured comparison</td>
+                  <td>Standardized evaluation artifacts create a shared surface for systematic model comparison.</td>
+                </tr>
+                <tr>
+                  <td>Missing provenance</td>
+                  <td>Run logging, artifact hashing, and report-level commit embedding improve auditability; full run-level commit linkage remains roadmap work.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="motivation-detail-grid">
+          <div class="motivation-detail-card">
+            <div class="label">Research setting</div>
+            <h4>Why the pressure increases in multi-modal work</h4>
+            <p>Each added modality introduces new adapters, representations, evaluation outputs, and follow-on analytical questions. Without explicit boundaries, the workflow surface expands faster than the ability to audit it.</p>
+          </div>
+          <div class="motivation-detail-card">
+            <div class="label">Positioning</div>
+            <h4>What SNPTX is claiming here</h4>
+            <p>The motivation claim is not that structure alone solves reproducibility. It is that infrastructure can remove recurring classes of workflow failure that informal process discipline rarely controls well.</p>
+          </div>
+          <div class="motivation-detail-card">
+            <div class="label">Section role</div>
+            <h4>How this supports the pilot narrative</h4>
+            <p>This section connects the platform to a concrete research need: bounded, auditable execution for one defined biomedical workflow where comparison, provenance, and extension safety matter immediately.</p>
+          </div>
+        </div>
+
+        <div class="citation-card">
+          <div class="label">Evidence anchor</div>
+          <p><strong>Framing carried forward from the live page:</strong> computational workflows in genomics, clinical prediction, and drug discovery routinely fail to reproduce across labs and time horizons, with an estimated 70% of computational biology results failing to reproduce when re-executed by independent groups. The section currently cites Baker (2016) and Hutson (2018) and preserves that evidence posture for later live-page integration.</p>
+        </div>
+      </section>
+    </article>
+  </div>
+</body>
+</html>

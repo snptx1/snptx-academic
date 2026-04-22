@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX Experimental Methodology</title>
+<style>
+  :root {
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-purple: #bc8cff;
+    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(88,166,255,0.08), transparent 28%),
+      radial-gradient(circle at top right, rgba(63,185,80,0.07), transparent 24%),
+      linear-gradient(180deg, #0d1117 0%, #0f1620 100%);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding: 12px 0 16px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
+    scrollbar-width: none;
+  }
+
+  .top-nav::-webkit-scrollbar { display: none; }
+
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(48,54,61,0.9);
+    background: rgba(22,27,34,0.82);
+  }
+
+  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+
+  .top-nav a:hover,
+  .top-nav a.active {
+    color: var(--text-primary);
+    border-color: rgba(88,166,255,0.32);
+    background: rgba(88,166,255,0.14);
+  }
+
+  .page-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    max-width: 840px;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .draft {
+    background: rgba(13,17,23,0.72);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+  }
+
+  .draft-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(22,27,34,0.88);
+  }
+
+  .draft-meta h2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .draft-meta p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    max-width: 760px;
+  }
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    background: rgba(88,166,255,0.10);
+    border: 1px solid rgba(88,166,255,0.28);
+    border-radius: 999px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+
+  .stage {
+    position: relative;
+    padding: 38px 32px 40px;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
+      radial-gradient(circle at 84% 16%, rgba(63,185,80,0.14), transparent 24%),
+      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: rgba(63,185,80,0.75);
+  }
+
+  .header {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 22px;
+  }
+
+  .header h3 {
+    font-size: 48px;
+    line-height: 1.03;
+    letter-spacing: -0.05em;
+    max-width: 860px;
+    margin-bottom: 16px;
+  }
+
+  .lede {
+    max-width: 860px;
+    color: var(--text-secondary);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .summary,
+  .card,
+  .note {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    padding: 16px;
+  }
+
+  .summary,
+  .card,
+  .note {
+    position: relative;
+    z-index: 1;
+  }
+
+  .summary {
+    align-self: start;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    color: var(--accent-green);
+  }
+
+  .summary h4,
+  .card h4,
+  .table-head h4,
+  .note h4 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .summary ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .summary li {
+    position: relative;
+    padding-left: 14px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .summary li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-green);
+  }
+
+  .table-card,
+  .callout,
+  .note {
+    margin-bottom: 18px;
+  }
+
+  .table-head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .table-head .label {
+    color: var(--accent-blue);
+  }
+
+  .table-head p,
+  .callout p,
+  .detail-card p,
+  .note p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgba(48,54,61,0.85);
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(13,17,23,0.56);
+  }
+
+  .table th,
+  .table td {
+    text-align: left;
+    padding: 13px 14px;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .table th {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: rgba(13,17,23,0.9);
+    border-bottom: 1px solid rgba(48,54,61,0.85);
+  }
+
+  .table td {
+    color: var(--text-secondary);
+    border-top: 1px solid rgba(48,54,61,0.55);
+  }
+
+  .table tbody tr:first-child td {
+    border-top: none;
+  }
+
+  .detail-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .detail-card {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    padding: 16px;
+  }
+
+  .detail-card:nth-child(1) .label { color: var(--accent-blue); }
+  .detail-card:nth-child(2) .label { color: var(--accent-green); }
+  .detail-card:nth-child(3) .label { color: var(--accent-orange); }
+
+  .callout {
+    background: rgba(22,27,34,0.68);
+    border: 1px solid rgba(63,185,80,0.22);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  }
+
+  .callout .label { color: var(--accent-green); }
+  .callout strong { color: var(--text-primary); }
+  .callout code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: rgba(48,54,61,0.6);
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--accent-blue);
+  }
+
+  .note {
+    background: rgba(22,27,34,0.62);
+    border-color: rgba(88,166,255,0.18);
+    margin-bottom: 0;
+  }
+
+  .note .label { color: var(--accent-blue); }
+
+  @media (max-width: 1100px) {
+    .header,
+    .detail-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    body { padding: 24px 14px 40px; }
+    .draft-meta { display: block; }
+    .draft-meta .badge { display: inline-block; margin-bottom: 12px; }
+    .stage { padding: 28px 20px 32px; }
+    .header h3 { font-size: 34px; }
+    .lede { font-size: 16px; }
+    .table, .table thead, .table tbody, .table tr, .table th, .table td {
+      display: block;
+      width: 100%;
+    }
+    .table thead { display: none; }
+    .table tr { border-top: 1px solid rgba(48,54,61,0.55); }
+    .table tbody tr:first-child { border-top: none; }
+    .table td { border-top: none; padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX academic sections">
+      <a href="../index.html" class="nav-brand">SNPTX</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="motivation.html">Motivation</a>
+      <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="intelligence.html">Intelligence</a>
+      <a href="autonomous.html">Autonomous</a>
+      <a href="methodology.html" class="active">Methodology</a>
+      <a href="fusion.html">Fusion</a>
+      <a href="pilots.html">Pilots</a>
+      <a href="positioning.html">Positioning</a>
+      <a href="limitations.html">Limitations</a>
+      <a href="references.html">References</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>SNPTX Experimental Methodology</h1>
+      <p>Controlled execution, versioned configuration, and reproducibility safeguards for the reported benchmark surface.</p>
+    </header>
+
+    <article class="draft">
+      <div class="draft-meta">
+        <div>
+          <h2>Methodology</h2>
+          <p>Methods specified to support auditability, comparability, and bounded reproducibility claims.</p>
+        </div>
+        <div class="badge">Methods</div>
+      </div>
+
+      <section class="stage" id="methodology">
+        <div class="header">
+          <div>
+            <div class="eyebrow">Reproducibility controls, explicit configuration, and bounded guarantees</div>
+            <h3>Experimental Methodology</h3>
+            <p class="lede">Experiments use reproducibility controls including fixed seeds, explicit configuration, and artifact logging; these controls improve reproducibility but are not presented as universal guarantees.</p>
+          </div>
+
+          <aside class="summary">
+            <div class="label">Method summary</div>
+            <h4>What this section establishes</h4>
+            <ul>
+              <li>The methodology is defined around controlled execution, versioned configuration, and auditability rather than informal experimentation.</li>
+              <li>The system spans 46 adapters across 8 modality families with explicit task and sample descriptions.</li>
+              <li>Determinism is treated as a bounded engineering property, not an unqualified universal guarantee.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <div class="label">Execution environment</div>
+            <h4>Compute environment</h4>
+            <p>The live compute table is preserved here as the environment baseline for the reported experiments.</p>
+          </div>
+          <table class="table" aria-label="Compute environment">
+            <thead><tr><th>Resource</th><th>Specification</th></tr></thead>
+            <tbody>
+              <tr><td>Instance</td><td>AWS EC2 g5.xlarge</td></tr>
+              <tr><td>GPU</td><td>NVIDIA A10G, 23 GB VRAM</td></tr>
+              <tr><td>Python</td><td>3.11.14</td></tr>
+              <tr><td>PyTorch</td><td>2.5.1+cu121</td></tr>
+              <tr><td>Orchestration</td><td>Snakemake 9.16.3 (34 rules)</td></tr>
+              <tr><td>Tracking</td><td>MLflow 3.10.0</td></tr>
+              <tr><td>Versioning</td><td>DVC configured (partial integration with primary pipeline)</td></tr>
+              <tr><td>Static Analysis</td><td>Pyright (0 errors), Ruff 0.15.4 (0 violations)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <div class="label">Data coverage</div>
+            <h4>Datasets (46 adapters, 8 modality families)</h4>
+            <p>The live dataset inventory is preserved here to make scope and modality breadth explicit.</p>
+          </div>
+          <table class="table" aria-label="Datasets and modality families">
+            <thead><tr><th>Modality</th><th>Dataset</th><th>Source</th><th>Samples</th><th>Task</th></tr></thead>
+            <tbody>
+              <tr><td>Clinical tabular</td><td>Synthea readmission</td><td>Synthea (synthetic EHR)</td><td>6,625</td><td>Binary classification</td></tr>
+              <tr><td>Omics</td><td>Visium breast cancer</td><td>10x Genomics</td><td>3,798</td><td>14-class tissue region</td></tr>
+              <tr><td>Knowledge graphs</td><td>Hetionet</td><td>Himmelstein et al.</td><td>1,913 ego-graphs</td><td>8-class node classification</td></tr>
+              <tr><td>Histopathology</td><td>PathMNIST</td><td>MedMNIST</td><td>107,180</td><td>9-class classification</td></tr>
+              <tr><td>Clinical text</td><td>MTSamples</td><td>MTSamples.com</td><td>~3,500</td><td>5-class specialty</td></tr>
+              <tr><td>Single-cell</td><td>BloodMNIST</td><td>MedMNIST</td><td>17,092</td><td>8-class classification</td></tr>
+              <tr><td>Drug discovery</td><td>ChEMBL bioactivity</td><td>ChEMBL database</td><td>4,685</td><td>Binary bioactivity</td></tr>
+              <tr><td>Classical ML</td><td>Iris, Wine, Breast Cancer, Digits</td><td>UCI / scikit-learn</td><td>150&ndash;1,797</td><td>Multi-class classification</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:12px;color:var(--text-secondary);font-size:13px;">9 additional adapters are deferred (specification complete, data not yet integrated).</div>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <div class="label">Training setup</div>
+            <h4>Training configuration</h4>
+            <p>The live training table is preserved here as the modality-by-modality configuration reference.</p>
+          </div>
+          <table class="table" aria-label="Training configuration by modality">
+            <thead><tr><th>Modality</th><th>Model</th><th>Key Hyperparameters</th><th>Training Details</th></tr></thead>
+            <tbody>
+              <tr><td>Clinical tabular</td><td>XGBoost + Optuna</td><td>n_estimators=100&ndash;300, max_depth=6, lr=0.1</td><td>Optuna HPO (30 trials), 5-fold CV</td></tr>
+              <tr><td>Omics</td><td>VAE</td><td>latent_dim=128, hidden=[512,256], epochs=80</td><td>Visium HVG, Leiden labels, 80/20 val</td></tr>
+              <tr><td>Knowledge graphs</td><td>GAT</td><td>layers=2, hidden=64, heads=4, epochs=200</td><td>Center-node readout, cosine LR</td></tr>
+              <tr><td>Histopathology</td><td>DenseNet-121</td><td>ImageNet pretrained, epochs=20, lr=1e-4</td><td>28&times;28, PathMNIST augmentation</td></tr>
+              <tr><td>Clinical text</td><td>ClinicalBERT</td><td>epochs=15, lr=2e-5, batch=16</td><td>Mean-pooled embeddings, 5-class</td></tr>
+              <tr><td>Single-cell</td><td>DenseNet-121</td><td>ImageNet pretrained, epochs=20, lr=1e-4</td><td>28&times;28, BloodMNIST</td></tr>
+              <tr><td>Drug discovery</td><td>GCN</td><td>layers=3, hidden=128, epochs=100</td><td>Class-weighted loss, molecular featurization</td></tr>
+              <tr><td>Multi-modal fusion</td><td>Attention fusion</td><td>heads=4, hidden=256</td><td>PCA embeddings from training set only</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <div class="label">Reproducibility controls</div>
+          <h4>Determinism controls and boundaries</h4>
+          <p><strong>Fixed seeds:</strong> Global seed (1337) for all random operations (numpy, torch, sklearn).</p>
+          <p><strong>Deterministic CUDA controls:</strong> <code>torch.use_deterministic_algorithms(True)</code> where supported.</p>
+          <p><strong>Versioned configuration:</strong> Every run defined by YAML committed to version control.</p>
+          <p><strong>DAG-enforced ordering:</strong> Snakemake enforces explicit dependency order with no implicit stage coupling.</p>
+          <p><strong>Artifact hashing:</strong> DVC checksum workflows are configured; full end-to-end enforcement across the primary pipeline remains in progress.</p>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="label">Execution discipline</div>
+            <h4>Why this section matters</h4>
+            <p>The methodology section grounds the rest of the document by showing that results and claims were generated in a controlled, inspectable environment.</p>
+          </div>
+          <div class="detail-card">
+            <div class="label">Scope clarity</div>
+            <h4>What is bounded here</h4>
+            <p>Determinism and versioning are described as implemented controls with explicit limits, which keeps the reproducibility claim technically credible.</p>
+          </div>
+          <div class="detail-card">
+            <div class="label">Coverage signal</div>
+            <h4>What breadth is shown</h4>
+            <p>The adapter inventory and training table show that SNPTX spans multiple modality families while still documenting per-modality training choices concretely.</p>
+          </div>
+        </div>
+
+      </section>
+    </article>
+  </div>
+</body>
+</html>

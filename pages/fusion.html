@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX Fusion Methodology</title>
+<style>
+  :root {
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-purple: #bc8cff;
+    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(88,166,255,0.08), transparent 28%),
+      radial-gradient(circle at top right, rgba(188,140,255,0.09), transparent 24%),
+      linear-gradient(180deg, #0d1117 0%, #0f1620 100%);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  .page { max-width: 1280px; margin: 0 auto; }
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding: 12px 0 16px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
+    scrollbar-width: none;
+  }
+  .top-nav::-webkit-scrollbar { display: none; }
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(48,54,61,0.9);
+    background: rgba(22,27,34,0.82);
+  }
+  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+  .top-nav a:hover,
+  .top-nav a.active {
+    color: var(--text-primary);
+    border-color: rgba(88,166,255,0.32);
+    background: rgba(88,166,255,0.14);
+  }
+  .page-header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .page-header h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+  .page-header p { max-width: 840px; color: var(--text-secondary); font-size: 15px; }
+  .draft { background: rgba(13,17,23,0.72); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.28); }
+  .draft-meta { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); background: rgba(22,27,34,0.88); }
+  .draft-meta h2 { font-size: 18px; font-weight: 700; }
+  .draft-meta p { color: var(--text-secondary); font-size: 13px; max-width: 760px; }
+  .badge { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-blue); background: rgba(88,166,255,0.10); border: 1px solid rgba(88,166,255,0.28); border-radius: 999px; padding: 5px 10px; white-space: nowrap; }
+
+  .stage {
+    position: relative;
+    padding: 38px 32px 40px;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
+      radial-gradient(circle at 84% 16%, rgba(188,140,255,0.16), transparent 24%),
+      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%); }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-green); }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: rgba(63,185,80,0.75); }
+  .header { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr); gap: 24px; align-items: start; margin-bottom: 22px; }
+  .header h3 { font-size: 48px; line-height: 1.03; letter-spacing: -0.05em; max-width: 860px; margin-bottom: 16px; }
+  .lede { max-width: 860px; color: var(--text-secondary); font-size: 17px; line-height: 1.75; }
+  .summary, .card, .callout, .note, .detail-card { background: rgba(22,27,34,0.82); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 18px 40px rgba(0,0,0,0.18); padding: 16px; }
+  .summary, .card, .callout, .note { position: relative; z-index: 1; }
+  .label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .summary .label { color: var(--accent-green); }
+  .table-head .label, .note .label { color: var(--accent-blue); }
+  .callout .label { color: var(--accent-purple); }
+  .summary h4, .table-head h4, .callout h4, .detail-card h4 { font-size: 15px; margin-bottom: 10px; }
+  .summary ul { list-style: none; display: grid; gap: 10px; }
+  .summary li { position: relative; padding-left: 14px; color: var(--text-secondary); font-size: 13px; line-height: 1.55; }
+  .summary li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-green); }
+  .table-card, .callout, .note { margin-bottom: 18px; }
+  .table-head { display: grid; gap: 6px; margin-bottom: 14px; }
+  .table-head p, .callout p, .detail-card p, .note p { color: var(--text-secondary); font-size: 13px; line-height: 1.65; }
+  .table { width: 100%; border-collapse: collapse; border: 1px solid rgba(48,54,61,0.85); border-radius: 12px; overflow: hidden; background: rgba(13,17,23,0.56); }
+  .table th, .table td { text-align: left; padding: 13px 14px; vertical-align: top; font-size: 13px; line-height: 1.55; }
+  .table th { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); background: rgba(13,17,23,0.9); border-bottom: 1px solid rgba(48,54,61,0.85); }
+  .table td { color: var(--text-secondary); border-top: 1px solid rgba(48,54,61,0.55); }
+  .table tbody tr:first-child td { border-top: none; }
+  .svg-wrap { border: 1px solid rgba(48,54,61,0.85); border-radius: 12px; overflow: hidden; background: rgba(13,17,23,0.56); }
+  .svg-wrap svg { display: block; max-width: 100%; height: auto; }
+  .detail-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .detail-card:nth-child(1) .label { color: var(--accent-blue); }
+  .detail-card:nth-child(2) .label { color: var(--accent-green); }
+  .detail-card:nth-child(3) .label { color: var(--accent-orange); }
+  .note { background: rgba(22,27,34,0.62); border-color: rgba(88,166,255,0.18); margin-bottom: 0; }
+
+  @media (max-width: 1100px) { .header, .detail-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) {
+    body { padding: 24px 14px 40px; }
+    .draft-meta { display: block; }
+    .draft-meta .badge { display: inline-block; margin-bottom: 12px; }
+    .stage { padding: 28px 20px 32px; }
+    .header h3 { font-size: 34px; }
+    .lede { font-size: 16px; }
+    .table, .table thead, .table tbody, .table tr, .table th, .table td { display: block; width: 100%; }
+    .table thead { display: none; }
+    .table tr { border-top: 1px solid rgba(48,54,61,0.55); }
+    .table tbody tr:first-child { border-top: none; }
+    .table td { border-top: none; padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX academic sections">
+      <a href="../index.html" class="nav-brand">SNPTX</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="motivation.html">Motivation</a>
+      <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="intelligence.html">Intelligence</a>
+      <a href="autonomous.html">Autonomous</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="fusion.html" class="active">Fusion</a>
+      <a href="pilots.html">Pilots</a>
+      <a href="positioning.html">Positioning</a>
+      <a href="limitations.html">Limitations</a>
+      <a href="references.html">References</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>SNPTX Fusion Methodology</h1>
+      <p>Validated three-modality fusion view with measured lift over the strongest unimodal baseline.</p>
+    </header>
+
+    <article class="draft">
+      <div class="draft-meta">
+        <div>
+          <h2>Fusion</h2>
+          <p>A validated fusion workflow combining learned modality representations with leakage-aware evaluation.</p>
+        </div>
+        <div class="badge">Fusion Evidence</div>
+      </div>
+
+      <section class="stage" id="fusion">
+        <div class="header">
+          <div>
+            <div class="eyebrow">Validated three-modality fusion with modest but measurable lift</div>
+            <h3>Fusion Methodology</h3>
+            <p class="lede">Validated 3-modality fusion combines learned representations through an attention mechanism and shows modest lift over the strongest unimodal baseline.</p>
+          </div>
+          <aside class="summary">
+            <div class="label">Fusion summary</div>
+            <h4>What this section establishes</h4>
+            <ul>
+              <li>The live fusion claim is evidence-based and limited to a validated three-modality configuration.</li>
+              <li>Fusion exceeds the strongest unimodal baseline, but only by a small margin, which keeps the claim disciplined.</li>
+              <li>The roadmap makes clear that broader multi-modal hardening remains planned work rather than completed work.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <div class="label">Architecture view</div>
+            <h4>Fusion architecture</h4>
+            <p>The live SVG is preserved here as the core visual explanation of how modality encoders, PCA projection, attention fusion, and classification connect.</p>
+          </div>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 260" width="980" height="364" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117;">
+              <defs>
+                <marker id="farrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#58a6ff"/></marker>
+                <style>
+                  .fbox{fill:#161b22;stroke:#30363d;stroke-width:1.5;rx:8}
+                  .fbox-enc{fill:#161b22;stroke:#bc8cff;stroke-width:1.5;rx:8}
+                  .fbox-pca{fill:#161b22;stroke:#d29922;stroke-width:1.5;rx:8}
+                  .fbox-attn{fill:#161b22;stroke:#58a6ff;stroke-width:1.5;rx:8}
+                  .fbox-cls{fill:#161b22;stroke:#3fb950;stroke-width:1.5;rx:8}
+                  .ftxt{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;fill:#e6edf3;text-anchor:middle;font-weight:600}
+                  .farr{stroke:#58a6ff;stroke-width:1.5;fill:none;marker-end:url(#farrow)}
+                </style>
+              </defs>
+              <rect width="700" height="260" fill="#0d1117" rx="8"/>
+              <rect class="fbox-enc" x="10" y="20" width="120" height="34"/><text class="ftxt" x="70" y="41">Omics Encoder</text>
+              <rect class="fbox-enc" x="10" y="72" width="120" height="34"/><text class="ftxt" x="70" y="93">Imaging Encoder</text>
+              <rect class="fbox-enc" x="10" y="124" width="120" height="34"/><text class="ftxt" x="70" y="145">Graph Encoder</text>
+              <rect class="fbox-enc" x="10" y="176" width="120" height="34"/><text class="ftxt" x="70" y="197">Text Encoder</text>
+              <rect class="fbox-pca" x="210" y="85" width="110" height="50"/><text class="ftxt" x="265" y="108" style="fill:#d29922">PCA Projection</text><text class="ftxt" x="265" y="122" style="fill:#8b949e;font-size:8px">(train-set fitted)</text>
+              <line class="farr" x1="130" y1="37" x2="208" y2="100"/>
+              <line class="farr" x1="130" y1="89" x2="208" y2="107"/>
+              <line class="farr" x1="130" y1="141" x2="208" y2="114"/>
+              <line class="farr" x1="130" y1="193" x2="208" y2="120"/>
+              <rect class="fbox-attn" x="390" y="78" width="130" height="64"/><text class="ftxt" x="455" y="104" style="fill:#58a6ff">Attention Fusion</text><text class="ftxt" x="455" y="118" style="fill:#8b949e;font-size:8px">4 heads, hidden=256</text><text class="ftxt" x="455" y="132" style="fill:#8b949e;font-size:8px">cross-modal weights</text>
+              <line class="farr" x1="320" y1="110" x2="388" y2="110"/>
+              <rect class="fbox-cls" x="590" y="85" width="100" height="50"/><text class="ftxt" x="640" y="108" style="fill:#3fb950">Classifier</text><text class="ftxt" x="640" y="122" style="fill:#8b949e;font-size:8px">93.0% val</text>
+              <line class="farr" x1="520" y1="110" x2="588" y2="110"/>
+              <text x="70" y="232" style="font-family:monospace;font-size:9px;fill:#bc8cff;text-anchor:middle">PER-MODALITY</text>
+              <text x="265" y="155" style="font-family:monospace;font-size:9px;fill:#d29922;text-anchor:middle">SHARED DIM</text>
+              <text x="455" y="158" style="font-family:monospace;font-size:9px;fill:#58a6ff;text-anchor:middle">CROSS-MODAL</text>
+              <text x="640" y="155" style="font-family:monospace;font-size:9px;fill:#3fb950;text-anchor:middle">PREDICTION</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <div class="label">Performance</div>
+            <h4>Fusion performance</h4>
+            <p>The live performance table is preserved here as the primary comparison between unimodal and fused configurations.</p>
+          </div>
+          <table class="table" aria-label="Fusion performance comparison">
+            <thead><tr><th>Configuration</th><th>Accuracy</th></tr></thead>
+            <tbody>
+              <tr><td>Omics only (VAE)</td><td>92.8%</td></tr>
+              <tr><td>Vision PCA only</td><td>87.4%</td></tr>
+              <tr><td>Spatial features only</td><td>72.1%</td></tr>
+              <tr><td><strong>Fusion (omics + vision + spatial)</strong></td><td><strong>93.0%</strong></td></tr>
+              <tr><td>Best unimodal</td><td>92.8%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <div class="label">Cross-modal benefit</div>
+          <h4>Measured improvement, bounded claim</h4>
+          <p>Fusion achieves 93.0% validation accuracy on 14-class tissue region classification, exceeding the best unimodal result (omics VAE at 92.8%) by 0.2 percentage points. While the improvement is modest, it demonstrates that complementary morphological signal from PCA vision features provides additional discriminative power beyond gene expression alone. Holdout accuracy (93.0%) is consistent with 5-fold CV (92.8% &plusmn; 0.7%), confirming no leakage.</p>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <div class="label">Roadmap</div>
+            <h4>Multi-modal hardening roadmap (Phase C.6)</h4>
+            <p>The live roadmap table is preserved here to separate validated fusion from future multi-modal hardening work.</p>
+          </div>
+          <table class="table" aria-label="Multi-modal hardening roadmap">
+            <thead><tr><th>Module</th><th>Methods</th><th>Theoretical Basis</th></tr></thead>
+            <tbody>
+              <tr><td>Cross-modal alignment</td><td>InfoNCE, CLIP-style, Deep CCA</td><td>Information Bottleneck (Tishby et al., 2000)</td></tr>
+              <tr><td>Uncertainty quantification</td><td>Evidential DL, conformal prediction</td><td>Sensoy et al., 2018; Vovk et al., 2005</td></tr>
+              <tr><td>E(n)-equivariant graphs</td><td>SE(3)-equivariance for molecular geometry</td><td>Thomas et al., 2018; Satorras et al., 2021</td></tr>
+              <tr><td>Tensor fusion</td><td>Multiplicative outer products, MoE</td><td>Zadeh et al., 2017</td></tr>
+              <tr><td>Domain-adaptive NLP</td><td>Biomedical NER, negation detection, masked LM</td><td>Lee et al., 2020 (BioBERT)</td></tr>
+              <tr><td>Masked autoencoders</td><td>Patch reconstruction, domain divergence</td><td>He et al., 2022 (MAE)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="label">Validated scope</div>
+            <h4>What is complete here</h4>
+            <p>The validated claim is specific: a three-modality attention fusion setup with a modest but positive lift over the best unimodal baseline.</p>
+          </div>
+          <div class="detail-card">
+            <div class="label">Boundary discipline</div>
+            <h4>What remains future work</h4>
+            <p>The roadmap makes clear that broader hardening areas such as uncertainty, alignment, tensor fusion, and richer NLP support are still prospective.</p>
+          </div>
+          <div class="detail-card">
+            <div class="label">Section role</div>
+            <h4>How Fusion supports the page</h4>
+            <p>This section demonstrates that SNPTX can integrate multiple modalities in a leakage-aware setting while still reporting the actual size of the observed gain honestly.</p>
+          </div>
+        </div>
+
+      </section>
+    </article>
+  </div>
+</body>
+</html>

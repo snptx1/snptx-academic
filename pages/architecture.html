@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX Architecture</title>
+<style>
+  :root {
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-purple: #bc8cff;
+    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(88,166,255,0.08), transparent 28%),
+      radial-gradient(circle at top right, rgba(188,140,255,0.07), transparent 24%),
+      linear-gradient(180deg, #0d1117 0%, #0f1620 100%);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding: 12px 0 16px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
+    scrollbar-width: none;
+  }
+
+  .top-nav::-webkit-scrollbar { display: none; }
+
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(48,54,61,0.9);
+    background: rgba(22,27,34,0.82);
+  }
+
+  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+
+  .top-nav a:hover,
+  .top-nav a.active {
+    color: var(--text-primary);
+    border-color: rgba(88,166,255,0.32);
+    background: rgba(88,166,255,0.14);
+  }
+
+  .page-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    max-width: 840px;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .draft {
+    background: rgba(13,17,23,0.72);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+  }
+
+  .draft-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(22,27,34,0.88);
+  }
+
+  .draft-meta h2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .draft-meta p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    max-width: 760px;
+  }
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    background: rgba(88,166,255,0.10);
+    border: 1px solid rgba(88,166,255,0.28);
+    border-radius: 999px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+
+  .section {
+    padding: 0;
+  }
+
+  .container {
+    padding: 0;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin: 0 0 10px;
+  }
+
+  .section-sub {
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.75;
+    max-width: 900px;
+    margin: 0 0 24px;
+    padding: 28px 32px 0;
+  }
+
+  .architecture-showcase {
+    position: relative;
+    padding: 36px 32px 40px;
+    background:
+      radial-gradient(circle at 10% 16%, rgba(88,166,255,0.18), transparent 30%),
+      radial-gradient(circle at 88% 12%, rgba(188,140,255,0.18), transparent 26%),
+      linear-gradient(135deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .architecture-showcase::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  }
+
+  .architecture-header {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+    gap: 24px;
+    margin-bottom: 24px;
+    align-items: start;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: rgba(63,185,80,0.75);
+  }
+
+  h3 {
+    font-size: 52px;
+    line-height: 1.03;
+    letter-spacing: -0.05em;
+    max-width: 920px;
+    margin-bottom: 16px;
+  }
+
+  .architecture-intro {
+    max-width: 820px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .architecture-summary,
+  .architecture-argument-card,
+  .architecture-visual-card,
+  .architecture-detail-card,
+  .architecture-legend {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  }
+
+  .architecture-summary {
+    padding: 18px;
+  }
+
+  .architecture-summary .label { color: var(--accent-green); }
+
+  .architecture-summary h4,
+  .architecture-argument-card h4,
+  .architecture-detail-card h4 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .architecture-summary ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .architecture-summary li {
+    position: relative;
+    padding-left: 14px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .architecture-summary li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-green);
+  }
+
+  .architecture-visual-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(13,17,23,0.76);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+  }
+
+  .architecture-visual-card svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .architecture-visual-head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .architecture-visual-head .label,
+  .architecture-caption .label { color: var(--accent-blue); }
+
+  .architecture-visual-head h4 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .architecture-visual-head p,
+  .architecture-caption p,
+  .architecture-legend p,
+  .architecture-argument-card p,
+  .architecture-detail-card p,
+  .architecture-note {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .architecture-caption {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+    gap: 18px;
+    margin-top: 14px;
+  }
+
+  .architecture-legend {
+    background: rgba(13,17,23,0.62);
+    border: 1px solid rgba(48,54,61,0.85);
+    padding: 14px;
+  }
+
+  .architecture-legend .label { color: var(--accent-purple); }
+
+  .architecture-legend-grid {
+    display: grid;
+    gap: 10px;
+  }
+
+  .architecture-legend-item {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .architecture-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    margin-top: 2px;
+  }
+
+  .architecture-argument-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .architecture-argument-card {
+    padding: 16px;
+  }
+
+  .architecture-argument-card:nth-child(1) .label { color: var(--accent-blue); }
+  .architecture-argument-card:nth-child(2) .label { color: var(--accent-orange); }
+  .architecture-argument-card:nth-child(3) .label { color: var(--accent-purple); }
+  .architecture-argument-card:nth-child(4) .label { color: var(--accent-green); }
+
+  .architecture-detail-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+    margin-top: 18px;
+  }
+
+  .architecture-detail-card {
+    padding: 18px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.18);
+  }
+
+  .architecture-detail-card p {
+    margin-bottom: 10px;
+  }
+
+  .architecture-detail-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .architecture-note {
+    position: relative;
+    z-index: 1;
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: rgba(22,27,34,0.62);
+    border: 1px solid rgba(88,166,255,0.18);
+    border-radius: 12px;
+  }
+
+  @media (max-width: 980px) {
+    .architecture-header,
+    .architecture-caption,
+    .architecture-detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .architecture-argument-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    h3 {
+      font-size: 40px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    body {
+      padding: 24px 14px 40px;
+    }
+
+    .draft-meta {
+      display: block;
+    }
+
+    .draft-meta .badge {
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .architecture-showcase {
+      padding: 28px 20px 32px;
+    }
+
+    .architecture-argument-grid {
+      grid-template-columns: 1fr;
+    }
+
+    h3 {
+      font-size: 32px;
+    }
+
+    .section-sub {
+      padding: 28px 20px 0;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX academic sections">
+      <a href="../index.html" class="nav-brand">SNPTX</a>
+      <a href="architecture.html" class="active">Architecture</a>
+      <a href="motivation.html">Motivation</a>
+      <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="intelligence.html">Intelligence</a>
+      <a href="autonomous.html">Autonomous</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="fusion.html">Fusion</a>
+      <a href="pilots.html">Pilots</a>
+      <a href="positioning.html">Positioning</a>
+      <a href="limitations.html">Limitations</a>
+      <a href="references.html">References</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>SNPTX Architecture</h1>
+      <p>Architecture view of the governed execution spine, artifact handoffs, and extension boundary supporting pilot-stage research workflows.</p>
+    </header>
+
+    <article class="draft">
+      <div class="draft-meta">
+        <div>
+          <h2>Architecture</h2>
+          <p>Why SNPTX is organized around governed execution, explicit artifact boundaries, and controlled extension points.</p>
+        </div>
+        <div class="badge">Framework View</div>
+      </div>
+
+      <section class="section" id="architecture">
+        <div class="container">
+          <p class="section-sub">SNPTX combines a layered framework architecture with a staged execution architecture. Together they define a governed execution spine, explicit artifact handoffs, and a mediated extension boundary for downstream analytical work.</p>
+
+          <div class="architecture-showcase">
+            <div class="architecture-header">
+              <div>
+                <div class="eyebrow">Framework architecture for research-facing deployment</div>
+                <h3>Framework Layers and Execution Architecture</h3>
+                <p class="architecture-intro">SNPTX includes a layered framework architecture and a staged execution architecture. The framework layer stack includes infrastructure, data platform components, execution governance, modality coverage, autonomous experimentation, and a research-facing deployment surface. The execution architecture describes stage ordering, persisted artifacts, mediated analytical attachment, optimization inputs, and deployment-facing outputs.</p>
+              </div>
+
+              <div class="architecture-summary">
+                <div class="label">Architecture overview</div>
+                <h4>Framework and execution structure</h4>
+                <ul>
+                  <li>The framework includes infrastructure, adapters, governance, modality-specific workloads, autonomous experimentation, and deployment surfaces.</li>
+                  <li>The execution path consists of ordered stages, persisted artifacts, and a contract-validated extension runner.</li>
+                  <li>The operational optimization loop uses experiment-selection components and does not define feedback flow for the full system.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="architecture-visual-card">
+              <div class="architecture-visual-head">
+                <div class="label">Framework architecture</div>
+                <h4>Layered framework organization</h4>
+                <p>The framework contains infrastructure controls, adapter and registry components, execution governance, modality-specific workloads, autonomous experimentation components, and deployment-facing interfaces for research workflows.</p>
+              </div>
+
+              <svg viewBox="0 0 1180 820" xmlns="http://www.w3.org/2000/svg" aria-label="SNPTX framework architecture layers">
+                <defs>
+                  <linearGradient id="frameworkFrame" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0f1620"/>
+                    <stop offset="100%" stop-color="#111b25"/>
+                  </linearGradient>
+                  <linearGradient id="frameworkBottom" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.06"/>
+                  </linearGradient>
+                  <linearGradient id="frameworkMid" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#bc8cff" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#bc8cff" stop-opacity="0.06"/>
+                  </linearGradient>
+                  <linearGradient id="frameworkTop" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#3fb950" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#3fb950" stop-opacity="0.06"/>
+                  </linearGradient>
+                  <linearGradient id="frameworkWarm" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f2cc60" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#f2cc60" stop-opacity="0.06"/>
+                  </linearGradient>
+                  <style>
+                    .frame-shell{fill:url(#frameworkFrame);stroke:#30363d;stroke-width:1.2}
+                    .layer-card{stroke-width:1.1}
+                    .layer-blue{fill:url(#frameworkBottom);stroke:#58a6ff}
+                    .layer-purple{fill:url(#frameworkMid);stroke:#bc8cff}
+                    .layer-green{fill:url(#frameworkTop);stroke:#3fb950}
+                    .layer-warm{fill:url(#frameworkWarm);stroke:#f2cc60}
+                    .layer-index{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:14px;font-weight:700;text-anchor:middle}
+                    .layer-title{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:14px;font-weight:700}
+                    .layer-copy{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:11px}
+                    .layer-chip-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                    .layer-note-text{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px}
+                  </style>
+                </defs>
+
+                <rect class="frame-shell" x="16" y="16" width="1148" height="788" rx="18"/>
+                <text class="layer-note-text" x="56" y="54">FRAMEWORK VIEW</text>
+
+                <rect class="layer-card layer-blue" x="54" y="80" width="1072" height="80" rx="14"/>
+                <circle cx="88" cy="120" r="18" fill="rgba(88,166,255,0.18)" stroke="#58a6ff"/>
+                <text class="layer-index" x="88" y="125">1</text>
+                <text class="layer-title" x="122" y="113">Infrastructure and reproducibility discipline</text>
+                <text class="layer-copy" x="122" y="136">config-driven execution, tests, versioned repos, artifact semantics, deterministic intent</text>
+                <rect x="928" y="100" width="150" height="28" rx="14" fill="rgba(88,166,255,0.12)" stroke="#58a6ff"/>
+                <text class="layer-chip-text" x="1003" y="118">FOUNDATION</text>
+
+                <rect class="layer-card layer-blue" x="54" y="174" width="1072" height="80" rx="14"/>
+                <circle cx="88" cy="214" r="18" fill="rgba(88,166,255,0.18)" stroke="#58a6ff"/>
+                <text class="layer-index" x="88" y="219">2</text>
+                <text class="layer-title" x="122" y="207">Data platform and adapters</text>
+                <text class="layer-copy" x="122" y="230">multi-dataset registry, modality adapters, embedding registry, FHIR / OMOP alignment, dataset manifests</text>
+                <rect x="928" y="194" width="150" height="28" rx="14" fill="rgba(88,166,255,0.12)" stroke="#58a6ff"/>
+                <text class="layer-chip-text" x="1003" y="212">OPERATIONAL</text>
+
+                <rect class="layer-card layer-purple" x="54" y="268" width="1072" height="92" rx="14"/>
+                <circle cx="88" cy="314" r="18" fill="rgba(188,140,255,0.18)" stroke="#bc8cff"/>
+                <text class="layer-index" x="88" y="319">3</text>
+                <text class="layer-title" x="122" y="302">Execution governance and extension boundary</text>
+                <text class="layer-copy" x="122" y="324">Snakemake spine, persisted artifacts, MLflow logging, contract validation, manifest capture</text>
+                <text class="layer-copy" x="122" y="345">owner-mediated extension runner with contract validation and manifest capture</text>
+                <rect x="928" y="298" width="150" height="28" rx="14" fill="rgba(188,140,255,0.12)" stroke="#bc8cff"/>
+                <text class="layer-chip-text" x="1003" y="316">EXECUTION GOVERNANCE</text>
+
+                <rect class="layer-card layer-warm" x="54" y="374" width="1072" height="80" rx="14"/>
+                <circle cx="88" cy="414" r="18" fill="rgba(242,204,96,0.18)" stroke="#f2cc60"/>
+                <text class="layer-index" x="88" y="419">4</text>
+                <text class="layer-title" x="122" y="407">Model and modality layer</text>
+                <text class="layer-copy" x="122" y="430">tabular, omics, graph, imaging, text, fusion, comparative evaluation, modality-specific methods</text>
+                <rect x="928" y="394" width="150" height="28" rx="14" fill="rgba(242,204,96,0.12)" stroke="#f2cc60"/>
+                <text class="layer-chip-text" x="1003" y="412">WORKLOAD SURFACE</text>
+
+                <rect class="layer-card layer-green" x="54" y="472" width="1072" height="96" rx="14"/>
+                <circle cx="88" cy="520" r="18" fill="rgba(63,185,80,0.18)" stroke="#3fb950"/>
+                <text class="layer-index" x="88" y="525">5</text>
+                <text class="layer-title" x="122" y="506">Autonomous experimentation surface</text>
+                <text class="layer-copy" x="122" y="529">GP surrogates, meta-features, experiment memory, value-of-information, stopping rules</text>
+                <text class="layer-copy" x="122" y="550">Experiment-selection loop using bounded optimization inputs and stopping rules.</text>
+                <rect x="928" y="506" width="150" height="28" rx="14" fill="rgba(63,185,80,0.12)" stroke="#3fb950"/>
+                <text class="layer-chip-text" x="1003" y="524">OPTIMIZATION</text>
+
+                <rect class="layer-card layer-green" x="54" y="586" width="1072" height="96" rx="14"/>
+                <circle cx="88" cy="634" r="18" fill="rgba(63,185,80,0.18)" stroke="#3fb950"/>
+                <text class="layer-index" x="88" y="639">6</text>
+                <text class="layer-title" x="122" y="620">Bounded deployment surface</text>
+                <text class="layer-copy" x="122" y="643">FastAPI serving, batch inference, audit trails, customer-hosted path, and one lab-facing workflow</text>
+                <text class="layer-copy" x="122" y="664">Research-facing deployment scope with defined workflow and reporting outputs.</text>
+                <rect x="928" y="620" width="150" height="28" rx="14" fill="rgba(63,185,80,0.12)" stroke="#3fb950"/>
+                <text class="layer-chip-text" x="1003" y="638">PILOT SURFACE</text>
+              </svg>
+
+              <div class="architecture-caption">
+                <div>
+                  <div class="label">Framework structure</div>
+                  <p>SNPTX is organized as a layered framework. Infrastructure controls, data adapters, execution governance, modality-specific workloads, autonomous experimentation, and deployment surfaces remain separate architectural components.</p>
+                </div>
+
+                <div class="architecture-legend">
+                  <div class="label">Layer properties</div>
+                  <div class="architecture-legend-grid">
+                    <div class="architecture-legend-item">
+                      <div class="architecture-swatch" style="background: rgba(88,166,255,0.20); border: 1px solid #58a6ff;"></div>
+                      <p>Foundational layers support reproducibility, adapters, and the overall system substrate.</p>
+                    </div>
+                    <div class="architecture-legend-item">
+                      <div class="architecture-swatch" style="background: rgba(188,140,255,0.20); border: 1px solid #bc8cff;"></div>
+                      <p>The execution governance layer contains persisted artifacts, contract validation, manifest capture, and mediated extension attachment.</p>
+                    </div>
+                    <div class="architecture-legend-item">
+                      <div class="architecture-swatch" style="background: rgba(63,185,80,0.20); border: 1px solid #3fb950;"></div>
+                      <p>Autonomy and deployment appear as separate surfaces with defined scope, interfaces, and outputs.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="architecture-visual-card">
+              <div class="architecture-visual-head">
+                <div class="label">Execution architecture</div>
+                <h4>Staged execution path</h4>
+                <p>Execution proceeds through ordered stages with persisted artifacts at each handoff. Downstream analytical work attaches through the extension runner. Optimization inputs and deployment-facing outputs connect at defined interfaces.</p>
+              </div>
+
+              <svg viewBox="0 0 1180 700" xmlns="http://www.w3.org/2000/svg" aria-label="SNPTX execution architecture visual">
+                <defs>
+                  <linearGradient id="spineFlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.95"/>
+                    <stop offset="100%" stop-color="#bc8cff" stop-opacity="0.95"/>
+                  </linearGradient>
+                  <linearGradient id="pilotSurface" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3fb950" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.10"/>
+                  </linearGradient>
+                  <style>
+                    .arch-frame{fill:#0f1620;stroke:#30363d;stroke-width:1.2;rx:16}
+                    .arch-lane{fill:#111821;stroke:#30363d;stroke-width:1;rx:14}
+                    .arch-stage{fill:#161b22;stroke:#30363d;stroke-width:1.5;rx:12}
+                    .arch-stage-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;font-weight:700;text-anchor:middle}
+                    .arch-stage-sub{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;text-anchor:middle}
+                    .arch-note{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px}
+                    .arch-artifact{fill:rgba(88,166,255,0.10);stroke:#58a6ff;stroke-width:1;rx:9}
+                    .arch-artifact-text{fill:#58a6ff;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                    .arch-extension{fill:rgba(188,140,255,0.10);stroke:#bc8cff;stroke-width:1.2;rx:11}
+                    .arch-extension-text{fill:#bc8cff;font-family:'SFMono-Regular',Consolas,monospace;font-size:11px;font-weight:700;text-anchor:middle}
+                    .arch-autonomy{fill:rgba(63,185,80,0.10);stroke:#3fb950;stroke-width:1.2;rx:11}
+                    .arch-autonomy-text{fill:#3fb950;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                    .arch-pilot{fill:url(#pilotSurface);stroke:#3fb950;stroke-width:1.2;rx:13}
+                    .arch-pilot-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                    .arch-copy-text{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;text-anchor:middle}
+                    .arch-flow{stroke:url(#spineFlow);stroke-width:3;fill:none;marker-end:url(#archArrow)}
+                    .arch-link{stroke:#58a6ff;stroke-width:1.4;fill:none;stroke-dasharray:5 4;marker-end:url(#archArrowSoft)}
+                    .arch-autonomy-link{stroke:#3fb950;stroke-width:1.6;fill:none;stroke-dasharray:7 5;marker-end:url(#archArrowGreen)}
+                  </style>
+                  <marker id="archArrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                    <path d="M0,0 L10,4 L0,8" fill="#bc8cff"/>
+                  </marker>
+                  <marker id="archArrowSoft" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L8,3 L0,6" fill="#58a6ff"/>
+                  </marker>
+                  <marker id="archArrowGreen" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L8,3 L0,6" fill="#3fb950"/>
+                  </marker>
+                </defs>
+
+                <rect class="arch-frame" x="16" y="16" width="1148" height="668" rx="18"/>
+
+                <rect class="arch-lane" x="46" y="54" width="1088" height="170" rx="14"/>
+                <text x="62" y="78" class="arch-note">COMPRESSED EXECUTION SPINE</text>
+                <path class="arch-flow" d="M224 131 H316"/>
+                <path class="arch-flow" d="M484 131 H576"/>
+                <path class="arch-flow" d="M744 131 H836"/>
+
+                <rect class="arch-stage" x="70" y="92" width="140" height="78" rx="12"/>
+                <text class="arch-stage-text" x="140" y="122">Ingestion</text>
+                <text class="arch-stage-sub" x="140" y="141">adapters + manifests</text>
+
+                <rect class="arch-stage" x="330" y="92" width="140" height="78" rx="12"/>
+                <text class="arch-stage-text" x="396" y="122">Training</text>
+                <text class="arch-stage-sub" x="396" y="141">models + configs</text>
+
+                <rect class="arch-stage" x="590" y="92" width="140" height="78" rx="12"/>
+                <text class="arch-stage-text" x="660" y="122">Evaluation</text>
+                <text class="arch-stage-sub" x="660" y="141">metrics + comparisons</text>
+
+                <rect class="arch-stage" x="850" y="92" width="140" height="78" rx="12"/>
+                <text class="arch-stage-text" x="920" y="122">Reporting</text>
+                <text class="arch-stage-sub" x="920" y="141">evidence packages</text>
+
+                <rect class="arch-artifact" x="85" y="186" width="110" height="26" rx="9"/>
+                <text class="arch-artifact-text" x="140" y="203">dataset state</text>
+                <rect class="arch-artifact" x="341" y="186" width="110" height="26" rx="9"/>
+                <text class="arch-artifact-text" x="396" y="203">trained model</text>
+                <rect class="arch-artifact" x="597" y="186" width="110" height="26" rx="9"/>
+                <text class="arch-artifact-text" x="652" y="203">evaluation set</text>
+                <rect class="arch-artifact" x="853" y="186" width="110" height="26" rx="9"/>
+                <text class="arch-artifact-text" x="908" y="203">report bundle</text>
+
+                <rect class="arch-lane" x="238" y="230" width="704" height="72" rx="14"/>
+                <rect class="arch-stage" x="290" y="244" width="600" height="44" rx="12"/>
+                <text class="arch-stage-text" x="590" y="271">contract-validated extension runner</text>
+
+                <rect class="arch-lane" x="46" y="306" width="1088" height="110" rx="14"/>
+                <text x="62" y="330" class="arch-note">DOWNSTREAM ANALYTICAL EXTENSION SURFACE</text>
+                <rect class="arch-extension" x="286" y="348" width="220" height="42" rx="11"/>
+                <text class="arch-extension-text" x="396" y="374">comparison and diagnostics</text>
+                <rect class="arch-extension" x="542" y="348" width="220" height="42" rx="11"/>
+                <text class="arch-extension-text" x="652" y="374">modality-specific analysis</text>
+                <rect class="arch-extension" x="798" y="348" width="220" height="42" rx="11"/>
+                <text class="arch-extension-text" x="908" y="374">monitoring and summary layers</text>
+
+                <path class="arch-link" d="M396 212 V244"/>
+                <path class="arch-link" d="M652 212 V244"/>
+                <path class="arch-link" d="M908 212 V244"/>
+                <path class="arch-link" d="M396 288 V348"/>
+                <path class="arch-link" d="M652 288 V348"/>
+                <path class="arch-link" d="M908 288 V348"/>
+
+                <rect class="arch-autonomy" x="46" y="464" width="520" height="126" rx="12"/>
+                <text class="arch-note" x="68" y="492">AUTONOMOUS EXPERIMENTATION SURFACE</text>
+                <text class="arch-autonomy-text" x="306" y="522">GP surrogates + meta-features</text>
+                <text class="arch-autonomy-text" x="306" y="546">experiment memory + value-of-information</text>
+                <text class="arch-autonomy-text" x="306" y="570">stopping rules + next-run selection</text>
+
+                <rect class="arch-pilot" x="614" y="464" width="520" height="126" rx="13"/>
+                <text class="arch-note" x="636" y="492">BOUNDED PILOT DEPLOYMENT SURFACE</text>
+                <text class="arch-pilot-text" x="874" y="522">one lab-facing data interface</text>
+                <text class="arch-pilot-text" x="874" y="546">one defined research workflow</text>
+                <text class="arch-pilot-text" x="874" y="570">one evaluation and reporting package</text>
+
+                <path class="arch-autonomy-link" d="M652 390 V438 H306 V464"/>
+                <path class="arch-link" d="M920 212 V464"/>
+                <text class="arch-note" x="324" y="430">bounded optimization inputs</text>
+              </svg>
+
+              <div class="architecture-caption">
+                <div>
+                  <div class="label">Execution path</div>
+                  <p>The runtime path includes ordered stages, explicit artifacts, and a mediated analytical boundary. Comparative analysis, modality-specific methods, optimization inputs, and deployment-facing outputs connect to the execution spine through declared interfaces.</p>
+                </div>
+
+                <div class="architecture-legend">
+                  <div class="label">Execution properties</div>
+                  <div class="architecture-legend-grid">
+                    <div class="architecture-legend-item">
+                      <div class="architecture-swatch" style="background: rgba(88,166,255,0.20); border: 1px solid #58a6ff;"></div>
+                      <p>Persisted artifacts mark the handoff between stages and keep provenance explicit.</p>
+                    </div>
+                    <div class="architecture-legend-item">
+                      <div class="architecture-swatch" style="background: rgba(188,140,255,0.20); border: 1px solid #bc8cff;"></div>
+                      <p>The extension runner mediates downstream analytical work through contract-validated attachment points.</p>
+                    </div>
+                    <div class="architecture-legend-item">
+                      <div class="architecture-swatch" style="background: rgba(63,185,80,0.20); border: 1px solid #3fb950;"></div>
+                      <p>Autonomous experimentation and pilot-facing deployment connect through separate interfaces with distinct scope and outputs.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="architecture-argument-grid">
+              <div class="architecture-argument-card">
+                <div class="label">Framework layers</div>
+                <h4>Layer stack</h4>
+                <p>Infrastructure, adapters, governance, modality-specific workloads, autonomous experimentation, and deployment surfaces are represented as separate framework layers.</p>
+              </div>
+              <div class="architecture-argument-card">
+                <div class="label">Execution spine</div>
+                <h4>Ordered stages</h4>
+                <p>The execution path includes ingestion, training, evaluation, reporting, persisted artifacts, and downstream analytical attachment through the runner.</p>
+              </div>
+              <div class="architecture-argument-card">
+                <div class="label">Extension boundary</div>
+                <h4>Mediated attachment</h4>
+                <p>Downstream analytical work attaches through the extension runner with contract validation, manifest capture, and declared interfaces.</p>
+              </div>
+              <div class="architecture-argument-card">
+                <div class="label">Operational scope</div>
+                <h4>Separate surfaces</h4>
+                <p>Autonomous experimentation, deployment-facing outputs, and downstream analytical work connect to execution through separate surfaces and interfaces.</p>
+              </div>
+            </div>
+
+            <div class="architecture-detail-grid">
+              <div class="architecture-detail-card">
+                <h4>Framework architecture</h4>
+                <p>The framework includes infrastructure controls, data adapters, governed execution, modality-specific workloads, autonomous experimentation, and deployment-facing interfaces for research workflows.</p>
+                <p>These components remain separate layers within the system architecture.</p>
+              </div>
+
+              <div class="architecture-detail-card">
+                <h4>Execution architecture</h4>
+                <p>The runtime system operates as a staged execution spine with persisted artifacts at each handoff. Downstream analytical work attaches through a contract-validated extension runner, separating comparative and modality-specific analysis from the core pipeline.</p>
+                <p>The execution architecture also includes optimization inputs and deployment-facing outputs connected at defined interfaces.</p>
+              </div>
+            </div>
+
+            <div class="architecture-note">The current architecture includes governed orchestration, persisted artifacts, a mediated extension boundary, an operational experiment-selection loop, and deployment-facing interfaces for research-facing pilot workflows.</div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </div>
+</body>
+</html>

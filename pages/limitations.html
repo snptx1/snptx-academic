@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX Limitations and Future Directions</title>
+<style>
+  :root {
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-red: #ff7b72;
+    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top left, rgba(255,123,114,0.07), transparent 26%), radial-gradient(circle at top right, rgba(88,166,255,0.07), transparent 24%), linear-gradient(180deg, #0d1117 0%, #0f1620 100%); color: var(--text-primary); font-family: var(--font-stack); line-height: 1.6; padding: 40px 24px 80px; }
+  .page { max-width: 1280px; margin: 0 auto; }
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding: 12px 0 16px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
+    scrollbar-width: none;
+  }
+  .top-nav::-webkit-scrollbar { display: none; }
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(48,54,61,0.9);
+    background: rgba(22,27,34,0.82);
+  }
+  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+  .top-nav a:hover,
+  .top-nav a.active {
+    color: var(--text-primary);
+    border-color: rgba(88,166,255,0.32);
+    background: rgba(88,166,255,0.14);
+  }
+  .page-header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .page-header h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+  .page-header p { max-width: 840px; color: var(--text-secondary); font-size: 15px; }
+  .draft { background: rgba(13,17,23,0.72); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.28); }
+  .draft-meta { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); background: rgba(22,27,34,0.88); }
+  .draft-meta h2 { font-size: 18px; font-weight: 700; }
+  .draft-meta p { color: var(--text-secondary); font-size: 13px; max-width: 760px; }
+  .badge { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-blue); background: rgba(88,166,255,0.10); border: 1px solid rgba(88,166,255,0.28); border-radius: 999px; padding: 5px 10px; white-space: nowrap; }
+  .stage { position: relative; padding: 38px 32px 40px; background: radial-gradient(circle at 12% 16%, rgba(255,123,114,0.14), transparent 30%), radial-gradient(circle at 84% 16%, rgba(88,166,255,0.12), transparent 24%), linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%); overflow: hidden; }
+  .stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent 0%, rgba(255,123,114,0.04) 100%); }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-orange); }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: rgba(210,153,34,0.75); }
+  .header { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr); gap: 24px; align-items: start; margin-bottom: 22px; }
+  .header h3 { font-size: 48px; line-height: 1.03; letter-spacing: -0.05em; max-width: 860px; margin-bottom: 16px; }
+  .lede { max-width: 860px; color: var(--text-secondary); font-size: 17px; line-height: 1.75; }
+  .summary, .card, .callout, .note, .detail-card { background: rgba(22,27,34,0.82); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 18px 40px rgba(0,0,0,0.18); padding: 16px; }
+  .summary, .card, .callout, .note { position: relative; z-index: 1; }
+  .label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .summary .label { color: var(--accent-orange); }
+  .table-head .label, .note .label { color: var(--accent-blue); }
+  .callout .label { color: var(--accent-blue); }
+  .summary h4, .table-head h4, .callout h4, .detail-card h4 { font-size: 15px; margin-bottom: 10px; }
+  .summary ul { list-style: none; display: grid; gap: 10px; }
+  .summary li { position: relative; padding-left: 14px; color: var(--text-secondary); font-size: 13px; line-height: 1.55; }
+  .summary li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-orange); }
+  .table-card, .callout, .note { margin-bottom: 18px; }
+  .table-head { display: grid; gap: 6px; margin-bottom: 14px; }
+  .table-head p, .callout p, .detail-card p, .note p { color: var(--text-secondary); font-size: 13px; line-height: 1.65; }
+  .table { width: 100%; border-collapse: collapse; border: 1px solid rgba(48,54,61,0.85); border-radius: 12px; overflow: hidden; background: rgba(13,17,23,0.56); }
+  .table th, .table td { text-align: left; padding: 13px 14px; vertical-align: top; font-size: 13px; line-height: 1.55; }
+  .table th { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); background: rgba(13,17,23,0.9); border-bottom: 1px solid rgba(48,54,61,0.85); }
+  .table td { color: var(--text-secondary); border-top: 1px solid rgba(48,54,61,0.55); }
+  .table tbody tr:first-child td { border-top: none; }
+  .detail-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .detail-card:nth-child(1) .label { color: var(--accent-blue); }
+  .detail-card:nth-child(2) .label { color: var(--accent-orange); }
+  .detail-card:nth-child(3) .label { color: var(--accent-green); }
+  .callout { background: rgba(22,27,34,0.62); border-color: rgba(88,166,255,0.18); }
+  .note { background: rgba(22,27,34,0.62); border-color: rgba(88,166,255,0.18); margin-bottom: 0; }
+  @media (max-width: 1100px) { .header, .detail-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) {
+    body { padding: 24px 14px 40px; }
+    .draft-meta { display: block; }
+    .draft-meta .badge { display: inline-block; margin-bottom: 12px; }
+    .stage { padding: 28px 20px 32px; }
+    .header h3 { font-size: 34px; }
+    .lede { font-size: 16px; }
+    .table, .table thead, .table tbody, .table tr, .table th, .table td { display: block; width: 100%; }
+    .table thead { display: none; }
+    .table tr { border-top: 1px solid rgba(48,54,61,0.55); }
+    .table tbody tr:first-child { border-top: none; }
+    .table td { border-top: none; padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX academic sections">
+      <a href="../index.html" class="nav-brand">SNPTX</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="motivation.html">Motivation</a>
+      <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="intelligence.html">Intelligence</a>
+      <a href="autonomous.html">Autonomous</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="fusion.html">Fusion</a>
+      <a href="pilots.html">Pilots</a>
+      <a href="positioning.html">Positioning</a>
+      <a href="limitations.html" class="active">Limitations</a>
+      <a href="references.html">References</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>SNPTX Limitations and Future Directions</h1>
+      <p>Known limits, evidence boundaries, and near-term technical priorities for the current platform.</p>
+    </header>
+
+    <article class="draft">
+      <div class="draft-meta">
+        <div>
+          <h2>Limitations</h2>
+          <p>Where the current evidence stops, what remains partial, and which technical extensions matter next.</p>
+        </div>
+        <div class="badge">Known Limits</div>
+      </div>
+
+      <section class="stage" id="limitations">
+        <div class="header">
+          <div>
+            <div class="eyebrow">Evidence boundaries, failure modes, and near-term priorities</div>
+            <h3>Limitations and Future Directions</h3>
+            <p class="lede">Explicit statement of current evidence boundaries, failure modes, and near-term research priorities.</p>
+          </div>
+          <aside class="summary">
+            <div class="label">Boundary summary</div>
+            <h4>What this section establishes</h4>
+            <ul>
+              <li>The document names current evidence limits directly instead of hiding them behind broader platform claims.</li>
+              <li>Known weaknesses are tied to specific empirical constraints such as dataset size, modality coverage, and deployment scope.</li>
+              <li>Future directions are concrete extensions of the current system rather than generic research aspirations.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <div class="label">Evidence posture</div>
+            <h4>Evidence boundary snapshot</h4>
+            <p>The live boundary table is preserved here as the clearest summary of implemented versus partial platform claims.</p>
+          </div>
+          <table class="table" aria-label="Evidence boundary snapshot">
+            <thead><tr><th>Dimension</th><th>Implemented</th><th>Partial / Roadmap Boundary</th></tr></thead>
+            <tbody>
+              <tr><td>Determinism</td><td>Seed controls and deterministic algorithm flags configured</td><td>No universal cross-hardware byte-identity claim</td></tr>
+              <tr><td>Versioning</td><td>MLflow tracking and report-level provenance available</td><td>DVC integration with primary pipeline is partial</td></tr>
+              <tr><td>Feedback</td><td>Autonomous experimentation loop operational</td><td>Framework-wide feedback artifact contract pending</td></tr>
+              <tr><td>Deployment</td><td>Pilot-ready research workflows demonstrated</td><td>No claim of clinical or commercial production deployment</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <div class="label">Known limits</div>
+            <h4>Known limitations</h4>
+            <p>The live limitations table is preserved here so weaknesses remain explicit and auditable.</p>
+          </div>
+          <table class="table" aria-label="Known limitations">
+            <thead><tr><th>Area</th><th>Limitation</th><th>Implication</th></tr></thead>
+            <tbody>
+              <tr><td>Clinical text (61.0%)</td><td>ClinicalBERT on 5-class specialty classification with ~3,500 training samples</td><td>Accuracy plateaus at 61% due to limited data; domain-specialized fine-tuning constrained by dataset size</td></tr>
+              <tr><td>Fusion (93.0%)</td><td>Marginal gain over best unimodal (92.8%); fusion advantage is 0.2 pp</td><td>Cross-modal benefit is modest when omics alone captures most signal; higher-dimensional morphological features may improve fusion lift</td></tr>
+              <tr><td>Fusion scope</td><td>Three-modality fusion validated; 4+ modality combinations untested</td><td>Attention-based fusion scales theoretically, but empirical validation beyond 3 modalities is pending</td></tr>
+              <tr><td>Dataset scale</td><td>Largest dataset is PathMNIST (107K); no million-scale benchmarks</td><td>Scaling behavior at biobank scale (UK Biobank, All of Us) is unvalidated</td></tr>
+              <tr><td>Single-institution</td><td>All experiments on one EC2 instance; no cross-site deployment tested</td><td>Reproducibility guarantees are validated within-environment; cross-institution pilot pending</td></tr>
+              <tr><td>Intelligence layer</td><td>10 of 15 modules are theoretical (specified but not trained)</td><td>Core 5 modules validated; theoretical modules are grounded in literature but lack empirical validation</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <div class="label">Forward path</div>
+            <h4>Future directions</h4>
+            <p>The live future-directions table is preserved here as the near-term extension roadmap.</p>
+          </div>
+          <table class="table" aria-label="Future directions">
+            <thead><tr><th>Direction</th><th>Approach</th></tr></thead>
+            <tbody>
+              <tr><td>Whole-slide imaging</td><td>Multiple-instance learning with attention pooling over tile embeddings; integration with foundation models (UNI, CONCH)</td></tr>
+              <tr><td>Foundation model integration</td><td>Adapter-based fine-tuning of domain-pretrained models (GatorTron, BioGPT, ESM-2) through the extension system</td></tr>
+              <tr><td>Large-scale graph reasoning</td><td>Scaling GCN pipeline to knowledge graphs with 1M+ nodes; exploring message-passing at biobank scale</td></tr>
+              <tr><td>Multi-task and transfer learning</td><td>Shared representations across related tasks using the embedding registry; continual learning across campaigns</td></tr>
+              <tr><td>Prospective validation</td><td>Cross-institutional deployment with artifact hash comparison; IRB-governed clinical cohort pilots</td></tr>
+              <tr><td>Causal inference integration</td><td>Extending the intelligence layer with treatment effect estimation and counterfactual reasoning</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <div class="label">Design philosophy</div>
+          <h4>How the document handles strong and weak results</h4>
+          <p>Where results are strong (imaging at 99.3%, drug discovery at 97.5%, single-cell at 96.9%), we report them. Where results are constrained by data (clinical text at 61.0%), we report those equally and explain the boundary. The value proposition is disciplined infrastructure: transparent experiments, auditable comparisons, and reproducibility controls within validated scope.</p>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="label">Honesty of scope</div>
+            <h4>Why this section matters</h4>
+            <p>The limitations section protects the rest of the document from overclaiming by explicitly documenting where evidence is thin, partial, or still theoretical.</p>
+          </div>
+          <div class="detail-card">
+            <div class="label">Practical implication</div>
+            <h4>What the reader should infer</h4>
+            <p>SNPTX is strongest as a pilot-ready research framework with clear infrastructure discipline, not as a proven production or clinical deployment platform.</p>
+          </div>
+          <div class="detail-card">
+            <div class="label">Continuation logic</div>
+            <h4>How future work is framed</h4>
+            <p>The future directions list extends directly from present gaps, which makes the roadmap look like the next technical layer of work rather than a detached wishlist.</p>
+          </div>
+        </div>
+
+      </section>
+    </article>
+  </div>
+</body>
+</html>

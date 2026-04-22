@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNPTX Intelligence Layer</title>
+<style>
+  :root {
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-purple: #bc8cff;
+    --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(88,166,255,0.08), transparent 28%),
+      radial-gradient(circle at top right, rgba(188,140,255,0.07), transparent 24%),
+      linear-gradient(180deg, #0d1117 0%, #0f1620 100%);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 18px;
+    padding: 12px 0 16px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
+    scrollbar-width: none;
+  }
+
+  .top-nav::-webkit-scrollbar { display: none; }
+
+  .top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(48,54,61,0.9);
+    background: rgba(22,27,34,0.82);
+  }
+
+  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+
+  .top-nav a:hover,
+  .top-nav a.active {
+    color: var(--text-primary);
+    border-color: rgba(88,166,255,0.32);
+    background: rgba(88,166,255,0.14);
+  }
+
+  .page-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    max-width: 840px;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .draft {
+    background: rgba(13,17,23,0.72);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+  }
+
+  .draft-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(22,27,34,0.88);
+  }
+
+  .draft-meta h2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .draft-meta p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    max-width: 760px;
+  }
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    background: rgba(88,166,255,0.10);
+    border: 1px solid rgba(88,166,255,0.28);
+    border-radius: 999px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+
+  .intelligence-stage {
+    position: relative;
+    padding: 38px 32px 40px;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
+      radial-gradient(circle at 84% 16%, rgba(188,140,255,0.16), transparent 24%),
+      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .intelligence-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: rgba(63,185,80,0.75);
+  }
+
+  .intelligence-header {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 22px;
+  }
+
+  .intelligence-header h3 {
+    font-size: 48px;
+    line-height: 1.03;
+    letter-spacing: -0.05em;
+    max-width: 860px;
+    margin-bottom: 16px;
+  }
+
+  .intelligence-lede {
+    max-width: 860px;
+    color: var(--text-secondary);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .intelligence-summary,
+  .signal-card,
+  .intelligence-table-card,
+  .intelligence-detail-card,
+  .intelligence-note {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  }
+
+  .intelligence-summary,
+  .signal-card,
+  .intelligence-table-card,
+  .intelligence-detail-card,
+  .intelligence-note {
+    padding: 16px;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .intelligence-summary .label { color: var(--accent-green); }
+  .intelligence-summary h4,
+  .signal-card h4,
+  .intelligence-table-head h4,
+  .intelligence-detail-card h4 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .intelligence-summary ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .intelligence-summary li {
+    position: relative;
+    padding-left: 14px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .intelligence-summary li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-green);
+  }
+
+  .signal-grid,
+  .intelligence-detail-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .signal-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .intelligence-detail-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .signal-card:nth-child(1) .label { color: var(--accent-green); }
+  .signal-card:nth-child(2) .label { color: var(--accent-blue); }
+  .signal-card:nth-child(3) .label { color: var(--accent-purple); }
+  .signal-card:nth-child(4) .label { color: var(--accent-orange); }
+
+  .signal-card p,
+  .intelligence-table-head p,
+  .intelligence-detail-card p,
+  .intelligence-note p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .intelligence-table-card {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 18px;
+  }
+
+  .intelligence-table-head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .intelligence-table-head .label { color: var(--accent-blue); }
+
+  .intelligence-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(48,54,61,0.85);
+    background: rgba(13,17,23,0.56);
+  }
+
+  .intelligence-table th,
+  .intelligence-table td {
+    text-align: left;
+    padding: 13px 14px;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .intelligence-table th {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: rgba(13,17,23,0.9);
+    border-bottom: 1px solid rgba(48,54,61,0.85);
+  }
+
+  .intelligence-table td {
+    color: var(--text-secondary);
+    border-top: 1px solid rgba(48,54,61,0.55);
+  }
+
+  .intelligence-table tbody tr:first-child td {
+    border-top: none;
+  }
+
+  .intelligence-detail-card:nth-child(1) .label { color: var(--accent-blue); }
+  .intelligence-detail-card:nth-child(2) .label { color: var(--accent-green); }
+  .intelligence-detail-card:nth-child(3) .label { color: var(--accent-purple); }
+
+  .intelligence-note {
+    position: relative;
+    z-index: 1;
+    background: rgba(22,27,34,0.62);
+    border-color: rgba(88,166,255,0.18);
+  }
+
+  @media (max-width: 1100px) {
+    .intelligence-header,
+    .signal-grid,
+    .intelligence-detail-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    body {
+      padding: 24px 14px 40px;
+    }
+
+    .draft-meta {
+      display: block;
+    }
+
+    .draft-meta .badge {
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .intelligence-stage {
+      padding: 28px 20px 32px;
+    }
+
+    .intelligence-header,
+    .signal-grid,
+    .intelligence-detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .intelligence-header h3 {
+      font-size: 34px;
+    }
+
+    .intelligence-lede {
+      font-size: 16px;
+    }
+
+    .intelligence-table,
+    .intelligence-table thead,
+    .intelligence-table tbody,
+    .intelligence-table tr,
+    .intelligence-table th,
+    .intelligence-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .intelligence-table thead {
+      display: none;
+    }
+
+    .intelligence-table tr {
+      border-top: 1px solid rgba(48,54,61,0.55);
+    }
+
+    .intelligence-table tbody tr:first-child {
+      border-top: none;
+    }
+
+    .intelligence-table td {
+      border-top: none;
+      padding: 10px 12px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX academic sections">
+      <a href="../index.html" class="nav-brand">SNPTX</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="motivation.html">Motivation</a>
+      <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="intelligence.html" class="active">Intelligence</a>
+      <a href="autonomous.html">Autonomous</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="fusion.html">Fusion</a>
+      <a href="pilots.html">Pilots</a>
+      <a href="positioning.html">Positioning</a>
+      <a href="limitations.html">Limitations</a>
+      <a href="references.html">References</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>SNPTX Intelligence Layer</h1>
+      <p>Implemented and theory-grounded intelligence modules supporting adaptive experimentation without overstating autonomous scope.</p>
+    </header>
+
+    <article class="draft">
+      <div class="draft-meta">
+        <div>
+          <h2>Intelligence</h2>
+          <p>Implemented intelligence modules and theory-grounded roadmap components for adaptive experimentation.</p>
+        </div>
+        <div class="badge">Implementation Status</div>
+      </div>
+
+      <section class="intelligence-stage" id="intelligence">
+        <div class="intelligence-header">
+          <div>
+            <div class="eyebrow">Adaptive experimentation infrastructure with implemented and specified layers</div>
+            <h3>Self-Learning Intelligence Layer</h3>
+            <p class="intelligence-lede">A partially implemented intelligence layer combines operational modules with theory-grounded roadmap modules for adaptive experimentation. The purpose of this section is to show what intelligence capabilities are already active in the framework and which additional modules are specified at the design level but not yet empirically validated.</p>
+          </div>
+
+          <aside class="intelligence-summary">
+            <div class="label">Intelligence summary</div>
+            <h4>How this layer is structured</h4>
+            <ul>
+              <li>Implemented modules support persistent experimentation memory, feedback, ranking, and dataset-aware defaults.</li>
+              <li>Roadmap modules are theory-grounded components specified for later integration into adaptive experimentation workflows.</li>
+              <li>The section distinguishes operational intelligence from literature-backed design intention.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="signal-grid">
+          <div class="signal-card">
+            <div class="label">Operational</div>
+            <h4>Five active modules</h4>
+            <p>The live system currently lists five implemented intelligence modules spanning cataloging, feedback, ranking, defaults, and hypothesis generation.</p>
+          </div>
+          <div class="signal-card">
+            <div class="label">Memory</div>
+            <h4>Persistent experiment catalog</h4>
+            <p>DuckDB-backed experiment storage gives the framework cumulative experiment memory rather than isolated one-off runs.</p>
+          </div>
+          <div class="signal-card">
+            <div class="label">Theory-grounded</div>
+            <h4>Ten specified roadmap modules</h4>
+            <p>The roadmap layer is anchored in cited theory across optimization, causal inference, continual learning, and information theory.</p>
+          </div>
+          <div class="signal-card">
+            <div class="label">Boundary</div>
+            <h4>Partial implementation only</h4>
+            <p>The intelligence layer is intentionally presented as mixed-status infrastructure, not as a fully trained or universally validated autonomous research system.</p>
+          </div>
+        </div>
+
+        <div class="intelligence-table-card">
+          <div class="intelligence-table-head">
+            <div class="label">Implemented intelligence</div>
+            <h4>Operational modules (B1-B5)</h4>
+            <p>The live implemented-module table is preserved here as the current validated intelligence surface in the framework.</p>
+          </div>
+
+          <table class="intelligence-table" aria-label="Implemented intelligence modules">
+            <thead>
+              <tr>
+                <th>Module</th>
+                <th>Function</th>
+                <th>Theory</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Experiment Catalog</td><td>DuckDB-backed persistent store, 16 columns, indexed</td><td>Cumulative experimentation</td></tr>
+              <tr><td>Meta-Analysis Engine</td><td>Cross-experiment pattern discovery, best-config ranking</td><td>Bayesian rank aggregation</td></tr>
+              <tr><td>Feedback Loop v2</td><td>Bayesian confidence updating, Thompson sampling</td><td>Beta-Binomial posterior (Agrawal &amp; Goyal, 2012)</td></tr>
+              <tr><td>Adaptive Defaults</td><td>Dataset-aware starting configuration</td><td>Sigmoid confidence scoring</td></tr>
+              <tr><td>Hypothesis Templates</td><td>7 declarative templates with trigger conditions</td><td>Declarative hypothesis systems</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="intelligence-table-card">
+          <div class="intelligence-table-head">
+            <div class="label">Specified roadmap</div>
+            <h4>Roadmap modules (B.6.1-B.6.10)</h4>
+            <p>The live roadmap table is retained as the theory-backed design surface for later intelligence expansion.</p>
+          </div>
+
+          <table class="intelligence-table" aria-label="Specified intelligence roadmap modules">
+            <thead>
+              <tr>
+                <th>Module</th>
+                <th>Theory</th>
+                <th>Citation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Meta-Features</td><td>Algorithm selection from dataset characteristics</td><td>Rice, 1976</td></tr>
+              <tr><td>Surrogates</td><td>GP-based Bayesian optimization with acquisition functions</td><td>Snoek et al., 2012</td></tr>
+              <tr><td>Causal Feedback</td><td>ATE, IPW, interrupted time series validation</td><td>Pearl, 2009</td></tr>
+              <tr><td>Experiment Design</td><td>Information gain, SPRT, active learning</td><td>Chaloner &amp; Verdinelli, 1995</td></tr>
+              <tr><td>Rule Mining</td><td>ILP rules with probabilistic calibration, Bayesian networks</td><td>Muggleton &amp; de Raedt, 1994</td></tr>
+              <tr><td>Multi-Objective</td><td>NSGA-II Pareto optimization with fairness constraints</td><td>Deb et al., 2002</td></tr>
+              <tr><td>Continual Learning</td><td>EWC, drift detection, experience replay</td><td>Kirkpatrick et al., 2017</td></tr>
+              <tr><td>Bayesian Testing</td><td>Signed-rank with ROPE, Friedman, bootstrap</td><td>Benavoli et al., 2017</td></tr>
+              <tr><td>Information Theory</td><td>Entropy, MI, MDL, KL divergence, feature ranking</td><td>Cover &amp; Thomas, 2006</td></tr>
+              <tr><td>Scientific Discovery</td><td>Surprise detection, symbolic regression, novelty search</td><td>Peirce, 1903</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="intelligence-detail-grid">
+          <div class="intelligence-detail-card">
+            <div class="label">Status discipline</div>
+            <h4>Why the split is necessary</h4>
+            <p>The implemented-versus-roadmap split keeps the intelligence discussion evidence-bounded and avoids treating cited theory as equivalent to validated runtime behavior.</p>
+          </div>
+          <div class="intelligence-detail-card">
+            <div class="label">Operational value</div>
+            <h4>What the active layer already contributes</h4>
+            <p>The active modules already support experiment memory, adaptive defaults, feedback updates, and reusable hypothesis scaffolding for experimentation workflows.</p>
+          </div>
+          <div class="intelligence-detail-card">
+            <div class="label">Section role</div>
+            <h4>How Intelligence supports the page</h4>
+            <p>This section extends the platform narrative beyond static benchmarking by showing how SNPTX is structured to accumulate experimental knowledge over time.</p>
+          </div>
+        </div>
+
+      </section>
+    </article>
+  </div>
+</body>
+</html>
