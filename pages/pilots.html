@@ -44,36 +44,15 @@
     top: 0;
     z-index: 1000;
     display: flex;
-    gap: 8px;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    gap: 6px 14px;
     margin-bottom: 18px;
     padding: 12px 0 16px;
     background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    touch-action: pan-x;
-    cursor: grab;
-  }
-
-  .top-nav::-webkit-scrollbar { display: none; }
-
-  .top-nav::before,
-  .top-nav::after {
-    content: "";
-    flex: 0 0 8px;
-  }
-
-  .top-nav.is-dragging {
-    cursor: grabbing;
-  }
-
-  .top-nav.is-dragging a {
-    pointer-events: none;
+    border-bottom: 1px solid rgba(48,54,61,0.85);
   }
 
   .top-nav a {
-    flex: 0 0 auto;
     color: var(--text-secondary);
     text-decoration: none;
     font-family: var(--font-mono);
@@ -81,10 +60,8 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     white-space: nowrap;
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid rgba(48,54,61,0.9);
-    background: rgba(22,27,34,0.82);
+    padding: 7px 0;
+    border-bottom: 1px solid transparent;
   }
 
   .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
@@ -92,8 +69,7 @@
   .top-nav a:hover,
   .top-nav a.active {
     color: var(--text-primary);
-    border-color: rgba(88,166,255,0.32);
-    background: rgba(88,166,255,0.14);
+    border-bottom-color: rgba(88,166,255,0.75);
   }
 
   .page-header {
@@ -666,72 +642,5 @@
       </section>
     </article>
   </div>
-  <script>
-    (() => {
-      for (const nav of document.querySelectorAll('.top-nav')) {
-        let pointerDown = false;
-        let startX = 0;
-        let startScrollLeft = 0;
-        let suppressClickUntil = 0;
-
-        const stopDragging = (event) => {
-          if (!pointerDown) {
-            return;
-          }
-
-          pointerDown = false;
-          nav.classList.remove('is-dragging');
-
-          if (event && nav.hasPointerCapture && nav.hasPointerCapture(event.pointerId)) {
-            nav.releasePointerCapture(event.pointerId);
-          }
-        };
-
-        nav.addEventListener('pointerdown', (event) => {
-          if (event.pointerType === 'mouse' && event.button !== 0) {
-            return;
-          }
-
-          pointerDown = true;
-          startX = event.clientX;
-          startScrollLeft = nav.scrollLeft;
-
-          if (nav.setPointerCapture) {
-            nav.setPointerCapture(event.pointerId);
-          }
-        });
-
-        nav.addEventListener('pointermove', (event) => {
-          if (!pointerDown) {
-            return;
-          }
-
-          const deltaX = event.clientX - startX;
-
-          if (Math.abs(deltaX) > 6) {
-            nav.classList.add('is-dragging');
-            suppressClickUntil = Date.now() + 120;
-          }
-
-          nav.scrollLeft = startScrollLeft - deltaX;
-        });
-
-        nav.addEventListener('pointerup', stopDragging);
-        nav.addEventListener('pointercancel', stopDragging);
-        nav.addEventListener('pointerleave', (event) => {
-          if (event.pointerType === 'mouse') {
-            stopDragging(event);
-          }
-        });
-
-        nav.addEventListener('click', (event) => {
-          if (Date.now() < suppressClickUntil) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-        }, true);
-      }
-    })();
-  </script>
 </body>
 </html>
