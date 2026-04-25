@@ -782,7 +782,7 @@
                   <div class="hero-stat-label">Modalities&nbsp;/&nbsp;datasets</div>
                 </div>
                 <div class="hero-stat">
-                  <div class="hero-stat-value" style="color:var(--accent-blue);">92.1%</div>
+                  <div class="hero-stat-value" style="color:var(--accent-blue);">98.0%</div>
                   <div class="hero-stat-label">ChEMBL drug GCN</div>
                   <div style="margin-top:4px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.05em;color:var(--accent-cyan);text-transform:none;"><a href="pages/fusion.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(120,212,255,0.5);">+0.2pp fusion vs best unimodal</a></div>
                 </div>
@@ -913,16 +913,16 @@
           </div>
 
           <details class="hero-toggle hero-toggle--full" open>
-            <summary>Verify in 5 minutes <span class="hero-toggle-hint">&mdash; reproduce the 92.1% ChEMBL result locally</span></summary>
+            <summary>Verify in 5 minutes <span class="hero-toggle-hint">&mdash; reproduce the 98.0% ChEMBL result locally</span></summary>
             <div class="hero-verify hero-verify--wide" aria-label="Verify in 5 minutes">
               <div>
                 <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-blue);margin-bottom:6px;">Verify in 5 minutes</div>
                 <div style="margin:-2px 0 10px;padding:8px 10px;border:1px dashed rgba(56,139,253,0.35);border-radius:6px;background:rgba(56,139,253,0.04);font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.5;"><span style="color:var(--accent-blue);text-transform:uppercase;letter-spacing:0.06em;font-size:9.5px;">Performance spectrum &middot;</span> <span style="color:var(--accent-green);">99.3%</span> imaging &middot; <span style="color:var(--accent-blue);">92.8%</span> omics &middot; <span style="color:var(--accent-orange);">61.0%</span> text &mdash; <a href="pages/results.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">full results &rarr;</a></div>
-                <p style="font-size:12px;color:var(--text-secondary);margin-bottom:8px;line-height:1.55;">Reproduce the 92.1% ChEMBL drug-GCN result locally; the snippet pins data hash + model hash + commit so the run is hash-equal across machines under fixed seeds.</p>
-<pre><span class="c"># clone, prepare a 2k-edge Hetionet subset, run the ChEMBL GCN baseline</span>
-<span class="k">git</span> clone https://github.com/snptx1/snptx-academic.git
-<span class="k">cd</span> snptx-academic && <span class="k">make</span> <span class="v">repro-chembl</span>   <span class="c"># &asymp; 4&ndash;6 min on a single GPU</span>
-<span class="k">mlflow</span> ui --backend-store-uri ./mlruns       <span class="c"># inspect runs, hashes, metrics</span></pre>
+                <p style="font-size:12px;color:var(--text-secondary);margin-bottom:8px;line-height:1.55;">Reproduce the 98.0% ChEMBL drug-GCN result locally &mdash; deterministic, bit-equal across runs at <code style="font-family:var(--font-mono);color:var(--accent-cyan);">seed=42</code>; CPU-only, no GPU required.</p>
+<pre><span class="c"># clone the public reproducibility repo and run the ChEMBL GCN baseline</span>
+<span class="k">git</span> clone https://github.com/snptx1/snptx-repro-chembl.git
+<span class="k">cd</span> snptx-repro-chembl && <span class="k">make</span> install <span class="v">repro-chembl</span>   <span class="c"># &asymp; 15s on CPU</span>
+<span class="k">cat</span> results/metrics/drug_discovery_result.json   <span class="c"># expect accuracy = 0.9797225186766275</span></pre>
               </div>
               <div>
                 <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-blue);margin-bottom:6px;">Pipeline rule graph</div>
