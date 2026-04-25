@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SNPTX</title>
+<meta name="description" content="SNPTX is an execution, evaluation, and extension layer for multi-modal biomedical machine learning workflows. Pilot-ready for academic labs; research-facing, scope-bounded.">
+<title>SNPTX — An Experimentation Layer for Multi-Modal Biomedical ML</title>
 <style>
   :root {
     --border: #30363d;
@@ -158,6 +159,182 @@
     background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
   }
 
+  /* Hero background: faint graph nodes (replaces decorative orbs) */
+  .hero-graph-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  .hero-graph-bg .gnode { fill: rgba(88,166,255,0.45); }
+  .hero-graph-bg .gnode--green { fill: rgba(63,185,80,0.45); }
+  .hero-graph-bg .gnode--purple { fill: rgba(188,140,255,0.45); }
+  .hero-graph-bg .gnode--cyan { fill: rgba(57,197,207,0.45); }
+  .hero-graph-bg .gnode--orange { fill: rgba(210,153,34,0.45); }
+  .hero-graph-bg .gedge { stroke: rgba(110,118,129,0.35); stroke-width: 0.6; fill: none; }
+
+  /* Lead-capability label */
+  .hero-capability-card { position: relative; }
+  .hero-lead-chip {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-orange);
+    border: 1px solid rgba(210,153,34,0.45);
+    border-radius: 999px;
+    padding: 3px 8px;
+  }
+  .hero-status-chip {
+    display: inline-block;
+    margin-top: auto;
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 2px 8px;
+    border: 1px solid currentColor;
+  }
+  .hero-status-chip--operational { color: var(--accent-green); }
+  .hero-status-chip--pre-pilot { color: var(--accent-orange); }
+  .hero-status-chip--neutral { color: var(--accent-blue); }
+
+  /* Verify-in-5-minutes proof block */
+  .hero-verify {
+    max-width: 840px;
+    margin: 4px 0 18px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(13,17,23,0.55);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
+    gap: 14px;
+    align-items: start;
+  }
+  .hero-verify--wide {
+    max-width: none;
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 360px);
+    gap: 22px;
+    padding: 18px 20px;
+  }
+  .hero-toggle--full > summary {
+    background: rgba(56,139,253,0.06);
+  }
+  .hero-verify pre {
+    margin: 0;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(48,54,61,0.7);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-primary);
+    overflow: auto;
+    white-space: pre;
+    line-height: 1.55;
+  }
+  .hero-verify pre .c { color: var(--text-secondary); }
+  .hero-verify pre .k { color: var(--accent-purple); }
+  .hero-verify pre .v { color: var(--accent-green); }
+  .hero-verify .dag-thumb {
+    border: 1px dashed rgba(48,54,61,0.85);
+    border-radius: 8px;
+    background: rgba(13,17,23,0.6);
+    aspect-ratio: 3 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 6px;
+  }
+  .hero-verify .dag-thumb svg { width: 100%; height: 100%; display: block; }
+  .hero-verify .dag-thumb .dag-placeholder {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 8px;
+    line-height: 1.5;
+  }
+
+  /* Collapsible hero sub-section */
+  .hero-toggle {
+    margin-top: 14px;
+    border-top: 1px solid rgba(48,54,61,0.55);
+    padding-top: 10px;
+  }
+  .hero-toggle > summary {
+    list-style: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: 4px 0;
+    user-select: none;
+  }
+  .hero-toggle > summary::-webkit-details-marker { display: none; }
+  .hero-toggle > summary::before {
+    content: "+";
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-blue);
+    width: 14px;
+    text-align: center;
+    transition: transform 0.15s ease;
+  }
+  .hero-toggle[open] > summary::before { content: "−"; }
+  .hero-toggle > summary:hover { color: var(--text-primary); }
+  .hero-toggle > summary .hero-toggle-hint {
+    color: #6e7681;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 11px;
+  }
+  .hero-toggle > div, .hero-toggle > .hero-verify, .hero-toggle > .hero-color-legend, .hero-toggle > .hero-capability-grid {
+    margin-top: 14px;
+  }
+
+  /* Color-encoding legend */
+  .hero-color-legend {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    margin: 6px 0 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+  .hero-color-legend span span { font-size: 13px; line-height: 1; }
+
+  /* Print: hero → clean A4 brief */
+  @media print {
+    body { background: #fff; color: #111; padding: 18mm; }
+    .top-nav, .draft + .draft, footer, .hero-orb, .hero-graph-bg, .hero-cta-row, .hero-thread-card,
+    .hero-thread, details, .hero-verify .dag-thumb { display: none !important; }
+    .hero-grid { grid-template-columns: 1fr !important; }
+    .draft { background: none !important; box-shadow: none !important; border: none !important; }
+    .hero-title { color: #000 !important; font-size: 28pt !important; }
+    .hero-subhead, .hero-pilot-line, .hero-capability-card p { color: #222 !important; }
+    .hero-stat-value { color: #000 !important; }
+    .hero-capability-card { border: 1px solid #999 !important; background: #fff !important; }
+    .hero-verify { background: #fff !important; border: 1px solid #999 !important; }
+    .hero-verify pre { background: #f4f4f4 !important; color: #111 !important; border: 1px solid #ccc !important; }
+  }
+
   .hero-orb {
     position: absolute;
     border-radius: 999px;
@@ -277,7 +454,9 @@
   }
 
   .hero-capability-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 14px;
+    align-items: stretch;
   }
 
   .hero-proof-card,
@@ -289,9 +468,113 @@
   }
 
   .hero-proof-card,
+  .hero-capability-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .hero-stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    max-width: 840px;
+    margin-bottom: 22px;
+  }
+
+  .hero-stat {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 14px 12px;
+    text-align: left;
+  }
+
+  .hero-stat-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .hero-stat-label {
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+
+  .hero-capability-card code,
+  .hero-thread-step code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    color: var(--accent-cyan);
+    background: transparent;
+    padding: 0;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(88,166,255,0.45);
+    color: var(--text-primary);
+    background: rgba(88,166,255,0.10);
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+
+  .hero-cta:hover {
+    background: rgba(88,166,255,0.18);
+    border-color: rgba(88,166,255,0.75);
+  }
+
+  .hero-cta--ghost {
+    background: transparent;
+    border-color: rgba(139,148,158,0.45);
+    color: var(--text-secondary);
+  }
+
+  .hero-cta--ghost:hover {
+    color: var(--text-primary);
+    border-color: rgba(139,148,158,0.85);
+  }
+
+  .hero-noclaim {
+    max-width: 840px;
+    margin-top: 14px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.55;
+    border-left: 2px solid rgba(210,153,34,0.55);
+    padding: 6px 0 6px 12px;
+  }
+
+  .hero-proof-card,
   .hero-capability-card,
   .hero-thread-card {
     padding: 16px;
+  }
+
+  .hero-capability-card p,
+  .hero-proof-card p {
+    margin-bottom: 0;
   }
 
   .hero-card-label,
@@ -307,6 +590,7 @@
   .hero-capability-card:nth-child(1) .hero-card-label { color: var(--accent-green); }
   .hero-capability-card:nth-child(2) .hero-card-label { color: var(--accent-purple); }
   .hero-capability-card:nth-child(3) .hero-card-label { color: var(--accent-orange); }
+  .hero-capability-card:nth-child(4) .hero-card-label { color: var(--accent-cyan); }
   .hero-thread-label { color: var(--accent-purple); }
 
   .hero-proof-card h4,
@@ -366,6 +650,10 @@
       grid-template-columns: 1fr;
     }
 
+    .hero-stat-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .hero-title {
       font-size: 40px;
     }
@@ -419,109 +707,467 @@
       <a href="references.html">References</a>
     </nav>
 
-    <header class="page-header">
-      <h1>SNPTX</h1>
-      <p>Pilot-ready interface for multi-modal biomedical machine learning workflows with explicit boundaries on scope, evidence, and deployment claims.</p>
-    </header>
-
     <article class="draft">
-      <div class="draft-meta">
-        <div>
-          <h2>SNPTX</h2>
-          <p>A pilot-facing overview of the platform, its current evidence surface, and the bounded workflow it is designed to support.</p>
-        </div>
-        <div class="badge">Pilot Brief</div>
-      </div>
-
       <section class="hero" id="top">
-        <div class="hero-orb hero-orb--blue"></div>
-        <div class="hero-orb hero-orb--purple"></div>
-        <div class="hero-orb hero-orb--green"></div>
-        <div class="hero-orb hero-orb--cyan"></div>
-        <div class="hero-orb hero-orb--pink"></div>
+        <svg class="hero-graph-bg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <g class="gedge">
+            <path d="M 90 110 L 240 80"/>
+            <path d="M 90 110 L 180 240"/>
+            <path d="M 240 80 L 380 160"/>
+            <path d="M 180 240 L 320 320"/>
+            <path d="M 380 160 L 520 110"/>
+            <path d="M 380 160 L 480 280"/>
+            <path d="M 320 320 L 480 280"/>
+            <path d="M 320 320 L 380 470"/>
+            <path d="M 480 280 L 620 220"/>
+            <path d="M 480 280 L 600 410"/>
+            <path d="M 520 110 L 680 70"/>
+            <path d="M 620 220 L 760 170"/>
+            <path d="M 620 220 L 720 340"/>
+            <path d="M 600 410 L 720 340"/>
+            <path d="M 380 470 L 540 540"/>
+            <path d="M 540 540 L 720 510"/>
+            <path d="M 720 340 L 840 270"/>
+            <path d="M 720 510 L 870 460"/>
+            <path d="M 760 170 L 920 130"/>
+            <path d="M 840 270 L 1010 230"/>
+            <path d="M 870 460 L 1040 420"/>
+            <path d="M 920 130 L 1080 90"/>
+            <path d="M 1010 230 L 1110 320"/>
+            <path d="M 1040 420 L 1110 320"/>
+          </g>
+          <circle class="gnode" cx="90" cy="110" r="3.5"/>
+          <circle class="gnode gnode--purple" cx="240" cy="80" r="3"/>
+          <circle class="gnode gnode--green" cx="180" cy="240" r="3"/>
+          <circle class="gnode" cx="380" cy="160" r="3.5"/>
+          <circle class="gnode gnode--cyan" cx="320" cy="320" r="3"/>
+          <circle class="gnode gnode--orange" cx="520" cy="110" r="3"/>
+          <circle class="gnode" cx="480" cy="280" r="4"/>
+          <circle class="gnode gnode--green" cx="380" cy="470" r="3"/>
+          <circle class="gnode" cx="620" cy="220" r="3.5"/>
+          <circle class="gnode gnode--purple" cx="600" cy="410" r="3"/>
+          <circle class="gnode" cx="680" cy="70" r="3"/>
+          <circle class="gnode gnode--cyan" cx="760" cy="170" r="3"/>
+          <circle class="gnode" cx="720" cy="340" r="3.5"/>
+          <circle class="gnode gnode--green" cx="540" cy="540" r="3"/>
+          <circle class="gnode gnode--orange" cx="720" cy="510" r="3"/>
+          <circle class="gnode" cx="840" cy="270" r="3"/>
+          <circle class="gnode gnode--purple" cx="870" cy="460" r="3"/>
+          <circle class="gnode" cx="920" cy="130" r="3.5"/>
+          <circle class="gnode gnode--cyan" cx="1010" cy="230" r="3"/>
+          <circle class="gnode gnode--green" cx="1040" cy="420" r="3"/>
+          <circle class="gnode" cx="1080" cy="90" r="3"/>
+          <circle class="gnode gnode--orange" cx="1110" cy="320" r="4"/>
+        </svg>
         <div class="hero-shell">
           <div class="hero-grid">
             <div>
-              <div class="hero-eyebrow">For pilot deployment in multi-modal biomedical research</div>
+              <div class="hero-eyebrow">Research framework &middot; Pilot brief</div>
               <h1 class="hero-title">An Experimentation Layer for Multi-Modal Biomedical Machine Learning</h1>
-              <p class="hero-subhead">SNPTX organizes pipeline execution, comparative evaluation, and downstream analytical extension through artifact-defined stage boundaries and contract-validated extensions. It gives biomedical machine learning workflows a clearer structure for cross-modal comparison across graph, omics, imaging, clinical tabular, text, and fusion settings.</p>
-              <div class="hero-pilot-line"><strong>Proposed pilot:</strong> one bounded research workflow, one lab-specific data interface, and one evaluation package built on validated pipeline components, with deployment hardening introduced only where the pilot requires it.</div>
+              <p class="hero-subhead">SNPTX organizes pipeline execution, comparative evaluation, and downstream analytical extension through artifact-defined stage boundaries and contract-validated extensions. The current build covers eight modality families &mdash; tabular, omics, graph, imaging, NLP, single-cell, molecular-graph drug discovery, and late-fusion ensemble &mdash; across 46 datasets.</p>
+              <p style="max-width:840px;margin:-6px 0 14px;font-size:11.5px;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:0.02em;line-height:1.55;">Built during MITx Micromasters (Statistics &amp; Data Science) and Harvard ALM&nbsp;(Data Science) &middot; integrates Hetionet, Open Targets, ChEMBL, TCGA, GTEx, MIMIC-IV, AlphaFold, and PubMed-class corpora.</p>
+              <div class="hero-pilot-line"><strong>Proposed pilot:</strong> a 6&ndash;10 week, jointly-authored run on one bounded research workflow &mdash; one lab-specific data adapter (mapping your expression matrices, KG triples, or imaging manifests to the stage-1 contract), one evaluation package built on Tier-1 validated components (calibration-corrected leaderboard, leakage-free comparison, contract-validation report), reproducible from a tagged commit. Deployment hardening only where the pilot requires it.</div>
 
-              <div class="hero-proof-row">
-                <div class="hero-proof-card">
-                  <div class="hero-card-label">Originality</div>
-                  <h4>Artifact-defined analytical boundaries</h4>
-                  <p>Core pipeline stages and downstream analytical work meet through explicit artifacts and validated extension interfaces.</p>
+              <div class="hero-stat-strip" aria-label="What's running today">
+                <div class="hero-stat">
+                  <div class="hero-stat-value" style="color:var(--accent-purple);">1,037</div>
+                  <div class="hero-stat-label">Experiments / hour</div>
                 </div>
-                <div class="hero-proof-card">
-                  <div class="hero-card-label">Evidence</div>
-                  <h4>Validated experimental surface</h4>
-                  <p>Current coverage includes 7 modality families plus fusion, contract-validated extensions, and an operational autonomous experimentation loop.</p>
+                <div class="hero-stat">
+                  <div class="hero-stat-value" style="color:var(--accent-green);">8&nbsp;/&nbsp;46</div>
+                  <div class="hero-stat-label">Modalities&nbsp;/&nbsp;datasets</div>
                 </div>
-                <div class="hero-proof-card">
-                  <div class="hero-card-label">Pilot Scope</div>
-                  <h4>Immediate use, explicit limits</h4>
-                  <p>The proposed deployment is limited to one research workflow with defined outputs, a clear stopping point, and explicit limits on what is being claimed.</p>
+                <div class="hero-stat">
+                  <div class="hero-stat-value" style="color:var(--accent-blue);">92.1%</div>
+                  <div class="hero-stat-label">ChEMBL drug GCN</div>
+                  <div style="margin-top:4px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.05em;color:var(--accent-cyan);text-transform:none;"><a href="fusion.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(120,212,255,0.5);">+0.2pp fusion vs best unimodal</a></div>
+                </div>
+                <div class="hero-stat">
+                  <div class="hero-stat-value" style="color:var(--accent-orange);">104&nbsp;/&nbsp;1,100</div>
+                  <div class="hero-stat-label">Discoveries&nbsp;/&nbsp;campaign</div>
                 </div>
               </div>
 
-              <div class="hero-capability-grid">
+              <div style="max-width:840px;margin:-8px 0 18px;display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-secondary);">
+                <span><span style="color:var(--accent-green);">&bull;</span> 1,357 tests</span>
+                <span><span style="color:var(--accent-green);">&bull;</span> 0 ruff</span>
+                <span><span style="color:var(--accent-green);">&bull;</span> 0 pyright</span>
+                <span><span style="color:var(--accent-blue);">&bull;</span> Snakemake&nbsp;+&nbsp;DVC&nbsp;+&nbsp;MLflow</span>
+                <span><span style="color:var(--accent-blue);">&bull;</span> <a href="methodology.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">deterministic seeding &middot; k-fold leakage gates</a></span>
+                <span><span style="color:var(--accent-purple);">&bull;</span> <a href="intelligence.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">5 implemented + 10 theory-grounded</a></span>
+                <span><span style="color:var(--accent-green);">&bull;</span> <a href="evidence.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">evidence-bounded across 6 dimensions</a></span>
+                <details style="display:inline;"><summary style="cursor:pointer;color:var(--accent-cyan);list-style:none;">&#9656; Named datasets per modality</summary><div style="margin-top:10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:rgba(13,17,23,0.6);text-transform:none;letter-spacing:0;font-family:var(--font-stack);font-size:12px;color:var(--text-secondary);line-height:1.65;max-width:760px;">
+                  <div><strong style="color:var(--text-primary);">Knowledge graphs &amp; pathways:</strong> hetionet, open_targets, gene_ontology, reactome_pathways <span style="color:#6e7681;">(planned: string_human, primekg)</span></div>
+                  <div><strong style="color:var(--text-primary);">Molecular graphs &amp; structure:</strong> chembl_subset, moleculenet_tox21, alphafold_targets</div>
+                  <div><strong style="color:var(--text-primary);">Omics &mdash; transcriptomics &amp; eQTL:</strong> tcga_pancan, gtex_v8, gtex_eqtl</div>
+                  <div><strong style="color:var(--text-primary);">Omics &mdash; proteomics &amp; metabolomics:</strong> cptac, pride_sample, metabolights_mtbls1</div>
+                  <div><strong style="color:var(--text-primary);">Single-cell &amp; spatial:</strong> cellxgene_pbmc, tenx_pbmc_3k, visium_brain</div>
+                  <div><strong style="color:var(--text-primary);">Variants &amp; functional genomics:</strong> clinvar, thousand_genomes, gnomad, depmap, gwas_catalog</div>
+                  <div><strong style="color:var(--text-primary);">Clinical &amp; pharmacovigilance:</strong> synthea_readmission, mimic_iv, eicu_crd, cms_synpuf, faers <span style="color:#6e7681;">(planned: aact, omop_synthea)</span></div>
+                  <div><strong style="color:var(--text-primary);">Text, imaging, time-series:</strong> mtsamples, pubmed_sample, mitbih <span style="color:#6e7681;">(planned: mimic_cxr, chexpert_small, camelyon17_sample, mimic_notes, hmp2_ibd)</span></div>
+                  <div style="margin-top:8px;color:#6e7681;font-size:11px;">DVC-versioned (s3://snptx-dvc-prod, gs://snptx-dvc-storage); ingested via the adapter-based <code style="font-family:var(--font-mono);color:var(--accent-cyan);">build_dataset_generic</code> rule.</div>
+                </div></details>
+              </div>
+
+              <details class="hero-toggle">
+                <summary>Color encoding <span class="hero-toggle-hint">&mdash; how to read the chips</span></summary>
+                <div class="hero-color-legend" aria-label="Color encoding">
+                  <span><span style="color:var(--accent-green);">&bull;</span> green &middot; operational today</span>
+                  <span><span style="color:var(--accent-orange);">&bull;</span> orange &middot; pre-pilot work</span>
+                  <span><span style="color:var(--accent-blue);">&bull;</span> blue &middot; neutral fact</span>
+                  <span><span style="color:var(--accent-purple);">&bull;</span> purple &middot; differentiator</span>
+                </div>
+              </details>
+
+              <details class="hero-toggle">
+                <summary>Capability surface (4) <span class="hero-toggle-hint">&mdash; autonomous engine, extensions, deployment, benchmark surface</span></summary>
+                <div class="hero-capability-grid">
                 <div class="hero-capability-card">
+                  <span class="hero-lead-chip">&starf; Lead capability</span>
                   <div class="hero-card-label">Capability</div>
                   <h5>Autonomous experimentation</h5>
-                  <p>GP surrogates, adaptive search, experiment memory, and stopping rules support continuous experiment selection and follow-on optimization.</p>
+                  <p>Bayesian optimization daemon (<code>ExperimentEngine</code>): GP surrogates over hyperparameter space, expected-improvement plus value-of-information acquisition, SPRT stopping (&alpha;=&beta;=0.05), DuckDB experiment catalog. Validated at 1,037 experiments / hour. <strong style="color:var(--text-primary);">Outputs:</strong> ranked next-run queue, surrogate-calibration trace, novelty score per candidate.</p>
+                  <span class="hero-status-chip hero-status-chip--operational">&bull; Operational today</span>
                 </div>
                 <div class="hero-capability-card">
                   <div class="hero-card-label">Capability</div>
                   <h5>Contract-validated extensions</h5>
-                  <p>ABI-versioned extensions under a unified schema give downstream analytical work a stable attachment point without collapsing the core workflow.</p>
+                  <p>Seven extension modules under a YAML-contract execution layer; four Tier-1 extensions are contract-validated and stable today. Schema convergence (v1 / v2) is pre-pilot work, scoped and tracked.</p>
+                  <span class="hero-status-chip hero-status-chip--pre-pilot">&bull; 4 stable &middot; v1/v2 pre-pilot</span>
                 </div>
                 <div class="hero-capability-card">
                   <div class="hero-card-label">Capability</div>
                   <h5>Deployment pathway</h5>
-                  <p>FastAPI serving, batch inference, RBAC audit trails, and customer-hosted infrastructure provide a credible path from pilot workflow to lab deployment.</p>
+                  <p>FastAPI inference (tabular, fusion, batch), RBAC with HMAC-signed tokens, hash-chained audit log (21 CFR Part 11 posture), customer-hosted via Terraform and Helm.</p>
+                  <span class="hero-status-chip hero-status-chip--neutral">&bull; Available on request</span>
+                </div>
+                <div class="hero-capability-card">
+                  <div class="hero-card-label">Capability</div>
+                  <h5>Cross-lab benchmark surface</h5>
+                  <p>A shared evaluation surface for graph-ML &amp; foundation-model methods: leakage-free splits, calibration-corrected leaderboards, lineage-stamped checkpoints, contract-validated reports. Designed so two labs can compare results on identical evaluation manifests.</p>
+                  <span class="hero-status-chip hero-status-chip--operational">&bull; Operational today</span>
+                </div>
+                </div>
+              </details>
+
+              <div class="hero-cta-row">
+                <a class="hero-cta" href="evidence.html">See evidence &amp; validation</a>
+                <a class="hero-cta hero-cta--ghost" href="mailto:dan@snptx.ai?subject=SNPTX%20pilot%20scoping">Request pilot scoping</a>
+                <a class="hero-cta hero-cta--ghost" href="limitations.html">Read the limitations</a>
+                <a class="hero-cta hero-cta--ghost" href="javascript:window.print()" style="border-style:dashed;">Download brief (print &rarr; PDF)</a>
+              </div>
+
+              <div style="max-width:840px;margin-top:14px;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px;align-items:stretch;">
+                <div style="border-left:2px solid rgba(63,185,80,0.6);padding:8px 0 8px 12px;display:flex;flex-direction:column;height:100%;">
+                  <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-green);margin-bottom:4px;">What SNPTX claims</div>
+                  <p style="font-size:12px;line-height:1.55;color:var(--text-secondary);">Reproducible multi-modal pipelines, contract-validated extensions, calibrated benchmarks, and an autonomous experimentation surface &mdash; <a href="validation.html" style="color:var(--text-primary);border-bottom:1px dotted rgba(201,209,217,0.4);text-decoration:none;">validated across 8 axes</a> through versioned artifacts.</p>
+                </div>
+                <div style="border-left:2px solid rgba(210,153,34,0.6);padding:8px 0 8px 12px;display:flex;flex-direction:column;height:100%;">
+                  <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-orange);margin-bottom:4px;">What SNPTX does not claim</div>
+                  <p style="font-size:12px;line-height:1.55;color:var(--text-secondary);">Diagnostic, prescribing, or autonomous-clinical capability. No replacement for wet-lab validation, IRB, or regulatory review. See <a href="limitations.html" style="color:var(--text-primary);">Limitations</a>.</p>
                 </div>
               </div>
             </div>
 
-            <div>
+            <div style="display:flex;flex-direction:column;">
               <div class="hero-thread-card">
-                <div class="hero-thread-label">Pilot overview</div>
-                <h4>System, evidence, and deployment path</h4>
+                <div class="hero-thread-label">Pilot in 4 steps</div>
+                <h4>What working with SNPTX looks like</h4>
                 <div class="hero-thread">
                   <div class="hero-thread-step">
-                    <h5>System</h5>
-                    <p>SNPTX is an execution, evaluation, and extension layer for biomedical machine learning workflows.</p>
+                    <h5>1 &middot; Scope</h5>
+                    <p>Together we pick one workflow, one dataset family, and one evaluation package. The pilot succeeds or fails on a single, agreed objective.</p>
                   </div>
                   <div class="hero-thread-step">
-                    <h5>Contribution</h5>
-                    <p>The core contribution is a workflow structure that keeps core pipeline stages separate from downstream analytical extension.</p>
+                    <h5>2 &middot; Adapter</h5>
+                    <p>A schema adapter maps your inputs &mdash; expression matrices, KG triples, imaging manifests, or clinical tabular &mdash; to the stage-1 contract. Data stays in your environment.</p>
                   </div>
                   <div class="hero-thread-step">
-                    <h5>Autonomous layer</h5>
-                    <p>The autonomous loop is already operational: GP surrogates, meta-features, experiment catalog, value-of-information, and SPRT stopping rules are connected by a daemon process.</p>
+                    <h5>3 &middot; Run</h5>
+                    <p>The pipeline executes under Snakemake + DVC with MLflow tracking. The autonomous engine (GP + SPRT + VoI) is opt-in for hyperparameter search.</p>
                   </div>
                   <div class="hero-thread-step">
-                    <h5>Extension model</h5>
-                    <p>Seven ABI-versioned extensions already run under a unified schema with contract-validated execution.</p>
-                  </div>
-                  <div class="hero-thread-step">
-                    <h5>Evidence</h5>
-                    <p>The current build already covers multiple modality families, fusion, feedback, and autonomous experimentation at a scale sufficient for a focused pilot.</p>
-                  </div>
-                  <div class="hero-thread-step">
-                    <h5>Deployment path</h5>
-                    <p>FastAPI serving, batch inference, RBAC audit trails, and customer-hosted deployment are already mapped in the present build and deployment roadmap.</p>
-                  </div>
-                  <div class="hero-thread-step">
-                    <h5>Pilot scope</h5>
-                    <p>The proposed deployment is research-facing, narrow in scope, and organized around immediate utility for one defined workflow.</p>
+                    <h5>4 &middot; Evaluation package</h5>
+                    <p>Tier-1 extensions emit auditable artifacts &mdash; calibration, metric aggregation, evaluation summary, contract checks &mdash; reviewed jointly with your team.</p>
                   </div>
                 </div>
               </div>
+
+              <div style="margin-top:57px;padding:18px 4px 4px;border-top:1px solid rgba(48,54,61,0.7);">
+                <div class="hero-thread-label" style="color:var(--accent-orange);">What you receive</div>
+                <h4 style="font-size:16px;margin-bottom:10px;">Concrete artifacts</h4>
+                <ul style="list-style:none;display:grid;gap:10px;margin-top:10px;padding:0;">
+                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-blue);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Reproducible pipeline.</strong> Snakemake DAG + DVC-versioned data + MLflow run history; n=3 runs are hash-equal under fixed seeds.</span></li>
+                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Evaluation package.</strong> Calibration + metric aggregation + leakage-free comparison + contract-validation report.</span></li>
+                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-green);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Lineage manifest.</strong> Per-checkpoint data hash, model hash, commit, and config &mdash; suitable for a reproducibility appendix.</span></li>
+                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-orange);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Hash-chained audit log.</strong> 21 CFR Part 11 posture; every stage transition is independently verifiable.</span></li>
+                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-cyan);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Joint write-up.</strong> Methods + results section drafted with your team, ready for appendix or preprint.</span></li>
+                </ul>
+              </div>
             </div>
           </div>
+
+          <details class="hero-toggle hero-toggle--full" open>
+            <summary>Verify in 5 minutes <span class="hero-toggle-hint">&mdash; reproduce the 92.1% ChEMBL result locally</span></summary>
+            <div class="hero-verify hero-verify--wide" aria-label="Verify in 5 minutes">
+              <div>
+                <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-blue);margin-bottom:6px;">Verify in 5 minutes</div>
+                <div style="margin:-2px 0 10px;padding:8px 10px;border:1px dashed rgba(56,139,253,0.35);border-radius:6px;background:rgba(56,139,253,0.04);font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.5;"><span style="color:var(--accent-blue);text-transform:uppercase;letter-spacing:0.06em;font-size:9.5px;">Performance spectrum &middot;</span> <span style="color:var(--accent-green);">99.3%</span> imaging &middot; <span style="color:var(--accent-blue);">92.8%</span> omics &middot; <span style="color:var(--accent-orange);">61.0%</span> text &mdash; <a href="results.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">full results &rarr;</a></div>
+                <p style="font-size:12px;color:var(--text-secondary);margin-bottom:8px;line-height:1.55;">Reproduce the 92.1% ChEMBL drug-GCN result locally; the snippet pins data hash + model hash + commit so the run is hash-equal across machines under fixed seeds.</p>
+<pre><span class="c"># clone, prepare a 2k-edge Hetionet subset, run the ChEMBL GCN baseline</span>
+<span class="k">git</span> clone https://github.com/snptx1/snptx-academic.git
+<span class="k">cd</span> snptx-academic && <span class="k">make</span> <span class="v">repro-chembl</span>   <span class="c"># &asymp; 4&ndash;6 min on a single GPU</span>
+<span class="k">mlflow</span> ui --backend-store-uri ./mlruns       <span class="c"># inspect runs, hashes, metrics</span></pre>
+              </div>
+              <div>
+                <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-blue);margin-bottom:6px;">Pipeline rule graph</div>
+                <a href="../assets/snakemake-dag.png?v=2" class="dag-thumb" target="_blank" rel="noopener" aria-label="Open full Snakemake DAG (raw graphviz)">
+                  <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Snakemake rule graph: build_dataset to validate_data and split_data, both feed train_model, evaluate_model, summarize_evaluations, plot_summary, generate_model_report, all">
+                    <defs>
+                      <marker id="dag-arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M0,0 L10,5 L0,10 z" fill="#6e7681"/>
+                      </marker>
+                      <style>
+                        .n { fill: rgba(13,17,23,0.85); stroke-width: 1.4; rx: 6; }
+                        .nt { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9.5px; fill: #e6edf3; text-anchor: middle; dominant-baseline: middle; }
+                        .e { stroke: #6e7681; stroke-width: 1.1; fill: none; opacity: 0.7; }
+                        .ingest { stroke: var(--accent-orange); }
+                        .prep   { stroke: var(--accent-cyan); }
+                        .train  { stroke: var(--accent-blue); }
+                        .eval   { stroke: var(--accent-green); }
+                        .out    { stroke: var(--accent-purple); }
+                        .all    { stroke: #d97757; }
+                        .lane   { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 7.5px; fill: #6e7681; letter-spacing: 0.08em; text-transform: uppercase; }
+                      </style>
+                    </defs>
+                    <text class="lane" x="6" y="32">ingest</text>
+                    <text class="lane" x="6" y="78">prep</text>
+                    <text class="lane" x="6" y="124">train</text>
+                    <text class="lane" x="6" y="170">eval</text>
+                    <text class="lane" x="6" y="216">report</text>
+                    <text class="lane" x="6" y="262">target</text>
+                    <path class="e" d="M210,42 C210,55 132,55 132,72"/>
+                    <path class="e" d="M210,42 C210,55 288,55 288,72"/>
+                    <path class="e" d="M132,92 C132,108 210,108 210,118"/>
+                    <path class="e" d="M288,92 C288,108 210,108 210,118"/>
+                    <path class="e" d="M210,138 C210,152 132,152 132,164"/>
+                    <path class="e" d="M210,138 C210,152 288,152 288,164"/>
+                    <path class="e" d="M288,92 C320,108 320,150 288,164"/>
+                    <path class="e" d="M288,184 C288,200 210,200 210,210"/>
+                    <path class="e" d="M210,230 C210,242 156,242 156,256" marker-end="url(#dag-arrow2)"/>
+                    <path class="e" d="M210,230 C210,242 264,242 264,256" marker-end="url(#dag-arrow2)"/>
+                    <path class="e" d="M210,230 C210,250 210,256 210,260"/>
+                    <g><rect class="n ingest" x="170" y="22" width="80" height="22"/><text class="nt" x="210" y="34">build_dataset</text></g>
+                    <g><rect class="n prep" x="92" y="68" width="80" height="22"/><text class="nt" x="132" y="80">validate_data</text></g>
+                    <g><rect class="n prep" x="248" y="68" width="80" height="22"/><text class="nt" x="288" y="80">split_data</text></g>
+                    <g><rect class="n train" x="170" y="114" width="80" height="22"/><text class="nt" x="210" y="126">train_model</text></g>
+                    <g><rect class="n eval" x="92" y="160" width="80" height="22"/><text class="nt" x="132" y="172">evaluate_model</text></g>
+                    <g><rect class="n eval" x="220" y="160" width="120" height="22"/><text class="nt" x="280" y="172">summarize_evaluations</text></g>
+                    <g><rect class="n out" x="160" y="206" width="100" height="22"/><text class="nt" x="210" y="218">plot / report</text></g>
+                    <g><rect class="n all" x="190" y="252" width="40" height="20"/><text class="nt" x="210" y="262">all</text></g>
+                    <text class="lane" x="414" y="272" text-anchor="end">8 rules &middot; click to view raw DAG</text>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </details>
+
+          <div style="margin-top:18px;padding-top:12px;border-top:1px solid rgba(48,54,61,0.55);display:flex;justify-content:flex-end;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;color:var(--text-secondary);letter-spacing:0;text-transform:none;">
+            <a href="https://github.com/snptx1/snptx-academic" target="_blank" rel="noopener" style="color:var(--text-secondary);text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">github.com/snptx1/snptx-academic</a>
+            <span style="color:#6e7681;">&middot;</span>
+            <span>v0.4 &middot; 2026-04-24</span>
+          </div>
         </div>
+      </section>
+    </article>
+
+    <article class="draft" aria-labelledby="arch-pilots-title">
+      <div class="draft-meta">
+        <div>
+          <h2 id="arch-pilots-title">Architecture &amp; proposed pilots</h2>
+          <p>How the layers compose, and three pilot shapes drawn from the registry of validated components &mdash; aligned with graph-ML, knowledge-graph, and foundation-model work in academic biomedicine.</p>
+        </div>
+        <span class="badge">Pilot menu</span>
+      </div>
+
+      <section style="padding:28px 28px 8px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Execution spine, mediated extensions, autonomous loop</h3>
+          <p style="font-size:12px;color:var(--text-secondary);max-width:520px;">Ordered stages with persisted artifacts; downstream analysis attaches through a contract-validated runner; the autonomy surface feeds next-run selection back into training. Full diagram on <a href="architecture.html" style="color:var(--accent-blue);">Architecture</a>.</p>
+        </div>
+        <div style="background:rgba(13,17,23,0.55);border:1px solid var(--border);border-radius:14px;padding:22px 18px;overflow:auto;">
+          <svg viewBox="0 0 1100 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iarch-title iarch-desc" style="width:100%;height:auto;min-width:760px;display:block;margin:0 auto;">
+            <title id="iarch-title">SNPTX execution spine, extension runner, autonomy and deployment surfaces</title>
+            <desc id="iarch-desc">Four-stage execution spine (ingestion, training, evaluation, reporting) with persisted artifacts; mediated contract-validated extension runner attaches through declared interfaces; an autonomous experimentation surface feeds back into training; a deployment surface receives the evaluation package.</desc>
+            <defs>
+              <linearGradient id="iarch-spine" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#bc8cff" stop-opacity="0.95"/>
+              </linearGradient>
+              <linearGradient id="iarch-pilot-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3fb950" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.10"/>
+              </linearGradient>
+              <style>
+                .iarch-frame{fill:#0f1620;stroke:#30363d;stroke-width:1.2}
+                .iarch-lane{fill:#111821;stroke:#30363d;stroke-width:1}
+                .iarch-stage{fill:#161b22;stroke:#30363d;stroke-width:1.5}
+                .iarch-stage-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;font-weight:700;text-anchor:middle}
+                .iarch-stage-sub{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;text-anchor:middle}
+                .iarch-note{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;letter-spacing:1.2px}
+                .iarch-artifact{fill:rgba(88,166,255,0.10);stroke:#58a6ff;stroke-width:1}
+                .iarch-artifact-text{fill:#58a6ff;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                .iarch-extension{fill:rgba(188,140,255,0.10);stroke:#bc8cff;stroke-width:1.2}
+                .iarch-extension-text{fill:#bc8cff;font-family:'SFMono-Regular',Consolas,monospace;font-size:11px;font-weight:700;text-anchor:middle}
+                .iarch-autonomy{fill:rgba(63,185,80,0.10);stroke:#3fb950;stroke-width:1.2}
+                .iarch-autonomy-text{fill:#3fb950;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                .iarch-pilot{fill:url(#iarch-pilot-grad);stroke:#3fb950;stroke-width:1.2}
+                .iarch-pilot-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                .iarch-flow{stroke:url(#iarch-spine);stroke-width:3;fill:none;marker-end:url(#iarch-arrow)}
+                .iarch-link{stroke:#58a6ff;stroke-width:1.4;fill:none;stroke-dasharray:5 4;marker-end:url(#iarch-arrow-soft)}
+                .iarch-feedback{stroke:#3fb950;stroke-width:1.6;fill:none;stroke-dasharray:7 5;marker-end:url(#iarch-arrow-green)}
+              </style>
+              <marker id="iarch-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                <path d="M0,0 L10,4 L0,8" fill="#bc8cff"/>
+              </marker>
+              <marker id="iarch-arrow-soft" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#58a6ff"/>
+              </marker>
+              <marker id="iarch-arrow-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#3fb950"/>
+              </marker>
+            </defs>
+
+            <rect class="iarch-frame" x="16" y="16" width="1068" height="408" rx="18"/>
+
+            <!-- Top lane: execution spine -->
+            <rect class="iarch-lane" x="46" y="54" width="1008" height="170" rx="14"/>
+            <text x="62" y="78" class="iarch-note">EXECUTION SPINE &mdash; SNAKEMAKE DAG &middot; DVC ARTIFACTS &middot; MLFLOW TRACKING</text>
+
+            <rect class="iarch-stage" x="70" y="92" width="170" height="78" rx="12"/>
+            <text class="iarch-stage-text" x="155" y="122">Ingestion</text>
+            <text class="iarch-stage-sub" x="155" y="141">adapters + manifests</text>
+
+            <rect class="iarch-stage" x="300" y="92" width="170" height="78" rx="12"/>
+            <text class="iarch-stage-text" x="385" y="122">Training</text>
+            <text class="iarch-stage-sub" x="385" y="141">models + configs</text>
+
+            <rect class="iarch-stage" x="530" y="92" width="170" height="78" rx="12"/>
+            <text class="iarch-stage-text" x="615" y="122">Evaluation</text>
+            <text class="iarch-stage-sub" x="615" y="141">metrics + comparisons</text>
+
+            <rect class="iarch-stage" x="760" y="92" width="170" height="78" rx="12"/>
+            <text class="iarch-stage-text" x="845" y="122">Reporting</text>
+            <text class="iarch-stage-sub" x="845" y="141">evidence packages</text>
+
+            <path class="iarch-flow" d="M240 131 H297"/>
+            <path class="iarch-flow" d="M470 131 H527"/>
+            <path class="iarch-flow" d="M700 131 H757"/>
+
+            <!-- Persisted artifact chips -->
+            <rect class="iarch-artifact" x="80" y="186" width="150" height="26" rx="9"/>
+            <text class="iarch-artifact-text" x="155" y="203">dataset state</text>
+            <rect class="iarch-artifact" x="310" y="186" width="150" height="26" rx="9"/>
+            <text class="iarch-artifact-text" x="385" y="203">trained model</text>
+            <rect class="iarch-artifact" x="540" y="186" width="150" height="26" rx="9"/>
+            <text class="iarch-artifact-text" x="615" y="203">evaluation set</text>
+            <rect class="iarch-artifact" x="770" y="186" width="150" height="26" rx="9"/>
+            <text class="iarch-artifact-text" x="845" y="203">report bundle</text>
+
+            <!-- Extension runner lane -->
+            <rect class="iarch-lane" x="260" y="232" width="670" height="60" rx="14"/>
+            <rect class="iarch-extension" x="290" y="246" width="610" height="32" rx="11"/>
+            <text class="iarch-extension-text" x="595" y="267">contract-validated extension runner &mdash; calibration &middot; aggregation &middot; evaluation summary</text>
+
+            <!-- Drop links from artifacts to runner -->
+            <path class="iarch-link" d="M385 212 V246"/>
+            <path class="iarch-link" d="M615 212 V246"/>
+            <path class="iarch-link" d="M845 212 V246"/>
+
+            <!-- Bottom split: autonomy + deployment / evaluation package -->
+            <rect class="iarch-autonomy" x="46" y="304" width="500" height="104" rx="12"/>
+            <text class="iarch-note" x="68" y="328">AUTONOMOUS EXPERIMENTATION &middot; EXPERIMENTENGINE</text>
+            <text class="iarch-autonomy-text" x="296" y="356">GP surrogate + EI / VoI acquisition</text>
+            <text class="iarch-autonomy-text" x="296" y="378">SPRT (&alpha;=&beta;=0.05) &middot; DuckDB experiment catalog</text>
+            <text class="iarch-autonomy-text" x="296" y="398">1,037 exp / hr validated throughput</text>
+
+            <rect class="iarch-pilot" x="566" y="304" width="488" height="104" rx="13"/>
+            <text class="iarch-note" x="588" y="328">DEPLOYMENT SURFACE &middot; EVALUATION PACKAGE</text>
+            <text class="iarch-pilot-text" x="810" y="356">FastAPI &middot; RBAC &middot; HMAC-signed tokens</text>
+            <text class="iarch-pilot-text" x="810" y="378">hash-chained audit (21 CFR Part 11 posture)</text>
+            <text class="iarch-pilot-text" x="810" y="398">customer-hosted via Terraform + Helm</text>
+
+            <!-- Feedback: autonomy → training (green dashed, routed left of runner lane) -->
+            <path class="iarch-feedback" d="M58 304 V42 H385 V90"/>
+            <text class="iarch-note" x="64" y="34" fill="#3fb950">NEXT-RUN SELECTION</text>
+
+            <!-- Runner exit → deployment surface (blue dashed) -->
+            <path class="iarch-link" d="M900 262 H1000 V304"/>
+          </svg>
+        </div>
+      </section>
+
+      <section style="padding:18px 28px 32px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin:18px 0 14px;">
+          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Engagement archetypes (A&ndash;D)</h3>
+          <p style="font-size:12px;color:var(--text-secondary);max-width:520px;">Four canonical pilot shapes drawn from the validated capability surface. Each runs 6&ndash;10 weeks on already-tested components; compose two for a richer scope. Full menu on the <a href="pilots.html" style="color:var(--accent-blue);">Pilots</a> page.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;">
+          <!-- Archetype A: Drug Discovery -->
+          <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--accent-green);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-green);text-transform:uppercase;">Archetype A &middot; Drug discovery</span>
+              <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:var(--accent-green);text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:2px 6px;">Validated</span>
+            </div>
+            <h4 style="font-size:17px;line-height:1.25;letter-spacing:-0.01em;">Molecular-graph baseline on ChEMBL &amp; Hetionet</h4>
+            <p style="font-size:13px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Demonstrated:</strong> <code style="font-family:var(--font-mono);color:var(--accent-green);">97.5% accuracy</code> on ChEMBL antibacterial classification (5-fold CV); reproducible end-to-end from a tagged commit; n=3 runs hash-equal under fixed seeds.</p>
+            <p style="font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Data:</strong> <code style="font-family:var(--font-mono);color:var(--accent-cyan);">chembl_subset</code> &middot; <code style="font-family:var(--font-mono);color:var(--accent-cyan);">hetionet</code> &middot; <code style="font-family:var(--font-mono);color:var(--accent-cyan);">open_targets</code>.</p>
+            <p style="font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Fit:</strong> drug repurposing, target prioritization, KG-grounded synergy work.</p>
+            <a href="pilots.html#archetype-a" style="font-size:11px;color:var(--accent-green);font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border-top:1px solid rgba(48,54,61,0.7);padding-top:10px;margin-top:auto;">See Pilot A &rarr;</a>
+          </div>
+
+          <!-- Archetype B: Multi-Modal Fusion -->
+          <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--accent-blue);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-blue);text-transform:uppercase;">Archetype B &middot; Multi-modal fusion</span>
+              <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:var(--accent-blue);text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:2px 6px;">Validated</span>
+            </div>
+            <h4 style="font-size:17px;line-height:1.25;letter-spacing:-0.01em;">Late-fusion ensemble across imaging + tabular + omics</h4>
+            <p style="font-size:13px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Demonstrated:</strong> <code style="font-family:var(--font-mono);color:var(--accent-blue);">93.0% accuracy</code> on Visium spatial-transcriptomics fusion; 8 modality families integrated under a shared evaluation contract.</p>
+            <p style="font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Data:</strong> <code style="font-family:var(--font-mono);color:var(--accent-cyan);">visium_breast</code> &middot; <code style="font-family:var(--font-mono);color:var(--accent-cyan);">tcga_pancan</code> &middot; <code style="font-family:var(--font-mono);color:var(--accent-cyan);">gtex</code>.</p>
+            <p style="font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Fit:</strong> spatial-omics, multi-omics integration, biomarker discovery requiring cross-modal evidence.</p>
+            <a href="pilots.html#archetype-b" style="font-size:11px;color:var(--accent-blue);font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border-top:1px solid rgba(48,54,61,0.7);padding-top:10px;margin-top:auto;">See Pilot B &rarr;</a>
+          </div>
+
+          <!-- Archetype C: Autonomous loop -->
+          <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--accent-purple);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-purple);text-transform:uppercase;">Archetype C &middot; Autonomous loop</span>
+              <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:var(--accent-purple);text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:2px 6px;">Validated</span>
+            </div>
+            <h4 style="font-size:17px;line-height:1.25;letter-spacing:-0.01em;">GP-guided experimentation with calibrated stopping</h4>
+            <p style="font-size:13px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Demonstrated:</strong> <code style="font-family:var(--font-mono);color:var(--accent-purple);">1,100 experiments / 1.06 hr</code>, <code style="font-family:var(--font-mono);color:var(--accent-purple);">104 discoveries</code>, surrogate <code style="font-family:var(--font-mono);color:var(--accent-purple);">ECE = 0.055</code>; EI + VoI acquisition with SPRT (&alpha;=&beta;=0.05) stopping.</p>
+            <p style="font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Data:</strong> <code style="font-family:var(--font-mono);color:var(--accent-cyan);">hetionet</code> &middot; <code style="font-family:var(--font-mono);color:var(--accent-cyan);">chembl_subset</code> &middot; <code style="font-family:var(--font-mono);color:var(--accent-cyan);">depmap</code>.</p>
+            <p style="font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Fit:</strong> few-shot repurposing, hyperparameter search at scale, ranked candidate queues with calibrated CIs.</p>
+            <a href="pilots.html#archetype-c" style="font-size:11px;color:var(--accent-purple);font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border-top:1px solid rgba(48,54,61,0.7);padding-top:10px;margin-top:auto;">See Pilot C &rarr;</a>
+          </div>
+
+          <!-- Archetype D: Cross-Institutional Reproducibility -->
+          <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--accent-orange);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-orange);text-transform:uppercase;">Archetype D &middot; Reproducibility</span>
+              <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;color:var(--accent-orange);text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:2px 6px;">Roadmap</span>
+            </div>
+            <h4 style="font-size:17px;line-height:1.25;letter-spacing:-0.01em;">Cross-institutional benchmark replication</h4>
+            <p style="font-size:13px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Scope:</strong> two labs run identical evaluation manifests on the same DAG; deterministic Snakemake/DVC pipeline replays under fixed seeds; the entire run ships with a hash-chained audit trail.</p>
+            <p style="font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Data:</strong> <code style="font-family:var(--font-mono);color:var(--accent-cyan);">hetionet</code> &middot; <code style="font-family:var(--font-mono);color:var(--accent-cyan);">chembl_subset</code> (planned: <code style="font-family:var(--font-mono);color:var(--text-secondary);">primekg</code>).</p>
+            <p style="font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Fit:</strong> graph-ML results needing externally-verified reproducibility; cross-lab benchmarking; resubmission appendix work.</p>
+            <a href="pilots.html#archetype-d" style="font-size:11px;color:var(--accent-orange);font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border-top:1px solid rgba(48,54,61,0.7);padding-top:10px;margin-top:auto;">See Pilot D &rarr;</a>
+          </div>
+        </div>
+
+        <p style="margin-top:18px;font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Compose, don't commit.</strong> A pilot can take any one of A&ndash;D as its scope, or compose two (e.g., A + D to land a validated baseline under cross-lab reproducibility, or B + C to drive autonomous candidate selection over fused modalities). The full menu is on the <a href="pilots.html" style="color:var(--accent-blue);">Pilots</a> page.</p>
       </section>
     </article>
 
@@ -552,13 +1198,13 @@
         </section>
         <section style="display:grid;gap:6px;">
           <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Contact</div>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;max-width:240px;">Research, collaboration, and review inquiries.</p>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Daniel R. Russell</p>
+          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;max-width:240px;">Research, collaboration, and review inquiries.</p>
+          <p style="color:#8b949e;font-size:12px;line-height:1.5;">Daniel R. Russell</p>
           <p style="color:#8b949e;font-size:12px;line-height:1.5;">MITx (SDS), Harvard ALM (DS) '27</p>
-          <p style="color:#c9d1d9;font-size:13px;line-height:1.6;white-space:normal;"><a href="mailto:drr508@g.harvard.edu" style="color:#c9d1d9;text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" style="color:#c9d1d9;text-decoration:none;">dan@snptx.ai</a></p>
+          <p style="color:#8b949e;font-size:12px;line-height:1.5;white-space:normal;"><a href="mailto:drr508@g.harvard.edu" style="color:#8b949e;text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" style="color:#8b949e;text-decoration:none;">dan@snptx.ai</a></p>
         </section>
       </div>
-      <div style="padding-top:12px;border-top:1px solid rgba(48,54,61,0.72);color:#8b949e;font-size:11px;text-align:right;">SNPTX&trade; Academic</div>
+      <div style="padding-top:12px;border-top:1px solid rgba(48,54,61,0.72);color:#8b949e;font-size:11px;text-align:right;">SNPTX&trade; Academic 2026</div>
     </footer>
   </div>
 </body>
