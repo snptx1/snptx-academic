@@ -769,8 +769,8 @@
             <div>
               <div class="hero-eyebrow">Research framework &middot; Pilot brief</div>
               <h1 class="hero-title">An Experimentation Layer for Multi-Modal Biomedical Machine Learning</h1>
-              <p style="max-width:840px;margin:6px 0 14px;font-size:11.5px;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:0.02em;line-height:1.55;">Built during MITx Micromasters (Statistics &amp; Data Science) and Harvard ALM&nbsp;(Data Science) &middot; integrates Hetionet, Open Targets, ChEMBL, TCGA, GTEx, MIMIC-IV, AlphaFold, and PubMed-class corpora.</p>
-              <p class="hero-subhead">SNPTX organizes pipeline execution, comparative evaluation, and downstream analytical extension through artifact-defined stage boundaries and contract-validated extensions. The current build covers eight modality families &mdash; tabular, omics, graph, imaging, NLP, single-cell, molecular-graph drug discovery, and late-fusion ensemble &mdash; across 46 datasets.</p>
+              <p style="max-width:840px;margin:30px 0 20px;font-size:11.5px;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:0.02em;line-height:1.55;">Built during MITx Micromasters (Statistics &amp; Data Science) and Harvard ALM&nbsp;(Data Science) &middot; integrates Hetionet, Open Targets, ChEMBL, TCGA, GTEx, MIMIC-IV, AlphaFold, and PubMed-class corpora.</p>
+              <p class="hero-subhead">SNPTX organizes pipeline execution, comparative evaluation, and downstream analytical extension through artifact-defined stage boundaries and contract-validated extensions. The current build covers eight modality families — tabular, omics, graph, imaging, NLP, single-cell, molecular-graph drug discovery, and late-fusion ensemble — across 46 datasets.</p>
 
               <div class="hero-stat-strip" aria-label="What's running today">
                 <div class="hero-stat">
@@ -800,7 +800,8 @@
                 <span><span style="color:var(--accent-blue);">&bull;</span> <a href="methodology.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">deterministic seeding &middot; k-fold leakage gates</a></span>
                 <span><span style="color:var(--accent-purple);">&bull;</span> <a href="intelligence.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">5 implemented + 10 theory-grounded</a></span>
                 <span><span style="color:var(--accent-green);">&bull;</span> <a href="evidence.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">evidence-bounded across 6 dimensions</a></span>
-                <details style="display:inline;"><summary style="cursor:pointer;color:var(--accent-cyan);list-style:none;">&#9656; Named datasets per modality</summary><div style="margin-top:10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:rgba(13,17,23,0.6);text-transform:none;letter-spacing:0;font-family:var(--font-stack);font-size:12px;color:var(--text-secondary);line-height:1.65;max-width:760px;">
+              </div>
+              <details style="display:block;margin:-6px 0 18px;max-width:840px;"><summary style="cursor:pointer;color:var(--accent-cyan);list-style:none;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;">&#9656; Named datasets per modality</summary><div style="margin-top:10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:rgba(13,17,23,0.6);text-transform:none;letter-spacing:0;font-family:var(--font-stack);font-size:12px;color:var(--text-secondary);line-height:1.65;max-width:760px;">
                   <div><strong style="color:var(--text-primary);">Knowledge graphs &amp; pathways:</strong> hetionet, open_targets, gene_ontology, reactome_pathways <span style="color:#6e7681;">(planned: string_human, primekg)</span></div>
                   <div><strong style="color:var(--text-primary);">Molecular graphs &amp; structure:</strong> chembl_subset, moleculenet_tox21, alphafold_targets</div>
                   <div><strong style="color:var(--text-primary);">Omics &mdash; transcriptomics &amp; eQTL:</strong> tcga_pancan, gtex_v8, gtex_eqtl</div>
@@ -811,7 +812,6 @@
                   <div><strong style="color:var(--text-primary);">Text, imaging, time-series:</strong> mtsamples, pubmed_sample, mitbih <span style="color:#6e7681;">(planned: mimic_cxr, chexpert_small, camelyon17_sample, mimic_notes, hmp2_ibd)</span></div>
                   <div style="margin-top:8px;color:#6e7681;font-size:11px;">DVC-versioned (s3://snptx-dvc-prod, gs://snptx-dvc-storage); ingested via the adapter-based <code style="font-family:var(--font-mono);color:var(--accent-cyan);">build_dataset_generic</code> rule.</div>
                 </div></details>
-              </div>
 
               <details class="hero-toggle">
                 <summary>Color encoding <span class="hero-toggle-hint">&mdash; how to read the chips</span></summary>
@@ -978,11 +978,6 @@
             </div>
           </details>
 
-          <div style="margin-top:18px;padding-top:12px;border-top:1px solid rgba(48,54,61,0.55);display:flex;justify-content:flex-end;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;color:var(--text-secondary);letter-spacing:0;text-transform:none;">
-            <a href="https://github.com/snptx1/snptx-academic" target="_blank" rel="noopener" style="color:var(--text-secondary);text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">github.com/snptx1/snptx-academic</a>
-            <span style="color:#6e7681;">&middot;</span>
-            <span>v0.4 &middot; 2026-04-24</span>
-          </div>
         </div>
       </section>
     </article>
