@@ -51,6 +51,8 @@
     z-index: 1000;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 6px 14px;
     margin-bottom: 18px;
     padding: 12px 0 16px;
@@ -874,8 +876,8 @@
             <div style="display:flex;flex-direction:column;">
               <div class="hero-thread-card">
                 <div class="hero-thread-label">Pilot in 4 steps</div>
-                <h4>What working with SNPTX looks like</h4>
-                <p style="font-size:12.5px;line-height:1.6;color:var(--text-secondary);margin:6px 0 14px;padding:10px 12px;border-left:2px solid var(--accent-blue);background:rgba(56,139,253,0.05);border-radius:0 6px 6px 0;"><strong style="color:var(--text-primary);">Proposed pilot:</strong> a 6&ndash;10 week, jointly-authored run on one bounded research workflow &mdash; one lab-specific data adapter (mapping your expression matrices, KG triples, or imaging manifests to the stage-1 contract), one evaluation package built on Tier-1 validated components (calibration-corrected leaderboard, leakage-free comparison, contract-validation report), reproducible from a tagged commit. Deployment hardening only where the pilot requires it.</p>
+                <h4>Proposed pilot</h4>
+                <p style="font-size:12.5px;line-height:1.6;color:var(--text-secondary);margin:6px 0 14px;">A 6&ndash;10 week, jointly-authored run on one bounded research workflow &mdash; one lab-specific data adapter (mapping your expression matrices, KG triples, or imaging manifests to the stage-1 contract), one evaluation package built on Tier-1 validated components (calibration-corrected leaderboard, leakage-free comparison, contract-validation report), reproducible from a tagged commit. Deployment hardening only where the pilot requires it.</p>
                 <div class="hero-thread">
                   <div class="hero-thread-step">
                     <h5>1 &middot; Scope</h5>
@@ -999,7 +1001,7 @@
           <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Execution spine, mediated extensions, autonomous loop</h3>
           <p style="font-size:12px;color:var(--text-secondary);max-width:520px;">Ordered stages with persisted artifacts; downstream analysis attaches through a contract-validated runner; the autonomy surface feeds next-run selection back into training. Full diagram on <a href="pages/architecture.html" style="color:var(--accent-blue);">Architecture</a>.</p>
         </div>
-        <div style="background:rgba(13,17,23,0.55);border:1px solid var(--border);border-radius:14px;padding:22px 18px;overflow:auto;">
+        <div style="background:rgba(13,17,23,0.55);border:1px solid var(--border);border-radius:14px;padding:8px 6px;overflow:auto;">
           <svg viewBox="0 0 1100 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iarch-title iarch-desc" style="width:100%;height:auto;min-width:760px;display:block;margin:0 auto;background:#0d1117;">
             <title id="iarch-title">SNPTX execution spine, extension runner, autonomy and deployment surfaces</title>
             <desc id="iarch-desc">Four-stage execution spine (ingestion, training, evaluation, reporting) with persisted artifacts; mediated contract-validated extension runner attaches through declared interfaces; an autonomous experimentation surface feeds back into training; a deployment surface receives the evaluation package.</desc>
