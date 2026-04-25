@@ -3,10 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1117">
 <meta name="description" content="SNPTX is an execution, evaluation, and extension layer for multi-modal biomedical machine learning workflows. Pilot-ready for academic labs; research-facing, scope-bounded.">
 <title>SNPTX — An Experimentation Layer for Multi-Modal Biomedical ML</title>
 <style>
   :root {
+    color-scheme: dark;
     --border: #30363d;
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
@@ -764,9 +767,8 @@
             <div>
               <div class="hero-eyebrow">Research framework &middot; Pilot brief</div>
               <h1 class="hero-title">An Experimentation Layer for Multi-Modal Biomedical Machine Learning</h1>
+              <p style="max-width:840px;margin:6px 0 14px;font-size:11.5px;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:0.02em;line-height:1.55;">Built during MITx Micromasters (Statistics &amp; Data Science) and Harvard ALM&nbsp;(Data Science) &middot; integrates Hetionet, Open Targets, ChEMBL, TCGA, GTEx, MIMIC-IV, AlphaFold, and PubMed-class corpora.</p>
               <p class="hero-subhead">SNPTX organizes pipeline execution, comparative evaluation, and downstream analytical extension through artifact-defined stage boundaries and contract-validated extensions. The current build covers eight modality families &mdash; tabular, omics, graph, imaging, NLP, single-cell, molecular-graph drug discovery, and late-fusion ensemble &mdash; across 46 datasets.</p>
-              <p style="max-width:840px;margin:-6px 0 14px;font-size:11.5px;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:0.02em;line-height:1.55;">Built during MITx Micromasters (Statistics &amp; Data Science) and Harvard ALM&nbsp;(Data Science) &middot; integrates Hetionet, Open Targets, ChEMBL, TCGA, GTEx, MIMIC-IV, AlphaFold, and PubMed-class corpora.</p>
-              <div class="hero-pilot-line"><strong>Proposed pilot:</strong> a 6&ndash;10 week, jointly-authored run on one bounded research workflow &mdash; one lab-specific data adapter (mapping your expression matrices, KG triples, or imaging manifests to the stage-1 contract), one evaluation package built on Tier-1 validated components (calibration-corrected leaderboard, leakage-free comparison, contract-validation report), reproducible from a tagged commit. Deployment hardening only where the pilot requires it.</div>
 
               <div class="hero-stat-strip" aria-label="What's running today">
                 <div class="hero-stat">
@@ -873,6 +875,7 @@
               <div class="hero-thread-card">
                 <div class="hero-thread-label">Pilot in 4 steps</div>
                 <h4>What working with SNPTX looks like</h4>
+                <p style="font-size:12.5px;line-height:1.6;color:var(--text-secondary);margin:6px 0 14px;padding:10px 12px;border-left:2px solid var(--accent-blue);background:rgba(56,139,253,0.05);border-radius:0 6px 6px 0;"><strong style="color:var(--text-primary);">Proposed pilot:</strong> a 6&ndash;10 week, jointly-authored run on one bounded research workflow &mdash; one lab-specific data adapter (mapping your expression matrices, KG triples, or imaging manifests to the stage-1 contract), one evaluation package built on Tier-1 validated components (calibration-corrected leaderboard, leakage-free comparison, contract-validation report), reproducible from a tagged commit. Deployment hardening only where the pilot requires it.</p>
                 <div class="hero-thread">
                   <div class="hero-thread-step">
                     <h5>1 &middot; Scope</h5>
@@ -893,7 +896,7 @@
                 </div>
               </div>
 
-              <div style="margin-top:57px;padding:18px 4px 4px;border-top:1px solid rgba(48,54,61,0.7);">
+              <div style="margin-top:20px;padding:18px 4px 4px;border-top:1px solid rgba(48,54,61,0.7);">
                 <div class="hero-thread-label" style="color:var(--accent-orange);">What you receive</div>
                 <h4 style="font-size:16px;margin-bottom:10px;">Concrete artifacts</h4>
                 <ul style="list-style:none;display:grid;gap:10px;margin-top:10px;padding:0;">
@@ -922,7 +925,8 @@
               <div>
                 <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-blue);margin-bottom:6px;">Pipeline rule graph</div>
                 <a href="assets/snakemake-dag.png?v=2" class="dag-thumb" target="_blank" rel="noopener" aria-label="Open full Snakemake DAG (raw graphviz)">
-                  <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Snakemake rule graph: build_dataset to validate_data and split_data, both feed train_model, evaluate_model, summarize_evaluations, plot_summary, generate_model_report, all">
+                  <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" role="img" style="background:#0d1117;" aria-label="Snakemake rule graph: build_dataset to validate_data and split_data, both feed train_model, evaluate_model, summarize_evaluations, plot_summary, generate_model_report, all">
+                    <rect width="420" height="280" fill="#0d1117"/>
                     <defs>
                       <marker id="dag-arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
                         <path d="M0,0 L10,5 L0,10 z" fill="#6e7681"/>
@@ -996,7 +1000,7 @@
           <p style="font-size:12px;color:var(--text-secondary);max-width:520px;">Ordered stages with persisted artifacts; downstream analysis attaches through a contract-validated runner; the autonomy surface feeds next-run selection back into training. Full diagram on <a href="pages/architecture.html" style="color:var(--accent-blue);">Architecture</a>.</p>
         </div>
         <div style="background:rgba(13,17,23,0.55);border:1px solid var(--border);border-radius:14px;padding:22px 18px;overflow:auto;">
-          <svg viewBox="0 0 1100 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iarch-title iarch-desc" style="width:100%;height:auto;min-width:760px;display:block;margin:0 auto;">
+          <svg viewBox="0 0 1100 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iarch-title iarch-desc" style="width:100%;height:auto;min-width:760px;display:block;margin:0 auto;background:#0d1117;">
             <title id="iarch-title">SNPTX execution spine, extension runner, autonomy and deployment surfaces</title>
             <desc id="iarch-desc">Four-stage execution spine (ingestion, training, evaluation, reporting) with persisted artifacts; mediated contract-validated extension runner attaches through declared interfaces; an autonomous experimentation surface feeds back into training; a deployment surface receives the evaluation package.</desc>
             <defs>
