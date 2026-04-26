@@ -394,8 +394,9 @@
 
   .hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.45fr) minmax(340px, 0.95fr);
-    gap: 28px;
+    grid-template-columns: minmax(0, 1.52fr) minmax(320px, 0.84fr);
+    gap: 36px;
+    align-items: start;
     position: relative;
     z-index: 1;
   }
@@ -423,16 +424,16 @@
     font-size: 52px;
     line-height: 1.03;
     letter-spacing: -0.05em;
-    max-width: 760px;
-    margin-bottom: 18px;
+    max-width: 720px;
+    margin-bottom: 16px;
   }
 
   .hero-subhead {
-    max-width: 760px;
-    font-size: 18px;
+    max-width: 720px;
+    font-size: 17px;
     color: var(--text-secondary);
-    line-height: 1.75;
-    margin-bottom: 24px;
+    line-height: 1.72;
+    margin-bottom: 22px;
   }
 
   .hero-pilot-line {
@@ -483,15 +484,15 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
-    max-width: 840px;
-    margin-bottom: 22px;
+    max-width: 760px;
+    margin-bottom: 18px;
   }
 
   .hero-stat {
     background: rgba(22,27,34,0.82);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 14px 14px 12px;
+    padding: 16px 15px 13px;
     text-align: left;
   }
 
@@ -509,7 +510,7 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     font-family: var(--font-mono);
-    white-space: nowrap;
+    line-height: 1.45;
   }
 
   .hero-capability-card code,
@@ -525,7 +526,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 22px;
+    margin-top: 16px;
+    margin-bottom: 22px;
   }
 
   .hero-cta {
@@ -559,6 +561,196 @@
   .hero-cta--ghost:hover {
     color: var(--text-primary);
     border-color: rgba(139,148,158,0.85);
+  }
+
+  .hero-cta--text {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-secondary);
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .hero-cta--text:hover {
+    color: var(--text-primary);
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .hero-compact-meta {
+    max-width: 760px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin-bottom: 8px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(48,54,61,0.72);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .hero-compact-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero-support-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .hero-thread-card {
+    background: rgba(17,24,33,0.84);
+    border: 1px solid rgba(48,54,61,0.88);
+  }
+
+  .hero-artifacts-card {
+    padding: 18px 18px 16px;
+  }
+
+  .hero-artifact-list {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .hero-artifact-list li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .hero-artifact-list span {
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.7;
+  }
+
+  .trust-grid {
+    max-width: 760px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .trust-card {
+    padding: 12px 14px 14px;
+    border: 1px solid rgba(48,54,61,0.78);
+    border-radius: 12px;
+    background: rgba(13,17,23,0.42);
+  }
+
+  .trust-card--claim {
+    box-shadow: inset 3px 0 0 rgba(63,185,80,0.65);
+  }
+
+  .trust-card--bounded {
+    box-shadow: inset 3px 0 0 rgba(210,153,34,0.65);
+  }
+
+  .trust-card-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .trust-card--claim .trust-card-label { color: var(--accent-green); }
+  .trust-card--bounded .trust-card-label { color: var(--accent-orange); }
+
+  .trust-card p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .section-block {
+    padding: 28px;
+  }
+
+  .section-divider {
+    border-top: 1px solid rgba(48,54,61,0.78);
+  }
+
+  .section-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+
+  .section-intro h3 {
+    font-size: 15px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .section-intro p {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    max-width: 560px;
+  }
+
+  .section-capability-grid {
+    max-width: none;
+    margin-top: 0;
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: 18px;
+    align-items: start;
+  }
+
+  .proof-card {
+    padding: 18px;
+  }
+
+  .proof-callout {
+    margin: 8px 0 12px;
+    padding: 8px 10px;
+    border: 1px dashed rgba(56,139,253,0.35);
+    border-radius: 6px;
+    background: rgba(56,139,253,0.04);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .proof-card pre {
+    margin: 0;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(48,54,61,0.7);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-primary);
+    overflow: auto;
+    white-space: pre;
+    line-height: 1.55;
+  }
+
+  .section-detail-toggle {
+    margin-top: 18px;
   }
 
   .hero-noclaim {
@@ -652,7 +844,9 @@
   @media (max-width: 980px) {
     .hero-grid,
     .hero-proof-row,
-    .hero-capability-grid {
+    .hero-capability-grid,
+    .proof-grid,
+    .trust-grid {
       grid-template-columns: 1fr;
     }
 
@@ -690,6 +884,10 @@
 
     .hero-subhead {
       font-size: 16px;
+    }
+
+    .section-block {
+      padding: 22px 20px;
     }
   }
 </style>
@@ -770,219 +968,231 @@
             <div>
               <div class="hero-eyebrow">Research framework &middot; Pilot brief</div>
               <h1 class="hero-title">An Experimentation Layer for Multi-Modal Biomedical Machine Learning</h1>
-              <p style="max-width:840px;margin:30px 0 20px;font-size:11.5px;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:0.02em;line-height:1.55;">Built during MITx Micromasters (Statistics &amp; Data Science) and Harvard ALM&nbsp;(Data Science) &middot; integrates Hetionet, Open Targets, ChEMBL, TCGA, GTEx, MIMIC-IV, AlphaFold, and PubMed-class corpora.</p>
-              <p class="hero-subhead">SNPTX organizes pipeline execution, comparative evaluation, and downstream analytical extension through artifact-defined stage boundaries and contract-validated extensions. The current build covers eight modality families — tabular, omics, graph, imaging, NLP, single-cell, molecular-graph drug discovery, and late-fusion ensemble — across 46 datasets.</p>
+              <p style="max-width:720px;margin:0 0 18px;font-size:11.5px;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:0.02em;line-height:1.55;">Built during MITx Micromasters (Statistics &amp; Data Science) and Harvard ALM (Data Science) &middot; integrates Hetionet, Open Targets, ChEMBL, TCGA, GTEx, MIMIC-IV, AlphaFold, and PubMed-class corpora.</p>
+              <p class="hero-subhead">SNPTX provides a governed execution layer for biomedical ML: ordered pipeline stages, persisted artifacts, contract-validated extensions, and a bounded autonomy surface for experiment selection. The current system spans eight modality families across 46 datasets while keeping evaluation and downstream analysis attached to explicit interfaces rather than ad hoc scripts.</p>
 
-              <div class="hero-stat-strip" aria-label="What's running today">
+              <div class="hero-stat-strip" aria-label="Key proof points">
                 <div class="hero-stat">
                   <div class="hero-stat-value" style="color:var(--accent-purple);">1,037</div>
-                  <div class="hero-stat-label">Experiments / hour</div>
+                  <div class="hero-stat-label">Validated experiments per hour</div>
                 </div>
                 <div class="hero-stat">
-                  <div class="hero-stat-value" style="color:var(--accent-green);">8&nbsp;/&nbsp;46</div>
-                  <div class="hero-stat-label">Modalities&nbsp;/&nbsp;datasets</div>
+                  <div class="hero-stat-value" style="color:var(--accent-green);">8 / 46</div>
+                  <div class="hero-stat-label">Modality families and active datasets</div>
                 </div>
                 <div class="hero-stat">
                   <div class="hero-stat-value" style="color:var(--accent-blue);">98.0%</div>
-                  <div class="hero-stat-label">ChEMBL drug GCN</div>
-                  <div style="margin-top:4px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.05em;color:var(--accent-cyan);text-transform:none;"><a href="fusion.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(120,212,255,0.5);">+0.2pp fusion vs best unimodal</a></div>
+                  <div class="hero-stat-label">ChEMBL drug-GCN reproducible baseline</div>
                 </div>
                 <div class="hero-stat">
-                  <div class="hero-stat-value" style="color:var(--accent-orange);">104&nbsp;/&nbsp;1,100</div>
-                  <div class="hero-stat-label">Discoveries&nbsp;/&nbsp;campaign</div>
+                  <div class="hero-stat-value" style="color:var(--accent-orange);">104 / 1,100</div>
+                  <div class="hero-stat-label">Discoveries per autonomous campaign</div>
                 </div>
               </div>
 
-              <div style="max-width:840px;margin:-8px 0 18px;display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-secondary);">
+              <div class="hero-compact-meta">
                 <span><span style="color:var(--accent-green);">&bull;</span> 1,357 tests</span>
-                <span><span style="color:var(--accent-green);">&bull;</span> 0 ruff</span>
-                <span><span style="color:var(--accent-green);">&bull;</span> 0 pyright</span>
-                <span><span style="color:var(--accent-blue);">&bull;</span> Snakemake&nbsp;+&nbsp;DVC&nbsp;+&nbsp;MLflow</span>
+                <span><span style="color:var(--accent-green);">&bull;</span> 0 ruff &middot; 0 pyright</span>
+                <span><span style="color:var(--accent-blue);">&bull;</span> Snakemake + DVC + MLflow</span>
                 <span><span style="color:var(--accent-blue);">&bull;</span> <a href="methodology.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">deterministic seeding &middot; k-fold leakage gates</a></span>
                 <span><span style="color:var(--accent-purple);">&bull;</span> <a href="intelligence.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">5 implemented + 10 theory-grounded</a></span>
-                <span><span style="color:var(--accent-green);">&bull;</span> <a href="evidence.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">evidence-bounded across 6 dimensions</a></span>
+                <span><span style="color:var(--accent-cyan);">&bull;</span> <a href="results.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">99.3% imaging &middot; 92.8% omics &middot; 98.5% drug-GCN</a></span>
               </div>
-              <details style="display:block;margin:-6px 0 18px;max-width:840px;"><summary style="cursor:pointer;color:var(--accent-cyan);list-style:none;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;">&#9656; Named datasets per modality</summary><div style="margin-top:10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:rgba(13,17,23,0.6);text-transform:none;letter-spacing:0;font-family:var(--font-stack);font-size:12px;color:var(--text-secondary);line-height:1.65;max-width:760px;">
-                  <div><strong style="color:var(--text-primary);">Knowledge graphs &amp; pathways:</strong> hetionet, open_targets, gene_ontology, reactome_pathways <span style="color:#6e7681;">(planned: string_human, primekg)</span></div>
-                  <div><strong style="color:var(--text-primary);">Molecular graphs &amp; structure:</strong> chembl_subset, moleculenet_tox21, alphafold_targets</div>
-                  <div><strong style="color:var(--text-primary);">Omics &mdash; transcriptomics &amp; eQTL:</strong> tcga_pancan, gtex_v8, gtex_eqtl</div>
-                  <div><strong style="color:var(--text-primary);">Omics &mdash; proteomics &amp; metabolomics:</strong> cptac, pride_sample, metabolights_mtbls1</div>
-                  <div><strong style="color:var(--text-primary);">Single-cell &amp; spatial:</strong> cellxgene_pbmc, tenx_pbmc_3k, visium_brain</div>
-                  <div><strong style="color:var(--text-primary);">Variants &amp; functional genomics:</strong> clinvar, thousand_genomes, gnomad, depmap, gwas_catalog</div>
-                  <div><strong style="color:var(--text-primary);">Clinical &amp; pharmacovigilance:</strong> synthea_readmission, mimic_iv, eicu_crd, cms_synpuf, faers <span style="color:#6e7681;">(planned: aact, omop_synthea)</span></div>
-                  <div><strong style="color:var(--text-primary);">Text, imaging, time-series:</strong> mtsamples, pubmed_sample, mitbih <span style="color:#6e7681;">(planned: mimic_cxr, chexpert_small, camelyon17_sample, mimic_notes, hmp2_ibd)</span></div>
-                  <div style="margin-top:8px;color:#6e7681;font-size:11px;">DVC-versioned (s3://snptx-dvc-prod, gs://snptx-dvc-storage); ingested via the adapter-based <code style="font-family:var(--font-mono);color:var(--accent-cyan);">build_dataset_generic</code> rule.</div>
-                </div></details>
-
-              <details class="hero-toggle">
-                <summary>Color encoding <span class="hero-toggle-hint">&mdash; how to read the chips</span></summary>
-                <div class="hero-color-legend" aria-label="Color encoding">
-                  <span><span style="color:var(--accent-green);">&bull;</span> green &middot; operational today</span>
-                  <span><span style="color:var(--accent-orange);">&bull;</span> orange &middot; pre-pilot work</span>
-                  <span><span style="color:var(--accent-blue);">&bull;</span> blue &middot; neutral fact</span>
-                  <span><span style="color:var(--accent-purple);">&bull;</span> purple &middot; differentiator</span>
-                </div>
-              </details>
-
-              <details class="hero-toggle">
-                <summary>Capability surface (4) <span class="hero-toggle-hint">&mdash; autonomous engine, extensions, deployment, benchmark surface</span></summary>
-                <div class="hero-capability-grid">
-                <div class="hero-capability-card">
-                  <span class="hero-lead-chip">&starf; Lead capability</span>
-                  <div class="hero-card-label">Capability</div>
-                  <h5>Autonomous experimentation</h5>
-                  <p>Bayesian optimization daemon (<code>ExperimentEngine</code>): GP surrogates over hyperparameter space, expected-improvement plus value-of-information acquisition, SPRT stopping (&alpha;=&beta;=0.05), DuckDB experiment catalog. Validated at 1,037 experiments / hour. <strong style="color:var(--text-primary);">Outputs:</strong> ranked next-run queue, surrogate-calibration trace, novelty score per candidate.</p>
-                  <span class="hero-status-chip hero-status-chip--operational">&bull; Operational today</span>
-                </div>
-                <div class="hero-capability-card">
-                  <div class="hero-card-label">Capability</div>
-                  <h5>Contract-validated extensions</h5>
-                  <p>Seven extension modules under a YAML-contract execution layer; four Tier-1 extensions are contract-validated and stable today. Schema convergence (v1 / v2) is pre-pilot work, scoped and tracked.</p>
-                  <span class="hero-status-chip hero-status-chip--pre-pilot">&bull; 4 stable &middot; v1/v2 pre-pilot</span>
-                </div>
-                <div class="hero-capability-card">
-                  <div class="hero-card-label">Capability</div>
-                  <h5>Deployment pathway</h5>
-                  <p>FastAPI inference (tabular, fusion, batch), RBAC with HMAC-signed tokens, hash-chained audit log (21 CFR Part 11 posture), customer-hosted via Terraform and Helm.</p>
-                  <span class="hero-status-chip hero-status-chip--neutral">&bull; Available on request</span>
-                </div>
-                <div class="hero-capability-card">
-                  <div class="hero-card-label">Capability</div>
-                  <h5>Cross-lab benchmark surface</h5>
-                  <p>A shared evaluation surface for graph-ML &amp; foundation-model methods: leakage-free splits, calibration-corrected leaderboards, lineage-stamped checkpoints, contract-validated reports. Designed so two labs can compare results on identical evaluation manifests.</p>
-                  <span class="hero-status-chip hero-status-chip--operational">&bull; Operational today</span>
-                </div>
-                </div>
-              </details>
 
               <div class="hero-cta-row">
                 <a class="hero-cta" href="evidence.html">See evidence &amp; validation</a>
                 <a class="hero-cta hero-cta--ghost" href="mailto:dan@snptx.ai?subject=SNPTX%20pilot%20scoping">Request pilot scoping</a>
-                <a class="hero-cta hero-cta--ghost" href="limitations.html">Read the limitations</a>
-                <a class="hero-cta hero-cta--ghost" href="javascript:window.print()" style="border-style:dashed;">Download brief (print &rarr; PDF)</a>
+                <a class="hero-cta hero-cta--text" href="limitations.html">Read the limitations</a>
+                <a class="hero-cta hero-cta--text" href="javascript:window.print()">Print brief</a>
               </div>
 
-              <div style="max-width:840px;margin-top:14px;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px;align-items:stretch;">
-                <div style="border-left:2px solid rgba(63,185,80,0.6);padding:8px 0 8px 12px;display:flex;flex-direction:column;height:100%;">
-                  <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-green);margin-bottom:4px;">What SNPTX claims</div>
-                  <p style="font-size:12px;line-height:1.55;color:var(--text-secondary);">Reproducible multi-modal pipelines, contract-validated extensions, calibrated benchmarks, and an autonomous experimentation surface &mdash; <a href="validation.html" style="color:var(--text-primary);border-bottom:1px dotted rgba(201,209,217,0.4);text-decoration:none;">validated across 8 axes</a> through versioned artifacts.</p>
+              <div class="trust-grid">
+                <div class="trust-card trust-card--claim">
+                  <div class="trust-card-label">What SNPTX claims</div>
+                  <p>Reproducible multi-modal pipelines, contract-validated extensions, calibrated benchmark outputs, and an autonomous experimentation surface &mdash; all grounded in versioned artifacts and <a href="validation.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">validated across 8 axes</a>.</p>
                 </div>
-                <div style="border-left:2px solid rgba(210,153,34,0.6);padding:8px 0 8px 12px;display:flex;flex-direction:column;height:100%;">
-                  <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-orange);margin-bottom:4px;">What SNPTX does not claim</div>
-                  <p style="font-size:12px;line-height:1.55;color:var(--text-secondary);">Diagnostic, prescribing, or autonomous-clinical capability. No replacement for wet-lab validation, IRB, or regulatory review. See <a href="limitations.html" style="color:var(--text-primary);">Limitations</a>.</p>
+                <div class="trust-card trust-card--bounded">
+                  <div class="trust-card-label">What SNPTX does not claim</div>
+                  <p>Diagnostic, prescribing, or autonomous clinical capability. It does not replace wet-lab validation, IRB oversight, or regulatory review. See <a href="limitations.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">limitations</a>.</p>
                 </div>
               </div>
             </div>
 
-            <div style="display:flex;flex-direction:column;">
+            <div class="hero-support-grid">
               <div class="hero-thread-card">
                 <div class="hero-thread-label">Pilot in 4 steps</div>
                 <h4>Proposed pilot</h4>
-                <p style="font-size:12.5px;line-height:1.6;color:var(--text-secondary);margin:6px 0 14px;">A 6&ndash;10 week, jointly-authored run on one bounded research workflow &mdash; one lab-specific data adapter (mapping your expression matrices, KG triples, or imaging manifests to the stage-1 contract), one evaluation package built on Tier-1 validated components (calibration-corrected leaderboard, leakage-free comparison, contract-validation report), reproducible from a tagged commit. Deployment hardening only where the pilot requires it.</p>
+                <p style="font-size:12.5px;line-height:1.6;color:var(--text-secondary);margin:6px 0 14px;">A 6&ndash;10 week, jointly-authored run on one bounded workflow: one lab-specific adapter, one evaluation package built on Tier-1 validated components, and a reproducible handoff from tagged commit to auditable results.</p>
                 <div class="hero-thread">
                   <div class="hero-thread-step">
-                    <h5>1 &middot; Scope</h5>
-                    <p>Together we pick one workflow, one dataset family, and one evaluation package. The pilot succeeds or fails on a single, agreed objective.</p>
+                    <h5>1. Scope</h5>
+                    <p>Pick one workflow, one dataset family, and one evaluation target. The pilot succeeds or fails on a single agreed objective.</p>
                   </div>
                   <div class="hero-thread-step">
-                    <h5>2 &middot; Adapter</h5>
-                    <p>A schema adapter maps your inputs &mdash; expression matrices, KG triples, imaging manifests, or clinical tabular &mdash; to the stage-1 contract. Data stays in your environment.</p>
+                    <h5>2. Adapter</h5>
+                    <p>Map your matrices, KG triples, imaging manifests, or clinical tables into the stage-1 contract while keeping data in your environment.</p>
                   </div>
                   <div class="hero-thread-step">
-                    <h5>3 &middot; Run</h5>
-                    <p>The pipeline executes under Snakemake + DVC with MLflow tracking. The autonomous engine (GP + SPRT + VoI) is opt-in for hyperparameter search.</p>
+                    <h5>3. Run</h5>
+                    <p>Execute under Snakemake + DVC + MLflow, with the autonomous engine available where hyperparameter search is part of scope.</p>
                   </div>
                   <div class="hero-thread-step">
-                    <h5>4 &middot; Evaluation package</h5>
-                    <p>Tier-1 extensions emit auditable artifacts &mdash; calibration, metric aggregation, evaluation summary, contract checks &mdash; reviewed jointly with your team.</p>
+                    <h5>4. Package</h5>
+                    <p>Review calibration, metric aggregation, contract checks, and evaluation summary jointly with your team.</p>
                   </div>
                 </div>
               </div>
 
-              <div style="margin-top:20px;padding:18px 4px 4px;border-top:1px solid rgba(48,54,61,0.7);">
+              <div class="hero-thread-card hero-artifacts-card">
                 <div class="hero-thread-label" style="color:var(--accent-orange);">What you receive</div>
-                <h4 style="font-size:16px;margin-bottom:10px;">Concrete artifacts</h4>
-                <ul style="list-style:none;display:grid;gap:10px;margin-top:10px;padding:0;">
-                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-blue);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Reproducible pipeline.</strong> Snakemake DAG + DVC-versioned data + MLflow run history; n=3 runs are hash-equal under fixed seeds.</span></li>
-                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Evaluation package.</strong> Calibration + metric aggregation + leakage-free comparison + contract-validation report.</span></li>
-                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-green);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Lineage manifest.</strong> Per-checkpoint data hash, model hash, commit, and config &mdash; suitable for a reproducibility appendix.</span></li>
-                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-orange);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Hash-chained audit log.</strong> 21 CFR Part 11 posture; every stage transition is independently verifiable.</span></li>
-                  <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-secondary);"><span style="color:var(--accent-cyan);font-family:var(--font-mono);font-size:11px;line-height:1.7;">&#9656;</span><span><strong style="color:var(--text-primary);">Joint write-up.</strong> Methods + results section drafted with your team, ready for appendix or preprint.</span></li>
+                <h4>Concrete artifacts</h4>
+                <ul class="hero-artifact-list">
+                  <li><span>&#9656;</span><span><strong style="color:var(--text-primary);">Reproducible pipeline.</strong> Snakemake DAG, DVC-versioned data, and MLflow run history with fixed-seed replay.</span></li>
+                  <li><span style="color:var(--accent-purple);">&#9656;</span><span><strong style="color:var(--text-primary);">Evaluation package.</strong> Calibration, metric aggregation, leakage-free comparison, and contract-validation report.</span></li>
+                  <li><span style="color:var(--accent-green);">&#9656;</span><span><strong style="color:var(--text-primary);">Lineage manifest.</strong> Checkpoint-level data hash, model hash, config, and commit for reproducibility appendix use.</span></li>
+                  <li><span style="color:var(--accent-cyan);">&#9656;</span><span><strong style="color:var(--text-primary);">Joint write-up.</strong> Methods and results text drafted with your team for appendix, preprint, or internal review.</span></li>
                 </ul>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+    </article>
 
-          <details class="hero-toggle hero-toggle--full" open>
-            <summary>Verify in 5 minutes <span class="hero-toggle-hint">&mdash; reproduce the 98.0% ChEMBL result locally</span></summary>
-            <div class="hero-verify hero-verify--wide" aria-label="Verify in 5 minutes">
-              <div>
-                <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-blue);margin-bottom:6px;">Verify in 5 minutes</div>
-                <div style="margin:-2px 0 10px;padding:8px 10px;border:1px dashed rgba(56,139,253,0.35);border-radius:6px;background:rgba(56,139,253,0.04);font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.5;"><span style="color:var(--accent-blue);text-transform:uppercase;letter-spacing:0.06em;font-size:9.5px;">Performance spectrum &middot;</span> <span style="color:var(--accent-green);">99.3%</span> imaging &middot; <span style="color:var(--accent-blue);">92.8%</span> omics &middot; <span style="color:var(--accent-orange);">61.0%</span> text &mdash; <a href="results.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">full results &rarr;</a></div>
-                <p style="font-size:12px;color:var(--text-secondary);margin:14px 0 16px;line-height:1.55;">Reproduce the 98.0% ChEMBL drug-GCN result locally &mdash; deterministic, bit-equal across runs at <code style="font-family:var(--font-mono);color:var(--accent-cyan);">seed=42</code>; CPU-only, no GPU required.</p>
-<div style="position:relative;"><button type="button" onclick="snptxCopySnippet(this)" style="position:absolute;top:6px;right:6px;z-index:2;padding:3px 8px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-secondary);background:rgba(110,118,129,0.15);border:1px solid rgba(110,118,129,0.35);border-radius:4px;cursor:pointer;" aria-label="Copy snippet to clipboard">copy</button>
+    <article class="draft" aria-labelledby="capability-proof-title">
+      <div class="draft-meta">
+        <div>
+          <h2 id="capability-proof-title">Capability surface &amp; reproducibility proof</h2>
+          <p>The landing page view reduces the top-level clutter; the underlying platform still resolves to four operating surfaces and a public proof path you can run locally.</p>
+        </div>
+        <span class="badge">Operational view</span>
+      </div>
+
+      <section class="section-block">
+        <div class="section-intro">
+          <h3>Four surfaces, one governed runtime</h3>
+          <p>These are the working surfaces behind the headline: experiment selection, mediated extensions, deployment handoff, and a shared benchmark layer for cross-lab comparison.</p>
+        </div>
+
+        <div class="hero-capability-grid section-capability-grid">
+          <div class="hero-capability-card">
+            <span class="hero-lead-chip">&starf; Lead capability</span>
+            <div class="hero-card-label">Capability</div>
+            <h5>Autonomous experimentation</h5>
+            <p>Bayesian optimization daemon (<code>ExperimentEngine</code>) with GP surrogates, expected-improvement plus value-of-information acquisition, SPRT stopping (&alpha;=&beta;=0.05), and DuckDB experiment catalog. Validated at 1,037 experiments per hour.</p>
+            <span class="hero-status-chip hero-status-chip--operational">&bull; Operational today</span>
+          </div>
+          <div class="hero-capability-card">
+            <div class="hero-card-label">Capability</div>
+            <h5>Contract-validated extensions</h5>
+            <p>Seven extension modules under a YAML-contract execution layer. Four Tier-1 extensions are stable today; schema convergence work for v1/v2 remains explicitly scoped as pre-pilot work.</p>
+            <span class="hero-status-chip hero-status-chip--pre-pilot">&bull; 4 stable &middot; v1/v2 pre-pilot</span>
+          </div>
+          <div class="hero-capability-card">
+            <div class="hero-card-label">Capability</div>
+            <h5>Deployment pathway</h5>
+            <p>FastAPI inference for tabular, fusion, and batch use cases, plus RBAC with HMAC-signed tokens and a hash-chained audit log designed for customer-hosted deployment via Terraform and Helm.</p>
+            <span class="hero-status-chip hero-status-chip--neutral">&bull; Available on request</span>
+          </div>
+          <div class="hero-capability-card">
+            <div class="hero-card-label">Capability</div>
+            <h5>Cross-lab benchmark surface</h5>
+            <p>A shared evaluation surface for graph-ML and foundation-model methods: leakage-free splits, calibration-corrected leaderboards, lineage-stamped checkpoints, and contract-validated reports.</p>
+            <span class="hero-status-chip hero-status-chip--operational">&bull; Operational today</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block section-divider">
+        <div class="section-intro">
+          <h3>Verify in 5 minutes</h3>
+          <p>Public proof should be easy to run. This path reproduces the ChEMBL drug-GCN baseline locally on CPU and shows the compressed rule graph behind the result.</p>
+        </div>
+
+        <div class="proof-grid">
+          <div class="hero-thread-card proof-card">
+            <div class="hero-thread-label" style="color:var(--accent-blue);">Public reproducibility path</div>
+            <h4>Reproduce the ChEMBL baseline locally</h4>
+            <div class="proof-callout"><span style="color:var(--accent-blue);text-transform:uppercase;letter-spacing:0.06em;font-size:9.5px;">Performance spectrum &middot;</span> <span style="color:var(--accent-green);">99.3%</span> imaging &middot; <span style="color:var(--accent-blue);">92.8%</span> omics &middot; <span style="color:var(--accent-green);">98.5%</span> drug-GCN &mdash; <a href="results.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">full results &rarr;</a></div>
+            <p style="font-size:12px;color:var(--text-secondary);margin:0 0 14px;line-height:1.55;">Deterministic, bit-equal across runs at <code style="font-family:var(--font-mono);color:var(--accent-cyan);">seed=42</code>; CPU-only, no GPU required.</p>
+            <div style="position:relative;"><button type="button" onclick="snptxCopySnippet(this)" style="position:absolute;top:6px;right:6px;z-index:2;padding:3px 8px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-secondary);background:rgba(110,118,129,0.15);border:1px solid rgba(110,118,129,0.35);border-radius:4px;cursor:pointer;" aria-label="Copy snippet to clipboard">copy</button>
 <script>function snptxCopySnippet(btn){var p=btn.parentElement.querySelector('pre');navigator.clipboard.writeText(p.innerText).then(function(){var o=btn.textContent;btn.textContent='copied';setTimeout(function(){btn.textContent=o;},1400);});}</script>
 <pre><span class="c"># Clone the public reproducibility repo and run the ChEMBL GCN baseline</span>
-<span class="c"># Prerequisites: python3.10+, pip, make, git  (apt: sudo apt install python3 python3-venv make git)</span>
+<span class="c"># Prerequisites: apt install python3 python3-venv make git</span>
 <span class="k">git</span> clone https://github.com/snptx1/snptx-repro-chembl.git
 <span class="k">cd</span> snptx-repro-chembl && <span class="k">make</span> install <span class="v">repro-chembl</span>   <span class="c"># &asymp; 3 min install + 15 s run on CPU</span>
 <span class="k">cat</span> results/metrics/drug_discovery_result.json   <span class="c"># expect accuracy = 0.9850586979722519</span></pre></div>
-              </div>
-              <div>
-                <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-blue);margin-bottom:6px;">Pipeline rule graph</div>
-                <a href="../assets/snakemake-dag.png?v=2" class="dag-thumb" target="_blank" rel="noopener" aria-label="Open full Snakemake DAG (raw graphviz)">
-                  <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" role="img" style="background:#0d1117;" aria-label="Snakemake rule graph: build_dataset to validate_data and split_data, both feed train_model, evaluate_model, summarize_evaluations, plot_summary, generate_model_report, all">
-                    <rect width="420" height="280" fill="#0d1117"/>
-                    <defs>
-                      <marker id="dag-arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                        <path d="M0,0 L10,5 L0,10 z" fill="#6e7681"/>
-                      </marker>
-                      <style>
-                        .n { fill: rgba(13,17,23,0.85); stroke-width: 1.4; rx: 6; }
-                        .nt { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9.5px; fill: #e6edf3; text-anchor: middle; dominant-baseline: middle; }
-                        .e { stroke: #6e7681; stroke-width: 1.1; fill: none; opacity: 0.7; }
-                        .ingest { stroke: var(--accent-orange); }
-                        .prep   { stroke: var(--accent-cyan); }
-                        .train  { stroke: var(--accent-blue); }
-                        .eval   { stroke: var(--accent-green); }
-                        .out    { stroke: var(--accent-purple); }
-                        .all    { stroke: #d97757; }
-                        .lane   { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 7.5px; fill: #6e7681; letter-spacing: 0.08em; text-transform: uppercase; }
-                      </style>
-                    </defs>
-                    <text class="lane" x="6" y="32">ingest</text>
-                    <text class="lane" x="6" y="78">prep</text>
-                    <text class="lane" x="6" y="124">train</text>
-                    <text class="lane" x="6" y="170">eval</text>
-                    <text class="lane" x="6" y="216">report</text>
-                    <text class="lane" x="6" y="262">target</text>
-                    <path class="e" d="M210,42 C210,55 132,55 132,72"/>
-                    <path class="e" d="M210,42 C210,55 288,55 288,72"/>
-                    <path class="e" d="M132,92 C132,108 210,108 210,118"/>
-                    <path class="e" d="M288,92 C288,108 210,108 210,118"/>
-                    <path class="e" d="M210,138 C210,152 132,152 132,164"/>
-                    <path class="e" d="M210,138 C210,152 288,152 288,164"/>
-                    <path class="e" d="M288,92 C320,108 320,150 288,164"/>
-                    <path class="e" d="M288,184 C288,200 210,200 210,210"/>
-                    <path class="e" d="M210,230 C210,242 156,242 156,256" marker-end="url(#dag-arrow2)"/>
-                    <path class="e" d="M210,230 C210,242 264,242 264,256" marker-end="url(#dag-arrow2)"/>
-                    <path class="e" d="M210,230 C210,250 210,256 210,260"/>
-                    <g><rect class="n ingest" x="170" y="22" width="80" height="22"/><text class="nt" x="210" y="34">build_dataset</text></g>
-                    <g><rect class="n prep" x="92" y="68" width="80" height="22"/><text class="nt" x="132" y="80">validate_data</text></g>
-                    <g><rect class="n prep" x="248" y="68" width="80" height="22"/><text class="nt" x="288" y="80">split_data</text></g>
-                    <g><rect class="n train" x="170" y="114" width="80" height="22"/><text class="nt" x="210" y="126">train_model</text></g>
-                    <g><rect class="n eval" x="92" y="160" width="80" height="22"/><text class="nt" x="132" y="172">evaluate_model</text></g>
-                    <g><rect class="n eval" x="220" y="160" width="120" height="22"/><text class="nt" x="280" y="172">summarize_evaluations</text></g>
-                    <g><rect class="n out" x="160" y="206" width="100" height="22"/><text class="nt" x="210" y="218">plot / report</text></g>
-                    <g><rect class="n all" x="190" y="252" width="40" height="20"/><text class="nt" x="210" y="262">all</text></g>
-                    <text class="lane" x="414" y="272" text-anchor="end">8 rules &middot; click to view raw DAG</text>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </details>
+          </div>
 
+          <div class="hero-thread-card proof-card">
+            <div class="hero-thread-label" style="color:var(--accent-blue);">Pipeline rule graph</div>
+            <h4>Compressed execution path</h4>
+            <p style="font-size:12px;color:var(--text-secondary);margin:0 0 14px;line-height:1.55;">A compact view of the baseline workflow: ingest, validate, split, train, evaluate, summarize, and report.</p>
+            <a href="../assets/snakemake-dag.png?v=2" class="dag-thumb" target="_blank" rel="noopener" aria-label="Open full Snakemake DAG (raw graphviz)">
+              <svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" role="img" style="background:#0d1117;" aria-label="Snakemake rule graph: build_dataset to validate_data and split_data, both feed train_model, evaluate_model, summarize_evaluations, plot_summary, generate_model_report, all">
+                <rect width="420" height="280" fill="#0d1117"/>
+                <defs>
+                  <marker id="dag-arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0,0 L10,5 L0,10 z" fill="#6e7681"/>
+                  </marker>
+                  <style>
+                    .n { fill: rgba(13,17,23,0.85); stroke-width: 1.4; rx: 6; }
+                    .nt { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9.5px; fill: #e6edf3; text-anchor: middle; dominant-baseline: middle; }
+                    .e { stroke: #6e7681; stroke-width: 1.1; fill: none; opacity: 0.7; }
+                    .ingest { stroke: var(--accent-orange); }
+                    .prep   { stroke: var(--accent-cyan); }
+                    .train  { stroke: var(--accent-blue); }
+                    .eval   { stroke: var(--accent-green); }
+                    .out    { stroke: var(--accent-purple); }
+                    .all    { stroke: #d97757; }
+                    .lane   { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 7.5px; fill: #6e7681; letter-spacing: 0.08em; text-transform: uppercase; }
+                  </style>
+                </defs>
+                <text class="lane" x="6" y="32">ingest</text>
+                <text class="lane" x="6" y="78">prep</text>
+                <text class="lane" x="6" y="124">train</text>
+                <text class="lane" x="6" y="170">eval</text>
+                <text class="lane" x="6" y="216">report</text>
+                <text class="lane" x="6" y="262">target</text>
+                <path class="e" d="M210,42 C210,55 132,55 132,72"/>
+                <path class="e" d="M210,42 C210,55 288,55 288,72"/>
+                <path class="e" d="M132,92 C132,108 210,108 210,118"/>
+                <path class="e" d="M288,92 C288,108 210,108 210,118"/>
+                <path class="e" d="M210,138 C210,152 132,152 132,164"/>
+                <path class="e" d="M210,138 C210,152 288,152 288,164"/>
+                <path class="e" d="M288,92 C320,108 320,150 288,164"/>
+                <path class="e" d="M288,184 C288,200 210,200 210,210"/>
+                <path class="e" d="M210,230 C210,242 156,242 156,256" marker-end="url(#dag-arrow2)"/>
+                <path class="e" d="M210,230 C210,242 264,242 264,256" marker-end="url(#dag-arrow2)"/>
+                <path class="e" d="M210,230 C210,250 210,256 210,260"/>
+                <g><rect class="n ingest" x="170" y="22" width="80" height="22"/><text class="nt" x="210" y="34">build_dataset</text></g>
+                <g><rect class="n prep" x="92" y="68" width="80" height="22"/><text class="nt" x="132" y="80">validate_data</text></g>
+                <g><rect class="n prep" x="248" y="68" width="80" height="22"/><text class="nt" x="288" y="80">split_data</text></g>
+                <g><rect class="n train" x="170" y="114" width="80" height="22"/><text class="nt" x="210" y="126">train_model</text></g>
+                <g><rect class="n eval" x="92" y="160" width="80" height="22"/><text class="nt" x="132" y="172">evaluate_model</text></g>
+                <g><rect class="n eval" x="220" y="160" width="120" height="22"/><text class="nt" x="280" y="172">summarize_evaluations</text></g>
+                <g><rect class="n out" x="160" y="206" width="100" height="22"/><text class="nt" x="210" y="218">plot / report</text></g>
+                <g><rect class="n all" x="190" y="252" width="40" height="20"/><text class="nt" x="210" y="262">all</text></g>
+                <text class="lane" x="414" y="272" text-anchor="end">8 rules &middot; click to view raw DAG</text>
+              </svg>
+            </a>
+          </div>
         </div>
+
+        <details class="hero-toggle section-detail-toggle">
+          <summary>Named datasets per modality <span class="hero-toggle-hint">&mdash; what sits behind the 8 / 46 surface</span></summary>
+          <div style="margin-top:10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:rgba(13,17,23,0.6);text-transform:none;letter-spacing:0;font-family:var(--font-stack);font-size:12px;color:var(--text-secondary);line-height:1.65;max-width:860px;">
+            <div><strong style="color:var(--text-primary);">Knowledge graphs &amp; pathways:</strong> hetionet, open_targets, gene_ontology, reactome_pathways <span style="color:#6e7681;">(planned: string_human, primekg)</span></div>
+            <div><strong style="color:var(--text-primary);">Molecular graphs &amp; structure:</strong> chembl_subset, moleculenet_tox21, alphafold_targets</div>
+            <div><strong style="color:var(--text-primary);">Omics &mdash; transcriptomics &amp; eQTL:</strong> tcga_pancan, gtex_v8, gtex_eqtl</div>
+            <div><strong style="color:var(--text-primary);">Omics &mdash; proteomics &amp; metabolomics:</strong> cptac, pride_sample, metabolights_mtbls1</div>
+            <div><strong style="color:var(--text-primary);">Single-cell &amp; spatial:</strong> cellxgene_pbmc, tenx_pbmc_3k, visium_brain</div>
+            <div><strong style="color:var(--text-primary);">Variants &amp; functional genomics:</strong> clinvar, thousand_genomes, gnomad, depmap, gwas_catalog</div>
+            <div><strong style="color:var(--text-primary);">Clinical &amp; pharmacovigilance:</strong> synthea_readmission, mimic_iv, eicu_crd, cms_synpuf, faers <span style="color:#6e7681;">(planned: aact, omop_synthea)</span></div>
+            <div><strong style="color:var(--text-primary);">Text, imaging, time-series:</strong> mtsamples, pubmed_sample, mitbih <span style="color:#6e7681;">(planned: mimic_cxr, chexpert_small, camelyon17_sample, mimic_notes, hmp2_ibd)</span></div>
+            <div style="margin-top:8px;color:#6e7681;font-size:11px;">DVC-versioned (s3://snptx-dvc-prod, gs://snptx-dvc-storage); ingested via the adapter-based <code style="font-family:var(--font-mono);color:var(--accent-cyan);">build_dataset_generic</code> rule.</div>
+          </div>
+        </details>
       </section>
     </article>
 
@@ -1000,8 +1210,8 @@
           <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Execution spine, mediated extensions, autonomous loop</h3>
           <p style="font-size:12px;color:var(--text-secondary);max-width:520px;">Ordered stages with persisted artifacts; downstream analysis attaches through a contract-validated runner; the autonomy surface feeds next-run selection back into training. Full diagram on <a href="architecture.html" style="color:var(--accent-blue);">Architecture</a>.</p>
         </div>
-        <div style="background:rgba(13,17,23,0.55);border:1px solid var(--border);border-radius:14px;padding:8px 6px;overflow:auto;">
-          <svg viewBox="0 0 1100 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iarch-title iarch-desc" style="width:100%;height:auto;min-width:760px;display:block;margin:0 auto;background:#0d1117;">
+        <div style="background:#0d1117;border:none;border-radius:0;padding:0;overflow:auto;">
+          <svg viewBox="46 42 1008 366" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iarch-title iarch-desc" style="width:100%;height:auto;min-width:760px;display:block;background:#0d1117;">
             <title id="iarch-title">SNPTX execution spine, extension runner, autonomy and deployment surfaces</title>
             <desc id="iarch-desc">Four-stage execution spine (ingestion, training, evaluation, reporting) with persisted artifacts; mediated contract-validated extension runner attaches through declared interfaces; an autonomous experimentation surface feeds back into training; a deployment surface receives the evaluation package.</desc>
             <defs>
@@ -1014,7 +1224,6 @@
                 <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.10"/>
               </linearGradient>
               <style>
-                .iarch-frame{fill:#0f1620;stroke:#30363d;stroke-width:1.2}
                 .iarch-lane{fill:#111821;stroke:#30363d;stroke-width:1}
                 .iarch-stage{fill:#161b22;stroke:#30363d;stroke-width:1.5}
                 .iarch-stage-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;font-weight:700;text-anchor:middle}
@@ -1032,8 +1241,8 @@
                 .iarch-link{stroke:#58a6ff;stroke-width:1.4;fill:none;stroke-dasharray:5 4;marker-end:url(#iarch-arrow-soft)}
                 .iarch-feedback{stroke:#3fb950;stroke-width:1.6;fill:none;stroke-dasharray:7 5;marker-end:url(#iarch-arrow-green)}
               </style>
-              <marker id="iarch-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
-                <path d="M0,0 L10,4 L0,8" fill="#bc8cff"/>
+              <marker id="iarch-arrow" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
+                 <path d="M0,0 L5,2 L0,4" fill="#bc8cff"/>
               </marker>
               <marker id="iarch-arrow-soft" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                 <path d="M0,0 L8,3 L0,6" fill="#58a6ff"/>
@@ -1042,9 +1251,6 @@
                 <path d="M0,0 L8,3 L0,6" fill="#3fb950"/>
               </marker>
             </defs>
-
-            <rect class="iarch-frame" x="16" y="16" width="1068" height="408" rx="18"/>
-
             <!-- Top lane: execution spine -->
             <rect class="iarch-lane" x="46" y="54" width="1008" height="170" rx="14"/>
             <text x="62" y="78" class="iarch-note">EXECUTION SPINE &mdash; SNAKEMAKE DAG &middot; DVC ARTIFACTS &middot; MLFLOW TRACKING</text>
@@ -1065,9 +1271,9 @@
             <text class="iarch-stage-text" x="845" y="122">Reporting</text>
             <text class="iarch-stage-sub" x="845" y="141">evidence packages</text>
 
-            <path class="iarch-flow" d="M240 131 H297"/>
-            <path class="iarch-flow" d="M470 131 H527"/>
-            <path class="iarch-flow" d="M700 131 H757"/>
+            <path class="iarch-flow" d="M255 131 H285"/>
+            <path class="iarch-flow" d="M485 131 H515"/>
+            <path class="iarch-flow" d="M715 131 H745"/>
 
             <!-- Persisted artifact chips -->
             <rect class="iarch-artifact" x="80" y="186" width="150" height="26" rx="9"/>

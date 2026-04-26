@@ -918,7 +918,7 @@
             <div class="hero-verify hero-verify--wide" aria-label="Verify in 5 minutes">
               <div>
                 <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-blue);margin-bottom:6px;">Verify in 5 minutes</div>
-                <div style="margin:-2px 0 10px;padding:8px 10px;border:1px dashed rgba(56,139,253,0.35);border-radius:6px;background:rgba(56,139,253,0.04);font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.5;"><span style="color:var(--accent-blue);text-transform:uppercase;letter-spacing:0.06em;font-size:9.5px;">Performance spectrum &middot;</span> <span style="color:var(--accent-green);">99.3%</span> imaging &middot; <span style="color:var(--accent-blue);">92.8%</span> omics &middot; <span style="color:var(--accent-orange);">61.0%</span> text &mdash; <a href="pages/results.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">full results &rarr;</a></div>
+                <div style="margin:-2px 0 10px;padding:8px 10px;border:1px dashed rgba(56,139,253,0.35);border-radius:6px;background:rgba(56,139,253,0.04);font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.5;"><span style="color:var(--accent-blue);text-transform:uppercase;letter-spacing:0.06em;font-size:9.5px;">Performance spectrum &middot;</span> <span style="color:var(--accent-green);">99.3%</span> imaging &middot; <span style="color:var(--accent-blue);">92.8%</span> omics &middot; <span style="color:var(--accent-green);">98.5%</span> drug-GCN &mdash; <a href="pages/results.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">full results &rarr;</a></div>
                 <p style="font-size:12px;color:var(--text-secondary);margin:14px 0 16px;line-height:1.55;">Reproduce the 98.0% ChEMBL drug-GCN result locally &mdash; deterministic, bit-equal across runs at <code style="font-family:var(--font-mono);color:var(--accent-cyan);">seed=42</code>; CPU-only, no GPU required.</p>
 <div style="position:relative;"><button type="button" onclick="snptxCopySnippet(this)" style="position:absolute;top:6px;right:6px;z-index:2;padding:3px 8px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-secondary);background:rgba(110,118,129,0.15);border:1px solid rgba(110,118,129,0.35);border-radius:4px;cursor:pointer;" aria-label="Copy snippet to clipboard">copy</button>
 <script>function snptxCopySnippet(btn){var p=btn.parentElement.querySelector('pre');navigator.clipboard.writeText(p.innerText).then(function(){var o=btn.textContent;btn.textContent='copied';setTimeout(function(){btn.textContent=o;},1400);});}</script>
@@ -1028,12 +1028,12 @@
                 .iarch-autonomy-text{fill:#3fb950;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
                 .iarch-pilot{fill:url(#iarch-pilot-grad);stroke:#3fb950;stroke-width:1.2}
                 .iarch-pilot-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
-                .iarch-flow{stroke:url(#iarch-spine);stroke-width:3;fill:none;marker-end:url(#iarch-arrow)}
+                  .iarch-flow{stroke:url(#iarch-spine);stroke-width:0.7;fill:none;marker-end:url(#iarch-arrow)}
                 .iarch-link{stroke:#58a6ff;stroke-width:1.4;fill:none;stroke-dasharray:5 4;marker-end:url(#iarch-arrow-soft)}
                 .iarch-feedback{stroke:#3fb950;stroke-width:1.6;fill:none;stroke-dasharray:7 5;marker-end:url(#iarch-arrow-green)}
               </style>
-              <marker id="iarch-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
-                <path d="M0,0 L10,4 L0,8" fill="#bc8cff"/>
+                <marker id="iarch-arrow" markerWidth="2.5" markerHeight="2" refX="2.25" refY="1" orient="auto">
+                  <path d="M0,0 L2.5,1 L0,2" fill="#bc8cff"/>
               </marker>
               <marker id="iarch-arrow-soft" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                 <path d="M0,0 L8,3 L0,6" fill="#58a6ff"/>
