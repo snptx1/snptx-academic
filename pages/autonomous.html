@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SNPTX Autonomous Experimentation</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="SNPTX autonomous experimentation: bounded evidence for closed-loop benchmark campaign execution, experiment selection, and calibration-aware reporting.">
+<title>SNPTX - Autonomous Experimentation</title>
 <style>
   :root {
+    color-scheme: dark;
     --border: #30363d;
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
@@ -13,7 +17,6 @@
     --accent-green: #3fb950;
     --accent-orange: #d29922;
     --accent-purple: #bc8cff;
-    --accent-pink: #ff7b72;
     --accent-cyan: #39c5cf;
     --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
     --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
@@ -47,6 +50,8 @@
     z-index: 1000;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 6px 14px;
     margin-bottom: 18px;
     padding: 12px 0 16px;
@@ -66,31 +71,15 @@
     border-bottom: 1px solid transparent;
   }
 
-  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+  .top-nav a.nav-brand {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
 
   .top-nav a:hover,
   .top-nav a.active {
     color: var(--text-primary);
     border-bottom-color: rgba(88,166,255,0.75);
-  }
-
-  .page-header {
-    margin-bottom: 32px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .page-header h1 {
-    font-size: 30px;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    margin-bottom: 8px;
-  }
-
-  .page-header p {
-    max-width: 840px;
-    color: var(--text-secondary);
-    font-size: 15px;
   }
 
   .draft {
@@ -120,7 +109,7 @@
   .draft-meta p {
     color: var(--text-secondary);
     font-size: 13px;
-    max-width: 760px;
+    max-width: 780px;
   }
 
   .badge {
@@ -136,22 +125,12 @@
     white-space: nowrap;
   }
 
-  .autonomous-stage {
-    position: relative;
-    padding: 38px 32px 40px;
-    background:
-      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
-      radial-gradient(circle at 84% 16%, rgba(63,185,80,0.12), transparent 24%),
-      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
-    overflow: hidden;
+  .section-block {
+    padding: 28px;
   }
 
-  .autonomous-stage::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  .section-divider {
+    border-top: 1px solid rgba(48,54,61,0.78);
   }
 
   .eyebrow {
@@ -173,52 +152,6 @@
     background: rgba(63,185,80,0.75);
   }
 
-  .autonomous-header {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
-    gap: 24px;
-    align-items: start;
-    margin-bottom: 22px;
-  }
-
-  .autonomous-header h3 {
-    font-size: 48px;
-    line-height: 1.03;
-    letter-spacing: -0.05em;
-    max-width: 860px;
-    margin-bottom: 16px;
-  }
-
-  .autonomous-lede {
-    max-width: 860px;
-    color: var(--text-secondary);
-    font-size: 17px;
-    line-height: 1.75;
-  }
-
-  .autonomous-summary,
-  .stat-card,
-  .autonomous-process,
-  .autonomous-table-card,
-  .autonomous-detail-card,
-  .autonomous-note {
-    background: rgba(22,27,34,0.82);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-  }
-
-  .autonomous-summary,
-  .stat-card,
-  .autonomous-process,
-  .autonomous-table-card,
-  .autonomous-detail-card,
-  .autonomous-note {
-    padding: 16px;
-  }
-
   .label {
     font-family: var(--font-mono);
     font-size: 10px;
@@ -227,31 +160,117 @@
     margin-bottom: 8px;
   }
 
-  .autonomous-summary .label { color: var(--accent-green); }
-  .autonomous-summary h4,
-  .stat-card h4,
-  .autonomous-table-head h4,
-  .autonomous-detail-card h4,
-  .autonomous-process h4 {
-    font-size: 15px;
+  .autonomous-hero {
+    position: relative;
+    padding: 36px 32px 40px;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.14), transparent 28%),
+      radial-gradient(circle at 84% 16%, rgba(63,185,80,0.10), transparent 22%),
+      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .autonomous-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.04) 100%);
+  }
+
+  .hero-grid,
+  .metrics-grid,
+  .cards-grid,
+  .caption-grid,
+  .site-footer-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 16px;
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: start;
+    margin-bottom: 24px;
+  }
+
+  .hero-grid h1 {
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+    max-width: 820px;
+    margin-bottom: 16px;
+  }
+
+  .lead {
+    max-width: 840px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .summary-card,
+  .visual-card,
+  .metric-context,
+  .stat-card,
+  .table-card,
+  .boundary-card,
+  .section-note,
+  .site-footer {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  .summary-card,
+  .metric-context,
+  .stat-card,
+  .table-card,
+  .boundary-card,
+  .section-note {
+    padding: 18px;
+  }
+
+  .summary-card .label,
+  .metric-context .label,
+  .section-note .label {
+    color: var(--accent-green);
+  }
+
+  .summary-card h3,
+  .metric-context h3,
+  .visual-head h3,
+  .table-head h3,
+  .boundary-card h3 {
+    font-size: 16px;
     margin-bottom: 10px;
   }
 
-  .autonomous-summary ul {
+  .summary-list {
     list-style: none;
     display: grid;
     gap: 10px;
   }
 
-  .autonomous-summary li {
-    position: relative;
-    padding-left: 14px;
+  .summary-list li,
+  .metric-context p,
+  .visual-head p,
+  .table-head p,
+  .boundary-card p,
+  .section-note p,
+  .caption-grid p {
     color: var(--text-secondary);
     font-size: 13px;
-    line-height: 1.55;
+    line-height: 1.65;
   }
 
-  .autonomous-summary li::before {
+  .summary-list li {
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .summary-list li::before {
     content: "";
     position: absolute;
     left: 0;
@@ -262,25 +281,52 @@
     background: var(--accent-green);
   }
 
-  .stats-grid,
-  .autonomous-detail-grid {
-    position: relative;
-    z-index: 1;
+  .visual-card {
+    padding: 18px 18px 16px;
+    background: rgba(13,17,23,0.54);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  }
+
+  .visual-head {
     display: grid;
-    gap: 14px;
-    margin-bottom: 18px;
+    gap: 6px;
+    margin-bottom: 14px;
   }
 
-  .stats-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+  .visual-head .label,
+  .table-head .label {
+    color: var(--accent-blue);
   }
 
-  .autonomous-detail-grid {
+  .visual-shell {
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 0 -18px;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+  }
+
+  .visual-shell svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 720px;
+  }
+
+  .caption-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 14px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin-top: 16px;
   }
 
   .stat-card {
     text-align: center;
+    background: rgba(17,24,33,0.78);
   }
 
   .stat-value {
@@ -293,41 +339,23 @@
 
   .stat-label {
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     font-family: var(--font-mono);
   }
 
-  .autonomous-process,
-  .autonomous-table-card {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 18px;
+  .table-card {
+    margin-top: 18px;
   }
 
-  .autonomous-process p,
-  .autonomous-table-head p,
-  .autonomous-detail-card p,
-  .autonomous-note p {
-    color: var(--text-secondary);
-    font-size: 13px;
-    line-height: 1.65;
-  }
-
-  .autonomous-process strong {
-    color: var(--text-primary);
-  }
-
-  .autonomous-table-head {
+  .table-head {
     display: grid;
     gap: 6px;
     margin-bottom: 14px;
   }
 
-  .autonomous-table-head .label { color: var(--accent-blue); }
-
-  .autonomous-table {
+  .data-table {
     width: 100%;
     border-collapse: collapse;
     overflow: hidden;
@@ -336,8 +364,8 @@
     background: rgba(13,17,23,0.56);
   }
 
-  .autonomous-table th,
-  .autonomous-table td {
+  .data-table th,
+  .data-table td {
     text-align: left;
     padding: 13px 14px;
     vertical-align: top;
@@ -345,7 +373,7 @@
     line-height: 1.55;
   }
 
-  .autonomous-table th {
+  .data-table th {
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 0.08em;
@@ -355,12 +383,12 @@
     border-bottom: 1px solid rgba(48,54,61,0.85);
   }
 
-  .autonomous-table td {
+  .data-table td {
     color: var(--text-secondary);
     border-top: 1px solid rgba(48,54,61,0.55);
   }
 
-  .autonomous-table tbody tr:first-child td {
+  .data-table tbody tr:first-child td {
     border-top: none;
   }
 
@@ -389,22 +417,91 @@
     border: 1px solid rgba(88,166,255,0.35);
   }
 
-  .autonomous-detail-card:nth-child(1) .label { color: var(--accent-blue); }
-  .autonomous-detail-card:nth-child(2) .label { color: var(--accent-green); }
-  .autonomous-detail-card:nth-child(3) .label { color: var(--accent-purple); }
-
-  .autonomous-note {
-    position: relative;
-    z-index: 1;
-    background: rgba(22,27,34,0.62);
-    border-color: rgba(88,166,255,0.18);
+  .cards-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  @media (max-width: 1180px) {
-    .autonomous-header,
-    .stats-grid,
-    .autonomous-detail-grid {
+  .boundary-card:nth-child(1) .label {
+    color: var(--accent-blue);
+  }
+
+  .boundary-card:nth-child(2) .label {
+    color: var(--accent-green);
+  }
+
+  .boundary-card:nth-child(3) .label {
+    color: var(--accent-orange);
+  }
+
+  .site-footer {
+    display: grid;
+    gap: 18px;
+    margin-top: 36px;
+    padding: 20px 0 0;
+    border: none;
+    background: transparent;
+  }
+
+  .site-footer-grid {
+    grid-template-columns: minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);
+    gap: 18px 24px;
+    align-items: start;
+  }
+
+  .site-footer .label {
+    color: #58a6ff;
+    font-size: 10px;
+  }
+
+  .site-footer p {
+    color: #c9d1d9;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .site-footer p.muted,
+  .site-footer a.muted {
+    color: #8b949e;
+  }
+
+  .site-footer .sitemap {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(96px, 1fr));
+    gap: 5px 16px;
+  }
+
+  .site-footer .sitemap a {
+    color: #e6edf3;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .site-footer-bottom {
+    padding-top: 12px;
+    border-top: 1px solid rgba(48,54,61,0.72);
+    color: #8b949e;
+    font-size: 11px;
+    text-align: right;
+  }
+
+  @media (max-width: 1100px) {
+    .hero-grid,
+    .caption-grid,
+    .cards-grid,
+    .site-footer-grid,
+    .metrics-grid {
       grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-grid > :first-child,
+    .metric-context,
+    .table-card,
+    .section-note {
+      grid-column: 1 / -1;
+    }
+
+    .hero-grid h1 {
+      font-size: 36px;
     }
   }
 
@@ -419,50 +516,49 @@
 
     .draft-meta .badge {
       display: inline-block;
-      margin-bottom: 12px;
+      margin-top: 12px;
     }
 
-    .autonomous-stage {
-      padding: 28px 20px 32px;
+    .section-block,
+    .autonomous-hero {
+      padding: 24px 20px 28px;
     }
 
-    .autonomous-header,
-    .stats-grid,
-    .autonomous-detail-grid {
+    .hero-grid,
+    .caption-grid,
+    .cards-grid,
+    .site-footer-grid,
+    .metrics-grid {
       grid-template-columns: 1fr;
     }
 
-    .autonomous-header h3 {
-      font-size: 34px;
+    .hero-grid h1 {
+      font-size: 30px;
     }
 
-    .autonomous-lede {
-      font-size: 16px;
-    }
-
-    .autonomous-table,
-    .autonomous-table thead,
-    .autonomous-table tbody,
-    .autonomous-table tr,
-    .autonomous-table th,
-    .autonomous-table td {
+    .data-table,
+    .data-table thead,
+    .data-table tbody,
+    .data-table tr,
+    .data-table th,
+    .data-table td {
       display: block;
       width: 100%;
     }
 
-    .autonomous-table thead {
+    .data-table thead {
       display: none;
     }
 
-    .autonomous-table tr {
+    .data-table tr {
       border-top: 1px solid rgba(48,54,61,0.55);
     }
 
-    .autonomous-table tbody tr:first-child {
+    .data-table tbody tr:first-child {
       border-top: none;
     }
 
-    .autonomous-table td {
+    .data-table td {
       border-top: none;
       padding: 10px 12px;
     }
@@ -488,105 +584,190 @@
       <a href="references.html">References</a>
     </nav>
 
-    <header class="page-header">
-      <h1>SNPTX Autonomous Experimentation</h1>
-      <p>Closed-loop campaign evidence for autonomous experimentation on supported benchmark surfaces.</p>
-    </header>
-
     <article class="draft">
       <div class="draft-meta">
         <div>
-          <h2>Autonomous</h2>
-          <p>Campaign-scale results showing how the current autonomous loop selects, evaluates, and updates experiments.</p>
+          <h2>Autonomous experimentation</h2>
+          <p>Evidence for the current campaign runner: how benchmark campaigns are controlled, what outcomes are reported, and what these results establish.</p>
         </div>
-        <div class="badge">Campaign Evidence</div>
+        <div class="badge">Evidence view</div>
       </div>
 
-      <section class="autonomous-stage" id="autonomous">
-        <div class="autonomous-header">
+      <section class="autonomous-hero section-block" id="overview">
+        <div class="hero-grid">
           <div>
-            <div class="eyebrow">Structured campaign execution with adaptive guidance and closed-loop updating</div>
-            <h3>Autonomous Experimentation Engine</h3>
-            <p class="autonomous-lede">Structured campaigns can be executed without manual intervention on selected benchmark suites, using the implemented intelligence modules to guide exploration. This section presents the live autonomous layer as an operational experimentation subsystem rather than a generalized autonomous research claim.</p>
+            <div class="eyebrow">Scoped benchmark campaign execution</div>
+            <h1>Closed-loop experiment selection, execution, and update for supported benchmark campaigns.</h1>
+            <p class="lead">This page documents the campaign controller as implemented in SNPTX. On the reported benchmark suites, it selects configurations from a declared search space, executes runs, classifies outcomes against the experiment record, and writes updated results back into subsequent selection. The evidence here concerns campaign control, throughput, and observed outcome quality within that reported setting.</p>
           </div>
 
-          <aside class="autonomous-summary">
-            <div class="label">Autonomy summary</div>
-            <h4>What this section establishes</h4>
-            <ul>
-              <li>The current system can execute structured benchmark campaigns without manual step-by-step intervention.</li>
-              <li>Campaign behavior is shaped by adaptive defaults, meta-analysis, catalog history, and confidence updating.</li>
-              <li>Reported outputs include throughput, discoveries, best-per-dataset results, and calibration evidence.</li>
+          <aside class="summary-card">
+            <div class="label">Scope summary</div>
+            <h3>What this page establishes</h3>
+            <ul class="summary-list">
+              <li>The reported campaigns proceed from declared search spaces rather than manual per-run control.</li>
+              <li>Each round writes outcomes back into the experiment record and conditions subsequent selection.</li>
+              <li>The evidence surface combines run volume, discovery classification, best-per-dataset results, and calibration context.</li>
             </ul>
           </aside>
         </div>
 
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-value" style="color:var(--accent-green);">1,100</div>
-            <div class="stat-label">Experiments</div>
+        <div class="visual-card">
+          <div class="visual-head">
+            <div class="label">Loop structure</div>
+            <h3>Selection, execution, evaluation, and catalog update within a declared campaign boundary</h3>
+            <p>The loop acts on a predefined campaign surface. It proposes supported configurations, executes the standard pipeline, compares outcomes with recorded history, and writes updated results back to the catalog for subsequent rounds.</p>
           </div>
-          <div class="stat-card">
-            <div class="stat-value" style="color:var(--accent-blue);">104</div>
-            <div class="stat-label">Discoveries</div>
+
+          <div class="visual-shell">
+            <svg viewBox="0 0 1180 228" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="auto-title auto-desc">
+              <title id="auto-title">SNPTX autonomous experimentation loop</title>
+              <desc id="auto-desc">A bounded campaign loop showing candidate selection, pipeline execution, evaluation and classification, catalog update, and next-run prioritization within supported benchmark surfaces.</desc>
+              <defs>
+                <style>
+                  .surface{fill:rgba(25,38,54,0.14);stroke:#4d8dd8;stroke-width:1.1;stroke-dasharray:7 6}
+                  .stage{fill:#161b22;stroke:#30363d;stroke-width:1.2}
+                  .stage-title{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;font-weight:700;text-anchor:middle}
+                  .stage-copy{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;text-anchor:middle}
+                  .note{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;letter-spacing:1px}
+                  .connector{stroke:#3fb950;stroke-width:2.2;fill:none;marker-end:url(#arrow)}
+                  .connector-soft{stroke:#3fb950;stroke-width:1.3;fill:none;opacity:0.85}
+                  .chip-blue{fill:rgba(88,166,255,0.12);stroke:#58a6ff;stroke-width:1}
+                  .chip-green{fill:rgba(63,185,80,0.12);stroke:#3fb950;stroke-width:1}
+                  .chip-orange{fill:rgba(210,153,34,0.12);stroke:#d29922;stroke-width:1}
+                  .chip-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                </style>
+                <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#3fb950"/>
+                </marker>
+              </defs>
+
+              <rect class="surface" x="20" y="20" width="1140" height="168" rx="14"/>
+              <text class="note" x="42" y="38">SUPPORTED BENCHMARK CAMPAIGN SURFACE</text>
+
+              <rect class="stage" x="40" y="60" width="240" height="64" rx="12"/>
+              <text class="stage-title" x="160" y="82">Candidate selection</text>
+              <text class="stage-copy" x="160" y="100">adaptive defaults + meta-analysis</text>
+              <text class="stage-copy" x="160" y="114">supported configuration space only</text>
+
+              <rect class="stage" x="320" y="60" width="240" height="64" rx="12"/>
+              <text class="stage-title" x="440" y="82">Pipeline execution</text>
+              <text class="stage-copy" x="440" y="100">standard run orchestration</text>
+              <text class="stage-copy" x="440" y="114">metrics and artifacts captured</text>
+
+              <rect class="stage" x="600" y="60" width="240" height="64" rx="12"/>
+              <text class="stage-title" x="720" y="82">Evaluation and classification</text>
+              <text class="stage-copy" x="720" y="100">compare against recorded history</text>
+              <text class="stage-copy" x="720" y="114">new_best, novel_config, surprise</text>
+
+              <rect class="stage" x="880" y="60" width="240" height="64" rx="12"/>
+              <text class="stage-title" x="1000" y="82">Catalog update</text>
+              <text class="stage-copy" x="1000" y="100">write outcomes and update priors</text>
+              <text class="stage-copy" x="1000" y="114">persist for the next round</text>
+
+              <path class="connector" d="M280 92 H310"/>
+              <path class="connector" d="M560 92 H590"/>
+              <path class="connector" d="M840 92 H870"/>
+
+              <path class="connector-soft" d="M160 124 V142"/>
+              <path class="connector-soft" d="M440 124 V142"/>
+              <path class="connector-soft" d="M720 124 V142"/>
+              <path class="connector-soft" d="M1000 124 V142"/>
+
+              <rect class="chip-blue" x="100" y="142" width="120" height="24" rx="12"/>
+              <text class="chip-text" x="160" y="157">selection record</text>
+              <rect class="chip-blue" x="380" y="142" width="120" height="24" rx="12"/>
+              <text class="chip-text" x="440" y="157">run artifacts</text>
+              <rect class="chip-green" x="664" y="142" width="112" height="24" rx="12"/>
+              <text class="chip-text" x="720" y="157">discovery tags</text>
+              <rect class="chip-orange" x="938" y="142" width="124" height="24" rx="12"/>
+              <text class="chip-text" x="1000" y="157">updated priors</text>
+            </svg>
           </div>
-          <div class="stat-card">
-            <div class="stat-value" style="color:var(--accent-purple);">1,037</div>
-            <div class="stat-label">Exp/Hour</div>
+
+          <div class="caption-grid">
+            <div>
+              <div class="label" style="color:var(--accent-blue);">Demonstrated</div>
+              <p>Once datasets, search space, and evaluation procedure are declared, the system can run repeated benchmark campaigns without manual stepwise intervention.</p>
+            </div>
+            <div>
+              <div class="label" style="color:var(--accent-green);">Evidence model</div>
+              <p>The evidence shown here is operational rather than theoretical: run volume, throughput, outcome classification, and a representative calibration check for one reported run.</p>
+            </div>
+            <div>
+              <div class="label" style="color:var(--accent-orange);">Not shown here</div>
+              <p>This figure does not address how the same controller behaves under shifted data, expanded search spaces, tighter runtime constraints, or materially different downstream workflows.</p>
+            </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-value" style="color:var(--accent-orange);">1.06 hr</div>
-            <div class="stat-label">Elapsed</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value" style="color:var(--accent-pink);">5</div>
-            <div class="stat-label">Datasets</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value" style="color:var(--accent-cyan);">6</div>
-            <div class="stat-label">Model Types</div>
+        </div>
+      </section>
+
+      <section class="section-block section-divider" id="campaign-evidence">
+        <div class="metric-context">
+          <div class="label">Campaign context</div>
+          <h3>Summary measures from the newer phase_c_validation metrics artifact</h3>
+          <p>These headline values come from the newer phase_c_validation autonomous metrics artifact. They summarize aggregate run volume, discovery yield, and runtime for a later validation pass. The dataset and model-family counts still reflect the current autonomy configuration, while the detailed tables below remain artifact-specific examples rather than a single unified report.</p>
+
+          <div class="metrics-grid" aria-label="Autonomous campaign summary metrics">
+            <div class="stat-card">
+              <div class="stat-value" style="color:var(--accent-green);">1,065</div>
+              <div class="stat-label">Experiments</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" style="color:var(--accent-blue);">101</div>
+              <div class="stat-label">Discoveries</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" style="color:var(--accent-purple);">976.7</div>
+              <div class="stat-label">Exp / Hour</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" style="color:var(--accent-orange);">1.09 hr</div>
+              <div class="stat-label">Elapsed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" style="color:var(--accent-cyan);">5</div>
+              <div class="stat-label">Datasets</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" style="color:#ff7b72;">6</div>
+              <div class="stat-label">Model Types</div>
+            </div>
           </div>
         </div>
 
-        <div class="autonomous-process">
-          <div class="label" style="color: var(--accent-green);">Closed-loop process</div>
-          <h4>Selection, execution, classification, update</h4>
-          <p>The autonomous engine operates as a closed loop within the experimentation subsystem: it <strong>selects</strong> configurations via adaptive defaults and meta-analysis, <strong>executes</strong> pipeline runs, <strong>evaluates</strong> outcomes against catalog history, <strong>classifies</strong> findings as `new_best`, `novel_config`, or `surprise`, and <strong>updates</strong> campaign-level confidence scores for subsequent rounds.</p>
-        </div>
-
-        <div class="autonomous-table-card">
-          <div class="autonomous-table-head">
+        <div class="table-card">
+          <div class="table-head">
             <div class="label">Campaign outcomes</div>
-            <h4>Best per-dataset results</h4>
-            <p>The live best-results table is preserved here as the primary discovery surface for the autonomous campaign.</p>
+            <h3>Detailed per-dataset checkpoint example</h3>
+            <p>The newer validation metrics artifact does not expose a per-dataset best-result table. To keep the page inspectable at the dataset level, this table continues to show the archived autonomous_1k checkpoint, which preserves the strongest saved accuracy for each dataset in that benchmark run.</p>
           </div>
 
-          <table class="autonomous-table" aria-label="Best per-dataset autonomous results">
+          <table class="data-table" aria-label="Best per-dataset autonomous results">
             <thead>
               <tr>
                 <th>Dataset</th>
-                <th>Best Accuracy</th>
-                <th>Discovery Type</th>
+                <th>Best accuracy</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>Iris</td><td>100%</td><td><span class="pill green">new_best</span></td></tr>
-              <tr><td>Wine</td><td>100%</td><td><span class="pill green">new_best</span></td></tr>
-              <tr><td>Digits</td><td>99.4%</td><td><span class="pill green">new_best</span></td></tr>
-              <tr><td>Breast Cancer</td><td>97.4%</td><td><span class="pill green">new_best</span></td></tr>
-              <tr><td>Synthea Readmission</td><td>78.0%</td><td><span class="pill blue">novel_config</span></td></tr>
+              <tr><td>Iris</td><td>100.0%</td></tr>
+              <tr><td>Wine</td><td>100.0%</td></tr>
+              <tr><td>Digits</td><td>99.44%</td></tr>
+              <tr><td>Breast Cancer</td><td>97.37%</td></tr>
+              <tr><td>Synthea Readmission</td><td>77.96%</td></tr>
             </tbody>
           </table>
         </div>
 
-        <div class="autonomous-table-card">
-          <div class="autonomous-table-head">
-            <div class="label">Reliability check</div>
-            <h4>Calibration analysis (XGBoost, Synthea, n_estimators=300)</h4>
-            <p>The live calibration table is preserved here to show that autonomous discovery reporting also includes model reliability context for representative runs.</p>
+        <div class="table-card">
+          <div class="table-head">
+            <div class="label">Reliability context</div>
+            <h3>Separate saved calibration artifact</h3>
+            <p>This calibration summary is not emitted by the newer validation metrics artifact or by the archived autonomous_1k run report. It is a separate saved model-level artifact for a Synthea readmission XGBoost model and is included here only as adjacent reliability context.</p>
           </div>
 
-          <table class="autonomous-table" aria-label="Calibration analysis table">
+          <table class="data-table" aria-label="Calibration analysis table">
             <thead>
               <tr>
                 <th>Metric</th>
@@ -594,70 +775,83 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Expected Calibration Error</td><td>0.055</td></tr>
-              <tr><td>Brier Score</td><td>0.160</td></tr>
-              <tr><td>Calibration Quality</td><td>Good (ECE &lt; 0.1)</td></tr>
+              <tr><td>Artifact</td><td>models/synthea_readmission_xgboost_model_300.pkl</td></tr>
+              <tr><td>Model / dataset</td><td>XGBoost on Synthea Readmission</td></tr>
+              <tr><td>Expected Calibration Error</td><td>0.0548</td></tr>
+              <tr><td>Brier Score</td><td>0.1599</td></tr>
+              <tr><td>Calibration quality</td><td>GOOD</td></tr>
               <tr><td>Mean predicted probability</td><td>58.1%</td></tr>
               <tr><td>Observed positive rate</td><td>58.9%</td></tr>
             </tbody>
           </table>
         </div>
+      </section>
 
-        <div class="autonomous-detail-grid">
-          <div class="autonomous-detail-card">
-            <div class="label">Operational scope</div>
-            <h4>What is autonomous here</h4>
-            <p>The autonomous layer concerns structured experimentation campaigns on supported benchmark suites, not unconstrained scientific agency across the whole platform.</p>
+      <section class="section-block section-divider" id="boundaries">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px;">
+          <h2 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Interpretation and limits</h2>
+          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">The central question is not whether the loop is autonomous in the abstract, but what the reported evidence establishes about campaign behavior and what remains untested.</p>
+        </div>
+
+        <div class="cards-grid">
+          <div class="boundary-card">
+            <div class="label">What is demonstrated</div>
+            <h3>Repeated campaign execution</h3>
+            <p>Across the reported metrics and checkpoint artifacts, SNPTX maintains the full campaign cycle from candidate selection through recorded outcome update while preserving an inspectable record of configurations, outputs, and outcome tags.</p>
           </div>
-          <div class="autonomous-detail-card">
-            <div class="label">Evidence posture</div>
-            <h4>Why campaign metrics matter</h4>
-            <p>Throughput, discoveries, and calibration give the reader a concrete view of campaign behavior instead of leaving the autonomy claim purely architectural.</p>
+          <div class="boundary-card">
+            <div class="label">What is inferred</div>
+            <h3>Directionally effective search</h3>
+            <p>Aggregate discovery counts and checkpoint-level best results indicate that the selection policy can surface productive configurations within the declared search space. They do not establish global optimality or uniform superiority over alternative search strategies.</p>
           </div>
-          <div class="autonomous-detail-card">
-            <div class="label">Section role</div>
-            <h4>How Autonomous supports the page</h4>
-            <p>This section translates the intelligence layer from a capability list into observable experimentation behavior with measurable outputs and bounded scope.</p>
+          <div class="boundary-card">
+            <div class="label">What is out of scope</div>
+            <h3>Transfer beyond the reported setting</h3>
+            <p>The evidence here is confined to the reported benchmark surfaces, model families, and search regime. It does not by itself establish that the same policy will transfer unchanged to new modalities, broader search spaces, different resource constraints, or downstream operational workflows.</p>
           </div>
         </div>
 
+        <div class="section-note" style="margin-top:18px;">
+          <div class="label">Interpretive note</div>
+          <p>What this page establishes is narrower and more concrete: the controller can manage repeated benchmark campaigns while preserving inspectable metrics and checkpoint artifacts, even when different evidentiary slices are reported in separate files. Separate experiments would still be needed to compare search efficiency rigorously, assess robustness under distribution shift, or evaluate transfer to laboratory or clinical workflows.</p>
+        </div>
       </section>
     </article>
 
-    <footer aria-label="Site footer" style="display:grid;gap:18px;margin-top:36px;padding-top:20px;border-top:1px solid rgba(48,54,61,0.85);">
-      <div style="display:grid;grid-template-columns:minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);gap:18px 24px;align-items:start;">
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="site-footer-grid">
         <section style="display:grid;gap:6px;align-content:start;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">SNPTX&trade;</div>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Connecting Data to Discovery</p>
+          <div class="label">SNPTX&trade;</div>
+          <p>Connecting Data to Discovery</p>
         </section>
         <section style="display:grid;gap:8px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Site Map</div>
-          <div style="display:grid;grid-template-columns:repeat(3, minmax(96px, 1fr));gap:5px 16px;">
-            <a href="../index.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Home</a>
-            <a href="architecture.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Architecture</a>
-            <a href="motivation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Motivation</a>
-            <a href="results.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Results</a>
-            <a href="validation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Validation</a>
-            <a href="evidence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Evidence</a>
-            <a href="intelligence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Intelligence</a>
-            <a href="autonomous.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Autonomous</a>
-            <a href="methodology.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Methodology</a>
-            <a href="fusion.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Fusion</a>
-            <a href="pilots.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Pilots</a>
-            <a href="positioning.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Positioning</a>
-            <a href="limitations.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Limitations</a>
-            <a href="references.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">References</a>
+          <div class="label">Site Map</div>
+          <div class="sitemap">
+            <a href="../index.html">Home</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="motivation.html">Motivation</a>
+            <a href="results.html">Results</a>
+            <a href="validation.html">Validation</a>
+            <a href="evidence.html">Evidence</a>
+            <a href="intelligence.html">Intelligence</a>
+            <a href="autonomous.html">Autonomous</a>
+            <a href="methodology.html">Methodology</a>
+            <a href="fusion.html">Fusion</a>
+            <a href="pilots.html">Pilots</a>
+            <a href="positioning.html">Positioning</a>
+            <a href="limitations.html">Limitations</a>
+            <a href="references.html">References</a>
           </div>
         </section>
         <section style="display:grid;gap:6px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Contact</div>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;max-width:240px;">Research, collaboration, and review inquiries.</p>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Daniel R. Russell</p>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;">MITx (SDS), Harvard ALM (DS) '27</p>
-          <p style="color:#c9d1d9;font-size:13px;line-height:1.6;white-space:normal;"><a href="mailto:drr508@g.harvard.edu" style="color:#c9d1d9;text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" style="color:#c9d1d9;text-decoration:none;">dan@snptx.ai</a></p>
+          <div class="label">Contact</div>
+          <p>Research, collaboration, and review inquiries.</p>
+          <p class="muted">Daniel R. Russell</p>
+          <p class="muted">MITx (SDS), Harvard ALM (DS) '27</p>
+          <p class="muted" style="white-space:normal;"><a href="mailto:drr508@g.harvard.edu" class="muted" style="text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" class="muted" style="text-decoration:none;">dan@snptx.ai</a></p>
         </section>
       </div>
-      <div style="padding-top:12px;border-top:1px solid rgba(48,54,61,0.72);color:#8b949e;font-size:11px;text-align:right;">SNPTX&trade; Academic</div>
+      <div class="site-footer-bottom">SNPTX&trade; Academic 2026</div>
     </footer>
   </div>
 </body>

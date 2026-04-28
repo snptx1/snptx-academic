@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SNPTX Experimental Methodology</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="SNPTX experimental methodology: compute environment, dataset coverage, per-modality training configuration, and bounded reproducibility controls.">
+<title>SNPTX - Methodology</title>
 <style>
   :root {
+    color-scheme: dark;
     --border: #30363d;
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
@@ -13,15 +17,12 @@
     --accent-green: #3fb950;
     --accent-orange: #d29922;
     --accent-purple: #bc8cff;
+    --accent-warm: #f2cc60;
     --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
     --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   }
 
-  *, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     background:
@@ -34,362 +35,244 @@
     padding: 40px 24px 80px;
   }
 
-  .page {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
+  .page { max-width: 1280px; margin: 0 auto; }
 
   .top-nav {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 1000;
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
     gap: 6px 14px;
-    margin-bottom: 18px;
-    padding: 12px 0 16px;
+    margin-bottom: 18px; padding: 12px 0 16px;
     background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
     border-bottom: 1px solid rgba(48,54,61,0.85);
   }
-
   .top-nav a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    padding: 7px 0;
-    border-bottom: 1px solid transparent;
+    color: var(--text-secondary); text-decoration: none;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; white-space: nowrap;
+    padding: 7px 0; border-bottom: 1px solid transparent;
   }
-
   .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+  .top-nav a:hover, .top-nav a.active { color: var(--text-primary); border-bottom-color: rgba(88,166,255,0.75); }
 
-  .top-nav a:hover,
-  .top-nav a.active {
-    color: var(--text-primary);
-    border-bottom-color: rgba(88,166,255,0.75);
-  }
-
-  .page-header {
-    margin-bottom: 32px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .page-header h1 {
-    font-size: 30px;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    margin-bottom: 8px;
-  }
-
-  .page-header p {
-    max-width: 840px;
-    color: var(--text-secondary);
-    font-size: 15px;
-  }
+  .page-header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .page-header h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+  .page-header p { max-width: 840px; color: var(--text-secondary); font-size: 15px; }
 
   .draft {
     background: rgba(13,17,23,0.72);
     border: 1px solid var(--border);
     border-radius: 18px;
     overflow: hidden;
+    margin-bottom: 28px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.28);
   }
-
   .draft-meta {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    align-items: center;
+    display: flex; justify-content: space-between; gap: 16px; align-items: center;
     padding: 18px 24px;
     border-bottom: 1px solid var(--border);
     background: rgba(22,27,34,0.88);
   }
-
-  .draft-meta h2 {
-    font-size: 18px;
-    font-weight: 700;
-  }
-
-  .draft-meta p {
-    color: var(--text-secondary);
-    font-size: 13px;
-    max-width: 760px;
-  }
-
+  .draft-meta h2 { font-size: 18px; font-weight: 700; }
+  .draft-meta p { color: var(--text-secondary); font-size: 13px; max-width: 760px; }
   .badge {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent-blue);
-    background: rgba(88,166,255,0.10);
-    border: 1px solid rgba(88,166,255,0.28);
-    border-radius: 999px;
-    padding: 5px 10px;
-    white-space: nowrap;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent-blue);
+    background: rgba(88,166,255,0.10); border: 1px solid rgba(88,166,255,0.28);
+    border-radius: 999px; padding: 5px 10px; white-space: nowrap;
   }
 
-  .stage {
+  .section-block { padding: 28px 32px; }
+  .section-divider { border-top: 1px solid rgba(48,54,61,0.78); }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 18px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent-green);
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: rgba(63,185,80,0.75); }
+
+  .hero {
     position: relative;
-    padding: 38px 32px 40px;
+    padding: 36px 32px 40px;
     background:
-      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
-      radial-gradient(circle at 84% 16%, rgba(63,185,80,0.14), transparent 24%),
-      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+      radial-gradient(circle at 10% 16%, rgba(88,166,255,0.16), transparent 30%),
+      radial-gradient(circle at 88% 12%, rgba(63,185,80,0.14), transparent 26%),
+      linear-gradient(135deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
     overflow: hidden;
   }
-
-  .stage::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
     background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
   }
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 18px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent-green);
-  }
-
-  .eyebrow::before {
-    content: "";
-    width: 28px;
-    height: 1px;
-    background: rgba(63,185,80,0.75);
-  }
-
-  .header {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
-    gap: 24px;
+  .hero-grid {
+    position: relative; z-index: 1;
+    display: grid; gap: 16px;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
     align-items: start;
-    margin-bottom: 22px;
+  }
+  .hero-grid h3 {
+    font-size: 40px; line-height: 1.05; letter-spacing: -0.05em;
+    max-width: 820px; margin-bottom: 16px;
+  }
+  .lead { max-width: 820px; color: var(--text-secondary); font-size: 16px; line-height: 1.75; }
+
+  .label {
+    font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 8px;
   }
 
-  .header h3 {
-    font-size: 48px;
-    line-height: 1.03;
-    letter-spacing: -0.05em;
-    max-width: 860px;
-    margin-bottom: 16px;
-  }
-
-  .lede {
-    max-width: 860px;
-    color: var(--text-secondary);
-    font-size: 17px;
-    line-height: 1.75;
-  }
-
-  .summary,
-  .card,
-  .note {
+  .summary-card {
     background: rgba(22,27,34,0.82);
     border: 1px solid var(--border);
     border-radius: 14px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-    padding: 16px;
+    padding: 18px;
+  }
+  .summary-card .label { color: var(--accent-green); }
+  .summary-card h4 { font-size: 15px; margin-bottom: 10px; }
+  .summary-list { list-style: none; display: grid; gap: 10px; }
+  .summary-list li {
+    position: relative; padding-left: 14px;
+    color: var(--text-secondary); font-size: 13px; line-height: 1.6;
+  }
+  .summary-list li::before {
+    content: ""; position: absolute; left: 0; top: 8px;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--accent-green);
   }
 
-  .summary,
-  .card,
-  .note {
-    position: relative;
-    z-index: 1;
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 18px; flex-wrap: wrap; margin-bottom: 14px;
   }
-
-  .summary {
-    align-self: start;
+  .section-head h3 {
+    font-size: 15px; font-family: var(--font-mono);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-secondary); font-weight: 600;
   }
-
-  .label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 8px;
-    color: var(--accent-green);
-  }
-
-  .summary h4,
-  .card h4,
-  .table-head h4,
-  .note h4 {
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
-
-  .summary ul {
-    list-style: none;
-    display: grid;
-    gap: 10px;
-  }
-
-  .summary li {
-    position: relative;
-    padding-left: 14px;
-    color: var(--text-secondary);
-    font-size: 13px;
-    line-height: 1.55;
-  }
-
-  .summary li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 8px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--accent-green);
-  }
-
-  .table-card,
-  .callout,
-  .note {
-    margin-bottom: 18px;
-  }
-
-  .table-head {
-    display: grid;
-    gap: 6px;
-    margin-bottom: 14px;
-  }
-
-  .table-head .label {
-    color: var(--accent-blue);
-  }
-
-  .table-head p,
-  .callout p,
-  .detail-card p,
-  .note p {
-    color: var(--text-secondary);
-    font-size: 13px;
-    line-height: 1.65;
-  }
+  .section-head p { font-size: 12px; color: var(--text-secondary); max-width: 520px; }
 
   .table {
-    width: 100%;
-    border-collapse: collapse;
+    width: 100%; border-collapse: collapse;
     border: 1px solid rgba(48,54,61,0.85);
-    border-radius: 12px;
-    overflow: hidden;
+    border-radius: 12px; overflow: hidden;
     background: rgba(13,17,23,0.56);
   }
-
-  .table th,
-  .table td {
-    text-align: left;
-    padding: 13px 14px;
-    vertical-align: top;
-    font-size: 13px;
-    line-height: 1.55;
+  .table th, .table td {
+    text-align: left; padding: 13px 14px; vertical-align: top;
+    font-size: 13px; line-height: 1.55;
   }
-
   .table th {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-primary);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-primary);
     background: rgba(13,17,23,0.9);
     border-bottom: 1px solid rgba(48,54,61,0.85);
   }
+  .table td { color: var(--text-secondary); border-top: 1px solid rgba(48,54,61,0.55); }
+  .table tbody tr:first-child td { border-top: none; }
 
-  .table td {
-    color: var(--text-secondary);
-    border-top: 1px solid rgba(48,54,61,0.55);
+  .table-note {
+    margin-top: 12px; color: var(--text-secondary);
+    font-size: 12px; line-height: 1.6;
+  }
+  .table-note code {
+    font-family: var(--font-mono); font-size: 11px;
+    background: rgba(48,54,61,0.6); padding: 1px 6px;
+    border-radius: 3px; color: var(--accent-blue);
   }
 
-  .table tbody tr:first-child td {
-    border-top: none;
-  }
-
-  .detail-grid {
-    position: relative;
-    z-index: 1;
-    display: grid;
+  .repro-grid {
+    display: grid; gap: 14px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
-    margin-top: 18px;
+    margin-top: 14px;
   }
+  .repro-card {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px; padding: 16px;
+  }
+  .repro-card .label { color: var(--accent-blue); margin-bottom: 6px; }
+  .repro-card h4 { font-size: 14px; margin-bottom: 8px; }
+  .repro-card p { color: var(--text-secondary); font-size: 13px; line-height: 1.6; }
+  .repro-card code {
+    font-family: var(--font-mono); font-size: 11px;
+    background: rgba(48,54,61,0.55); padding: 1px 6px;
+    border-radius: 3px; color: var(--accent-blue);
+  }
+  .repro-card .bound {
+    margin-top: 8px; font-size: 12px; color: var(--accent-warm);
+  }
+  .repro-card.posture .label { color: var(--accent-green); }
 
-  .detail-card {
+  .flow-card {
+    margin-top: 18px;
     background: rgba(22,27,34,0.82);
     border: 1px solid var(--border);
     border-radius: 14px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-    padding: 16px;
+    padding: 18px;
+  }
+  .flow-card .label { color: var(--accent-purple); }
+  .flow-card h4 { font-size: 15px; margin-bottom: 10px; }
+  .flow-card svg {
+    width: 100%; height: auto; display: block;
+    background: #0d1117; border-radius: 10px; margin-top: 6px;
+    forced-color-adjust: none;
+  }
+  .flow-card svg * { forced-color-adjust: none; }
+  .flow-card p.caption {
+    margin-top: 10px; color: var(--text-secondary);
+    font-size: 12px; line-height: 1.6;
   }
 
-  .detail-card:nth-child(1) .label { color: var(--accent-blue); }
-  .detail-card:nth-child(2) .label { color: var(--accent-green); }
-  .detail-card:nth-child(3) .label { color: var(--accent-orange); }
-
-  .callout {
-    background: rgba(22,27,34,0.68);
-    border: 1px solid rgba(63,185,80,0.22);
-    border-radius: 14px;
-    padding: 16px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  .site-footer {
+    display: grid; gap: 18px;
+    margin-top: 36px; padding-top: 20px;
+    border-top: 1px solid rgba(48,54,61,0.85);
   }
-
-  .callout .label { color: var(--accent-green); }
-  .callout strong { color: var(--text-primary); }
-  .callout code {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    background: rgba(48,54,61,0.6);
-    padding: 1px 6px;
-    border-radius: 3px;
-    color: var(--accent-blue);
+  .site-footer-grid {
+    display: grid;
+    grid-template-columns: minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);
+    gap: 18px 24px; align-items: start;
   }
-
-  .note {
-    background: rgba(22,27,34,0.62);
-    border-color: rgba(88,166,255,0.18);
-    margin-bottom: 0;
+  .site-footer .label { color: #58a6ff; font-size: 10px; }
+  .site-footer p { color: #c9d1d9; font-size: 12px; line-height: 1.5; }
+  .site-footer p.muted, .site-footer a.muted { color: #8b949e; }
+  .site-footer .sitemap {
+    display: grid; grid-template-columns: repeat(3, minmax(96px, 1fr));
+    gap: 5px 16px;
   }
-
-  .note .label { color: var(--accent-blue); }
+  .site-footer .sitemap a { color: #e6edf3; text-decoration: none; width: fit-content; }
+  .site-footer-bottom {
+    padding-top: 12px; border-top: 1px solid rgba(48,54,61,0.72);
+    color: #8b949e; font-size: 11px; text-align: right;
+  }
 
   @media (max-width: 1100px) {
-    .header,
-    .detail-grid {
-      grid-template-columns: 1fr;
-    }
+    .hero-grid, .repro-grid, .site-footer-grid { grid-template-columns: 1fr 1fr; }
+    .hero-grid > :first-child { grid-column: 1 / -1; }
+    .hero-grid h3 { font-size: 32px; }
   }
 
   @media (max-width: 760px) {
     body { padding: 24px 14px 40px; }
     .draft-meta { display: block; }
-    .draft-meta .badge { display: inline-block; margin-bottom: 12px; }
-    .stage { padding: 28px 20px 32px; }
-    .header h3 { font-size: 34px; }
-    .lede { font-size: 16px; }
-    .table, .table thead, .table tbody, .table tr, .table th, .table td {
-      display: block;
-      width: 100%;
-    }
+    .draft-meta .badge { display: inline-block; margin-top: 12px; }
+    .section-block, .hero { padding: 24px 20px 28px; }
+    .hero-grid, .repro-grid, .site-footer-grid { grid-template-columns: 1fr; }
+    .hero-grid h3 { font-size: 28px; }
+
+    /* Keep tables readable on narrow screens by exposing labels per cell. */
+    .table, .table thead, .table tbody, .table tr, .table th, .table td { display: block; width: 100%; }
     .table thead { display: none; }
-    .table tr { border-top: 1px solid rgba(48,54,61,0.55); }
+    .table tr { border-top: 1px solid rgba(48,54,61,0.55); padding: 6px 0; }
     .table tbody tr:first-child { border-top: none; }
-    .table td { border-top: none; padding: 10px 12px; }
+    .table td { border-top: none; padding: 6px 12px; }
+    .table td::before {
+      content: attr(data-label);
+      display: block;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-primary); margin-bottom: 2px;
+    }
   }
 </style>
 </head>
@@ -412,168 +295,243 @@
       <a href="references.html">References</a>
     </nav>
 
-    <header class="page-header">
-      <h1>SNPTX Experimental Methodology</h1>
-      <p>Controlled execution, versioned configuration, and reproducibility safeguards for the reported benchmark surface.</p>
-    </header>
-
     <article class="draft">
       <div class="draft-meta">
         <div>
-          <h2>Methodology</h2>
-          <p>Methods specified to support auditability, comparability, and bounded reproducibility claims.</p>
+          <h2>Experimental methodology</h2>
+          <p>Compute environment, dataset coverage, per-modality training configuration, and the reproducibility controls that bound the reported results.</p>
         </div>
         <div class="badge">Methods</div>
       </div>
 
-      <section class="stage" id="methodology">
-        <div class="header">
+      <section class="hero" id="overview">
+        <div class="hero-grid">
           <div>
-            <div class="eyebrow">Reproducibility controls, explicit configuration, and bounded guarantees</div>
-            <h3>Experimental Methodology</h3>
-            <p class="lede">Experiments use reproducibility controls including fixed seeds, explicit configuration, and artifact logging; these controls improve reproducibility but are not presented as universal guarantees.</p>
+            <div class="eyebrow">Environment, data, training, and reproducibility controls</div>
+            <h3>Controls and configuration that bound the reported benchmark surface.</h3>
+            <p class="lead">Experiments run on a fixed compute environment with versioned configuration, fixed seeds, deterministic CUDA where supported, DAG-enforced execution order, and tracked artifacts. These controls improve reproducibility within the documented scope; they are not presented as universal guarantees.</p>
           </div>
 
-          <aside class="summary">
-            <div class="label">Method summary</div>
-            <h4>What this section establishes</h4>
-            <ul>
-              <li>The methodology is defined around controlled execution, versioned configuration, and auditability rather than informal experimentation.</li>
-              <li>The system spans 46 adapters across 8 modality families with explicit task and sample descriptions.</li>
-              <li>Determinism is treated as a bounded engineering property, not an unqualified universal guarantee.</li>
+          <aside class="summary-card">
+            <div class="label">Page contents</div>
+            <h4>Four sections</h4>
+            <ul class="summary-list">
+              <li>Compute and software environment used to produce the reported runs.</li>
+              <li>Dataset coverage across 8 modality families and 46 declared adapters.</li>
+              <li>Per-modality training configuration with key hyperparameters.</li>
+              <li>Reproducibility controls with their explicit limits.</li>
             </ul>
           </aside>
         </div>
+      </section>
 
-        <div class="card table-card">
-          <div class="table-head">
-            <div class="label">Execution environment</div>
-            <h4>Compute environment</h4>
-            <p>The live compute table is preserved here as the environment baseline for the reported experiments.</p>
-          </div>
-          <table class="table" aria-label="Compute environment">
-            <thead><tr><th>Resource</th><th>Specification</th></tr></thead>
-            <tbody>
-              <tr><td>Instance</td><td>AWS EC2 g5.xlarge</td></tr>
-              <tr><td>GPU</td><td>NVIDIA A10G, 23 GB VRAM</td></tr>
-              <tr><td>Python</td><td>3.11.14</td></tr>
-              <tr><td>PyTorch</td><td>2.5.1+cu121</td></tr>
-              <tr><td>Orchestration</td><td>Snakemake 9.16.3 (34 rules)</td></tr>
-              <tr><td>Tracking</td><td>MLflow 3.10.0</td></tr>
-              <tr><td>Versioning</td><td>DVC configured (partial integration with primary pipeline)</td></tr>
-              <tr><td>Static Analysis</td><td>Pyright (0 errors), Ruff 0.15.4 (0 violations)</td></tr>
-            </tbody>
-          </table>
+      <section class="section-block section-divider" id="environment">
+        <div class="section-head">
+          <h3>Compute and software environment</h3>
+          <p>Single-node configuration used for the reported experiments. Static-analysis posture is reported separately under reproducibility controls.</p>
+        </div>
+        <table class="table" aria-label="Compute and software environment">
+          <thead><tr><th>Resource</th><th>Specification</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Resource">Instance</td><td data-label="Specification">AWS EC2 g5.xlarge</td></tr>
+            <tr><td data-label="Resource">GPU</td><td data-label="Specification">NVIDIA A10G, 23 GB VRAM</td></tr>
+            <tr><td data-label="Resource">CUDA toolkit</td><td data-label="Specification">12.1 (PyTorch build)</td></tr>
+            <tr><td data-label="Resource">Python</td><td data-label="Specification">3.11.14</td></tr>
+            <tr><td data-label="Resource">PyTorch</td><td data-label="Specification">2.5.1+cu121</td></tr>
+            <tr><td data-label="Resource">Orchestration</td><td data-label="Specification">Snakemake 9.16.3 (34 rules)</td></tr>
+            <tr><td data-label="Resource">Tracking</td><td data-label="Specification">MLflow 3.10.0</td></tr>
+            <tr><td data-label="Resource">Versioning</td><td data-label="Specification">DVC (configured; partial integration with the primary pipeline)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section-block section-divider" id="datasets">
+        <div class="section-head">
+          <h3>Dataset coverage</h3>
+          <p>Eight modality families. The table summarizes the integrated adapters by family; see the note below for the full adapter accounting.</p>
+        </div>
+        <table class="table" aria-label="Datasets and modality families">
+          <thead><tr><th>Modality</th><th>Dataset</th><th>Source</th><th>Samples</th><th>Task</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Modality">Clinical tabular</td><td data-label="Dataset">Synthea readmission</td><td data-label="Source">Synthea (synthetic EHR)</td><td data-label="Samples">6,625</td><td data-label="Task">Binary classification</td></tr>
+            <tr><td data-label="Modality">Omics</td><td data-label="Dataset">Visium breast cancer</td><td data-label="Source">10x Genomics</td><td data-label="Samples">3,798</td><td data-label="Task">14-class tissue region</td></tr>
+            <tr><td data-label="Modality">Knowledge graphs</td><td data-label="Dataset">Hetionet</td><td data-label="Source">Himmelstein et al.</td><td data-label="Samples">1,913 ego-graphs</td><td data-label="Task">8-class node classification</td></tr>
+            <tr><td data-label="Modality">Histopathology</td><td data-label="Dataset">PathMNIST</td><td data-label="Source">MedMNIST</td><td data-label="Samples">107,180</td><td data-label="Task">9-class classification</td></tr>
+            <tr><td data-label="Modality">Clinical text</td><td data-label="Dataset">MTSamples</td><td data-label="Source">MTSamples.com</td><td data-label="Samples">~3,500</td><td data-label="Task">5-class specialty</td></tr>
+            <tr><td data-label="Modality">Single-cell</td><td data-label="Dataset">BloodMNIST</td><td data-label="Source">MedMNIST</td><td data-label="Samples">17,092</td><td data-label="Task">8-class classification</td></tr>
+            <tr><td data-label="Modality">Drug discovery</td><td data-label="Dataset">ChEMBL bioactivity</td><td data-label="Source">ChEMBL database</td><td data-label="Samples">4,685</td><td data-label="Task">Binary bioactivity</td></tr>
+            <tr><td data-label="Modality">Classical ML</td><td data-label="Dataset">Iris, Wine, Breast Cancer, Digits</td><td data-label="Source">UCI / scikit-learn</td><td data-label="Samples">150&ndash;1,797</td><td data-label="Task">Multi-class classification</td></tr>
+          </tbody>
+        </table>
+        <p class="table-note">Adapter accounting: 46 adapters are declared in the data registry across these 8 families. 37 are integrated (one or more adapters per row above); 9 are specified but not yet integrated and are excluded from the reported runs.</p>
+      </section>
+
+      <section class="section-block section-divider" id="training">
+        <div class="section-head">
+          <h3>Training configuration</h3>
+          <p>Per-modality model choice and key hyperparameters. Full configurations live in versioned YAML referenced by each run.</p>
+        </div>
+        <table class="table" aria-label="Training configuration by modality">
+          <thead><tr><th>Modality</th><th>Model</th><th>Key hyperparameters</th><th>Training details</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Modality">Clinical tabular</td><td data-label="Model">XGBoost + Optuna</td><td data-label="Key hyperparameters">n_estimators=100&ndash;300, max_depth=6, lr=0.1</td><td data-label="Training details">Optuna HPO (30 trials), 5-fold CV</td></tr>
+            <tr><td data-label="Modality">Omics</td><td data-label="Model">VAE</td><td data-label="Key hyperparameters">latent_dim=128, hidden=[512,256], epochs=80</td><td data-label="Training details">Visium HVG, Leiden labels, 80/20 val</td></tr>
+            <tr><td data-label="Modality">Knowledge graphs</td><td data-label="Model">GAT</td><td data-label="Key hyperparameters">layers=2, hidden=64, heads=4, epochs=200</td><td data-label="Training details">Center-node readout, cosine LR</td></tr>
+            <tr><td data-label="Modality">Histopathology</td><td data-label="Model">DenseNet-121</td><td data-label="Key hyperparameters">ImageNet pretrained, epochs=20, lr=1e-4</td><td data-label="Training details">28&times;28, PathMNIST augmentation</td></tr>
+            <tr><td data-label="Modality">Clinical text</td><td data-label="Model">ClinicalBERT</td><td data-label="Key hyperparameters">epochs=15, lr=2e-5, batch=16</td><td data-label="Training details">Mean-pooled embeddings, 5-class</td></tr>
+            <tr><td data-label="Modality">Single-cell</td><td data-label="Model">DenseNet-121</td><td data-label="Key hyperparameters">ImageNet pretrained, epochs=20, lr=1e-4</td><td data-label="Training details">28&times;28, BloodMNIST</td></tr>
+            <tr><td data-label="Modality">Drug discovery</td><td data-label="Model">GCN</td><td data-label="Key hyperparameters">layers=3, hidden=128, epochs=100</td><td data-label="Training details">Class-weighted loss, molecular featurization</td></tr>
+            <tr><td data-label="Modality">Multi-modal fusion</td><td data-label="Model">Attention fusion</td><td data-label="Key hyperparameters">heads=4, hidden=256</td><td data-label="Training details">PCA embeddings from training set only</td></tr>
+          </tbody>
+        </table>
+        <p class="table-note">Each run is defined by a YAML committed to version control; <code>seed=1337</code> applies across numpy, torch, and sklearn unless a modality-specific seed is documented.</p>
+      </section>
+
+      <section class="section-block section-divider" id="reproducibility">
+        <div class="section-head">
+          <h3>Reproducibility controls and boundaries</h3>
+          <p>Each control is paired with its current limit. Determinism is treated as a bounded engineering property within this scope.</p>
         </div>
 
-        <div class="card table-card">
-          <div class="table-head">
-            <div class="label">Data coverage</div>
-            <h4>Datasets (46 adapters, 8 modality families)</h4>
-            <p>The live dataset inventory is preserved here to make scope and modality breadth explicit.</p>
+        <div class="repro-grid">
+          <div class="repro-card">
+            <div class="label">Seeds</div>
+            <h4>Fixed global seed</h4>
+            <p><code>seed=1337</code> for numpy, torch, and sklearn random operations.</p>
+            <p class="bound">Limit: stochastic library calls outside these three sources are not centrally seeded.</p>
           </div>
-          <table class="table" aria-label="Datasets and modality families">
-            <thead><tr><th>Modality</th><th>Dataset</th><th>Source</th><th>Samples</th><th>Task</th></tr></thead>
-            <tbody>
-              <tr><td>Clinical tabular</td><td>Synthea readmission</td><td>Synthea (synthetic EHR)</td><td>6,625</td><td>Binary classification</td></tr>
-              <tr><td>Omics</td><td>Visium breast cancer</td><td>10x Genomics</td><td>3,798</td><td>14-class tissue region</td></tr>
-              <tr><td>Knowledge graphs</td><td>Hetionet</td><td>Himmelstein et al.</td><td>1,913 ego-graphs</td><td>8-class node classification</td></tr>
-              <tr><td>Histopathology</td><td>PathMNIST</td><td>MedMNIST</td><td>107,180</td><td>9-class classification</td></tr>
-              <tr><td>Clinical text</td><td>MTSamples</td><td>MTSamples.com</td><td>~3,500</td><td>5-class specialty</td></tr>
-              <tr><td>Single-cell</td><td>BloodMNIST</td><td>MedMNIST</td><td>17,092</td><td>8-class classification</td></tr>
-              <tr><td>Drug discovery</td><td>ChEMBL bioactivity</td><td>ChEMBL database</td><td>4,685</td><td>Binary bioactivity</td></tr>
-              <tr><td>Classical ML</td><td>Iris, Wine, Breast Cancer, Digits</td><td>UCI / scikit-learn</td><td>150&ndash;1,797</td><td>Multi-class classification</td></tr>
-            </tbody>
-          </table>
-          <div style="margin-top:12px;color:var(--text-secondary);font-size:13px;">9 additional adapters are deferred (specification complete, data not yet integrated).</div>
-        </div>
-
-        <div class="card table-card">
-          <div class="table-head">
-            <div class="label">Training setup</div>
-            <h4>Training configuration</h4>
-            <p>The live training table is preserved here as the modality-by-modality configuration reference.</p>
+          <div class="repro-card">
+            <div class="label">CUDA determinism</div>
+            <h4>Deterministic algorithms</h4>
+            <p><code>torch.use_deterministic_algorithms(True)</code> is enabled where supported by the operator set in use.</p>
+            <p class="bound">Limit: a small number of GPU kernels remain non-deterministic and are documented per modality where they apply.</p>
           </div>
-          <table class="table" aria-label="Training configuration by modality">
-            <thead><tr><th>Modality</th><th>Model</th><th>Key Hyperparameters</th><th>Training Details</th></tr></thead>
-            <tbody>
-              <tr><td>Clinical tabular</td><td>XGBoost + Optuna</td><td>n_estimators=100&ndash;300, max_depth=6, lr=0.1</td><td>Optuna HPO (30 trials), 5-fold CV</td></tr>
-              <tr><td>Omics</td><td>VAE</td><td>latent_dim=128, hidden=[512,256], epochs=80</td><td>Visium HVG, Leiden labels, 80/20 val</td></tr>
-              <tr><td>Knowledge graphs</td><td>GAT</td><td>layers=2, hidden=64, heads=4, epochs=200</td><td>Center-node readout, cosine LR</td></tr>
-              <tr><td>Histopathology</td><td>DenseNet-121</td><td>ImageNet pretrained, epochs=20, lr=1e-4</td><td>28&times;28, PathMNIST augmentation</td></tr>
-              <tr><td>Clinical text</td><td>ClinicalBERT</td><td>epochs=15, lr=2e-5, batch=16</td><td>Mean-pooled embeddings, 5-class</td></tr>
-              <tr><td>Single-cell</td><td>DenseNet-121</td><td>ImageNet pretrained, epochs=20, lr=1e-4</td><td>28&times;28, BloodMNIST</td></tr>
-              <tr><td>Drug discovery</td><td>GCN</td><td>layers=3, hidden=128, epochs=100</td><td>Class-weighted loss, molecular featurization</td></tr>
-              <tr><td>Multi-modal fusion</td><td>Attention fusion</td><td>heads=4, hidden=256</td><td>PCA embeddings from training set only</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="callout">
-          <div class="label">Reproducibility controls</div>
-          <h4>Determinism controls and boundaries</h4>
-          <p><strong>Fixed seeds:</strong> Global seed (1337) for all random operations (numpy, torch, sklearn).</p>
-          <p><strong>Deterministic CUDA controls:</strong> <code>torch.use_deterministic_algorithms(True)</code> where supported.</p>
-          <p><strong>Versioned configuration:</strong> Every run defined by YAML committed to version control.</p>
-          <p><strong>DAG-enforced ordering:</strong> Snakemake enforces explicit dependency order with no implicit stage coupling.</p>
-          <p><strong>Artifact hashing:</strong> DVC checksum workflows are configured; full end-to-end enforcement across the primary pipeline remains in progress.</p>
-        </div>
-
-        <div class="detail-grid">
-          <div class="detail-card">
-            <div class="label">Execution discipline</div>
-            <h4>Why this section matters</h4>
-            <p>The methodology section grounds the rest of the document by showing that results and claims were generated in a controlled, inspectable environment.</p>
+          <div class="repro-card">
+            <div class="label">Versioned configuration</div>
+            <h4>YAML-defined runs</h4>
+            <p>Every run is defined by a YAML committed to version control; the run record references the exact configuration hash.</p>
+            <p class="bound">Limit: external dataset hosts are pinned by URL/version, not by content hash for every adapter.</p>
           </div>
-          <div class="detail-card">
-            <div class="label">Scope clarity</div>
-            <h4>What is bounded here</h4>
-            <p>Determinism and versioning are described as implemented controls with explicit limits, which keeps the reproducibility claim technically credible.</p>
+          <div class="repro-card">
+            <div class="label">Execution order</div>
+            <h4>Snakemake DAG</h4>
+            <p>Stage dependencies are declared in the Snakefile. The DAG enforces ordering with no implicit stage coupling.</p>
+            <p class="bound">Limit: parallel rule execution can interleave logs; per-rule artifacts remain ordered.</p>
           </div>
-          <div class="detail-card">
-            <div class="label">Coverage signal</div>
-            <h4>What breadth is shown</h4>
-            <p>The adapter inventory and training table show that SNPTX spans multiple modality families while still documenting per-modality training choices concretely.</p>
+          <div class="repro-card">
+            <div class="label">Artifact integrity</div>
+            <h4>Hashed bundles</h4>
+            <p>DVC checksum workflows are configured for the staged artifact bundles produced by each run.</p>
+            <p class="bound">Limit: full end-to-end DVC enforcement across the primary pipeline is in progress.</p>
+          </div>
+          <div class="repro-card posture">
+            <div class="label">Code-quality posture</div>
+            <h4>Static analysis</h4>
+            <p>Pyright reports 0 errors and Ruff 0.15.4 reports 0 violations on the pipeline source at the time of the reported runs.</p>
+            <p class="bound">Limit: static checks bound code quality, not numerical correctness; correctness is bounded by the validation surface.</p>
           </div>
         </div>
 
+        <div class="flow-card">
+          <div class="label">Per-run lifecycle</div>
+          <h4>From configuration to evidence bundle</h4>
+          <svg viewBox="0 0 1080 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="repro-title repro-desc">
+            <title id="repro-title">SNPTX per-run reproducibility lifecycle</title>
+            <desc id="repro-desc">A run begins from a YAML configuration with a fixed seed, executes through the Snakemake DAG with deterministic CUDA where supported, is tracked by MLflow, produces DVC-hashed artifacts, and emits a referenced evidence bundle.</desc>
+            <defs>
+              <linearGradient id="repro-spine" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#bc8cff" stop-opacity="0.95"/>
+              </linearGradient>
+              <marker id="repro-arrow" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6" fill="#bc8cff"/>
+              </marker>
+              <style>
+                .r-lane{fill:#111821;stroke:#30363d;stroke-width:1}
+                .r-stage{fill:#161b22;stroke:#30363d;stroke-width:1.5}
+                .r-stage-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;font-weight:700;text-anchor:middle}
+                .r-stage-sub{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;text-anchor:middle}
+                .r-note{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;letter-spacing:1.2px}
+                .r-flow{stroke:url(#repro-spine);stroke-width:3;fill:none;marker-end:url(#repro-arrow)}
+                .r-chip{fill:rgba(88,166,255,0.10);stroke:#58a6ff;stroke-width:1}
+                .r-chip-text{fill:#58a6ff;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+              </style>
+            </defs>
+
+            <rect class="r-lane" x="20" y="20" width="1040" height="180" rx="14"/>
+            <text class="r-note" x="36" y="44">PER-RUN LIFECYCLE &mdash; SEED &middot; DAG &middot; TRACKING &middot; HASHING</text>
+
+            <!-- Stages -->
+            <rect class="r-stage" x="44" y="60" width="180" height="78" rx="12"/>
+            <text class="r-stage-text" x="134" y="92">config.yaml</text>
+            <text class="r-stage-sub" x="134" y="111">seed=1337 &middot; pinned versions</text>
+
+            <rect class="r-stage" x="276" y="60" width="200" height="78" rx="12"/>
+            <text class="r-stage-text" x="376" y="92">snakemake run</text>
+            <text class="r-stage-sub" x="376" y="111">DAG order &middot; deterministic CUDA</text>
+
+            <rect class="r-stage" x="528" y="60" width="200" height="78" rx="12"/>
+            <text class="r-stage-text" x="628" y="92">mlflow + dvc</text>
+            <text class="r-stage-sub" x="628" y="111">tracked params &middot; hashed artifacts</text>
+
+            <rect class="r-stage" x="780" y="60" width="240" height="78" rx="12"/>
+            <text class="r-stage-text" x="900" y="92">evidence bundle</text>
+            <text class="r-stage-sub" x="900" y="111">metrics + manifest + config hash</text>
+
+            <!-- Arrows -->
+            <path class="r-flow" d="M232 99 H268"/>
+            <path class="r-flow" d="M484 99 H520"/>
+            <path class="r-flow" d="M736 99 H772"/>
+
+            <!-- Chips along the bottom: what each handoff carries -->
+            <rect class="r-chip" x="232" y="160" width="44" height="22" rx="8"/>
+            <text class="r-chip-text" x="254" y="175">SEED</text>
+
+            <rect class="r-chip" x="484" y="160" width="44" height="22" rx="8"/>
+            <text class="r-chip-text" x="506" y="175">RUN</text>
+
+            <rect class="r-chip" x="736" y="160" width="44" height="22" rx="8"/>
+            <text class="r-chip-text" x="758" y="175">HASH</text>
+          </svg>
+          <p class="caption">A run is fully described by its configuration hash and the artifact hashes it produces. Re-execution from the same configuration on the same environment is expected to reproduce the bundle within the determinism limits noted above.</p>
+        </div>
       </section>
     </article>
 
-    <footer aria-label="Site footer" style="display:grid;gap:18px;margin-top:36px;padding-top:20px;border-top:1px solid rgba(48,54,61,0.85);">
-      <div style="display:grid;grid-template-columns:minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);gap:18px 24px;align-items:start;">
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="site-footer-grid">
         <section style="display:grid;gap:6px;align-content:start;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">SNPTX&trade;</div>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Connecting Data to Discovery</p>
+          <div class="label">SNPTX&trade;</div>
+          <p>Connecting Data to Discovery</p>
         </section>
         <section style="display:grid;gap:8px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Site Map</div>
-          <div style="display:grid;grid-template-columns:repeat(3, minmax(96px, 1fr));gap:5px 16px;">
-            <a href="../index.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Home</a>
-            <a href="architecture.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Architecture</a>
-            <a href="motivation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Motivation</a>
-            <a href="results.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Results</a>
-            <a href="validation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Validation</a>
-            <a href="evidence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Evidence</a>
-            <a href="intelligence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Intelligence</a>
-            <a href="autonomous.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Autonomous</a>
-            <a href="methodology.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Methodology</a>
-            <a href="fusion.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Fusion</a>
-            <a href="pilots.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Pilots</a>
-            <a href="positioning.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Positioning</a>
-            <a href="limitations.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Limitations</a>
-            <a href="references.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">References</a>
+          <div class="label">Site Map</div>
+          <div class="sitemap">
+            <a href="../index.html">Home</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="motivation.html">Motivation</a>
+            <a href="results.html">Results</a>
+            <a href="validation.html">Validation</a>
+            <a href="evidence.html">Evidence</a>
+            <a href="intelligence.html">Intelligence</a>
+            <a href="autonomous.html">Autonomous</a>
+            <a href="methodology.html">Methodology</a>
+            <a href="fusion.html">Fusion</a>
+            <a href="pilots.html">Pilots</a>
+            <a href="positioning.html">Positioning</a>
+            <a href="limitations.html">Limitations</a>
+            <a href="references.html">References</a>
           </div>
         </section>
         <section style="display:grid;gap:6px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Contact</div>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;max-width:240px;">Research, collaboration, and review inquiries.</p>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Daniel R. Russell</p>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;">MITx (SDS), Harvard ALM (DS) '27</p>
-          <p style="color:#c9d1d9;font-size:13px;line-height:1.6;white-space:normal;"><a href="mailto:drr508@g.harvard.edu" style="color:#c9d1d9;text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" style="color:#c9d1d9;text-decoration:none;">dan@snptx.ai</a></p>
+          <div class="label">Contact</div>
+          <p>Research, collaboration, and review inquiries.</p>
+          <p class="muted">Daniel R. Russell</p>
+          <p class="muted">MITx (SDS), Harvard ALM (DS) '27</p>
+          <p class="muted" style="white-space:normal;"><a href="mailto:drr508@g.harvard.edu" class="muted" style="text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" class="muted" style="text-decoration:none;">dan@snptx.ai</a></p>
         </section>
       </div>
-      <div style="padding-top:12px;border-top:1px solid rgba(48,54,61,0.72);color:#8b949e;font-size:11px;text-align:right;">SNPTX&trade; Academic</div>
+      <div class="site-footer-bottom">SNPTX&trade; Academic 2026</div>
     </footer>
   </div>
 </body>

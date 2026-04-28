@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SNPTX Intelligence Layer</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="SNPTX intelligence layer: bounded adaptive experimentation modules, current operational components, and literature-backed roadmap elements kept distinct from validated runtime behavior.">
+<title>SNPTX - Intelligence</title>
 <style>
   :root {
+    color-scheme: dark;
     --border: #30363d;
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
@@ -13,6 +17,7 @@
     --accent-green: #3fb950;
     --accent-orange: #d29922;
     --accent-purple: #bc8cff;
+    --accent-cyan: #39c5cf;
     --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
     --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   }
@@ -45,6 +50,8 @@
     z-index: 1000;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 6px 14px;
     margin-bottom: 18px;
     padding: 12px 0 16px;
@@ -64,31 +71,15 @@
     border-bottom: 1px solid transparent;
   }
 
-  .top-nav a.nav-brand { color: var(--text-primary); font-weight: 700; }
+  .top-nav a.nav-brand {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
 
   .top-nav a:hover,
   .top-nav a.active {
     color: var(--text-primary);
     border-bottom-color: rgba(88,166,255,0.75);
-  }
-
-  .page-header {
-    margin-bottom: 32px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .page-header h1 {
-    font-size: 30px;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    margin-bottom: 8px;
-  }
-
-  .page-header p {
-    max-width: 840px;
-    color: var(--text-secondary);
-    font-size: 15px;
   }
 
   .draft {
@@ -134,22 +125,12 @@
     white-space: nowrap;
   }
 
-  .intelligence-stage {
-    position: relative;
-    padding: 38px 32px 40px;
-    background:
-      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
-      radial-gradient(circle at 84% 16%, rgba(188,140,255,0.16), transparent 24%),
-      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
-    overflow: hidden;
+  .section-block {
+    padding: 28px;
   }
 
-  .intelligence-stage::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  .section-divider {
+    border-top: 1px solid rgba(48,54,61,0.78);
   }
 
   .eyebrow {
@@ -171,50 +152,6 @@
     background: rgba(63,185,80,0.75);
   }
 
-  .intelligence-header {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
-    gap: 24px;
-    align-items: start;
-    margin-bottom: 22px;
-  }
-
-  .intelligence-header h3 {
-    font-size: 48px;
-    line-height: 1.03;
-    letter-spacing: -0.05em;
-    max-width: 860px;
-    margin-bottom: 16px;
-  }
-
-  .intelligence-lede {
-    max-width: 860px;
-    color: var(--text-secondary);
-    font-size: 17px;
-    line-height: 1.75;
-  }
-
-  .intelligence-summary,
-  .signal-card,
-  .intelligence-table-card,
-  .intelligence-detail-card,
-  .intelligence-note {
-    background: rgba(22,27,34,0.82);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-  }
-
-  .intelligence-summary,
-  .signal-card,
-  .intelligence-table-card,
-  .intelligence-detail-card,
-  .intelligence-note {
-    padding: 16px;
-  }
-
   .label {
     font-family: var(--font-mono);
     font-size: 10px;
@@ -223,84 +160,229 @@
     margin-bottom: 8px;
   }
 
-  .intelligence-summary .label { color: var(--accent-green); }
-  .intelligence-summary h4,
+  .summary-card,
+  .signal-card,
+  .visual-card,
+  .callout-card,
+  .boundary-card,
+  .section-note,
+  .table-card,
+  .legend-card {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: none;
+  }
+
+  .summary-card,
+  .signal-card,
+  .callout-card,
+  .boundary-card,
+  .section-note,
+  .legend-card,
+  .table-card {
+    padding: 18px;
+  }
+
+  .intelligence-hero {
+    position: relative;
+    padding: 36px 32px 40px;
+    background:
+      radial-gradient(circle at 10% 16%, rgba(88,166,255,0.18), transparent 30%),
+      radial-gradient(circle at 88% 12%, rgba(188,140,255,0.18), transparent 26%),
+      linear-gradient(135deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .intelligence-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  }
+
+  .hero-grid,
+  .status-grid,
+  .visual-caption,
+  .boundary-grid,
+  .roadmap-summary-grid,
+  .site-footer-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 16px;
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    align-items: start;
+    margin-bottom: 24px;
+  }
+
+  .hero-grid h3 {
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+    max-width: 860px;
+    margin-bottom: 16px;
+  }
+
+  .lead {
+    max-width: 850px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .summary-card .label,
+  .section-note .label,
+  .boundary-card .label {
+    color: var(--accent-green);
+  }
+
+  .summary-card h4,
   .signal-card h4,
-  .intelligence-table-head h4,
-  .intelligence-detail-card h4 {
+  .visual-card h4,
+  .callout-card h4,
+  .boundary-card h4,
+  .table-card h4,
+  .legend-card h4 {
     font-size: 15px;
     margin-bottom: 10px;
   }
 
-  .intelligence-summary ul {
+  .summary-list,
+  .boundary-list,
+  .legend-list {
     list-style: none;
     display: grid;
     gap: 10px;
   }
 
-  .intelligence-summary li {
-    position: relative;
-    padding-left: 14px;
+  .summary-list li,
+  .boundary-list li,
+  .legend-list li,
+  .signal-card p,
+  .callout-card p,
+  .boundary-card p,
+  .section-note p,
+  .table-head p,
+  .visual-head p,
+  .visual-caption p,
+  .legend-card p {
     color: var(--text-secondary);
     font-size: 13px;
-    line-height: 1.55;
+    line-height: 1.65;
   }
 
-  .intelligence-summary li::before {
+  .summary-list li,
+  .boundary-list li,
+  .legend-list li {
+    position: relative;
+    padding-left: 16px;
+  }
+
+  .summary-list li::before,
+  .boundary-list li::before,
+  .legend-list li::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 8px;
-    width: 5px;
-    height: 5px;
+    top: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: var(--accent-green);
+    background: var(--dot-color, var(--accent-blue));
   }
 
-  .signal-grid,
-  .intelligence-detail-grid {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    gap: 14px;
-    margin-bottom: 18px;
-  }
-
-  .signal-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .intelligence-detail-grid {
+  .status-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 24px;
   }
 
-  .signal-card:nth-child(1) .label { color: var(--accent-green); }
-  .signal-card:nth-child(2) .label { color: var(--accent-blue); }
-  .signal-card:nth-child(3) .label { color: var(--accent-purple); }
-  .signal-card:nth-child(4) .label { color: var(--accent-orange); }
-
-  .signal-card p,
-  .intelligence-table-head p,
-  .intelligence-detail-card p,
-  .intelligence-note p {
-    color: var(--text-secondary);
-    font-size: 13px;
-    line-height: 1.6;
+  .signal-card:nth-child(1) .label {
+    color: var(--accent-blue);
   }
 
-  .intelligence-table-card {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 18px;
+  .signal-card:nth-child(2) .label {
+    color: var(--accent-green);
   }
 
-  .intelligence-table-head {
+  .signal-card:nth-child(3) .label {
+    color: var(--accent-orange);
+  }
+
+  .signal-card .label {
+    margin-bottom: 6px;
+  }
+
+  .visual-card {
+    padding: 18px;
+    background: rgba(13,17,23,0.58);
+    overflow: hidden;
+  }
+
+  .visual-head,
+  .table-head {
     display: grid;
     gap: 6px;
     margin-bottom: 14px;
   }
 
-  .intelligence-table-head .label { color: var(--accent-blue); }
+  .visual-head .label,
+  .table-head .label,
+  .legend-card .label,
+  .callout-card .label {
+    color: var(--accent-blue);
+  }
+
+  .visual-head h4 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .visual-card svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #0d1117;
+    border-radius: 14px;
+    forced-color-adjust: none;
+  }
+
+  .diagram-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 6px;
+  }
+
+  .diagram-scroll svg {
+    min-width: 980px;
+    vertical-align: top;
+  }
+
+  .visual-caption {
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    margin-top: 14px;
+  }
+
+  .roadmap-summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 18px;
+  }
+
+  .boundary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .table-card {
+    margin-top: 18px;
+  }
+
+  .table-card:first-of-type {
+    margin-top: 0;
+  }
 
   .intelligence-table {
     width: 100%;
@@ -339,22 +421,78 @@
     border-top: none;
   }
 
-  .intelligence-detail-card:nth-child(1) .label { color: var(--accent-blue); }
-  .intelligence-detail-card:nth-child(2) .label { color: var(--accent-green); }
-  .intelligence-detail-card:nth-child(3) .label { color: var(--accent-purple); }
+  .section-note {
+    margin-top: 18px;
+    background: rgba(13,17,23,0.5);
+  }
 
-  .intelligence-note {
-    position: relative;
-    z-index: 1;
-    background: rgba(22,27,34,0.62);
-    border-color: rgba(88,166,255,0.18);
+  .site-footer {
+    display: grid;
+    gap: 18px;
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(48,54,61,0.85);
+  }
+
+  .site-footer-grid {
+    grid-template-columns: minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);
+    align-items: start;
+    gap: 18px 24px;
+  }
+
+  .site-footer .label {
+    color: var(--accent-blue);
+    font-size: 10px;
+  }
+
+  .site-footer p {
+    color: #c9d1d9;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .site-footer p.muted,
+  .site-footer a.muted {
+    color: var(--text-secondary);
+  }
+
+  .site-footer .sitemap {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(96px, 1fr));
+    gap: 5px 16px;
+  }
+
+  .site-footer .sitemap a {
+    color: var(--text-primary);
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .site-footer-bottom {
+    padding-top: 12px;
+    border-top: 1px solid rgba(48,54,61,0.72);
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-align: right;
   }
 
   @media (max-width: 1100px) {
-    .intelligence-header,
-    .signal-grid,
-    .intelligence-detail-grid {
+    .hero-grid,
+    .status-grid,
+    .visual-caption,
+    .roadmap-summary-grid,
+    .boundary-grid,
+    .site-footer-grid {
       grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-grid > :first-child,
+    .visual-caption > :first-child {
+      grid-column: 1 / -1;
+    }
+
+    .hero-grid h3 {
+      font-size: 36px;
     }
   }
 
@@ -369,25 +507,25 @@
 
     .draft-meta .badge {
       display: inline-block;
-      margin-bottom: 12px;
+      margin-top: 12px;
     }
 
-    .intelligence-stage {
-      padding: 28px 20px 32px;
+    .section-block,
+    .intelligence-hero {
+      padding: 24px 20px 28px;
     }
 
-    .intelligence-header,
-    .signal-grid,
-    .intelligence-detail-grid {
+    .hero-grid,
+    .status-grid,
+    .visual-caption,
+    .roadmap-summary-grid,
+    .boundary-grid,
+    .site-footer-grid {
       grid-template-columns: 1fr;
     }
 
-    .intelligence-header h3 {
-      font-size: 34px;
-    }
-
-    .intelligence-lede {
-      font-size: 16px;
+    .hero-grid h3 {
+      font-size: 30px;
     }
 
     .intelligence-table,
@@ -438,67 +576,230 @@
       <a href="references.html">References</a>
     </nav>
 
-    <header class="page-header">
-      <h1>SNPTX Intelligence Layer</h1>
-      <p>Implemented and theory-grounded intelligence modules supporting adaptive experimentation without overstating autonomous scope.</p>
-    </header>
-
     <article class="draft">
       <div class="draft-meta">
         <div>
-          <h2>Intelligence</h2>
-          <p>Implemented intelligence modules and theory-grounded roadmap components for adaptive experimentation.</p>
+          <h2>Adaptive experimentation layer</h2>
+          <p>SNPTX includes a bounded intelligence surface for experiment memory, ranking, feedback, and design scaffolding. This page separates modules present in the current framework build from literature-backed modules specified for later integration.</p>
         </div>
-        <div class="badge">Implementation Status</div>
+        <div class="badge">Intelligence view</div>
       </div>
 
-      <section class="intelligence-stage" id="intelligence">
-        <div class="intelligence-header">
+      <section class="intelligence-hero section-block" id="overview">
+        <div class="hero-grid">
           <div>
-            <div class="eyebrow">Adaptive experimentation infrastructure with implemented and specified layers</div>
-            <h3>Self-Learning Intelligence Layer</h3>
-            <p class="intelligence-lede">A partially implemented intelligence layer combines operational modules with theory-grounded roadmap modules for adaptive experimentation. The purpose of this section is to show what intelligence capabilities are already active in the framework and which additional modules are specified at the design level but not yet empirically validated.</p>
+            <div class="eyebrow">Adaptive experimentation without autonomous overclaim</div>
+            <h3>Bounded intelligence for cumulative experimentation, explicit roadmap, and disciplined scope.</h3>
+            <p class="lead">The intelligence layer is not presented as a general autonomous research agent. In the current SNPTX framework build it refers to concrete support for persistent experiment memory, cross-run ranking, Bayesian feedback updates, dataset-aware defaults, and reusable hypothesis templates. A separate roadmap identifies additional modules grounded in optimization, causal inference, continual learning, and information theory, but those modules are specified rather than validated runtime behavior.</p>
           </div>
 
-          <aside class="intelligence-summary">
-            <div class="label">Intelligence summary</div>
-            <h4>How this layer is structured</h4>
-            <ul>
-              <li>Implemented modules support persistent experimentation memory, feedback, ranking, and dataset-aware defaults.</li>
-              <li>Roadmap modules are theory-grounded components specified for later integration into adaptive experimentation workflows.</li>
-              <li>The section distinguishes operational intelligence from literature-backed design intention.</li>
+          <aside class="summary-card">
+            <div class="label">Page structure</div>
+            <h4>How to read this page</h4>
+            <ul class="summary-list">
+              <li>This page first defines the operational role of intelligence inside the framework.</li>
+              <li>It then shows which components are active in the present build and what they do.</li>
+              <li>Roadmap components remain cited design intent, not empirical evidence of deployed autonomy.</li>
+              <li>Limits are stated explicitly so intelligence claims remain aligned with the rest of the site.</li>
             </ul>
           </aside>
         </div>
 
-        <div class="signal-grid">
+        <div class="status-grid" aria-label="Intelligence status summary">
           <div class="signal-card">
-            <div class="label">Operational</div>
-            <h4>Five active modules</h4>
-            <p>The live system currently lists five implemented intelligence modules spanning cataloging, feedback, ranking, defaults, and hypothesis generation.</p>
+            <div class="label">Implemented now</div>
+            <h4>Five operational modules</h4>
+            <p>The current build exposes experiment cataloging, cross-run analysis, feedback updating, adaptive defaults, and hypothesis templates as the active intelligence surface.</p>
           </div>
           <div class="signal-card">
-            <div class="label">Memory</div>
-            <h4>Persistent experiment catalog</h4>
-            <p>DuckDB-backed experiment storage gives the framework cumulative experiment memory rather than isolated one-off runs.</p>
+            <div class="label">Specified next</div>
+            <h4>Ten roadmap modules</h4>
+            <p>The roadmap extends the layer toward experiment design, optimization, causal analysis, continual learning, and information-theoretic ranking, with citations retained for each module.</p>
           </div>
           <div class="signal-card">
-            <div class="label">Theory-grounded</div>
-            <h4>Ten specified roadmap modules</h4>
-            <p>The roadmap layer is anchored in cited theory across optimization, causal inference, continual learning, and information theory.</p>
-          </div>
-          <div class="signal-card">
-            <div class="label">Boundary</div>
-            <h4>Partial implementation only</h4>
-            <p>The intelligence layer is intentionally presented as mixed-status infrastructure, not as a fully trained or universally validated autonomous research system.</p>
+            <div class="label">Out of scope</div>
+            <h4>No claim of autonomous science</h4>
+            <p>The page does not imply autonomous discovery, clinical decision-making, or universally validated closed-loop experimentation beyond the bounded modules listed here.</p>
           </div>
         </div>
 
-        <div class="intelligence-table-card">
-          <div class="intelligence-table-head">
+        <div class="visual-card" id="layer-map">
+          <div class="visual-head">
+            <div class="label">Intelligence architecture</div>
+            <h4>Operational modules, experiment memory, and the declared roadmap boundary</h4>
+            <p>The current build centers on cumulative experiment state and bounded decision support. Roadmap modules are shown as future analytical attachments rather than active control claims.</p>
+          </div>
+
+          <div class="diagram-scroll">
+          <svg viewBox="0 0 1180 620" xmlns="http://www.w3.org/2000/svg" aria-label="SNPTX intelligence layer map">
+            <defs>
+              <linearGradient id="intelFrame" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0f1620"/>
+                <stop offset="100%" stop-color="#111b25"/>
+              </linearGradient>
+              <linearGradient id="intelBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.06"/>
+              </linearGradient>
+              <linearGradient id="intelGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#3fb950" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#3fb950" stop-opacity="0.06"/>
+              </linearGradient>
+              <linearGradient id="intelPurple" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#bc8cff" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#bc8cff" stop-opacity="0.06"/>
+              </linearGradient>
+              <linearGradient id="intelOrange" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#d29922" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#d29922" stop-opacity="0.06"/>
+              </linearGradient>
+              <style>
+                .frame-shell{fill:url(#intelFrame);stroke:#30363d;stroke-width:1.2}
+                .lane{fill:#111821;stroke:#30363d;stroke-width:1}
+                .card-blue{fill:url(#intelBlue);stroke:#58a6ff;stroke-width:1.1}
+                .card-green{fill:url(#intelGreen);stroke:#3fb950;stroke-width:1.1}
+                .card-purple{fill:url(#intelPurple);stroke:#bc8cff;stroke-width:1.1}
+                .card-orange{fill:url(#intelOrange);stroke:#d29922;stroke-width:1.1}
+                .title{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:14px;font-weight:700}
+                .copy{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:11px}
+                .copy-small{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px}
+                .note{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;letter-spacing:1.2px}
+                .chip{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                .link{stroke:#58a6ff;stroke-width:2.1;fill:none;marker-end:url(#intelArrowBlue)}
+                .feedback{stroke:#3fb950;stroke-width:1.8;fill:none;stroke-dasharray:7 5;marker-end:url(#intelArrowGreen)}
+                .spec-link{stroke:#bc8cff;stroke-width:1.6;fill:none;stroke-dasharray:6 4;marker-end:url(#intelArrowPurple)}
+              </style>
+              <marker id="intelArrowBlue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#58a6ff"/>
+              </marker>
+              <marker id="intelArrowGreen" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#3fb950"/>
+              </marker>
+              <marker id="intelArrowPurple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#bc8cff"/>
+              </marker>
+            </defs>
+
+            <rect class="frame-shell" x="16" y="16" width="1148" height="588" rx="18"/>
+            <text class="note" x="56" y="54">CURRENT FRAMEWORK BUILD</text>
+
+            <rect class="lane" x="54" y="74" width="1072" height="236" rx="16"/>
+
+            <rect class="card-blue" x="84" y="108" width="238" height="82" rx="14"/>
+            <text class="title" x="104" y="134">Experiment Catalog</text>
+            <text class="copy-small" x="104" y="154">DuckDB-backed cumulative record</text>
+            <text class="copy-small" x="104" y="168">of prior runs; indexed state and</text>
+            <text class="copy-small" x="104" y="182">outcomes</text>
+
+            <rect class="card-blue" x="342" y="108" width="238" height="82" rx="14"/>
+            <text class="title" x="362" y="134">Meta-Analysis Engine</text>
+            <text class="copy-small" x="362" y="154">cross-run ranking and pattern</text>
+            <text class="copy-small" x="362" y="168">extraction; best-configuration</text>
+            <text class="copy-small" x="362" y="182">comparison across experiments</text>
+
+            <rect class="card-green" x="600" y="108" width="238" height="82" rx="14"/>
+            <text class="title" x="620" y="134">Feedback Loop v2</text>
+            <text class="copy-small" x="620" y="154">Bayesian confidence updates and</text>
+            <text class="copy-small" x="620" y="168">Thompson-style selection support</text>
+
+            <rect class="card-green" x="858" y="108" width="238" height="82" rx="14"/>
+            <text class="title" x="878" y="134">Adaptive Defaults</text>
+            <text class="copy-small" x="878" y="154">dataset-aware initialization and</text>
+            <text class="copy-small" x="878" y="168">starting points before tuning</text>
+
+            <rect class="card-orange" x="342" y="218" width="238" height="62" rx="14"/>
+            <text class="title" x="362" y="240">Hypothesis Templates</text>
+            <text class="copy-small" x="362" y="258">reusable trigger-driven prompts</text>
+            <text class="copy-small" x="362" y="272">for experimental follow-up</text>
+
+            <rect x="600" y="218" width="496" height="62" rx="14" fill="rgba(88,166,255,0.08)" stroke="#58a6ff" stroke-width="1"/>
+            <text class="title" x="620" y="240">Execution Interface</text>
+            <text class="copy-small" x="620" y="258">selection support returns signals to the experiment spine,</text>
+            <text class="copy-small" x="620" y="272">not a self-governing lab loop</text>
+
+            <!-- forward chain across the top row -->
+            <path class="link" d="M322 149 H342"/>
+            <path class="link" d="M580 149 H600"/>
+            <path class="link" d="M838 149 H858"/>
+
+            <!-- Meta-Analysis feeds Hypothesis Templates; Adaptive Defaults feeds Execution Interface -->
+            <path class="link" d="M461 190 V218"/>
+            <path class="link" d="M977 190 V218"/>
+
+            <!-- Hypothesis Templates -> Execution Interface -->
+            <path class="link" d="M580 249 H600"/>
+
+            <!-- Closing the loop: Execution Interface returns to Experiment Catalog -->
+            <path class="feedback" d="M848 280 V296 H203 V190"/>
+
+            <rect x="936" y="38" width="180" height="24" rx="12" fill="rgba(63,185,80,0.12)" stroke="#3fb950"/>
+            <text class="chip" x="1026" y="54">OPERATIONAL TODAY</text>
+
+            <text class="note" x="56" y="340">SPECIFIED ROADMAP SURFACE</text>
+            <rect class="lane" x="54" y="360" width="1072" height="206" rx="16"/>
+
+            <rect class="card-purple" x="84" y="392" width="320" height="68" rx="14"/>
+            <text class="title" x="104" y="417">Experiment Design and Optimization</text>
+            <text class="copy-small" x="104" y="435">meta-features, surrogates, active design,</text>
+            <text class="copy-small" x="104" y="449">multi-objective search</text>
+
+            <rect class="card-purple" x="430" y="392" width="320" height="68" rx="14"/>
+            <text class="title" x="450" y="417">Causal and Statistical Inference</text>
+            <text class="copy-small" x="450" y="435">causal feedback, Bayesian testing,</text>
+            <text class="copy-small" x="450" y="449">rule mining, information theory</text>
+
+            <rect class="card-purple" x="776" y="392" width="320" height="68" rx="14"/>
+            <text class="title" x="796" y="417">Continual and Discovery Modules</text>
+            <text class="copy-small" x="796" y="435">continual learning, novelty search,</text>
+            <text class="copy-small" x="796" y="449">symbolic discovery components</text>
+
+            <rect x="230" y="482" width="720" height="76" rx="14" fill="rgba(188,140,255,0.08)" stroke="#bc8cff" stroke-width="1"/>
+            <text class="title" x="590" y="506" text-anchor="middle">Declared boundary</text>
+            <text class="copy-small" x="590" y="526" text-anchor="middle">cited modules remain design intent until integrated</text>
+            <text class="copy-small" x="590" y="542" text-anchor="middle">and validated in the framework runtime</text>
+
+            <path class="spec-link" d="M244 460 V482"/>
+            <path class="spec-link" d="M590 460 V482"/>
+            <path class="spec-link" d="M936 460 V482"/>
+
+            <rect x="936" y="324" width="180" height="24" rx="12" fill="rgba(188,140,255,0.12)" stroke="#bc8cff"/>
+            <text class="chip" x="1026" y="340">SPECIFIED ONLY</text>
+          </svg>
+          </div>
+
+          <div class="visual-caption">
+            <div class="callout-card">
+              <div class="label">Interpretation</div>
+              <h4>What the layer actually does today</h4>
+              <p>In the present build, intelligence functions as a bounded experimental memory and decision-support surface. It accumulates prior runs, updates confidence, ranks candidate configurations, proposes reusable follow-up structures, and hands those outputs back to the broader execution framework.</p>
+            </div>
+
+            <aside class="legend-card">
+              <div class="label">Boundary discipline</div>
+              <ul class="legend-list">
+                <li style="--dot-color: var(--accent-blue);">Blue cards identify operational modules present in the current build.</li>
+                <li style="--dot-color: var(--accent-green);">Green cards identify adaptive support affecting selection and defaults.</li>
+                <li style="--dot-color: var(--accent-orange);">Orange identifies reusable hypothesis scaffolding, not autonomous interpretation.</li>
+                <li style="--dot-color: var(--accent-blue);">The execution interface returns support signals to the framework rather than bypassing it.</li>
+                <li style="--dot-color: var(--accent-green);">The dashed return line marks the closed feedback path: execution outcomes are written back into the experiment catalog.</li>
+                <li style="--dot-color: var(--accent-purple);">Purple roadmap clusters remain declared future work until validated in the runtime system.</li>
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block section-divider" id="operational-modules">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Operational modules in the current build</h3>
+          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">This table is the active intelligence surface. Each row describes a module currently represented in the framework rather than a purely conceptual addition.</p>
+        </div>
+
+        <div class="table-card">
+          <div class="table-head">
             <div class="label">Implemented intelligence</div>
             <h4>Operational modules (B1-B5)</h4>
-            <p>The live implemented-module table is preserved here as the current validated intelligence surface in the framework.</p>
+            <p>The present build supports cumulative experiment memory, ranking, feedback updates, and templated follow-up logic without claiming a fully autonomous experimentation engine.</p>
           </div>
 
           <table class="intelligence-table" aria-label="Implemented intelligence modules">
@@ -519,11 +820,41 @@
           </table>
         </div>
 
-        <div class="intelligence-table-card">
-          <div class="intelligence-table-head">
+        <div class="section-note">
+          <div class="label">Why this matters</div>
+          <p>These modules move the framework beyond one-off benchmarking by allowing runs to accumulate state across experiments. The claim is modest but important: SNPTX can retain and reuse experimental information. It does not claim to replace researcher judgment or wet-lab confirmation.</p>
+        </div>
+      </section>
+
+      <section class="section-block section-divider" id="roadmap-modules">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Specified roadmap and cited research basis</h3>
+          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">The roadmap remains useful because it states intended analytical directions precisely, but it must be read as literature-backed specification until the modules are integrated and validated.</p>
+        </div>
+
+        <div class="roadmap-summary-grid">
+          <div class="callout-card">
+            <div class="label">Selection and design</div>
+            <h4>Choosing what to run next</h4>
+            <p>Meta-features, surrogates, experiment design, and multi-objective search would extend the current ranking surface toward more explicit experiment selection under competing objectives.</p>
+          </div>
+          <div class="callout-card">
+            <div class="label">Inference and evaluation</div>
+            <h4>Interpreting what a run means</h4>
+            <p>Causal feedback, Bayesian testing, rule mining, and information-theoretic analysis would make the layer more explicit about uncertainty, attribution, and evidence quality.</p>
+          </div>
+          <div class="callout-card">
+            <div class="label">Adaptation over time</div>
+            <h4>Responding to drift and novelty</h4>
+            <p>Continual learning and scientific discovery modules would extend the layer toward adaptation across non-stationary settings, but these remain roadmap items rather than active claims.</p>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-head">
             <div class="label">Specified roadmap</div>
             <h4>Roadmap modules (B.6.1-B.6.10)</h4>
-            <p>The live roadmap table is retained as the theory-backed design surface for later intelligence expansion.</p>
+            <p>The roadmap table is retained because it anchors future work in named methods and citations rather than in vague references to intelligence.</p>
           </div>
 
           <table class="intelligence-table" aria-label="Specified intelligence roadmap modules">
@@ -548,62 +879,72 @@
             </tbody>
           </table>
         </div>
+      </section>
 
-        <div class="intelligence-detail-grid">
-          <div class="intelligence-detail-card">
-            <div class="label">Status discipline</div>
-            <h4>Why the split is necessary</h4>
-            <p>The implemented-versus-roadmap split keeps the intelligence discussion evidence-bounded and avoids treating cited theory as equivalent to validated runtime behavior.</p>
-          </div>
-          <div class="intelligence-detail-card">
-            <div class="label">Operational value</div>
-            <h4>What the active layer already contributes</h4>
-            <p>The active modules already support experiment memory, adaptive defaults, feedback updates, and reusable hypothesis scaffolding for experimentation workflows.</p>
-          </div>
-          <div class="intelligence-detail-card">
-            <div class="label">Section role</div>
-            <h4>How Intelligence supports the page</h4>
-            <p>This section extends the platform narrative beyond static benchmarking by showing how SNPTX is structured to accumulate experimental knowledge over time.</p>
-          </div>
+      <section class="section-block section-divider" id="claims">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Claims, inferences, and explicit limits</h3>
+          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">The page distinguishes what is demonstrated in the framework build from what is reasonably inferred and what remains out of scope.</p>
         </div>
 
+        <div class="boundary-grid">
+          <div class="boundary-card">
+            <div class="label">Demonstrated</div>
+            <h4>Implemented support for adaptive experimentation</h4>
+            <ul class="boundary-list">
+              <li style="--dot-color: var(--accent-blue);">Persistent experiment memory across runs.</li>
+              <li style="--dot-color: var(--accent-blue);">Cross-experiment ranking and Bayesian feedback updates.</li>
+              <li style="--dot-color: var(--accent-blue);">Dataset-aware defaults and reusable hypothesis scaffolding.</li>
+            </ul>
+          </div>
+          <div class="boundary-card">
+            <div class="label">Inferred but bounded</div>
+            <h4>A platform that can accumulate experimental knowledge</h4>
+            <p>The implemented modules support a credible claim that SNPTX is structured for cumulative experimentation rather than isolated benchmark runs. That inference depends on the concrete modules above, not on unimplemented roadmap items.</p>
+          </div>
+          <div class="boundary-card">
+            <div class="label">Out of scope</div>
+            <h4>No claim of closed-loop autonomous discovery</h4>
+            <p>This page does not claim independent scientific reasoning, diagnosis, therapeutic recommendation, or deployment-ready autonomous control of laboratory or clinical workflows.</p>
+          </div>
+        </div>
       </section>
     </article>
 
-    <footer aria-label="Site footer" style="display:grid;gap:18px;margin-top:36px;padding-top:20px;border-top:1px solid rgba(48,54,61,0.85);">
-      <div style="display:grid;grid-template-columns:minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);gap:18px 24px;align-items:start;">
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="site-footer-grid">
         <section style="display:grid;gap:6px;align-content:start;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">SNPTX&trade;</div>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Connecting Data to Discovery</p>
+          <div class="label">SNPTX&trade;</div>
+          <p>Connecting Data to Discovery</p>
         </section>
         <section style="display:grid;gap:8px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Site Map</div>
-          <div style="display:grid;grid-template-columns:repeat(3, minmax(96px, 1fr));gap:5px 16px;">
-            <a href="../index.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Home</a>
-            <a href="architecture.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Architecture</a>
-            <a href="motivation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Motivation</a>
-            <a href="results.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Results</a>
-            <a href="validation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Validation</a>
-            <a href="evidence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Evidence</a>
-            <a href="intelligence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Intelligence</a>
-            <a href="autonomous.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Autonomous</a>
-            <a href="methodology.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Methodology</a>
-            <a href="fusion.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Fusion</a>
-            <a href="pilots.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Pilots</a>
-            <a href="positioning.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Positioning</a>
-            <a href="limitations.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Limitations</a>
-            <a href="references.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">References</a>
+          <div class="label">Site Map</div>
+          <div class="sitemap">
+            <a href="../index.html">Home</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="motivation.html">Motivation</a>
+            <a href="results.html">Results</a>
+            <a href="validation.html">Validation</a>
+            <a href="evidence.html">Evidence</a>
+            <a href="intelligence.html">Intelligence</a>
+            <a href="autonomous.html">Autonomous</a>
+            <a href="methodology.html">Methodology</a>
+            <a href="fusion.html">Fusion</a>
+            <a href="pilots.html">Pilots</a>
+            <a href="positioning.html">Positioning</a>
+            <a href="limitations.html">Limitations</a>
+            <a href="references.html">References</a>
           </div>
         </section>
         <section style="display:grid;gap:6px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Contact</div>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;max-width:240px;">Research, collaboration, and review inquiries.</p>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Daniel R. Russell</p>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;">MITx (SDS), Harvard ALM (DS) '27</p>
-          <p style="color:#c9d1d9;font-size:13px;line-height:1.6;white-space:normal;"><a href="mailto:drr508@g.harvard.edu" style="color:#c9d1d9;text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" style="color:#c9d1d9;text-decoration:none;">dan@snptx.ai</a></p>
+          <div class="label">Contact</div>
+          <p>Research, collaboration, and review inquiries.</p>
+          <p class="muted">Daniel R. Russell</p>
+          <p class="muted">MITx (SDS), Harvard ALM (DS) '27</p>
+          <p class="muted" style="white-space:normal;"><a href="mailto:drr508@g.harvard.edu" class="muted" style="text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" class="muted" style="text-decoration:none;">dan@snptx.ai</a></p>
         </section>
       </div>
-      <div style="padding-top:12px;border-top:1px solid rgba(48,54,61,0.72);color:#8b949e;font-size:11px;text-align:right;">SNPTX&trade; Academic</div>
+      <div class="site-footer-bottom">SNPTX&trade; Academic 2026</div>
     </footer>
   </div>
 </body>

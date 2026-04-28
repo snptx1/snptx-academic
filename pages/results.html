@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SNPTX Results</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="SNPTX results: per-modality benchmark accuracy across eight evaluated settings, the pipeline that produced them, and current delivery state.">
+<title>SNPTX - Results</title>
 <style>
   :root {
+    color-scheme: dark;
     --border: #30363d;
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
@@ -13,18 +17,14 @@
     --accent-green: #3fb950;
     --accent-orange: #d29922;
     --accent-purple: #bc8cff;
-    --accent-red: #f85149;
     --accent-cyan: #39c5cf;
+    --accent-warm: #f2cc60;
+    --accent-red: #f85149;
     --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
     --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    color-scheme: dark;
   }
 
-  *, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     background:
@@ -37,10 +37,7 @@
     padding: 40px 24px 80px;
   }
 
-  .page {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
+  .page { max-width: 1280px; margin: 0 auto; }
 
   .top-nav {
     position: sticky;
@@ -48,6 +45,8 @@
     z-index: 1000;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 6px 14px;
     margin-bottom: 18px;
     padding: 12px 0 16px;
@@ -113,16 +112,8 @@
     background: rgba(22,27,34,0.88);
   }
 
-  .draft-meta h2 {
-    font-size: 18px;
-    font-weight: 700;
-  }
-
-  .draft-meta p {
-    color: var(--text-secondary);
-    font-size: 13px;
-    max-width: 760px;
-  }
+  .draft-meta h2 { font-size: 18px; font-weight: 700; }
+  .draft-meta p { color: var(--text-secondary); font-size: 13px; max-width: 760px; }
 
   .badge {
     font-family: var(--font-mono);
@@ -137,22 +128,31 @@
     white-space: nowrap;
   }
 
-  .results-stage {
-    position: relative;
-    padding: 38px 32px 40px;
-    background:
-      radial-gradient(circle at 12% 16%, rgba(88,166,255,0.18), transparent 30%),
-      radial-gradient(circle at 84% 14%, rgba(188,140,255,0.16), transparent 24%),
-      linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
-    overflow: hidden;
+  .section-block { padding: 28px; }
+  .section-divider { border-top: 1px solid rgba(48,54,61,0.78); }
+
+  .section-rule {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
   }
 
-  .results-stage::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(90deg, transparent 0%, rgba(88,166,255,0.05) 100%);
+  .section-rule h3 {
+    font-size: 15px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .section-rule p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    max-width: 520px;
   }
 
   .eyebrow {
@@ -174,52 +174,39 @@
     background: rgba(63,185,80,0.75);
   }
 
-  .results-header {
+  .results-hero {
+    position: relative;
+    padding: 36px 32px 32px;
+    background:
+      radial-gradient(circle at 10% 16%, rgba(88,166,255,0.18), transparent 30%),
+      radial-gradient(circle at 88% 12%, rgba(188,140,255,0.18), transparent 26%),
+      linear-gradient(135deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%);
+    overflow: hidden;
+  }
+
+  .hero-grid {
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
-    gap: 24px;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    gap: 18px;
     align-items: start;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
   }
 
-  .results-header h3 {
-    font-size: 48px;
-    line-height: 1.03;
-    letter-spacing: -0.05em;
-    max-width: 840px;
-    margin-bottom: 16px;
+  .hero-grid h3 {
+    font-size: 40px;
+    line-height: 1.06;
+    letter-spacing: -0.045em;
+    max-width: 780px;
+    margin-bottom: 14px;
   }
 
-  .results-lede {
-    max-width: 860px;
+  .lead {
+    max-width: 780px;
     color: var(--text-secondary);
-    font-size: 17px;
-    line-height: 1.75;
-  }
-
-  .results-summary,
-  .signal-card,
-  .results-visual-card,
-  .results-table-card,
-  .results-detail-card,
-  .results-callout,
-  .results-note {
-    background: rgba(22,27,34,0.82);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-  }
-
-  .results-summary,
-  .signal-card,
-  .results-visual-card,
-  .results-table-card,
-  .results-detail-card,
-  .results-callout,
-  .results-note {
-    padding: 16px;
+    font-size: 16px;
+    line-height: 1.7;
   }
 
   .label {
@@ -230,32 +217,39 @@
     margin-bottom: 8px;
   }
 
-  .results-summary .label { color: var(--accent-green); }
-  .results-summary h4,
-  .signal-card h4,
-  .results-visual-head h4,
-  .results-table-head h4,
-  .results-detail-card h4,
-  .results-callout h4 {
-    font-size: 15px;
-    margin-bottom: 10px;
+  .summary-card,
+  .visual-card,
+  .callout-card,
+  .section-note {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
   }
 
-  .results-summary ul {
-    list-style: none;
-    display: grid;
-    gap: 10px;
-  }
+  .summary-card,
+  .callout-card { padding: 18px; }
 
-  .results-summary li {
-    position: relative;
-    padding-left: 14px;
+  .summary-card .label,
+  .section-note .label { color: var(--accent-green); }
+
+  .summary-card h4,
+  .visual-card h4,
+  .callout-card h4 { font-size: 15px; margin-bottom: 10px; }
+
+  .summary-list { list-style: none; display: grid; gap: 10px; }
+
+  .summary-list li,
+  .callout-card p,
+  .section-note p,
+  .visual-head p {
     color: var(--text-secondary);
     font-size: 13px;
-    line-height: 1.55;
+    line-height: 1.65;
   }
 
-  .results-summary li::before {
+  .summary-list li { position: relative; padding-left: 14px; }
+
+  .summary-list li::before {
     content: "";
     position: absolute;
     left: 0;
@@ -266,130 +260,20 @@
     background: var(--accent-green);
   }
 
-  .signal-grid {
+  /* Table */
+  .results-table-wrap {
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
-    margin-bottom: 18px;
-  }
-
-  .signal-card:nth-child(1) .label { color: var(--accent-blue); }
-  .signal-card:nth-child(2) .label { color: var(--accent-orange); }
-  .signal-card:nth-child(3) .label { color: var(--accent-purple); }
-  .signal-card:nth-child(4) .label { color: var(--accent-green); }
-
-  .signal-card p,
-  .results-visual-head p,
-  .results-table-head p,
-  .results-detail-card p,
-  .results-callout p,
-  .results-note p {
-    color: var(--text-secondary);
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .results-chart-grid,
-  .results-support-grid,
-  .results-detail-grid {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    gap: 18px;
-    margin-bottom: 18px;
-  }
-
-  .results-chart-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .results-support-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .results-detail-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .results-visual-head,
-  .results-table-head {
-    display: grid;
-    gap: 6px;
-    margin-bottom: 14px;
-  }
-
-  .results-visual-head .label { color: var(--accent-blue); }
-  .results-table-head .label { color: var(--accent-purple); }
-
-  .visual-shell {
-    padding: 14px;
-    background: rgba(13,17,23,0.72);
+    overflow-x: auto;
+    border-radius: 12px;
     border: 1px solid rgba(48,54,61,0.85);
-    border-radius: 14px;
-    forced-color-adjust: none;
-  }
-
-  .visual-shell svg {
-    width: 100%;
-    height: auto;
-    display: block;
-    background: #0d1117;
-    border-radius: 10px;
-    forced-color-adjust: none;
-  }
-
-  .visual-shell svg * {
-    forced-color-adjust: none;
-  }
-
-  .bar-chart {
-    display: grid;
-    gap: 10px;
-  }
-
-  .bar-row {
-    display: grid;
-    grid-template-columns: 148px 1fr;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .bar-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-secondary);
-  }
-
-  .bar-track {
-    height: 28px;
-    border-radius: 999px;
-    background: rgba(48,54,61,0.45);
-    overflow: hidden;
-    border: 1px solid rgba(48,54,61,0.65);
-  }
-
-  .bar-fill {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    height: 100%;
-    padding: 0 10px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    color: #0d1117;
-    background: var(--bar-color);
+    background: rgba(13,17,23,0.56);
   }
 
   .results-table {
     width: 100%;
     border-collapse: collapse;
-    overflow: hidden;
-    border-radius: 12px;
-    border: 1px solid rgba(48,54,61,0.85);
-    background: rgba(13,17,23,0.56);
+    min-width: 760px;
   }
 
   .results-table th,
@@ -416,53 +300,117 @@
     border-top: 1px solid rgba(48,54,61,0.55);
   }
 
-  .results-table tbody tr:first-child td {
-    border-top: none;
+  .results-table tbody tr:first-child td { border-top: none; }
+  .results-table td.num { font-family: var(--font-mono); color: var(--text-primary); white-space: nowrap; }
+  .results-table tr.fusion td { background: rgba(188,140,255,0.05); }
+  .results-table tr.fusion td:first-child { color: var(--text-primary); font-weight: 600; }
+
+  /* Bar chart */
+  .visual-card {
+    padding: 18px;
+    background: rgba(13,17,23,0.58);
+    overflow: hidden;
   }
 
-  .results-table td strong {
+  .visual-head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .visual-head .label { color: var(--accent-blue); }
+  .visual-head h4 { font-size: 18px; margin: 0; }
+
+  .visual-shell {
+    padding: 14px;
+    background: rgba(13,17,23,0.72);
+    border: 1px solid rgba(48,54,61,0.85);
+    border-radius: 12px;
+    forced-color-adjust: none;
+  }
+
+  .visual-shell svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #0d1117;
+    border-radius: 8px;
+    forced-color-adjust: none;
+  }
+
+  .visual-shell svg * { forced-color-adjust: none; }
+
+  .bar-chart { display: grid; gap: 9px; }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 188px 1fr 56px;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .bar-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.3;
+  }
+
+  .bar-track {
+    height: 18px;
+    border-radius: 4px;
+    background: rgba(48,54,61,0.45);
+    overflow: hidden;
+    border: 1px solid rgba(48,54,61,0.65);
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--bar-color);
+    border-radius: 3px 0 0 3px;
+  }
+
+  .bar-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
     color: var(--text-primary);
+    text-align: right;
   }
 
-  .results-callout {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 18px;
-    background: rgba(22,27,34,0.62);
-    border-color: rgba(88,166,255,0.18);
+  /* Two-up under DAG */
+  .two-up {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 16px;
   }
 
-  .results-callout .label { color: var(--accent-blue); }
-
-  .results-detail-card:nth-child(1) .label { color: var(--accent-blue); }
-  .results-detail-card:nth-child(2) .label { color: var(--accent-green); }
-  .results-detail-card:nth-child(3) .label { color: var(--accent-orange); }
-
+  /* Timeline */
   .timeline {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(9, minmax(0, 1fr));
     gap: 8px;
     align-items: start;
+    padding: 8px 0 4px;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 32px;
+    left: calc((100% / 9) / 2);
+    right: calc((100% / 9) / 2);
+    height: 1px;
+    background: rgba(48,54,61,0.8);
+    z-index: 0;
   }
 
   .timeline-item {
     text-align: center;
     position: relative;
     padding-top: 8px;
-  }
-
-  .timeline-item::after {
-    content: "";
-    position: absolute;
-    top: 30px;
-    left: calc(50% + 18px);
-    width: calc(100% - 4px);
-    height: 2px;
-    background: rgba(48,54,61,0.8);
-  }
-
-  .timeline-item:last-child::after {
-    display: none;
+    z-index: 1;
   }
 
   .timeline-label {
@@ -473,14 +421,12 @@
   }
 
   .timeline-dot {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 999px;
     margin: 0 auto 10px;
     border: 2px solid rgba(48,54,61,0.9);
     background: #0d1117;
-    position: relative;
-    z-index: 1;
   }
 
   .timeline-item.complete .timeline-dot {
@@ -488,108 +434,119 @@
     border-color: var(--accent-blue);
   }
 
-  .timeline-item.active .timeline-dot {
+  .timeline-item.partial .timeline-dot {
     background: rgba(63,185,80,0.16);
     border-color: var(--accent-green);
   }
 
   .timeline-desc {
-    font-size: 12px;
-    line-height: 1.45;
+    font-size: 11.5px;
+    line-height: 1.4;
     color: var(--text-secondary);
   }
 
-  .results-note {
-    position: relative;
-    z-index: 1;
-    background: rgba(22,27,34,0.62);
+  .timeline-status {
+    display: inline-block;
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .timeline-item.complete .timeline-status { color: var(--accent-blue); }
+  .timeline-item.partial .timeline-status { color: var(--accent-green); }
+
+  .section-note {
+    margin-top: 18px;
+    padding: 16px 18px;
+    background: rgba(13,17,23,0.5);
     border-color: rgba(88,166,255,0.18);
   }
 
+  .section-note .label { color: var(--accent-blue); margin-bottom: 6px; }
+  .section-note h4 { font-size: 14px; margin-bottom: 6px; color: var(--text-primary); }
+
+  /* Footer */
+  .site-footer {
+    display: grid;
+    gap: 18px;
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(48,54,61,0.85);
+  }
+
+  .site-footer-grid {
+    display: grid;
+    grid-template-columns: minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);
+    gap: 18px 24px;
+    align-items: start;
+  }
+
+  .site-footer .label { color: #58a6ff; font-size: 10px; }
+  .site-footer p { color: #c9d1d9; font-size: 12px; line-height: 1.5; }
+  .site-footer p.muted, .site-footer a.muted { color: #8b949e; }
+
+  .site-footer .sitemap {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(96px, 1fr));
+    gap: 5px 16px;
+  }
+
+  .site-footer .sitemap a {
+    color: #e6edf3;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .site-footer-bottom {
+    padding-top: 12px;
+    border-top: 1px solid rgba(48,54,61,0.72);
+    color: #8b949e;
+    font-size: 11px;
+    text-align: right;
+  }
+
   @media (max-width: 1100px) {
-    .results-header,
-    .results-chart-grid,
-    .results-support-grid {
+    .hero-grid,
+    .two-up,
+    .site-footer-grid {
       grid-template-columns: 1fr;
     }
 
-    .signal-grid,
-    .results-detail-grid {
-      grid-template-columns: 1fr 1fr;
-    }
+    .hero-grid h3 { font-size: 32px; }
 
     .timeline {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px 10px;
+      gap: 18px 10px;
     }
 
-    .timeline-item::after {
-      display: none;
-    }
+    .timeline::before { display: none; }
   }
 
   @media (max-width: 760px) {
-    body {
-      padding: 24px 14px 40px;
-    }
+    body { padding: 24px 14px 40px; }
 
-    .draft-meta {
-      display: block;
-    }
+    .draft-meta { display: block; }
+    .draft-meta .badge { display: inline-block; margin-top: 12px; }
 
-    .draft-meta .badge {
-      display: inline-block;
-      margin-bottom: 12px;
-    }
+    .section-block,
+    .results-hero { padding: 24px 20px 28px; }
 
-    .results-stage {
-      padding: 28px 20px 32px;
-    }
-
-    .results-header h3 {
-      font-size: 34px;
-    }
-
-    .results-lede {
-      font-size: 16px;
-    }
-
-    .signal-grid,
-    .results-detail-grid,
-    .timeline {
-      grid-template-columns: 1fr;
-    }
+    .hero-grid h3 { font-size: 26px; }
 
     .bar-row {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 56px;
+      grid-template-areas:
+        "label label"
+        "track value";
+      gap: 6px 10px;
     }
+    .bar-row .bar-label { grid-area: label; }
+    .bar-row .bar-track { grid-area: track; }
+    .bar-row .bar-value { grid-area: value; }
 
-    .results-table,
-    .results-table thead,
-    .results-table tbody,
-    .results-table tr,
-    .results-table th,
-    .results-table td {
-      display: block;
-      width: 100%;
-    }
-
-    .results-table thead {
-      display: none;
-    }
-
-    .results-table tr {
-      border-top: 1px solid rgba(48,54,61,0.55);
-    }
-
-    .results-table tbody tr:first-child {
-      border-top: none;
-    }
-
-    .results-table td {
-      border-top: none;
-      padding: 10px 12px;
-    }
+    .timeline { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -612,183 +569,38 @@
       <a href="references.html">References</a>
     </nav>
 
-    <header class="page-header">
-      <h1>SNPTX Results</h1>
-      <p>Benchmark evidence across the current multi-modal workload surface under controlled evaluation protocols.</p>
-    </header>
-
     <article class="draft">
       <div class="draft-meta">
         <div>
-          <h2>Results</h2>
-          <p>Performance, modality coverage, workflow structure, and delivery progress in one bounded evidence surface.</p>
+          <h2>Benchmark surface</h2>
+          <p>Seven unimodal benchmarks plus one tri-modal fusion run, each tied to a named dataset, model, and validation protocol.</p>
         </div>
-        <div class="badge">Evidence Snapshot</div>
+        <div class="badge">Evidence</div>
       </div>
 
-      <section class="results-stage" id="results">
-        <div class="results-header">
+      <!-- Section A: Per-modality results -->
+      <section class="results-hero" id="per-modality">
+        <div class="hero-grid">
           <div>
-            <div class="eyebrow">Validated experimental surface across multi-modal benchmarks</div>
-            <h3>Multi-Modal Experimental Results</h3>
-            <p class="results-lede">The current build reports benchmark performance across seven biomedical modality families plus a three-modality fusion setting. These results are presented as research performance measurements under controlled evaluation protocols, not as claims of prospective clinical deployment performance.</p>
+            <div class="eyebrow">Per-modality benchmark accuracy</div>
+            <h3>Eight evaluated settings across seven biomedical modalities and one fusion run.</h3>
+            <p class="lead">Reported accuracies range from 0.610 (clinical text, 5-class classification with a 0.20 random baseline) to 0.993 (PathMNIST, 9-class). The validation column on each row records the protocol that produced the number; it is not omitted from any row.</p>
           </div>
 
-          <aside class="results-summary">
-            <div class="label">Results summary</div>
-            <h4>What this section establishes</h4>
-            <ul>
-              <li>Coverage extends across clinical tabular, omics, graphs, histopathology, text, single-cell, drug discovery, and fusion workloads.</li>
-              <li>Reported metrics are benchmark-level outputs tied to specific validation protocols and datasets.</li>
-              <li>The section combines performance evidence, pipeline structure, and implementation progress in one reviewable surface.</li>
+          <aside class="summary-card">
+            <div class="label">What this section reports</div>
+            <h4>Read this first</h4>
+            <ul class="summary-list">
+              <li>Eight benchmark settings: seven unimodal, one tri-modal attention fusion.</li>
+              <li>Each row names the dataset, the model, the score, and the validation split or protocol.</li>
+              <li>The fusion row is evaluated on Visium only and is compared against the omics-only baseline on the same dataset.</li>
+              <li>Numbers below are benchmark-level accuracy, not estimates of clinical performance.</li>
             </ul>
           </aside>
         </div>
 
-        <div class="signal-grid">
-          <div class="signal-card">
-            <div class="label">Coverage</div>
-            <h4>Eight evaluated settings</h4>
-            <p>Seven modality families plus a multi-modal fusion run give the results section breadth beyond a single benchmark or model family.</p>
-          </div>
-          <div class="signal-card">
-            <div class="label">Best score</div>
-            <h4>99.3% histopathology accuracy</h4>
-            <p>PathMNIST with DenseNet-121 is the highest reported benchmark result in the current section.</p>
-          </div>
-          <div class="signal-card">
-            <div class="label">Fusion result</div>
-            <h4>93.0% tri-modal performance</h4>
-            <p>Attention fusion on Visium exceeds the strongest unimodal omics baseline reported in the current table.</p>
-          </div>
-          <div class="signal-card">
-            <div class="label">Interpretation</div>
-            <h4>Infrastructure evidence only</h4>
-            <p>The section is bounded to methodology and platform evidence rather than claims of clinical utility.</p>
-          </div>
-        </div>
-
-        <div class="results-chart-grid">
-          <div class="results-visual-card">
-            <div class="results-visual-head">
-              <div class="label">Comparative view</div>
-              <h4>Modality accuracy radar</h4>
-              <p>The radar chart gives a compact cross-modal view of the current benchmark surface while preserving the per-modality score values used in the live section.</p>
-            </div>
-
-            <div class="visual-shell">
-              <svg viewBox="-60 0 620 460" xmlns="http://www.w3.org/2000/svg" aria-label="Modality accuracy radar chart">
-                <defs>
-                  <style>
-                    .radar-label{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;fill:#8b949e}
-                    .radar-value{font-family:'SFMono-Regular',Consolas,monospace;font-size:9px;fill:#e6edf3;font-weight:700}
-                    .radar-ring{fill:none;stroke:#30363d;stroke-width:1}
-                    .radar-spoke{stroke:#30363d;stroke-width:0.5}
-                    .radar-area{fill:rgba(88,166,255,0.12);stroke:#58a6ff;stroke-width:2}
-                    .radar-dot{fill:#58a6ff}
-                  </style>
-                </defs>
-                <rect x="-60" width="620" height="460" fill="#0d1117" rx="8"/>
-                <polygon class="radar-ring" points="250,220 250,220 250,220 250,220 250,220 250,220 250,220 250,220"/>
-                <circle class="radar-ring" cx="250" cy="220" r="45"/>
-                <circle class="radar-ring" cx="250" cy="220" r="90"/>
-                <circle class="radar-ring" cx="250" cy="220" r="135"/>
-                <circle class="radar-ring" cx="250" cy="220" r="180"/>
-                <text x="254" y="178" class="radar-label">25%</text>
-                <text x="254" y="133" class="radar-label">50%</text>
-                <text x="254" y="88" class="radar-label">75%</text>
-                <text x="254" y="43" class="radar-label">100%</text>
-                <line class="radar-spoke" x1="250" y1="220" x2="250" y2="40"/>
-                <line class="radar-spoke" x1="250" y1="220" x2="377.3" y2="92.7"/>
-                <line class="radar-spoke" x1="250" y1="220" x2="430" y2="220"/>
-                <line class="radar-spoke" x1="250" y1="220" x2="377.3" y2="347.3"/>
-                <line class="radar-spoke" x1="250" y1="220" x2="250" y2="400"/>
-                <line class="radar-spoke" x1="250" y1="220" x2="122.7" y2="347.3"/>
-                <line class="radar-spoke" x1="250" y1="220" x2="70" y2="220"/>
-                <line class="radar-spoke" x1="250" y1="220" x2="122.7" y2="92.7"/>
-                <polygon class="radar-area" points="250,80.1 368.1,101.9 396.7,220 376.4,346.4 250,329.8 126.7,343.3 74.5,220 131.6,101.6"/>
-                <circle class="radar-dot" cx="250" cy="80.1" r="4"/>
-                <circle class="radar-dot" cx="368.1" cy="101.9" r="4"/>
-                <circle class="radar-dot" cx="396.7" cy="220" r="4"/>
-                <circle class="radar-dot" cx="376.4" cy="346.4" r="4"/>
-                <circle class="radar-dot" cx="250" cy="329.8" r="4"/>
-                <circle class="radar-dot" cx="126.7" cy="343.3" r="4"/>
-                <circle class="radar-dot" cx="74.5" cy="220" r="4"/>
-                <circle class="radar-dot" cx="131.6" cy="101.6" r="4"/>
-                <text x="250" y="28" text-anchor="middle" class="radar-label">Tabular (XGBoost)</text>
-                <text x="250" y="16" text-anchor="middle" class="radar-value">77.7%</text>
-                <text x="396" y="80" text-anchor="start" class="radar-label">Omics (VAE)</text>
-                <text x="396" y="68" text-anchor="start" class="radar-value">92.8%</text>
-                <text x="440" y="224" text-anchor="start" class="radar-label">Graph (GAT)</text>
-                <text x="440" y="212" text-anchor="start" class="radar-value">81.5%</text>
-                <text x="390" y="365" text-anchor="start" class="radar-label">Imaging (DenseNet)</text>
-                <text x="390" y="353" text-anchor="start" class="radar-value">99.3%</text>
-                <text x="250" y="425" text-anchor="middle" class="radar-label">Text (ClinicalBERT)</text>
-                <text x="250" y="445" text-anchor="middle" class="radar-value">61.0%</text>
-                <text x="95" y="365" text-anchor="end" class="radar-label">Single-cell (DenseNet)</text>
-                <text x="95" y="353" text-anchor="end" class="radar-value">96.9%</text>
-                <text x="55" y="212" text-anchor="end" class="radar-label">Drug Discovery</text>
-                <text x="55" y="224" text-anchor="end" class="radar-value">97.5%</text>
-                <text x="95" y="80" text-anchor="end" class="radar-label">Fusion (Attention)</text>
-                <text x="95" y="68" text-anchor="end" class="radar-value">93.0%</text>
-              </svg>
-            </div>
-          </div>
-
-          <div class="results-visual-card">
-            <div class="results-visual-head">
-              <div class="label">Ranked comparison</div>
-              <h4>Per-modality accuracy</h4>
-              <p>The bar view makes the current ordering explicit and gives the section a second, more directly readable performance surface.</p>
-            </div>
-
-            <div class="visual-shell">
-              <div class="bar-chart">
-                <div class="bar-row">
-                  <div class="bar-label">Imaging (DenseNet)</div>
-                  <div class="bar-track"><div class="bar-fill" style="width:99.3%;--bar-color:var(--accent-blue);">99.3%</div></div>
-                </div>
-                <div class="bar-row">
-                  <div class="bar-label">Drug Discovery</div>
-                  <div class="bar-track"><div class="bar-fill" style="width:97.5%;--bar-color:var(--accent-green);">97.5%</div></div>
-                </div>
-                <div class="bar-row">
-                  <div class="bar-label">Single-cell (DenseNet)</div>
-                  <div class="bar-track"><div class="bar-fill" style="width:96.9%;--bar-color:var(--accent-orange);">96.9%</div></div>
-                </div>
-                <div class="bar-row">
-                  <div class="bar-label">Fusion (Attention)</div>
-                  <div class="bar-track"><div class="bar-fill" style="width:93%;--bar-color:var(--accent-purple);">93.0%</div></div>
-                </div>
-                <div class="bar-row">
-                  <div class="bar-label">Omics (VAE)</div>
-                  <div class="bar-track"><div class="bar-fill" style="width:92.8%;--bar-color:var(--accent-blue);">92.8%</div></div>
-                </div>
-                <div class="bar-row">
-                  <div class="bar-label">Graph (GAT)</div>
-                  <div class="bar-track"><div class="bar-fill" style="width:81.5%;--bar-color:var(--accent-cyan);">81.5%</div></div>
-                </div>
-                <div class="bar-row">
-                  <div class="bar-label">Tabular (XGBoost)</div>
-                  <div class="bar-track"><div class="bar-fill" style="width:77.7%;--bar-color:var(--accent-cyan);">77.7%</div></div>
-                </div>
-                <div class="bar-row">
-                  <div class="bar-label">Text (ClinicalBERT)</div>
-                  <div class="bar-track"><div class="bar-fill" style="width:61%;--bar-color:var(--accent-red);">61.0%</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="results-table-card">
-          <div class="results-table-head">
-            <div class="label">Performance table</div>
-            <h4>Per-modality performance detail</h4>
-            <p>The current live results table is retained here as the main evidence surface linking each modality to dataset, model choice, score, and validation context.</p>
-          </div>
-
-          <table class="results-table" aria-label="Per-modality performance detail">
+        <div class="results-table-wrap">
+          <table class="results-table" aria-label="Per-modality benchmark performance">
             <thead>
               <tr>
                 <th>Modality</th>
@@ -799,187 +611,276 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Clinical tabular</td><td>Synthea readmission (n=6,625)</td><td>XGBoost + Optuna</td><td>77.7%</td><td>5-fold CV, 77.4% &plusmn; 0.8%</td></tr>
-              <tr><td>Omics</td><td>Visium breast cancer (n=3,798)</td><td>VAE</td><td>92.8%</td><td>Val split, 14-class Leiden clustering</td></tr>
-              <tr><td>Knowledge graphs</td><td>Hetionet ego-graphs (n=1,913)</td><td>GAT</td><td>81.5%</td><td>Val, center-node readout, 8-class</td></tr>
-              <tr><td>Histopathology</td><td>PathMNIST (n=107,180)</td><td>DenseNet-121</td><td>99.3%</td><td>Val split, 9-class</td></tr>
-              <tr><td>Clinical text</td><td>MTSamples (n&asymp;3,500)</td><td>ClinicalBERT</td><td>61.0%</td><td>5-class specialty, random baseline 20%</td></tr>
-              <tr><td>Single-cell</td><td>BloodMNIST (n=17,092)</td><td>DenseNet-121</td><td>96.9%</td><td>Test split, 8-class</td></tr>
-              <tr><td>Drug discovery</td><td>ChEMBL bioactivity (n=4,685)</td><td>GCN</td><td>97.5%</td><td>Val, molecular graph classification</td></tr>
-              <tr><td><strong>Multi-modal fusion</strong></td><td><strong>Visium (omics + vision + spatial)</strong></td><td><strong>Attention fusion</strong></td><td><strong>93.0%</strong></td><td><strong>Val split; exceeds best unimodal (92.8%)</strong></td></tr>
+              <tr><td>Clinical tabular</td><td>Synthea readmission (n=6,625)</td><td>XGBoost + Optuna</td><td class="num">0.777</td><td>5-fold CV, 0.774 &plusmn; 0.008</td></tr>
+              <tr><td>Omics</td><td>Visium breast cancer (n=3,798 spots)</td><td>VAE</td><td class="num">0.928</td><td>Validation split, 14-class Leiden clustering</td></tr>
+              <tr><td>Knowledge graphs</td><td>Hetionet ego-graphs (n=1,913)</td><td>GAT</td><td class="num">0.815</td><td>Validation split, center-node readout, 8-class</td></tr>
+              <tr><td>Histopathology</td><td>PathMNIST (n=107,180)</td><td>DenseNet-121</td><td class="num">0.993</td><td>Validation split, 9-class</td></tr>
+              <tr><td>Clinical text</td><td>MTSamples (n&asymp;3,500)</td><td>ClinicalBERT</td><td class="num">0.610</td><td>5-class specialty, random baseline 0.20</td></tr>
+              <tr><td>Single-cell imaging</td><td>BloodMNIST (n=17,092)</td><td>DenseNet-121</td><td class="num">0.969</td><td>Test split, 8-class</td></tr>
+              <tr><td>Drug discovery</td><td>ChEMBL bioactivity (n=4,685)</td><td>GCN</td><td class="num">0.975</td><td>Validation split, molecular graph classification</td></tr>
+              <tr class="fusion"><td>Multi-modal fusion</td><td>Visium (omics + vision + spatial)</td><td>Attention fusion</td><td class="num">0.930</td><td>Validation split; vs. 0.928 omics-only on same dataset</td></tr>
             </tbody>
           </table>
         </div>
 
-        <div class="results-callout">
-          <div class="label">Interpretation boundary</div>
-          <h4>Infrastructure and methodology evidence</h4>
-          <p>All reported metrics are benchmark-level measurements under controlled train/validation/test protocols. They should be interpreted as infrastructure and methodology evidence, not evidence of prospective clinical utility.</p>
-        </div>
-
-        <div class="results-support-grid">
-          <div class="results-visual-card">
-            <div class="results-visual-head">
-              <div class="label">Execution structure</div>
-              <h4>Artifact-driven pipeline DAG</h4>
-              <p>The pipeline diagram remains part of the Results section because it shows the sequence that produced the reported evidence and the closed-loop feedback path tied to the broader system.</p>
-            </div>
-
-            <div class="visual-shell">
-              <svg viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg" aria-label="Artifact-driven pipeline DAG">
-                <defs>
-                  <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#58a6ff"/></marker>
-                  <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#3fb950"/></marker>
-                  <style>
-                    .dag-box{fill:#161b22;stroke:#30363d;stroke-width:1.5;rx:8}
-                    .dag-text{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;fill:#e6edf3;text-anchor:middle;font-weight:600}
-                    .dag-arrow{stroke:#58a6ff;stroke-width:1.5;fill:none;marker-end:url(#arrow)}
-                    .dag-feedback{stroke:#3fb950;stroke-width:1.5;fill:none;marker-end:url(#arrow-green);stroke-dasharray:6,3}
-                  </style>
-                </defs>
-                <rect width="900" height="180" fill="#0d1117" rx="8"/>
-                <g transform="translate(35 0)">
-                  <rect class="dag-box" x="10" y="60" width="90" height="40"/>
-                  <text class="dag-text" x="55" y="84">Ingestion</text>
-                  <rect class="dag-box" x="130" y="60" width="80" height="40"/>
-                  <text class="dag-text" x="170" y="84">Training</text>
-                  <rect class="dag-box" x="240" y="60" width="90" height="40"/>
-                  <text class="dag-text" x="285" y="84">Evaluation</text>
-                  <rect class="dag-box" x="360" y="60" width="100" height="40"/>
-                  <text class="dag-text" x="410" y="84">Diagnostics</text>
-                  <rect class="dag-box" x="490" y="60" width="100" height="40"/>
-                  <text class="dag-text" x="540" y="84">Aggregation</text>
-                  <rect class="dag-box" x="620" y="60" width="90" height="40"/>
-                  <text class="dag-text" x="665" y="84">Reporting</text>
-                  <rect class="dag-box" x="740" y="60" width="80" height="40" style="stroke:#3fb950"/>
-                  <text class="dag-text" x="780" y="84" style="fill:#3fb950">Feedback</text>
-                  <line class="dag-arrow" x1="100" y1="80" x2="128" y2="80"/>
-                  <line class="dag-arrow" x1="210" y1="80" x2="238" y2="80"/>
-                  <line class="dag-arrow" x1="330" y1="80" x2="358" y2="80"/>
-                  <line class="dag-arrow" x1="460" y1="80" x2="488" y2="80"/>
-                  <line class="dag-arrow" x1="590" y1="80" x2="618" y2="80"/>
-                  <line class="dag-arrow" x1="710" y1="80" x2="738" y2="80"/>
-                  <path class="dag-feedback" d="M780,100 L780,145 Q780,160 765,160 L65,160 Q50,160 50,145 L50,102"/>
-                  <text x="415" y="155" style="font-family:monospace;font-size:9px;fill:#3fb950;text-anchor:middle">CLOSED-LOOP FEEDBACK</text>
-                </g>
-              </svg>
-            </div>
+        <div class="visual-card" style="margin-top:18px;">
+          <div class="visual-head">
+            <div class="label">Sorted view</div>
+            <h4>Per-modality accuracy, descending</h4>
+            <p>The same eight numbers as the table, ordered by accuracy. The bar widths are linear over [0, 1].</p>
           </div>
 
-          <div class="results-visual-card">
-            <div class="results-visual-head">
-              <div class="label">Delivery progress</div>
-              <h4>Phase completion timeline</h4>
-              <p>The timeline is preserved as a compact delivery-status surface showing completed, hardened, and still-partial stages across the program phases represented in the live page.</p>
-            </div>
-
-            <div class="visual-shell">
-              <div class="timeline">
-                <div class="timeline-item complete">
-                  <div class="timeline-label">A</div>
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-desc">Data Foundation<br/>247 tests</div>
-                </div>
-                <div class="timeline-item complete">
-                  <div class="timeline-label">A.6</div>
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-desc">Theoretical<br/>Hardening • 85</div>
-                </div>
-                <div class="timeline-item complete">
-                  <div class="timeline-label">B</div>
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-desc">Intelligence<br/>Layer • 70</div>
-                </div>
-                <div class="timeline-item complete">
-                  <div class="timeline-label">B.6</div>
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-desc">Theoretical<br/>Intelligence • 485</div>
-                </div>
-                <div class="timeline-item complete">
-                  <div class="timeline-label">C</div>
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-desc">Multi-Modal<br/>Expansion • 169</div>
-                </div>
-                <div class="timeline-item complete">
-                  <div class="timeline-label">C.6</div>
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-desc">Multi-Modal<br/>Hardening</div>
-                </div>
-                <div class="timeline-item active">
-                  <div class="timeline-label">D</div>
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-desc">Deployment<br/>&amp; Compliance (partial)</div>
-                </div>
-                <div class="timeline-item active">
-                  <div class="timeline-label">D.6</div>
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-desc">Deployment<br/>Hardening (partial)</div>
-                </div>
-                <div class="timeline-item active">
-                  <div class="timeline-label">E</div>
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-desc">Platform<br/>&amp; Scale</div>
-                </div>
+          <div class="visual-shell">
+            <div class="bar-chart">
+              <div class="bar-row">
+                <div class="bar-label">Histopathology &middot; DenseNet-121</div>
+                <div class="bar-track"><div class="bar-fill" style="width:99.3%;--bar-color:var(--accent-blue);"></div></div>
+                <div class="bar-value">0.993</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Drug discovery &middot; GCN</div>
+                <div class="bar-track"><div class="bar-fill" style="width:97.5%;--bar-color:var(--accent-blue);"></div></div>
+                <div class="bar-value">0.975</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Single-cell &middot; DenseNet-121</div>
+                <div class="bar-track"><div class="bar-fill" style="width:96.9%;--bar-color:var(--accent-blue);"></div></div>
+                <div class="bar-value">0.969</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Fusion &middot; attention (Visium)</div>
+                <div class="bar-track"><div class="bar-fill" style="width:93.0%;--bar-color:var(--accent-purple);"></div></div>
+                <div class="bar-value">0.930</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Omics &middot; VAE</div>
+                <div class="bar-track"><div class="bar-fill" style="width:92.8%;--bar-color:var(--accent-blue);"></div></div>
+                <div class="bar-value">0.928</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Knowledge graphs &middot; GAT</div>
+                <div class="bar-track"><div class="bar-fill" style="width:81.5%;--bar-color:var(--accent-cyan);"></div></div>
+                <div class="bar-value">0.815</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Clinical tabular &middot; XGBoost</div>
+                <div class="bar-track"><div class="bar-fill" style="width:77.7%;--bar-color:var(--accent-cyan);"></div></div>
+                <div class="bar-value">0.777</div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">Clinical text &middot; ClinicalBERT</div>
+                <div class="bar-track"><div class="bar-fill" style="width:61.0%;--bar-color:var(--accent-orange);"></div></div>
+                <div class="bar-value">0.610</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="results-detail-grid">
-          <div class="results-detail-card">
-            <div class="label">Scope</div>
-            <h4>What is being compared</h4>
-            <p>The section reports benchmark outputs across heterogeneous biomedical settings rather than a single shared task. The value is in visible modality coverage under one framework surface.</p>
-          </div>
-          <div class="results-detail-card">
-            <div class="label">Evidence posture</div>
-            <h4>Why the validation column matters</h4>
-            <p>Every row includes a validation context so the reported number remains tied to a concrete evaluation setup rather than appearing as an unqualified headline metric.</p>
-          </div>
-          <div class="results-detail-card">
-            <div class="label">Section role</div>
-            <h4>How Results supports the page</h4>
-            <p>This section converts the architectural and motivational claims into observable outputs: metrics, comparisons, workflow structure, and delivered implementation phases.</p>
-          </div>
+        <div class="section-note">
+          <div class="label">Reading these numbers</div>
+          <h4>Benchmark accuracy, not clinical performance</h4>
+          <p>Every row reports accuracy on a held-out split or cross-validation protocol of a public or synthetic dataset. These are infrastructure and methodology measurements that show the framework can train, evaluate, and report across heterogeneous biomedical modalities under one execution surface. They are not estimates of clinical utility. Clinical evaluation, where applicable, lives on the <a href="validation.html" style="color:var(--accent-blue);text-decoration:none;border-bottom:1px solid rgba(88,166,255,0.4);">Validation</a> page.</p>
+        </div>
+      </section>
+
+      <!-- Section B: Pipeline that produced the evidence -->
+      <section class="section-block section-divider" id="pipeline">
+        <div class="section-rule">
+          <h3>Pipeline that produced these numbers</h3>
+          <p>Every row in the table above is the output of the same staged DAG. Stage transitions persist artifacts; a feedback edge from reporting drives next-run selection.</p>
         </div>
 
+        <div class="visual-card">
+          <div class="visual-shell">
+            <svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" aria-label="Artifact-driven pipeline DAG">
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#58a6ff"/>
+                </marker>
+                <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#3fb950"/>
+                </marker>
+                <style>
+                  .dag-box{fill:#161b22;stroke:#30363d;stroke-width:1.5}
+                  .dag-text{font-family:'SFMono-Regular',Consolas,monospace;font-size:11px;fill:#e6edf3;text-anchor:middle;font-weight:600}
+                  .dag-sub{font-family:'SFMono-Regular',Consolas,monospace;font-size:9px;fill:#8b949e;text-anchor:middle}
+                  .dag-arrow{stroke:#58a6ff;stroke-width:1.5;fill:none;marker-end:url(#arrow)}
+                  .dag-feedback{stroke:#3fb950;stroke-width:1.4;fill:none;marker-end:url(#arrow-green);stroke-dasharray:6,4}
+                  .dag-note{font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;fill:#8b949e;letter-spacing:0.06em}
+                  .dag-feedback-label{font-family:'SFMono-Regular',Consolas,monospace;font-size:9.5px;fill:#3fb950;text-anchor:middle;letter-spacing:0.06em}
+                </style>
+              </defs>
+              <rect width="900" height="200" fill="#0d1117"/>
+              <text x="36" y="32" class="dag-note">EXECUTION SPINE &mdash; SNAKEMAKE DAG &middot; DVC ARTIFACTS &middot; MLFLOW TRACKING</text>
+
+              <!-- 7 stages, evenly spaced, each 100 wide, 18 gap -->
+              <g>
+                <rect class="dag-box" x="36"  y="60" width="100" height="48" rx="8"/>
+                <text class="dag-text" x="86"  y="82">Ingestion</text>
+                <text class="dag-sub"  x="86"  y="98">adapters</text>
+
+                <rect class="dag-box" x="154" y="60" width="100" height="48" rx="8"/>
+                <text class="dag-text" x="204" y="82">Training</text>
+                <text class="dag-sub"  x="204" y="98">models</text>
+
+                <rect class="dag-box" x="272" y="60" width="100" height="48" rx="8"/>
+                <text class="dag-text" x="322" y="82">Evaluation</text>
+                <text class="dag-sub"  x="322" y="98">metrics</text>
+
+                <rect class="dag-box" x="390" y="60" width="100" height="48" rx="8"/>
+                <text class="dag-text" x="440" y="82">Diagnostics</text>
+                <text class="dag-sub"  x="440" y="98">calibration</text>
+
+                <rect class="dag-box" x="508" y="60" width="100" height="48" rx="8"/>
+                <text class="dag-text" x="558" y="82">Aggregation</text>
+                <text class="dag-sub"  x="558" y="98">summaries</text>
+
+                <rect class="dag-box" x="626" y="60" width="100" height="48" rx="8"/>
+                <text class="dag-text" x="676" y="82">Reporting</text>
+                <text class="dag-sub"  x="676" y="98">bundles</text>
+
+                <rect class="dag-box" x="744" y="60" width="120" height="48" rx="8" style="stroke:#3fb950"/>
+                <text class="dag-text" x="804" y="82" style="fill:#3fb950">Feedback</text>
+                <text class="dag-sub"  x="804" y="98">next-run select</text>
+              </g>
+
+              <line class="dag-arrow" x1="136" y1="84" x2="152" y2="84"/>
+              <line class="dag-arrow" x1="254" y1="84" x2="270" y2="84"/>
+              <line class="dag-arrow" x1="372" y1="84" x2="388" y2="84"/>
+              <line class="dag-arrow" x1="490" y1="84" x2="506" y2="84"/>
+              <line class="dag-arrow" x1="608" y1="84" x2="624" y2="84"/>
+              <line class="dag-arrow" x1="726" y1="84" x2="742" y2="84"/>
+
+              <!-- closed-loop feedback under the spine -->
+              <path class="dag-feedback" d="M804,108 V148 Q804,162 790,162 L100,162 Q86,162 86,148 V110"/>
+              <text x="445" y="180" class="dag-feedback-label">CLOSED-LOOP FEEDBACK &middot; REPORTING DRIVES NEXT-RUN SELECTION</text>
+            </svg>
+          </div>
+
+          <div class="two-up">
+            <div class="callout-card">
+              <div class="label" style="color:var(--accent-blue);">Artifact handoffs</div>
+              <h4>Each stage persists state</h4>
+              <p>Ingestion writes a dataset state, training writes a model, evaluation writes metrics, reporting writes the bundle that produced the rows above. Stage transitions cross artifact boundaries rather than in-process state.</p>
+            </div>
+            <div class="callout-card">
+              <div class="label" style="color:var(--accent-green);">Feedback edge</div>
+              <h4>Reporting drives next-run selection</h4>
+              <p>The feedback path links the reporting bundle back to next-run selection through declared interfaces. It influences which experiments run next; it does not bypass the staged sequence or the artifact record.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section C: Delivery state -->
+      <section class="section-block section-divider" id="delivery">
+        <div class="section-rule">
+          <h3>Delivery state of the program</h3>
+          <p>Phase markers for the build that produced the table above. Status is reported as completed or partial; nothing here implies clinical or production readiness.</p>
+        </div>
+
+        <div class="visual-card">
+          <div class="visual-shell">
+            <div class="timeline" role="list" aria-label="Program phase status">
+              <div class="timeline-item complete" role="listitem">
+                <div class="timeline-label">A</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-desc">Data foundation</div>
+                <div class="timeline-status">Complete</div>
+              </div>
+              <div class="timeline-item complete" role="listitem">
+                <div class="timeline-label">A.6</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-desc">Theoretical hardening</div>
+                <div class="timeline-status">Complete</div>
+              </div>
+              <div class="timeline-item complete" role="listitem">
+                <div class="timeline-label">B</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-desc">Intelligence layer</div>
+                <div class="timeline-status">Complete</div>
+              </div>
+              <div class="timeline-item complete" role="listitem">
+                <div class="timeline-label">B.6</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-desc">Theoretical intelligence</div>
+                <div class="timeline-status">Complete</div>
+              </div>
+              <div class="timeline-item complete" role="listitem">
+                <div class="timeline-label">C</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-desc">Multi-modal expansion</div>
+                <div class="timeline-status">Complete</div>
+              </div>
+              <div class="timeline-item complete" role="listitem">
+                <div class="timeline-label">C.6</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-desc">Multi-modal hardening</div>
+                <div class="timeline-status">Complete</div>
+              </div>
+              <div class="timeline-item partial" role="listitem">
+                <div class="timeline-label">D</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-desc">Deployment &amp; compliance</div>
+                <div class="timeline-status">Partial</div>
+              </div>
+              <div class="timeline-item partial" role="listitem">
+                <div class="timeline-label">D.6</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-desc">Deployment hardening</div>
+                <div class="timeline-status">Partial</div>
+              </div>
+              <div class="timeline-item partial" role="listitem">
+                <div class="timeline-label">E</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-desc">Platform &amp; scale</div>
+                <div class="timeline-status">Partial</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-note" style="margin-top:14px;">
+            <div class="label">Status taxonomy</div>
+            <p><span style="color:var(--accent-blue);">Complete</span> means the phase has shipped artifacts that the table above depends on. <span style="color:var(--accent-green);">Partial</span> means in-progress work toward declared deliverables; deployment, compliance posture, and platform scaling are not finished and are not claimed as production-ready.</p>
+          </div>
+        </div>
       </section>
     </article>
 
-    <footer aria-label="Site footer" style="display:grid;gap:18px;margin-top:36px;padding-top:20px;border-top:1px solid rgba(48,54,61,0.85);">
-      <div style="display:grid;grid-template-columns:minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);gap:18px 24px;align-items:start;">
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="site-footer-grid">
         <section style="display:grid;gap:6px;align-content:start;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">SNPTX&trade;</div>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Connecting Data to Discovery</p>
+          <div class="label">SNPTX&trade;</div>
+          <p>Connecting Data to Discovery</p>
         </section>
         <section style="display:grid;gap:8px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Site Map</div>
-          <div style="display:grid;grid-template-columns:repeat(3, minmax(96px, 1fr));gap:5px 16px;">
-            <a href="../index.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Home</a>
-            <a href="architecture.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Architecture</a>
-            <a href="motivation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Motivation</a>
-            <a href="results.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Results</a>
-            <a href="validation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Validation</a>
-            <a href="evidence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Evidence</a>
-            <a href="intelligence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Intelligence</a>
-            <a href="autonomous.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Autonomous</a>
-            <a href="methodology.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Methodology</a>
-            <a href="fusion.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Fusion</a>
-            <a href="pilots.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Pilots</a>
-            <a href="positioning.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Positioning</a>
-            <a href="limitations.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Limitations</a>
-            <a href="references.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">References</a>
+          <div class="label">Site Map</div>
+          <div class="sitemap">
+            <a href="../index.html">Home</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="motivation.html">Motivation</a>
+            <a href="results.html">Results</a>
+            <a href="validation.html">Validation</a>
+            <a href="evidence.html">Evidence</a>
+            <a href="intelligence.html">Intelligence</a>
+            <a href="autonomous.html">Autonomous</a>
+            <a href="methodology.html">Methodology</a>
+            <a href="fusion.html">Fusion</a>
+            <a href="pilots.html">Pilots</a>
+            <a href="positioning.html">Positioning</a>
+            <a href="limitations.html">Limitations</a>
+            <a href="references.html">References</a>
           </div>
         </section>
         <section style="display:grid;gap:6px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Contact</div>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;max-width:240px;">Research, collaboration, and review inquiries.</p>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Daniel R. Russell</p>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;">MITx (SDS), Harvard ALM (DS) '27</p>
-          <p style="color:#c9d1d9;font-size:13px;line-height:1.6;white-space:normal;"><a href="mailto:drr508@g.harvard.edu" style="color:#c9d1d9;text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" style="color:#c9d1d9;text-decoration:none;">dan@snptx.ai</a></p>
+          <div class="label">Contact</div>
+          <p>Research, collaboration, and review inquiries.</p>
+          <p class="muted">Daniel R. Russell</p>
+          <p class="muted">MITx (SDS), Harvard ALM (DS) '27</p>
+          <p class="muted" style="white-space:normal;"><a href="mailto:drr508@g.harvard.edu" class="muted" style="text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" class="muted" style="text-decoration:none;">dan@snptx.ai</a></p>
         </section>
       </div>
-      <div style="padding-top:12px;border-top:1px solid rgba(48,54,61,0.72);color:#8b949e;font-size:11px;text-align:right;">SNPTX&trade; Academic</div>
+      <div class="site-footer-bottom">SNPTX&trade; Academic 2026</div>
     </footer>
   </div>
 </body>

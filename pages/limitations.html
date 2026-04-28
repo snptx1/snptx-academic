@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SNPTX Limitations and Future Directions</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="SNPTX limitations: what is demonstrated, what remains partial, what is explicitly out of scope, and the near-term technical priorities that follow from those gaps.">
+<title>SNPTX - Limitations</title>
 <style>
   :root {
+    color-scheme: dark;
     --border: #30363d;
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
@@ -13,19 +17,34 @@
     --accent-green: #3fb950;
     --accent-orange: #d29922;
     --accent-red: #ff7b72;
+    --accent-purple: #bc8cff;
     --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
     --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: radial-gradient(circle at top left, rgba(255,123,114,0.07), transparent 26%), radial-gradient(circle at top right, rgba(88,166,255,0.07), transparent 24%), linear-gradient(180deg, #0d1117 0%, #0f1620 100%); color: var(--text-primary); font-family: var(--font-stack); line-height: 1.6; padding: 40px 24px 80px; }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(210,153,34,0.07), transparent 28%),
+      radial-gradient(circle at top right, rgba(88,166,255,0.06), transparent 24%),
+      linear-gradient(180deg, #0d1117 0%, #0f1620 100%);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+
   .page { max-width: 1280px; margin: 0 auto; }
+
   .top-nav {
     position: sticky;
     top: 0;
     z-index: 1000;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 6px 14px;
     margin-bottom: 18px;
     padding: 12px 0 16px;
@@ -49,58 +68,305 @@
     color: var(--text-primary);
     border-bottom-color: rgba(88,166,255,0.75);
   }
-  .page-header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-  .page-header h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
-  .page-header p { max-width: 840px; color: var(--text-secondary); font-size: 15px; }
-  .draft { background: rgba(13,17,23,0.72); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.28); }
-  .draft-meta { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); background: rgba(22,27,34,0.88); }
+
+  .page-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+  .page-header p {
+    max-width: 840px;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .draft {
+    background: rgba(13,17,23,0.72);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+  }
+  .draft-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(22,27,34,0.88);
+  }
   .draft-meta h2 { font-size: 18px; font-weight: 700; }
   .draft-meta p { color: var(--text-secondary); font-size: 13px; max-width: 760px; }
-  .badge { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-blue); background: rgba(88,166,255,0.10); border: 1px solid rgba(88,166,255,0.28); border-radius: 999px; padding: 5px 10px; white-space: nowrap; }
-  .stage { position: relative; padding: 38px 32px 40px; background: radial-gradient(circle at 12% 16%, rgba(255,123,114,0.14), transparent 30%), radial-gradient(circle at 84% 16%, rgba(88,166,255,0.12), transparent 24%), linear-gradient(145deg, rgba(13,17,23,1) 0%, rgba(15,22,32,1) 100%); overflow: hidden; }
-  .stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent 0%, rgba(255,123,114,0.04) 100%); }
-  .eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-orange); }
-  .eyebrow::before { content: ""; width: 28px; height: 1px; background: rgba(210,153,34,0.75); }
-  .header { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr); gap: 24px; align-items: start; margin-bottom: 22px; }
-  .header h3 { font-size: 48px; line-height: 1.03; letter-spacing: -0.05em; max-width: 860px; margin-bottom: 16px; }
-  .lede { max-width: 860px; color: var(--text-secondary); font-size: 17px; line-height: 1.75; }
-  .summary, .card, .callout, .note, .detail-card { background: rgba(22,27,34,0.82); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 18px 40px rgba(0,0,0,0.18); padding: 16px; }
-  .summary, .card, .callout, .note { position: relative; z-index: 1; }
-  .label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-  .summary .label { color: var(--accent-orange); }
-  .table-head .label, .note .label { color: var(--accent-blue); }
-  .callout .label { color: var(--accent-blue); }
-  .summary h4, .table-head h4, .callout h4, .detail-card h4 { font-size: 15px; margin-bottom: 10px; }
-  .summary ul { list-style: none; display: grid; gap: 10px; }
-  .summary li { position: relative; padding-left: 14px; color: var(--text-secondary); font-size: 13px; line-height: 1.55; }
-  .summary li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-orange); }
-  .table-card, .callout, .note { margin-bottom: 18px; }
-  .table-head { display: grid; gap: 6px; margin-bottom: 14px; }
-  .table-head p, .callout p, .detail-card p, .note p { color: var(--text-secondary); font-size: 13px; line-height: 1.65; }
-  .table { width: 100%; border-collapse: collapse; border: 1px solid rgba(48,54,61,0.85); border-radius: 12px; overflow: hidden; background: rgba(13,17,23,0.56); }
-  .table th, .table td { text-align: left; padding: 13px 14px; vertical-align: top; font-size: 13px; line-height: 1.55; }
-  .table th { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); background: rgba(13,17,23,0.9); border-bottom: 1px solid rgba(48,54,61,0.85); }
-  .table td { color: var(--text-secondary); border-top: 1px solid rgba(48,54,61,0.55); }
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-orange);
+    background: rgba(210,153,34,0.10);
+    border: 1px solid rgba(210,153,34,0.32);
+    border-radius: 999px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+
+  .section-block { padding: 28px; }
+  .section-divider { border-top: 1px solid rgba(48,54,61,0.78); }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .section-head h3 {
+    font-size: 15px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+  .section-head p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    max-width: 520px;
+  }
+
+  .lede-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    gap: 18px;
+    align-items: start;
+    margin-bottom: 22px;
+  }
+  .lede-row h3 {
+    font-size: 38px;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    max-width: 760px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  .lead {
+    max-width: 760px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    color: var(--accent-orange);
+  }
+
+  .summary-card,
+  .callout-card,
+  .boundary-card,
+  .priority-card,
+  .section-note {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+  .summary-card,
+  .callout-card,
+  .boundary-card,
+  .priority-card { padding: 18px; }
+
+  .summary-card h4,
+  .callout-card h4,
+  .boundary-card h4,
+  .priority-card h4 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .summary-card p,
+  .callout-card p,
+  .boundary-card p,
+  .priority-card p,
+  .section-note p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .summary-list { list-style: none; display: grid; gap: 10px; }
+  .summary-list li {
+    position: relative;
+    padding-left: 14px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .summary-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-orange);
+  }
+
+  /* Tables --------------------------------------------------------- */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid rgba(48,54,61,0.85);
+    border-radius: 12px;
+    background: rgba(13,17,23,0.56);
+  }
+  .table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+  }
+  .table th,
+  .table td {
+    text-align: left;
+    padding: 13px 16px;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .table th {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: rgba(13,17,23,0.9);
+    border-bottom: 1px solid rgba(48,54,61,0.85);
+    position: sticky;
+    top: 0;
+  }
+  .table td { color: var(--text-secondary); border-top: 1px solid rgba(48,54,61,0.5); }
   .table tbody tr:first-child td { border-top: none; }
-  .detail-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-  .detail-card:nth-child(1) .label { color: var(--accent-blue); }
-  .detail-card:nth-child(2) .label { color: var(--accent-orange); }
-  .detail-card:nth-child(3) .label { color: var(--accent-green); }
-  .callout { background: rgba(22,27,34,0.62); border-color: rgba(88,166,255,0.18); }
-  .note { background: rgba(22,27,34,0.62); border-color: rgba(88,166,255,0.18); margin-bottom: 0; }
-  @media (max-width: 1100px) { .header, .detail-grid { grid-template-columns: 1fr; } }
+
+  .table .area { color: var(--text-primary); white-space: nowrap; }
+  .table .impl { color: #c9d1d9; }
+  .table .partial { color: var(--text-secondary); }
+
+  .tag {
+    display: inline-block;
+    margin-right: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    line-height: 1.4;
+  }
+  .tag-data    { color: var(--accent-orange); }
+  .tag-scope   { color: var(--accent-blue); }
+  .tag-unval   { color: var(--accent-purple); }
+
+  .tag-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 18px;
+    margin: 0 auto 14px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-family: var(--font-mono);
+    text-align: center;
+  }
+  .tag-legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* Out-of-scope grid --------------------------------------------- */
+  .scope-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .boundary-card .label { color: var(--accent-orange); }
+
+  /* Priorities ---------------------------------------------------- */
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .priority-card .label { color: var(--accent-blue); }
+  .priority-card .approach {
+    margin-top: 6px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .section-note {
+    margin-top: 18px;
+    padding: 16px 18px;
+    background: rgba(13,17,23,0.5);
+  }
+  .section-note .label { color: var(--accent-blue); margin-bottom: 6px; }
+
+  /* Footer (matches architecture standard) ------------------------ */
+  .site-footer {
+    display: grid;
+    gap: 18px;
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(48,54,61,0.85);
+  }
+  .site-footer-grid {
+    display: grid;
+    grid-template-columns: minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);
+    gap: 18px 24px;
+    align-items: start;
+  }
+  .site-footer .label { color: #58a6ff; font-size: 10px; }
+  .site-footer p { color: #c9d1d9; font-size: 12px; line-height: 1.5; }
+  .site-footer p.muted, .site-footer a.muted { color: #8b949e; }
+  .site-footer .sitemap {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(96px, 1fr));
+    gap: 5px 16px;
+  }
+  .site-footer .sitemap a { color: #e6edf3; text-decoration: none; width: fit-content; }
+  .site-footer-bottom {
+    padding-top: 12px;
+    border-top: 1px solid rgba(48,54,61,0.72);
+    color: #8b949e;
+    font-size: 11px;
+    text-align: right;
+  }
+
+  @media (max-width: 1100px) {
+    .lede-row,
+    .scope-grid,
+    .priority-grid,
+    .site-footer-grid {
+      grid-template-columns: 1fr;
+    }
+    .lede-row h3 { font-size: 32px; }
+  }
+
   @media (max-width: 760px) {
     body { padding: 24px 14px 40px; }
     .draft-meta { display: block; }
-    .draft-meta .badge { display: inline-block; margin-bottom: 12px; }
-    .stage { padding: 28px 20px 32px; }
-    .header h3 { font-size: 34px; }
-    .lede { font-size: 16px; }
-    .table, .table thead, .table tbody, .table tr, .table th, .table td { display: block; width: 100%; }
-    .table thead { display: none; }
-    .table tr { border-top: 1px solid rgba(48,54,61,0.55); }
-    .table tbody tr:first-child { border-top: none; }
-    .table td { border-top: none; padding: 10px 12px; }
+    .draft-meta .badge { display: inline-block; margin-top: 12px; }
+    .section-block { padding: 22px 18px 26px; }
+    .lede-row h3 { font-size: 28px; }
   }
 </style>
 </head>
@@ -123,154 +389,275 @@
       <a href="references.html">References</a>
     </nav>
 
-    <header class="page-header">
-      <h1>SNPTX Limitations and Future Directions</h1>
-      <p>Known limits, evidence boundaries, and near-term technical priorities for the current platform.</p>
-    </header>
-
     <article class="draft">
       <div class="draft-meta">
         <div>
-          <h2>Limitations</h2>
-          <p>Where the current evidence stops, what remains partial, and which technical extensions matter next.</p>
+          <h2>Evidence boundaries and near-term priorities</h2>
+          <p>This page bounds the rest of the document. Demonstrated results live on Results and Evidence; this page records where those results stop.</p>
         </div>
-        <div class="badge">Known Limits</div>
+        <div class="badge">Bounded scope</div>
       </div>
 
-      <section class="stage" id="limitations">
-        <div class="header">
+      <!-- Section 1: Evidence boundary snapshot -->
+      <section class="section-block" id="boundary">
+        <div class="lede-row">
           <div>
-            <div class="eyebrow">Evidence boundaries, failure modes, and near-term priorities</div>
-            <h3>Limitations and Future Directions</h3>
-            <p class="lede">Explicit statement of current evidence boundaries, failure modes, and near-term research priorities.</p>
+            <div class="label">Evidence posture</div>
+            <h3>What is implemented, what is partial.</h3>
+            <p class="lead">The first table is the page in compressed form: each dimension states what the current system actually does and where the platform claim stops. Subsequent sections expand the partial column into specific limitations, declared out-of-scope items, and the technical work that addresses them.</p>
           </div>
-          <aside class="summary">
-            <div class="label">Boundary summary</div>
-            <h4>What this section establishes</h4>
-            <ul>
-              <li>The document names current evidence limits directly instead of hiding them behind broader platform claims.</li>
-              <li>Known weaknesses are tied to specific empirical constraints such as dataset size, modality coverage, and deployment scope.</li>
-              <li>Future directions are concrete extensions of the current system rather than generic research aspirations.</li>
+          <aside class="summary-card">
+            <div class="label">How to read this page</div>
+            <ul class="summary-list">
+              <li>Section&nbsp;1 separates implemented behavior from partial or roadmap behavior at the platform level.</li>
+              <li>Section&nbsp;2 enumerates known limitations, tagged by whether they are data-bound, scope-bound, or unvalidated at scale.</li>
+              <li>Section&nbsp;3 records claims that are explicitly outside current scope.</li>
+              <li>Section&nbsp;4 lists near-term technical priorities tied to the gaps above.</li>
             </ul>
           </aside>
         </div>
 
-        <div class="card table-card">
-          <div class="table-head">
-            <div class="label">Evidence posture</div>
-            <h4>Evidence boundary snapshot</h4>
-            <p>The live boundary table is preserved here as the clearest summary of implemented versus partial platform claims.</p>
-          </div>
-          <table class="table" aria-label="Evidence boundary snapshot">
-            <thead><tr><th>Dimension</th><th>Implemented</th><th>Partial / Roadmap Boundary</th></tr></thead>
+        <div class="table-wrap" role="region" aria-label="Evidence boundary snapshot" tabindex="0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Dimension</th>
+                <th scope="col">Implemented</th>
+                <th scope="col">Partial / roadmap boundary</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Determinism</td><td>Seed controls and deterministic algorithm flags configured</td><td>No universal cross-hardware byte-identity claim</td></tr>
-              <tr><td>Versioning</td><td>MLflow tracking and report-level provenance available</td><td>DVC integration with primary pipeline is partial</td></tr>
-              <tr><td>Feedback</td><td>Autonomous experimentation loop operational</td><td>Framework-wide feedback artifact contract pending</td></tr>
-              <tr><td>Deployment</td><td>Pilot-ready research workflows demonstrated</td><td>No claim of clinical or commercial production deployment</td></tr>
+              <tr>
+                <td class="area">Determinism</td>
+                <td class="impl">Seed controls and deterministic algorithm flags configured across pipelines.</td>
+                <td class="partial">No universal cross-hardware byte-identity claim; determinism is asserted within a fixed environment.</td>
+              </tr>
+              <tr>
+                <td class="area">Versioning</td>
+                <td class="impl">MLflow tracking and report-level provenance available for every recorded run.</td>
+                <td class="partial">DVC integration with the primary pipeline is partial; not all artifacts are content-addressed end-to-end.</td>
+              </tr>
+              <tr>
+                <td class="area">Feedback</td>
+                <td class="impl">Autonomous experimentation loop operational with surrogate, acquisition, and stopping rules.</td>
+                <td class="partial">Framework-wide feedback artifact contract is pending; today the loop is wired per-campaign rather than as a shared interface.</td>
+              </tr>
+              <tr>
+                <td class="area">Deployment</td>
+                <td class="impl">Pilot-ready research workflow with evaluation package, audit trail, and customer-hosted serving path.</td>
+                <td class="partial">No claim of clinical or commercial production deployment; no IRB-governed prospective use to date.</td>
+              </tr>
             </tbody>
           </table>
         </div>
 
-        <div class="card table-card">
-          <div class="table-head">
-            <div class="label">Known limits</div>
-            <h4>Known limitations</h4>
-            <p>The live limitations table is preserved here so weaknesses remain explicit and auditable.</p>
-          </div>
-          <table class="table" aria-label="Known limitations">
-            <thead><tr><th>Area</th><th>Limitation</th><th>Implication</th></tr></thead>
+        <div class="section-note">
+          <div class="label">Interpretation</div>
+          <p>The implemented column reflects behavior present in the current pipelines; the partial column states where that behavior stops. Items in the partial column are not failures &mdash; they are declared boundaries that prevent over-reading the platform claim.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Known limitations -->
+      <section class="section-block section-divider" id="known">
+        <div class="section-head">
+          <h3>Known limitations</h3>
+          <p>Tagged by the constraint that produces the limit: data availability, scope of validation, or unvalidated scale.</p>
+        </div>
+
+        <div class="tag-legend" aria-label="Limitation tag key">
+          <span><span class="tag tag-data">Data-bound</span> training-data availability</span>
+          <span><span class="tag tag-scope">Scope-bound</span> validation scope</span>
+          <span><span class="tag tag-unval">Unvalidated</span> behavior at larger scale</span>
+        </div>
+
+        <div class="table-wrap" role="region" aria-label="Known limitations" tabindex="0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Area</th>
+                <th scope="col">Limitation</th>
+                <th scope="col">Implication</th>
+              </tr>
+            </thead>
             <tbody>
-              <tr><td>Clinical text (61.0%)</td><td>ClinicalBERT on 5-class specialty classification with ~3,500 training samples</td><td>Accuracy plateaus at 61% due to limited data; domain-specialized fine-tuning constrained by dataset size</td></tr>
-              <tr><td>Fusion (93.0%)</td><td>Marginal gain over best unimodal (92.8%); fusion advantage is 0.2 pp</td><td>Cross-modal benefit is modest when omics alone captures most signal; higher-dimensional morphological features may improve fusion lift</td></tr>
-              <tr><td>Fusion scope</td><td>Three-modality fusion validated; 4+ modality combinations untested</td><td>Attention-based fusion scales theoretically, but empirical validation beyond 3 modalities is pending</td></tr>
-              <tr><td>Dataset scale</td><td>Largest dataset is PathMNIST (107K); no million-scale benchmarks</td><td>Scaling behavior at biobank scale (UK Biobank, All of Us) is unvalidated</td></tr>
-              <tr><td>Single-institution</td><td>All experiments on one EC2 instance; no cross-site deployment tested</td><td>Reproducibility guarantees are validated within-environment; cross-institution pilot pending</td></tr>
-              <tr><td>Intelligence layer</td><td>10 of 15 modules are theoretical (specified but not trained)</td><td>Core 5 modules validated; theoretical modules are grounded in literature but lack empirical validation</td></tr>
+              <tr>
+                <td class="area">
+                  <span class="tag tag-data">Data-bound</span><br>
+                  Clinical text<br>
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">61.0% accuracy</span>
+                </td>
+                <td class="impl">ClinicalBERT fine-tuned for 5-class specialty classification on ~3,500 training samples.</td>
+                <td class="partial">Accuracy plateaus at 61% as a function of dataset size; further gains require larger labeled clinical corpora rather than architectural change.</td>
+              </tr>
+              <tr>
+                <td class="area">
+                  <span class="tag tag-scope">Scope-bound</span><br>
+                  Fusion lift<br>
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">+0.2 pp over best unimodal</span>
+                </td>
+                <td class="impl">Three-modality fusion reaches 93.0% versus 92.8% for the best unimodal model (omics).</td>
+                <td class="partial">Cross-modal benefit is modest in this regime because omics alone captures most of the available signal; higher-dimensional morphological features are the most likely route to a larger lift.</td>
+              </tr>
+              <tr>
+                <td class="area">
+                  <span class="tag tag-scope">Scope-bound</span><br>
+                  Fusion arity
+                </td>
+                <td class="impl">Three-modality fusion (omics + imaging + text) is empirically validated.</td>
+                <td class="partial">Four-or-more modality combinations are architecturally supported but untested; attention-based fusion scales theoretically, empirical validation is pending.</td>
+              </tr>
+              <tr>
+                <td class="area">
+                  <span class="tag tag-unval">Unvalidated</span><br>
+                  Dataset scale
+                </td>
+                <td class="impl">Largest evaluated dataset is PathMNIST (107K samples).</td>
+                <td class="partial">Scaling behavior at biobank scale (UK Biobank, <em>All of Us</em>) is not validated; throughput and statistical behavior at &gt;10<sup>6</sup> samples are inferred, not measured.</td>
+              </tr>
+              <tr>
+                <td class="area">
+                  <span class="tag tag-scope">Scope-bound</span><br>
+                  Single institution
+                </td>
+                <td class="impl">All experiments executed on one EC2 environment.</td>
+                <td class="partial">Reproducibility is asserted within-environment; cross-institution and cross-hardware reproducibility require an external pilot to verify.</td>
+              </tr>
+              <tr>
+                <td class="area">
+                  <span class="tag tag-unval">Unvalidated</span><br>
+                  Intelligence layer<br>
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">5/15 modules trained</span>
+                </td>
+                <td class="impl">Five intelligence-layer modules are trained and reported; ten are specified but not trained.</td>
+                <td class="partial">The unspecified ten are grounded in literature interfaces but lack empirical validation in this codebase. Treat them as design surface, not as evidence.</td>
+              </tr>
             </tbody>
           </table>
         </div>
+      </section>
 
-        <div class="card table-card">
-          <div class="table-head">
-            <div class="label">Forward path</div>
-            <h4>Future directions</h4>
-            <p>The live future-directions table is preserved here as the near-term extension roadmap.</p>
-          </div>
-          <table class="table" aria-label="Future directions">
-            <thead><tr><th>Direction</th><th>Approach</th></tr></thead>
-            <tbody>
-              <tr><td>Whole-slide imaging</td><td>Multiple-instance learning with attention pooling over tile embeddings; integration with foundation models (UNI, CONCH)</td></tr>
-              <tr><td>Foundation model integration</td><td>Adapter-based fine-tuning of domain-pretrained models (GatorTron, BioGPT, ESM-2) through the extension system</td></tr>
-              <tr><td>Large-scale graph reasoning</td><td>Scaling GCN pipeline to knowledge graphs with 1M+ nodes; exploring message-passing at biobank scale</td></tr>
-              <tr><td>Multi-task and transfer learning</td><td>Shared representations across related tasks using the embedding registry; continual learning across campaigns</td></tr>
-              <tr><td>Prospective validation</td><td>Cross-institutional deployment with artifact hash comparison; IRB-governed clinical cohort pilots</td></tr>
-              <tr><td>Causal inference integration</td><td>Extending the intelligence layer with treatment effect estimation and counterfactual reasoning</td></tr>
-            </tbody>
-          </table>
+      <!-- Section 3: Out of scope -->
+      <section class="section-block section-divider" id="out-of-scope">
+        <div class="section-head">
+          <h3>Explicitly out of scope</h3>
+          <p>Claims this document does not make. They are listed so the rest of the site can be read without ambiguity about what SNPTX is for today.</p>
         </div>
 
-        <div class="callout">
-          <div class="label">Design philosophy</div>
-          <h4>How the document handles strong and weak results</h4>
-          <p>Where results are strong (imaging at 99.3%, drug discovery at 97.5%, single-cell at 96.9%), we report them. Where results are constrained by data (clinical text at 61.0%), we report those equally and explain the boundary. The value proposition is disciplined infrastructure: transparent experiments, auditable comparisons, and reproducibility controls within validated scope.</p>
+        <div class="scope-grid">
+          <div class="boundary-card">
+            <div class="label">Clinical use</div>
+            <h4>No diagnostic or treatment claim</h4>
+            <p>No model on this site is presented as diagnostic, prognostic, or treatment-guiding. Outputs are research artifacts; clinical use would require regulatory pathway, prospective evidence, and clinical workflow integration that are not in scope here.</p>
+          </div>
+          <div class="boundary-card">
+            <div class="label">Production deployment</div>
+            <h4>No commercial production claim</h4>
+            <p>The deployment surface is pilot-scoped: customer-hosted, audit-trailed, and bounded to a defined evaluation package. SNPTX does not claim continuous production operation, on-call SLAs, or revenue-bearing service.</p>
+          </div>
+          <div class="boundary-card">
+            <div class="label">Cross-site reproducibility</div>
+            <h4>No multi-institution guarantee</h4>
+            <p>Reproducibility guarantees are validated within a single EC2 environment. Cross-institution byte-identity is not asserted; cross-institution behavioral reproducibility requires a pilot run to verify.</p>
+          </div>
+          <div class="boundary-card">
+            <div class="label">Scale</div>
+            <h4>No biobank-scale benchmark</h4>
+            <p>No experiment in this document is run at &gt;10<sup>6</sup> samples. Statements about behavior at biobank scale are extrapolations from the validated regime, not measurements.</p>
+          </div>
+          <div class="boundary-card">
+            <div class="label">Autonomy</div>
+            <h4>No unsupervised decisioning</h4>
+            <p>The autonomous experimentation loop selects the next experiment under declared stopping rules and operator review. It does not autonomously act on clinical, financial, or external decisions.</p>
+          </div>
+          <div class="boundary-card">
+            <div class="label">Causal inference</div>
+            <h4>No causal claim from current modules</h4>
+            <p>Reported metrics are predictive. Treatment-effect estimation and counterfactual reasoning are listed as a near-term priority and are not present in the current evidence.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Near-term priorities -->
+      <section class="section-block section-divider" id="priorities">
+        <div class="section-head">
+          <h3>Near-term technical priorities</h3>
+          <p>Each priority extends from a documented gap above. Listed as work to be done, not as work that has been done.</p>
         </div>
 
-        <div class="detail-grid">
-          <div class="detail-card">
-            <div class="label">Honesty of scope</div>
-            <h4>Why this section matters</h4>
-            <p>The limitations section protects the rest of the document from overclaiming by explicitly documenting where evidence is thin, partial, or still theoretical.</p>
+        <div class="priority-grid">
+          <div class="priority-card">
+            <div class="label">Imaging</div>
+            <h4>Whole-slide imaging</h4>
+            <p class="approach">Multiple-instance learning with attention pooling over tile embeddings; integration with domain foundation models (UNI, CONCH) through the extension boundary.</p>
           </div>
-          <div class="detail-card">
-            <div class="label">Practical implication</div>
-            <h4>What the reader should infer</h4>
-            <p>SNPTX is strongest as a pilot-ready research framework with clear infrastructure discipline, not as a proven production or clinical deployment platform.</p>
+          <div class="priority-card">
+            <div class="label">Foundation models</div>
+            <h4>Domain-pretrained adapter integration</h4>
+            <p class="approach">Adapter-based fine-tuning of GatorTron, BioGPT, and ESM-2 attached through the mediated extension runner rather than embedded in the core DAG.</p>
           </div>
-          <div class="detail-card">
-            <div class="label">Continuation logic</div>
-            <h4>How future work is framed</h4>
-            <p>The future directions list extends directly from present gaps, which makes the roadmap look like the next technical layer of work rather than a detached wishlist.</p>
+          <div class="priority-card">
+            <div class="label">Graph scale</div>
+            <h4>Large-scale graph reasoning</h4>
+            <p class="approach">Scaling the GCN pipeline to knowledge graphs with &gt;10<sup>6</sup> nodes; characterizing message-passing throughput and memory at biobank scale before claiming behavior there.</p>
+          </div>
+          <div class="priority-card">
+            <div class="label">Transfer</div>
+            <h4>Multi-task and continual learning</h4>
+            <p class="approach">Shared representations across related tasks via the embedding registry; continual updates across campaigns without retraining from scratch.</p>
+          </div>
+          <div class="priority-card">
+            <div class="label">Prospective</div>
+            <h4>Cross-institutional pilot</h4>
+            <p class="approach">External deployment with artifact-hash comparison across sites and an IRB-governed cohort pilot to convert reproducibility from within-environment to cross-institution.</p>
+          </div>
+          <div class="priority-card">
+            <div class="label">Causal</div>
+            <h4>Treatment-effect estimation</h4>
+            <p class="approach">Extending the intelligence layer with treatment-effect estimators and counterfactual reasoning so causal questions sit on the same execution spine as predictive ones.</p>
           </div>
         </div>
 
+        <div class="section-note">
+          <div class="label">Continuation logic</div>
+          <p>The priorities above are extensions of present gaps rather than aspirational research themes. Each one names the gap it addresses; progress against any item should be reflected back into the boundary table on this page rather than added quietly elsewhere.</p>
+        </div>
       </section>
     </article>
 
-    <footer aria-label="Site footer" style="display:grid;gap:18px;margin-top:36px;padding-top:20px;border-top:1px solid rgba(48,54,61,0.85);">
-      <div style="display:grid;grid-template-columns:minmax(140px, 0.65fr) minmax(360px, 1.5fr) minmax(250px, 1fr);gap:18px 24px;align-items:start;">
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="site-footer-grid">
         <section style="display:grid;gap:6px;align-content:start;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">SNPTX&trade;</div>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Connecting Data to Discovery</p>
+          <div class="label">SNPTX&trade;</div>
+          <p>Connecting Data to Discovery</p>
         </section>
         <section style="display:grid;gap:8px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Site Map</div>
-          <div style="display:grid;grid-template-columns:repeat(3, minmax(96px, 1fr));gap:5px 16px;">
-            <a href="../index.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Home</a>
-            <a href="architecture.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Architecture</a>
-            <a href="motivation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Motivation</a>
-            <a href="results.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Results</a>
-            <a href="validation.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Validation</a>
-            <a href="evidence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Evidence</a>
-            <a href="intelligence.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Intelligence</a>
-            <a href="autonomous.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Autonomous</a>
-            <a href="methodology.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Methodology</a>
-            <a href="fusion.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Fusion</a>
-            <a href="pilots.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Pilots</a>
-            <a href="positioning.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Positioning</a>
-            <a href="limitations.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">Limitations</a>
-            <a href="references.html" style="color:#e6edf3;text-decoration:none;width:fit-content;">References</a>
+          <div class="label">Site Map</div>
+          <div class="sitemap">
+            <a href="../index.html">Home</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="motivation.html">Motivation</a>
+            <a href="results.html">Results</a>
+            <a href="validation.html">Validation</a>
+            <a href="evidence.html">Evidence</a>
+            <a href="intelligence.html">Intelligence</a>
+            <a href="autonomous.html">Autonomous</a>
+            <a href="methodology.html">Methodology</a>
+            <a href="fusion.html">Fusion</a>
+            <a href="pilots.html">Pilots</a>
+            <a href="positioning.html">Positioning</a>
+            <a href="limitations.html">Limitations</a>
+            <a href="references.html">References</a>
           </div>
         </section>
         <section style="display:grid;gap:6px;">
-          <div style="color:#58a6ff;font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Contact</div>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;max-width:240px;">Research, collaboration, and review inquiries.</p>
-          <p style="color:#c9d1d9;font-size:12px;line-height:1.5;">Daniel R. Russell</p>
-          <p style="color:#8b949e;font-size:12px;line-height:1.5;">MITx (SDS), Harvard ALM (DS) '27</p>
-          <p style="color:#c9d1d9;font-size:13px;line-height:1.6;white-space:normal;"><a href="mailto:drr508@g.harvard.edu" style="color:#c9d1d9;text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" style="color:#c9d1d9;text-decoration:none;">dan@snptx.ai</a></p>
+          <div class="label">Contact</div>
+          <p>Research, collaboration, and review inquiries.</p>
+          <p class="muted">Daniel R. Russell</p>
+          <p class="muted">MITx (SDS), Harvard ALM (DS) '27</p>
+          <p class="muted" style="white-space:normal;"><a href="mailto:drr508@g.harvard.edu" class="muted" style="text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" class="muted" style="text-decoration:none;">dan@snptx.ai</a></p>
         </section>
       </div>
-      <div style="padding-top:12px;border-top:1px solid rgba(48,54,61,0.72);color:#8b949e;font-size:11px;text-align:right;">SNPTX&trade; Academic</div>
+      <div class="site-footer-bottom">SNPTX&trade; Academic 2026</div>
     </footer>
   </div>
 </body>
