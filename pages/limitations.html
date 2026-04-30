@@ -48,8 +48,14 @@
     gap: 6px 14px;
     margin-bottom: 18px;
     padding: 12px 0 16px;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .top-nav.scrolled {
     background: linear-gradient(180deg, rgba(13,17,23,0.96) 0%, rgba(13,17,23,0.82) 72%, rgba(13,17,23,0) 100%);
-    border-bottom: 1px solid rgba(48,54,61,0.85);
+    border-bottom-color: rgba(48,54,61,0.85);
   }
   .top-nav a {
     color: var(--text-secondary);
@@ -661,5 +667,18 @@
       <div class="site-footer-bottom">SNPTX&trade; Academic 2026</div>
     </footer>
   </div>
+  <script>
+    (function () {
+      var nav = document.querySelector('.top-nav');
+      if (!nav) return;
+      var threshold = 8;
+      function update() {
+        if (window.scrollY > threshold) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      }
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+    })();
+  </script>
 </body>
 </html>
