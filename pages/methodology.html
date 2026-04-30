@@ -440,63 +440,74 @@
         <div class="flow-card">
           <div class="label">Per-run lifecycle</div>
           <h4>From configuration to evidence bundle</h4>
-          <svg viewBox="0 0 1080 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="repro-title repro-desc">
+          <svg viewBox="0 0 1080 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="repro-title repro-desc">
             <title id="repro-title">SNPTX per-run reproducibility lifecycle</title>
             <desc id="repro-desc">A run begins from a YAML configuration with a fixed seed, executes through the Snakemake DAG with deterministic CUDA where supported, is tracked by MLflow, produces DVC-hashed artifacts, and emits a referenced evidence bundle.</desc>
             <defs>
               <linearGradient id="repro-spine" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.95"/>
-                <stop offset="100%" stop-color="#bc8cff" stop-opacity="0.95"/>
+                <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#bc8cff" stop-opacity="0.9"/>
               </linearGradient>
-              <marker id="repro-arrow" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto">
-                <path d="M0,0 L6,3 L0,6" fill="#bc8cff"/>
+              <marker id="repro-arrow" markerWidth="8" markerHeight="6" refX="7.5" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#bc8cff"/>
               </marker>
               <style>
-                .r-lane{fill:#111821;stroke:#30363d;stroke-width:1}
-                .r-stage{fill:#161b22;stroke:#30363d;stroke-width:1.5}
-                .r-stage-text{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;font-weight:700;text-anchor:middle}
+                .r-frame{fill:#0d1117;stroke:#30363d;stroke-width:1}
+                .r-stage{fill:#161b22;stroke:#30363d;stroke-width:1.4}
+                .r-idx-circle{fill:rgba(88,166,255,0.12);stroke:#58a6ff;stroke-width:1}
+                .r-idx-text{fill:#58a6ff;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                .r-stage-title{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:13px;font-weight:700;text-anchor:middle}
                 .r-stage-sub{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;text-anchor:middle}
                 .r-note{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;letter-spacing:1.2px}
-                .r-flow{stroke:url(#repro-spine);stroke-width:3;fill:none;marker-end:url(#repro-arrow)}
-                .r-chip{fill:rgba(88,166,255,0.10);stroke:#58a6ff;stroke-width:1}
-                .r-chip-text{fill:#58a6ff;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
+                .r-edge-text{fill:#bc8cff;font-family:'SFMono-Regular',Consolas,monospace;font-size:9.5px;font-weight:700;text-anchor:middle;letter-spacing:0.06em}
+                .r-flow{stroke:url(#repro-spine);stroke-width:1.6;fill:none;marker-end:url(#repro-arrow)}
               </style>
             </defs>
 
-            <rect class="r-lane" x="20" y="20" width="1040" height="180" rx="14"/>
-            <text class="r-note" x="36" y="44">PER-RUN LIFECYCLE &mdash; SEED &middot; DAG &middot; TRACKING &middot; HASHING</text>
+            <rect class="r-frame" x="0.5" y="0.5" width="1079" height="199" rx="12"/>
+            <text class="r-note" x="24" y="24">PER-RUN LIFECYCLE &mdash; REPRODUCIBLE BY CONFIG HASH + ARTIFACT HASHES</text>
 
-            <!-- Stages -->
-            <rect class="r-stage" x="44" y="60" width="180" height="78" rx="12"/>
-            <text class="r-stage-text" x="134" y="92">config.yaml</text>
-            <text class="r-stage-sub" x="134" y="111">seed=1337 &middot; pinned versions</text>
+            <!-- Stage 1 -->
+            <rect class="r-stage" x="32"  y="44" width="212" height="132" rx="12"/>
+            <circle class="r-idx-circle" cx="56"  cy="68" r="12"/>
+            <text class="r-idx-text"     x="56"  y="71">1</text>
+            <text class="r-stage-title"  x="138" y="100">config.yaml</text>
+            <text class="r-stage-sub"    x="138" y="124">seed = 1337</text>
+            <text class="r-stage-sub"    x="138" y="142">pinned versions &middot; env hash</text>
 
-            <rect class="r-stage" x="276" y="60" width="200" height="78" rx="12"/>
-            <text class="r-stage-text" x="376" y="92">snakemake run</text>
-            <text class="r-stage-sub" x="376" y="111">DAG order &middot; deterministic CUDA</text>
+            <!-- Stage 2 -->
+            <rect class="r-stage" x="300" y="44" width="212" height="132" rx="12"/>
+            <circle class="r-idx-circle" cx="324" cy="68" r="12"/>
+            <text class="r-idx-text"     x="324" y="71">2</text>
+            <text class="r-stage-title"  x="406" y="100">snakemake run</text>
+            <text class="r-stage-sub"    x="406" y="124">DAG-ordered execution</text>
+            <text class="r-stage-sub"    x="406" y="142">deterministic CUDA</text>
 
-            <rect class="r-stage" x="528" y="60" width="200" height="78" rx="12"/>
-            <text class="r-stage-text" x="628" y="92">mlflow + dvc</text>
-            <text class="r-stage-sub" x="628" y="111">tracked params &middot; hashed artifacts</text>
+            <!-- Stage 3 -->
+            <rect class="r-stage" x="568" y="44" width="212" height="132" rx="12"/>
+            <circle class="r-idx-circle" cx="592" cy="68" r="12"/>
+            <text class="r-idx-text"     x="592" y="71">3</text>
+            <text class="r-stage-title"  x="674" y="100">mlflow + dvc</text>
+            <text class="r-stage-sub"    x="674" y="124">tracked params &amp; metrics</text>
+            <text class="r-stage-sub"    x="674" y="142">content-addressed artifacts</text>
 
-            <rect class="r-stage" x="780" y="60" width="240" height="78" rx="12"/>
-            <text class="r-stage-text" x="900" y="92">evidence bundle</text>
-            <text class="r-stage-sub" x="900" y="111">metrics + manifest + config hash</text>
+            <!-- Stage 4 -->
+            <rect class="r-stage" x="836" y="44" width="212" height="132" rx="12"/>
+            <circle class="r-idx-circle" cx="860" cy="68" r="12"/>
+            <text class="r-idx-text"     x="860" y="71">4</text>
+            <text class="r-stage-title"  x="942" y="100">evidence bundle</text>
+            <text class="r-stage-sub"    x="942" y="124">metrics + manifest</text>
+            <text class="r-stage-sub"    x="942" y="142">+ config hash</text>
 
-            <!-- Arrows -->
-            <path class="r-flow" d="M232 99 H268"/>
-            <path class="r-flow" d="M484 99 H520"/>
-            <path class="r-flow" d="M736 99 H772"/>
+            <!-- Inter-stage connectors with inline edge labels -->
+            <text class="r-edge-text" x="272" y="104">CONFIG HASH</text>
+            <path class="r-flow" d="M246 116 H298"/>
 
-            <!-- Chips along the bottom: what each handoff carries -->
-            <rect class="r-chip" x="232" y="160" width="44" height="22" rx="8"/>
-            <text class="r-chip-text" x="254" y="175">SEED</text>
+            <text class="r-edge-text" x="540" y="104">RUN OUTPUTS</text>
+            <path class="r-flow" d="M514 116 H566"/>
 
-            <rect class="r-chip" x="484" y="160" width="44" height="22" rx="8"/>
-            <text class="r-chip-text" x="506" y="175">RUN</text>
-
-            <rect class="r-chip" x="736" y="160" width="44" height="22" rx="8"/>
-            <text class="r-chip-text" x="758" y="175">HASH</text>
+            <text class="r-edge-text" x="808" y="104">ARTIFACT HASHES</text>
+            <path class="r-flow" d="M782 116 H834"/>
           </svg>
           <p class="caption">A run is fully described by its configuration hash and the artifact hashes it produces. Re-execution from the same configuration on the same environment is expected to reproduce the bundle within the determinism limits noted above.</p>
         </div>
