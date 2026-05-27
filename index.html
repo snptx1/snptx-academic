@@ -1068,7 +1068,7 @@
       <div class="draft-meta">
         <div>
           <h2 id="capability-proof-title">Capability surface &amp; reproducibility proof</h2>
-          <p>The landing page view reduces the top-level clutter; the underlying platform still resolves to four operating surfaces and a public proof path you can run locally.</p>
+          <p>The landing page view reduces the top-level clutter; the underlying framework still resolves to four operating surfaces and a public proof path you can run locally.</p>
         </div>
         <span class="badge">Operational view</span>
       </div>
@@ -1096,7 +1096,7 @@
           <div class="hero-capability-card">
             <div class="hero-card-label">Capability</div>
             <h5>Deployment pathway</h5>
-            <p>FastAPI inference for tabular, fusion, and batch use cases, plus RBAC with HMAC-signed tokens and a hash-chained audit log designed for customer-hosted deployment via Terraform and Helm.</p>
+            <p>FastAPI inference for tabular, fusion, and batch use cases, plus RBAC with HMAC-signed tokens and a hash-chained audit log designed for lab-hosted reference deployment via Terraform and Helm.</p>
             <span class="hero-status-chip hero-status-chip--neutral">&bull; Available on request</span>
           </div>
           <div class="hero-capability-card">
@@ -1311,7 +1311,7 @@
             <text class="iarch-note" x="588" y="328">DEPLOYMENT SURFACE &middot; EVALUATION PACKAGE</text>
             <text class="iarch-pilot-text" x="810" y="356">FastAPI &middot; RBAC &middot; HMAC-signed tokens</text>
             <text class="iarch-pilot-text" x="810" y="378">hash-chained audit (21 CFR Part 11 posture)</text>
-            <text class="iarch-pilot-text" x="810" y="398">customer-hosted via Terraform + Helm</text>
+            <text class="iarch-pilot-text" x="810" y="398">lab-hosted via Terraform + Helm</text>
 
             <!-- Feedback: autonomy → training (green dashed, routed left of runner lane) -->
             <path class="iarch-feedback" d="M58 304 V42 H385 V90"/>
@@ -1384,6 +1384,62 @@
         </div>
 
         <p style="margin-top:18px;font-size:12px;color:var(--text-secondary);"><strong style="color:var(--text-primary);">Compose, don't commit.</strong> A pilot can take any one of A&ndash;D as its scope, or compose two (e.g., A + D to land a validated baseline under cross-lab reproducibility, or B + C to drive autonomous candidate selection over fused modalities). The full menu is on the <a href="pages/pilots.html" style="color:var(--accent-blue);">Pilots</a> page.</p>
+      </section>
+    </article>
+
+    <article class="draft" id="for-reviewers" aria-labelledby="for-reviewers-title">
+      <div class="draft-meta">
+        <div>
+          <h2 id="for-reviewers-title">For visiting reviewers</h2>
+          <p>A short orientation for faculty or lab members arriving from an introduction email.</p>
+        </div>
+        <span class="badge">Orientation</span>
+      </div>
+
+      <section class="section-block">
+        <div class="section-intro">
+          <h3>Fastest paths through the site</h3>
+          <p>SNPTX is single-author research engineering work. Reported numbers are bounded to the declared configurations, datasets, and seeds on each page; nothing here is a clinical-performance claim. Three short reading paths cover almost any first review.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px;margin-top:6px;">
+          <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--accent-blue);">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-blue);text-transform:uppercase;">Path 1 &middot; What is claimed</span>
+            <h4 style="font-size:16px;line-height:1.3;letter-spacing:-0.01em;">Evidence &rarr; Validation &rarr; Limitations</h4>
+            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;">The Evidence page routes each claim to its inspection surface and separates demonstrated, partial, planned, and out-of-scope work. Validation describes the protocols. Limitations states what is not yet established.</p>
+            <p style="font-size:11.5px;color:var(--text-secondary);margin-top:auto;padding-top:8px;border-top:1px solid rgba(48,54,61,0.7);">
+              <a href="pages/evidence.html" style="color:var(--accent-blue);text-decoration:none;font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;">Evidence &rarr;</a>
+              &nbsp;&middot;&nbsp;
+              <a href="pages/validation.html" style="color:var(--accent-blue);text-decoration:none;font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;">Validation &rarr;</a>
+              &nbsp;&middot;&nbsp;
+              <a href="pages/limitations.html" style="color:var(--accent-blue);text-decoration:none;font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;">Limitations &rarr;</a>
+            </p>
+          </div>
+
+          <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--accent-green);">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-green);text-transform:uppercase;">Path 2 &middot; Run something</span>
+            <h4 style="font-size:16px;line-height:1.3;letter-spacing:-0.01em;">Reproduce a result locally in 5 minutes</h4>
+            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;">A carved-out repository reproduces the ChEMBL bioactivity GCN baseline end to end on CPU, deterministic at <code style="font-family:var(--font-mono);color:var(--accent-cyan);">seed=42</code>. The README states the headline number, the expected runtime, and where to look if you are evaluating the result critically.</p>
+            <p style="font-size:11.5px;color:var(--text-secondary);margin-top:auto;padding-top:8px;border-top:1px solid rgba(48,54,61,0.7);">
+              <a href="https://github.com/snptx1/snptx-repro-chembl" style="color:var(--accent-green);text-decoration:none;font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;">snptx-repro-chembl &rarr;</a>
+            </p>
+          </div>
+
+          <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--accent-purple);">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-purple);text-transform:uppercase;">Path 3 &middot; Methods detail</span>
+            <h4 style="font-size:16px;line-height:1.3;letter-spacing:-0.01em;">Architecture &rarr; Methodology &rarr; References</h4>
+            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;">Architecture explains the execution spine, the extension runner, and the experiment-selection surface. Methodology lists compute, datasets, versions, and reproducibility controls. References organizes the literature the design draws on.</p>
+            <p style="font-size:11.5px;color:var(--text-secondary);margin-top:auto;padding-top:8px;border-top:1px solid rgba(48,54,61,0.7);">
+              <a href="pages/architecture.html" style="color:var(--accent-purple);text-decoration:none;font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;">Architecture &rarr;</a>
+              &nbsp;&middot;&nbsp;
+              <a href="pages/methodology.html" style="color:var(--accent-purple);text-decoration:none;font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;">Methodology &rarr;</a>
+              &nbsp;&middot;&nbsp;
+              <a href="pages/references.html" style="color:var(--accent-purple);text-decoration:none;font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;">References &rarr;</a>
+            </p>
+          </div>
+        </div>
+
+        <p style="margin-top:16px;font-size:12px;color:var(--text-secondary);line-height:1.6;"><strong style="color:var(--text-primary);">If you have 15 minutes:</strong> Evidence, then a single Validation table, then clone <code style="font-family:var(--font-mono);color:var(--accent-cyan);">snptx-repro-chembl</code> and run <code style="font-family:var(--font-mono);color:var(--accent-cyan);">make install repro-chembl</code>. Feedback on any of the above is welcome at <a href="mailto:dan@snptx.ai" style="color:var(--accent-blue);">dan@snptx.ai</a>.</p>
       </section>
     </article>
 
