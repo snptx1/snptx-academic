@@ -169,14 +169,16 @@
   table.courses td.score {
     font-family: var(--font-mono);
     font-size: 12px;
-    text-align: right;
+    text-align: center;
     color: var(--text-secondary);
     white-space: nowrap;
   }
   table.courses td.score .perfect {
-    display: inline-block;
-    margin-left: 6px;
-    font-size: 10.5px;
+    display: block;
+    margin-top: 4px;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: #ffea00;
     text-shadow: 0 0 6px rgba(255,234,0,0.45);
   }
@@ -491,8 +493,6 @@
     <div class="stats">
       <div class="stat highlight-green"><div class="label">ALM GPA</div><div class="value">4.00 / 4.00</div><div class="note">grade of A in every completed course</div></div>
       <div class="stat"><div class="label">Avg course score</div><div class="value">0.9973</div><div class="note">mean of completed-course raw scores (HES record)</div></div>
-      <div class="stat"><div class="label">ALM courses completed</div><div class="value">6</div><div class="note">CSCI E-104, E-116, E-108, E-89b, STAT S-103, CSCI E-101</div></div>
-      <div class="stat"><div class="label">In progress</div><div class="value">1</div><div class="note">DGMD S-17 &middot; Summer 2026</div></div>
       <div class="stat"><div class="label">Capstone sequence</div><div class="value">Spring 2027</div><div class="note">Precapstone (IDPR) + Capstone (IDCP)</div></div>
       <div class="stat"><div class="label">Credits earned</div><div class="value">28 / 36</div><div class="note">8 remaining (DGMD S-17 + capstone sequence)</div></div>
       <div class="stat"><div class="label">MITx MicroMasters</div><div class="value">5 / 5</div><div class="note">Statistics &amp; Data Science (MIT IDSS)</div></div>
@@ -567,8 +567,8 @@
           <td class="code">CSCI E-104</td>
           <td class="title">
             <strong>Advanced Deep Learning</strong>
-            <div class="desc">Data Science Core. Advanced research-and-development in AI and deep learning across large language models, generative networks (GANs, stable diffusion, text-to-speech), graph neural networks, drug discovery, and physics-constrained neural networks. Taught in PyTorch with practical case work each lecture. Final-project deliverable integrated with the SNPTX framework.</div>
-            <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e104/e104_finalproject_slides.pptx">pptx</a></div>
+            <div class="desc">Data Science Core. Advanced research-and-development in AI and deep learning across large language models, generative networks (GANs, stable diffusion, text-to-speech), graph neural networks, drug discovery, and physics-constrained neural networks. Taught in PyTorch with practical case work each lecture. Final project: DeepDDS drug-synergy reproduction with graph-attention networks, reframed as a SNPTX-orchestrated reproducible benchmark.</div>
+            <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e104/e104_finalproject_notebook.ipynb">ipynb</a><a href="../assets/projects/e104/e104_finalproject_code.html">html</a><a href="../assets/projects/e104/e104_finalproject_slides.pptx">pptx</a></div>
           </td>
           <td>Zoran Djordjevic</td>
           <td>Spring 2026</td>
@@ -582,7 +582,7 @@
           <td class="title">
             <strong>Dynamic Modeling and Forecasting in Big Data</strong>
             <div class="desc">Data Science Core. Time-series and dynamic-systems modeling on data rich in both variables and time: dynamic regression, dynamic-factor and vector-autoregression models, volatility and error-correction models, dimensional reduction for fat datasets, state-space models, and decomposition of trend / cycle / seasonality for high-frequency forecasting. Final project: temporal early-window ICU mortality forecasting on the eICU Collaborative Research Database (demo, v2.0.1), packaged as a self-contained reproducible notebook with environment receipts, dual real-data and synthetic-fallback execution paths, and full provenance via the SNPTX harness.</div>
-            <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e116/e116_finalproject.ipynb">ipynb</a><a href="../assets/projects/e116/e116_finalproject.html">html</a><a href="../assets/projects/e116/e116_finalproject.pdf">pdf</a><a href="../assets/projects/e116/e116_presentation.pptx">pptx</a></div>
+            <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e116/e116_finalproject_notebook.ipynb">ipynb</a><a href="../assets/projects/e116/e116_finalproject.html">html</a><a href="../assets/projects/e116/e116_finalproject_slides.pptx">pptx</a></div>
           </td>
           <td>William Yu</td>
           <td>Spring 2026</td>
@@ -595,7 +595,8 @@
           <td class="code">CSCI E-108</td>
           <td class="title">
             <strong>Data Mining, Discovery, and Exploration</strong>
-            <div class="desc">Data Science Core. Unsupervised learning for actionable insight on massive, complex data: graph algorithms, scalable similarity and clustering, recommender systems, and discovery workflows applied to real datasets. Hands-on in Python with NetworkX, Neo4j, scikit-learn-extra, Mlxtend, and Surprise. Graduate-credit independent project required end-to-end against a real-world dataset.</div>
+            <div class="desc">Data Science Core. Unsupervised learning for actionable insight on massive, complex data: graph algorithms, scalable similarity and clustering, recommender systems, and discovery workflows applied to real datasets. Hands-on in Python with NetworkX, Neo4j, scikit-learn-extra, Mlxtend, and Surprise. Graduate-credit independent project required end-to-end against a real-world dataset. Final project: ChEMBL32 bioactivity mining and exploratory graph analysis of medicinal-chemistry data.</div>
+            <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e108/e108_finalproject_chembl32.ipynb">ipynb</a><a href="../assets/projects/e108/e108_finalproject_chembl32.html">html</a></div>
           </td>
           <td>Stephen Elston</td>
           <td>Fall 2025</td>
@@ -608,7 +609,8 @@
           <td class="code">CSCI E-89b</td>
           <td class="title">
             <strong>Introduction to Natural Language Processing</strong>
-            <div class="desc">Data Science Core. Modern NLP foundations: text classification, named-entity recognition, parsing, language modeling and text generation, topic modeling, and machine translation. Text-representation methods from tokenization and TF-IDF through Word2Vec / GloVe embeddings, autoencoders, and topic models. Models covered include RNNs / LSTMs, CRFs, BiLSTM-CRF, attention, transformers and BERT, GANs, LDA, NMF, and structural topic modeling. Hands-on in Python plus the R <code>stm</code> package.</div>
+            <div class="desc">Data Science Core. Modern NLP foundations: text classification, named-entity recognition, parsing, language modeling and text generation, topic modeling, and machine translation. Text-representation methods from tokenization and TF-IDF through Word2Vec / GloVe embeddings, autoencoders, and topic models. Models covered include RNNs / LSTMs, CRFs, BiLSTM-CRF, attention, transformers and BERT, GANs, LDA, NMF, and structural topic modeling. Hands-on in Python plus the R <code>stm</code> package. Final project: hybrid statistical / neural named-entity-recognition pipeline over the BC5CDR biomedical corpus, with a companion visualization suite.</div>
+            <div class="proj-links"><span class="pl-label">NER demo</span><a href="../assets/projects/e89b/e89b_ner_hybrid_demo.ipynb">ipynb</a><a href="../assets/projects/e89b/e89b_ner_hybrid_demo.html">html</a><span class="pl-label" style="margin-left:8px;">Vis suite</span><a href="../assets/projects/e89b/e89b_ner_hybrid_vissuite.ipynb">ipynb</a><a href="../assets/projects/e89b/e89b_ner_hybrid_vissuite.html">html</a><span class="pl-label" style="margin-left:8px;">Slides</span><a href="../assets/projects/e89b/e89b_ner_hybrid_slides.pptx">pptx</a></div>
           </td>
           <td>Dmitry Kurochkin</td>
           <td>Fall 2025</td>
@@ -639,7 +641,7 @@
           <td>Bruce Huang</td>
           <td>Fall 2024</td>
           <td>4</td>
-          <td class="score">0.9900<span class="sub">PASS (credit/no-credit)</span></td>
+          <td class="score">0.9900</td>
           <td class="grade">A</td>
         </tr>
 
@@ -703,16 +705,6 @@
       <tbody>
 
         <tr>
-          <td class="code">6.431x</td>
-          <td class="title">
-            <strong>Probability: The Science of Uncertainty and Data</strong>
-            <div class="desc">Probability theory, random variables, Bayesian inference, Markov chains, limit theorems, and an introduction to statistical inference. Foundation for the rest of the IDSS sequence.</div>
-          </td>
-          <td>John Tsitsiklis; Patrick Jaillet</td>
-          <td><span class="badge term-done">Completed</span></td>
-        </tr>
-
-        <tr>
           <td class="code">6.86x</td>
           <td class="title">
             <strong>Machine Learning with Python: from Linear Models to Deep Learning</strong>
@@ -731,6 +723,16 @@
             <div class="proj-links"><span class="pl-label">Module projects</span><a href="../assets/projects/mitx-6.419/mitx_6.419_module3_network_analysis.ipynb">network &middot; ipynb</a><a href="../assets/projects/mitx-6.419/mitx_6.419_module5_gaussian_processes.pdf">gaussian processes &middot; pdf</a></div>
           </td>
           <td>Caroline Uhler</td>
+          <td><span class="badge term-done">Completed</span></td>
+        </tr>
+
+        <tr>
+          <td class="code">6.431x</td>
+          <td class="title">
+            <strong>Probability: The Science of Uncertainty and Data</strong>
+            <div class="desc">Probability theory, random variables, Bayesian inference, Markov chains, limit theorems, and an introduction to statistical inference. Foundation for the rest of the IDSS sequence.</div>
+          </td>
+          <td>John Tsitsiklis; Patrick Jaillet</td>
           <td><span class="badge term-done">Completed</span></td>
         </tr>
 
