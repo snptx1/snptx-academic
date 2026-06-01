@@ -226,6 +226,7 @@
     border-radius: 12px;
     padding: 18px 22px;
     border-top: 2px solid var(--accent-cyan);
+    box-shadow: 0 0 32px rgba(57,197,207,0.18), inset 0 1px 0 rgba(57,197,207,0.10);
   }
   .capstone-card h3 {
     font-size: 16px;
@@ -290,6 +291,112 @@
   }
   .note strong { color: var(--accent-orange); }
 
+  /* GPA stat highlight (neon green glow) */
+  .stat.highlight-green {
+    border-color: rgba(63,185,80,0.55);
+    box-shadow: 0 0 22px rgba(63,185,80,0.22), inset 0 0 0 1px rgba(63,185,80,0.18);
+  }
+  .stat.highlight-green .value { color: var(--accent-green); }
+
+  /* Credit-progress bar */
+  .progress { margin: 4px 0 14px; }
+  .progress .bar {
+    display: flex;
+    height: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: rgba(22,27,34,0.85);
+    box-shadow: 0 0 18px rgba(63,185,80,0.10);
+  }
+  .progress .seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #0d1117;
+    border-right: 1px solid rgba(13,17,23,0.6);
+  }
+  .progress .seg:last-child { border-right: 0; }
+  .progress .seg.done   { background: var(--accent-green); }
+  .progress .seg.curr   { background: var(--accent-orange); }
+  .progress .seg.future { background: rgba(110,118,129,0.30); color: var(--text-muted); }
+  .progress .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .progress .legend .sw {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+
+  /* Term timeline */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin: 6px 0 20px;
+  }
+  .timeline .term {
+    background: rgba(22,27,34,0.60);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 8px 10px;
+    min-height: 110px;
+  }
+  .timeline .term .lbl {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .timeline .term .pill {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    padding: 3px 6px;
+    border-radius: 5px;
+    margin-top: 4px;
+    border: 1px solid;
+    line-height: 1.25;
+  }
+  .timeline .term .pill.done   { color: var(--accent-green);  border-color: rgba(63,185,80,0.5);  background: rgba(63,185,80,0.10); }
+  .timeline .term .pill.curr   { color: var(--accent-orange); border-color: rgba(210,153,34,0.5); background: rgba(210,153,34,0.10); }
+  .timeline .term .pill.future { color: var(--text-muted);    border-color: rgba(110,118,129,0.4); background: rgba(110,118,129,0.08); }
+
+  /* Capability chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(22,27,34,0.75);
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+  .chip.blue   { color: var(--accent-blue);   border-color: rgba(88,166,255,0.45); }
+  .chip.green  { color: var(--accent-green);  border-color: rgba(63,185,80,0.45); }
+  .chip.purple { color: var(--accent-purple); border-color: rgba(188,140,255,0.45); }
+  .chip.cyan   { color: var(--accent-cyan);   border-color: rgba(57,197,207,0.45); }
+  .chip.orange { color: var(--accent-orange); border-color: rgba(210,153,34,0.45); }
+
   footer.page-footer {
     margin-top: 32px;
     padding-top: 18px;
@@ -311,7 +418,7 @@
   <header class="page-header">
     <div>
       <h1>Daniel R. Russell</h1>
-      <p class="lede">ALM Data Science candidate at the Harvard Extension School (Class of 2027) and MITx MicroMasters holder in Statistics and Data Science (MIT IDSS). Single-author systems engineer behind <a href="https://snptx1.github.io/snptx-academic/index.html#for-review" style="color: var(--accent-blue);">SNPTX</a>, a deterministic, multi-modal biomedical ML orchestration framework currently in capstone-affiliated development.</p>
+      <p class="lede">ALM Data Science candidate at the Harvard Extension School (Class of 2027) and MITx MicroMasters holder in Statistics and Data Science (MIT IDSS). Single-author systems engineer behind <a href="https://snptx1.github.io/snptx-academic/index.html#for-review" style="color: var(--accent-blue);">SNPTX</a>, the deterministic, multi-modal biomedical ML orchestration framework that anchors the ALM Data Science capstone.</p>
     </div>
     <div class="identity-card">
       <div><strong>Program</strong> &middot; Harvard ALM, Data Science</div>
@@ -328,10 +435,10 @@
     <h2>At a glance</h2>
     <p class="sub">Snapshot of academic standing as of <span style="font-family:var(--font-mono);color:var(--accent-cyan);">June 2026</span>.</p>
     <div class="stats">
-      <div class="stat"><div class="label">ALM GPA</div><div class="value">4.00 / 4.00</div><div class="note">grade of A in every completed course</div></div>
+      <div class="stat highlight-green"><div class="label">ALM GPA</div><div class="value">4.00 / 4.00</div><div class="note">grade of A in every completed course</div></div>
       <div class="stat"><div class="label">ALM courses completed</div><div class="value">6</div><div class="note">CSCI E-101, E-108, E-89b, STAT S-103, CSCI E-104, E-116</div></div>
       <div class="stat"><div class="label">In progress</div><div class="value">1</div><div class="note">DGMD S-17 &middot; Summer 2026</div></div>
-      <div class="stat"><div class="label">Precapstone &amp; Capstone</div><div class="value">Spring 27</div><div class="note">advisor: Steven Elston</div></div>
+      <div class="stat"><div class="label">Capstone sequence</div><div class="value">Fall 26 &rarr; Spring 27</div><div class="note">Precapstone (IDPR) then Capstone (IDCP)</div></div>
       <div class="stat"><div class="label">Credits earned</div><div class="value">28 / 36</div><div class="note">8 remaining (DGMD S-17 + capstone sequence)</div></div>
       <div class="stat"><div class="label">MITx MicroMasters</div><div class="value">5 / 5</div><div class="note">Statistics &amp; Data Science (MIT IDSS)</div></div>
     </div>
@@ -342,14 +449,63 @@
     <h2>ALM coursework: Harvard Extension School</h2>
     <p class="sub">Courses taken for the ALM in Extension Studies, Data Science field. Cumulative GPA: 4.00 / 4.00. Course catalog requirements are tracked across foundations, data science core, electives, precapstone, and capstone.</p>
 
+    <!-- Credit-progress bar -->
+    <div class="progress" aria-label="Credit progress: 24 completed, 4 in progress, 8 sequenced of 36 total">
+      <div class="bar">
+        <div class="seg done"   style="width: 66.67%;">24 / 36 COMPLETED</div>
+        <div class="seg curr"   style="width: 11.11%;">4 REG</div>
+        <div class="seg future" style="width: 22.22%;">8 SEQUENCED</div>
+      </div>
+      <div class="legend">
+        <span><span class="sw" style="background: var(--accent-green);"></span>Completed &middot; grade A</span>
+        <span><span class="sw" style="background: var(--accent-orange);"></span>Registered &middot; Summer 2026</span>
+        <span><span class="sw" style="background: rgba(110,118,129,0.30);"></span>Sequenced &middot; Fall 2026 &ndash; Spring 2027</span>
+      </div>
+    </div>
+
+    <!-- Term timeline -->
+    <div class="timeline" aria-label="Term-by-term coursework timeline">
+      <div class="term">
+        <div class="lbl">Fall 2024</div>
+        <span class="pill done">CSCI E-101</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Summer 2025</div>
+        <span class="pill done">STAT S-103</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Fall 2025</div>
+        <span class="pill done">CSCI E-108</span>
+        <span class="pill done">CSCI E-89b</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Spring 2026</div>
+        <span class="pill done">CSCI E-104</span>
+        <span class="pill done">CSCI E-116</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Summer 2026</div>
+        <span class="pill curr">DGMD S-17</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Fall 2026</div>
+        <span class="pill future">Precapstone</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Spring 2027</div>
+        <span class="pill future">Capstone</span>
+      </div>
+    </div>
+
     <table class="courses">
       <thead>
         <tr>
-          <th style="width: 120px;">Code</th>
+          <th style="width: 105px;">Code</th>
           <th>Title and description</th>
-          <th style="width: 130px;">Term</th>
-          <th style="width: 70px;">Credits</th>
-          <th style="width: 70px;">Grade</th>
+          <th style="width: 160px;">Instructor</th>
+          <th style="width: 110px;">Term</th>
+          <th style="width: 60px;">Credits</th>
+          <th style="width: 60px;">Grade</th>
         </tr>
       </thead>
       <tbody>
@@ -360,6 +516,7 @@
             <strong>Foundations of Data Science and Engineering</strong>
             <div class="desc">Foundations requirement. Core data engineering, data pipelines, and applied data science workflows.</div>
           </td>
+          <td>&mdash;</td>
           <td>Fall 2024</td>
           <td>4</td>
           <td class="grade">A</td>
@@ -369,8 +526,9 @@
           <td class="code">CSCI E-108</td>
           <td class="title">
             <strong>Data Mining, Discovery, and Exploration</strong>
-            <div class="desc">Data Science Core. Exploratory analysis at scale, unsupervised pattern discovery, feature interaction, and statistical-rigor controls for discovery workflows. Instructor: <strong>Steven Elston</strong> (subsequently assigned capstone advisor).</div>
+            <div class="desc">Data Science Core. Exploratory analysis at scale, unsupervised pattern discovery, feature interaction, and statistical-rigor controls for discovery workflows.</div>
           </td>
+          <td>Steven Elston</td>
           <td>Fall 2025</td>
           <td>4</td>
           <td class="grade">A</td>
@@ -382,6 +540,7 @@
             <strong>Introduction to Natural Language Processing</strong>
             <div class="desc">Data Science Core. Tokenization, embeddings, sequence modeling, transformer-based language understanding, and applied text-processing pipelines.</div>
           </td>
+          <td>&mdash;</td>
           <td>Fall 2025</td>
           <td>4</td>
           <td class="grade">A</td>
@@ -393,6 +552,7 @@
             <strong>Epidemiology and Biostatistics</strong>
             <div class="desc">Data Science Elective. Epidemiologic study design, biostatistical inference, and applied analysis of clinical and population health data.</div>
           </td>
+          <td>&mdash;</td>
           <td>Summer 2025</td>
           <td>4</td>
           <td class="grade">A</td>
@@ -404,6 +564,7 @@
             <strong>Advanced Deep Learning</strong>
             <div class="desc">Data Science Core. Modern deep learning across modalities: diffusion-based image generation, graph neural networks, text-to-speech synthesis, LLM orchestration with LangChain, ML for drug discovery, fine-tuning of assistant APIs, agentic systems, and deep learning for physical systems. Final project integrated with the SNPTX framework.</div>
           </td>
+          <td>&mdash;</td>
           <td>Spring 2026</td>
           <td>4</td>
           <td class="grade">A</td>
@@ -415,6 +576,7 @@
             <strong>Dynamic Modeling and Big Data</strong>
             <div class="desc">Data Science Core. Final project: temporal early-window ICU mortality forecasting on the eICU Collaborative Research Database (demo, v2.0.1), packaged as a self-contained reproducible notebook with environment receipts, dual real-data and synthetic-fallback execution paths, and full provenance via the SNPTX harness.</div>
           </td>
+          <td>&mdash;</td>
           <td>Spring 2026</td>
           <td>4</td>
           <td class="grade">A</td>
@@ -426,6 +588,7 @@
             <strong>Robotics, Autonomous Vehicles, Drones, and Artificial Intelligence</strong>
             <div class="desc">Data Science Elective. Summer intensive on robotics platforms, autonomous-vehicle perception stacks, drone systems, and applied AI for embodied agents.</div>
           </td>
+          <td>&mdash;</td>
           <td>Summer 2026</td>
           <td>(4)</td>
           <td class="grade pending">REG</td>
@@ -435,8 +598,9 @@
           <td class="code">Precapstone</td>
           <td class="title">
             <strong>ALM Data Science Precapstone</strong>
-            <div class="desc">IDPR requirement. Proposal development, methodology framing, and literature anchoring for the capstone research direction. Advisor: <strong>Steven Elston</strong>.</div>
+            <div class="desc">IDPR requirement. Proposal development, methodology framing, and literature anchoring for the capstone research direction.</div>
           </td>
+          <td>ALM advising</td>
           <td>Fall 2026</td>
           <td>4</td>
           <td class="grade future">&mdash;</td>
@@ -446,8 +610,9 @@
           <td class="code">Capstone</td>
           <td class="title">
             <strong>ALM Data Science Capstone</strong>
-            <div class="desc">IDCP requirement. Capstone systems engineering and writeup centered on the SNPTX deterministic orchestration framework. Advisor: <strong>Steven Elston</strong>. Capstone direction: reproducibility and provenance harness for multi-modal biomedical ML workflows.</div>
+            <div class="desc">IDCP requirement. Capstone systems engineering and writeup centered on the SNPTX deterministic orchestration framework. Capstone direction: reproducibility and provenance harness for multi-modal biomedical ML workflows.</div>
           </td>
+          <td>ALM advising</td>
           <td>Spring 2027</td>
           <td>4</td>
           <td class="grade future">&mdash;</td>
@@ -534,7 +699,7 @@
     <div class="capstone-card">
       <h3>SNPTX: deterministic orchestration for multi-modal biomedical ML</h3>
       <div class="row">
-        <div class="k">Advisor</div><div class="v"><strong>Steven Elston</strong> &middot; CSCI E-108 instructor (fall 2025) and assigned ALM Data Science capstone advisor.</div>
+        <div class="k">Advisor</div><div class="v"><strong>Steven Elston</strong> &middot; CSCI E-108 instructor (Fall 2025) and assigned ALM Data Science capstone advisor.</div>
         <div class="k">Sequence</div><div class="v">Precapstone in Fall 2026 (proposal and methodology framing); Capstone in Spring 2027 (defense and final writeup).</div>
         <div class="k">Direction</div><div class="v">Reproducibility and provenance harness for multi-modal biomedical ML workflows, with content-hashed inputs, deterministic Snakemake DAGs, MLflow-logged runs, and per-experiment lineage. Capstone deliverable centered on a single bounded scientific surface (current candidate: a reproduction-and-provenance pass for a published graph-based therapeutic-prediction model) rather than a horizontal framework demo.</div>
         <div class="k">Inspection surface</div><div class="v">All artifacts and pages designed to be reviewed end-to-end without chasing follow-up materials. The reviewer-facing entry point is <a href="https://snptx1.github.io/snptx-academic/index.html#for-review" style="color: var(--accent-blue);">snptx-academic/#for-review</a>.</div>
@@ -568,10 +733,27 @@
         <a href="https://snptx1.github.io/snptx-academic/pages/architecture.html">Architecture &rarr;</a>
       </div>
     </div>
+    <div class="chips" aria-label="Capability summary">
+      <span class="chip green">Snakemake</span>
+      <span class="chip green">DVC</span>
+      <span class="chip green">MLflow</span>
+      <span class="chip cyan">Deterministic pipelines</span>
+      <span class="chip cyan">Content-hashed data</span>
+      <span class="chip blue">PyTorch</span>
+      <span class="chip blue">Graph neural networks</span>
+      <span class="chip blue">Diffusion models</span>
+      <span class="chip purple">LLM agents</span>
+      <span class="chip purple">LangChain orchestration</span>
+      <span class="chip orange">Clinical time series</span>
+      <span class="chip orange">Drug repurposing</span>
+      <span class="chip">Bayesian inference</span>
+      <span class="chip">NLP &middot; transformers</span>
+    </div>
   </section>
 
   <footer class="page-footer">
     <div>SNPTX&trade; &middot; Daniel R. Russell &middot; <a href="mailto:dan@snptx.ai" style="color: var(--accent-blue);">dan@snptx.ai</a></div>
+    <div><a href="../index.html#for-review" style="color: var(--accent-cyan); text-decoration: none;">snptx-academic &middot; for-review &rarr;</a></div>
     <div>Last updated: 1 June 2026</div>
   </footer>
 
