@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="Academic resume with course-professor reference layer: Daniel R. Russell, ALM Data Science candidate (HES), MITx MicroMasters holder in Statistics and Data Science (IDSS), and SNPTX pilot-phase researcher.">
+<title>Daniel R. Russell: Academic Resume with Reference Layer</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --dark-bg:        #0d1117;
+    --card-bg:        #161b22;
+    --border:         #30363d;
+    --text-primary:   #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted:     #6e7681;
+    --accent-blue:    #58a6ff;
+    --accent-green:   #3fb950;
+    --accent-orange:  #d29922;
+    --accent-purple:  #bc8cff;
+    --accent-cyan:    #39c5cf;
+    --accent-red:     #f85149;
+    --font-stack:     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    --font-mono:      'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(88,166,255,0.08), transparent 28%),
+      radial-gradient(circle at top right, rgba(188,140,255,0.07), transparent 24%),
+      linear-gradient(180deg, #0d1117 0%, #0f1620 100%);
+    color: var(--text-primary);
+    font-family: var(--font-stack);
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+  }
+  .page { max-width: 1180px; margin: 0 auto; }
+
+  .page-header {
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+    align-items: end;
+  }
+  .page-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 6px;
+  }
+  .page-header .lede {
+    max-width: 760px;
+    color: var(--text-secondary);
+    font-size: 14.5px;
+  }
+  .identity-card {
+    background: rgba(22,27,34,0.7);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    display: grid;
+    gap: 4px;
+    min-width: 280px;
+  }
+  .identity-card strong { color: var(--text-primary); font-weight: 600; }
+  .identity-card a { color: var(--accent-blue); text-decoration: none; }
+
+  .section {
+    background: rgba(13,17,23,0.72);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.22);
+  }
+  .section h2 {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .section .sub {
+    color: var(--text-secondary);
+    font-size: 13.5px;
+    margin-bottom: 18px;
+  }
+
+  /* Stats strip */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .stat {
+    background: rgba(22,27,34,0.85);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    min-height: 82px;
+    padding: 13px 15px;
+  }
+  .stat .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .stat .value {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .stat .note { color: var(--text-secondary); font-size: 11.5px; margin-top: 2px; border-left-color: #ffea00; }
+
+  /* Course table */
+  table.courses {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.courses th, table.courses td {
+    text-align: left;
+    padding: 11px 12px;
+    border-bottom: 1px solid rgba(48,54,61,0.7);
+    vertical-align: top;
+  }
+  table.courses th {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+  table.courses td.code {
+    font-family: var(--font-mono);
+    color: var(--accent-cyan);
+    white-space: nowrap;
+    font-size: 12.5px;
+  }
+  table.courses td.title strong { color: var(--text-primary); }
+  table.courses td .desc {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-top: 4px;
+    line-height: 1.5;
+    max-width: 460px;
+  }
+  table.courses td.grade {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-align: center;
+    color: var(--accent-green);
+  }
+  table.courses td.grade.pending { color: var(--accent-orange); font-weight: 600; }
+  table.courses td.grade.future { color: var(--text-muted); font-weight: 500; }
+
+  table.courses td.score {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-align: center;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  table.courses td.score .perfect {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 2px 10px;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffea00;
+    border: 1px solid #ffea00;
+    border-radius: 999px;
+    box-shadow: 0 0 8px rgba(255,234,0,0.35), inset 0 0 4px rgba(255,234,0,0.18);
+  }
+  table.courses td.score .sub {
+    display: block;
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .proj-links {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .proj-links .pl-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-right: 2px;
+  }
+  .proj-links a {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 5px;
+    border: 1px solid rgba(88,166,255,0.4);
+    color: var(--accent-blue);
+    text-decoration: none;
+    background: rgba(88,166,255,0.08);
+  }
+  .proj-links a:hover {
+    background: rgba(88,166,255,0.18);
+    border-color: rgba(88,166,255,0.7);
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 999px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .badge.ref-primary   { color: var(--accent-green);  border-color: rgba(63,185,80,0.5);  background: rgba(63,185,80,0.10); }
+  .badge.ref-secondary { color: var(--accent-purple); border-color: rgba(188,140,255,0.5); background: rgba(188,140,255,0.10); }
+  .badge.ref-no        { color: var(--text-muted);    border-color: rgba(110,118,129,0.4); background: rgba(110,118,129,0.08); }
+  .badge.term-current  { color: var(--accent-orange); border-color: rgba(210,153,34,0.5); background: rgba(210,153,34,0.10); }
+  .badge.term-done     { color: var(--accent-blue);   border-color: rgba(88,166,255,0.5);  background: rgba(88,166,255,0.10); }
+  .badge.term-future   { color: var(--text-muted);    border-color: rgba(110,118,129,0.4); background: rgba(110,118,129,0.08); }
+  .badge.capstone      { color: var(--accent-cyan);   border-color: rgba(57,197,207,0.5);  background: rgba(57,197,207,0.10); }
+  .badge.confirm       { color: var(--accent-red);    border-color: rgba(248,81,73,0.5);   background: rgba(248,81,73,0.10); }
+
+  .instructor-cell { min-width: 150px; }
+  .instructor-cell .ref-badge {
+    display: inline-block;
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: var(--accent-green);
+    border: 1px solid rgba(63,185,80,0.56);
+    background: rgba(63,185,80,0.08);
+    white-space: nowrap;
+  }
+  .instructor-cell .ref-badge.pending {
+    color: var(--accent-orange);
+    border-color: rgba(210,153,34,0.56);
+    background: rgba(210,153,34,0.08);
+  }
+
+  .ref-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .ref-card {
+    background: rgba(22,27,34,0.78);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-green);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .ref-card.secondary { border-left-color: var(--accent-purple); }
+  .ref-card .name {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 14.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .ref-card .affil {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-family: var(--font-mono);
+  }
+  .ref-card .reason {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-top: 8px;
+    line-height: 1.55;
+  }
+
+  .capstone-card {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    border-top: 2px solid var(--accent-cyan);
+    box-shadow: 0 0 32px rgba(57,197,207,0.18), inset 0 1px 0 rgba(57,197,207,0.10);
+  }
+  .capstone-card h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  .capstone-card .row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 14px;
+    margin-top: 8px;
+    font-size: 13px;
+  }
+  .capstone-card .row .k {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-top: 3px;
+  }
+  .capstone-card .row .v { color: var(--text-secondary); }
+  .capstone-card .row .v strong { color: var(--text-primary); }
+
+  .snptx-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .snptx-strip .cell {
+    background: rgba(22,27,34,0.82);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .snptx-strip .cell h4 {
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+  }
+  .snptx-strip .cell p {
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .snptx-strip .cell a {
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .note {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    border-left: 2px solid rgba(210,153,34,0.5);
+    padding-left: 12px;
+  }
+  .note strong { color: var(--accent-orange); }
+
+  /* Highlighted at-a-glance stats */
+  .stat.highlight-blue {
+    border-color: rgba(88,166,255,0.5);
+    background: rgba(88,166,255,0.10);
+  }
+  .stat.highlight-blue .label,
+  .stat.highlight-blue .value { color: var(--accent-blue); }
+
+  .stat.highlight-blue .note { color: var(--text-secondary); }
+
+  .stat.outline-blue {
+    border-color: rgba(88,166,255,0.5);
+  }
+
+  /* Credit-progress bar */
+  .progress { margin: 4px 0 14px; }
+  .progress .bar {
+    display: flex;
+    height: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: rgba(22,27,34,0.85);
+    box-shadow: 0 0 18px rgba(63,185,80,0.10);
+  }
+  .progress .seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #0d1117;
+    border-right: 1px solid rgba(13,17,23,0.6);
+  }
+  .progress .seg:last-child { border-right: 0; }
+  .progress .seg.done   { background: var(--accent-green); }
+  .progress .seg.curr   { background: var(--accent-orange); }
+  .progress .seg.future { background: rgba(110,118,129,0.30); color: var(--text-muted); }
+  .progress .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .progress .legend .sw {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+
+  /* Term timeline */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin: 6px 0 20px;
+  }
+  .timeline .term {
+    background: rgba(22,27,34,0.60);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 8px 10px;
+    min-height: 110px;
+  }
+  .timeline .term .lbl {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .timeline .term .pill {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    padding: 3px 6px;
+    border-radius: 5px;
+    margin-top: 4px;
+    border: 1px solid;
+    line-height: 1.25;
+  }
+  .timeline .term .pill.done   { color: var(--accent-green);  border-color: rgba(63,185,80,0.5);  background: rgba(63,185,80,0.10); }
+  .timeline .term .pill.curr   { color: var(--accent-orange); border-color: rgba(210,153,34,0.5); background: rgba(210,153,34,0.10); }
+  .timeline .term .pill.future { color: var(--text-muted);    border-color: rgba(110,118,129,0.4); background: rgba(110,118,129,0.08); }
+
+  /* Capability chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(22,27,34,0.75);
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+  .chip.blue   { color: var(--accent-blue);   border-color: rgba(88,166,255,0.45); }
+  .chip.green  { color: var(--accent-green);  border-color: rgba(63,185,80,0.45); }
+  .chip.purple { color: var(--accent-purple); border-color: rgba(188,140,255,0.45); }
+  .chip.cyan   { color: var(--accent-cyan);   border-color: rgba(57,197,207,0.45); }
+  .chip.orange { color: var(--accent-orange); border-color: rgba(210,153,34,0.45); }
+
+  footer.page-footer {
+    margin-top: 32px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 11.5px;
+    font-family: var(--font-mono);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ───────────── HEADER ───────────── -->
+  <header class="page-header">
+    <div>
+      <h1>Daniel R. Russell</h1>
+      <p class="lede">ALM Data Science candidate at the Harvard Extension School (Class of 2027) and MITx MicroMasters holder in Statistics and Data Science (MIT IDSS). Single-author systems engineer behind <a href="https://snptx1.github.io/snptx-academic/index.html#for-review" style="color: var(--accent-blue);">SNPTX</a>, the deterministic, multi-modal biomedical ML orchestration framework that anchors the ALM Data Science capstone. This unlisted variant adds the course-professor reference layer for pilot-lab review.</p>
+    </div>
+    <div class="identity-card">
+      <div><strong>Program</strong> &middot; Harvard ALM, Data Science</div>
+      <div><strong>Class</strong> &middot; 2027 (HES)</div>
+      <div><strong>Prior credential</strong> &middot; MITx MicroMasters, Statistics &amp; Data Science (IDSS)</div>
+      <div><strong>GPA (ALM)</strong> &middot; 4.00 / 4.00</div>
+      <div><strong>Reference layer</strong> &middot; requested, pending confirmation</div>
+      <div><strong>Email</strong> &middot; <a href="mailto:drr508@g.harvard.edu">drr508@g.harvard.edu</a></div>
+      <div><strong>Research site</strong> &middot; <a href="https://snptx1.github.io/snptx-academic/index.html#for-review">snptx-academic</a></div>
+    </div>
+  </header>
+
+  <!-- ───────────── SUMMARY STATS ───────────── -->
+  <section class="section">
+    <h2>At a glance</h2>
+    <p class="sub">Snapshot of academic standing as of <span style="font-family:var(--font-mono);color:var(--accent-cyan);">June 2026</span>.</p>
+    <div class="stats">
+      <div class="stat highlight-blue"><div class="label">ALM GPA</div><div class="value">4.00 / 4.00</div><div class="note">All completed ALM courses: A</div></div>
+      <div class="stat highlight-blue"><div class="label">Avg course score</div><div class="value">0.9973</div><div class="note">mean of completed-course raw scores (HES record)</div></div>
+      <div class="stat outline-blue"><div class="label">Capstone sequence</div><div class="value">Spring 2027</div><div class="note">Precapstone + Capstone</div></div>
+      <div class="stat outline-blue"><div class="label">Credits earned</div><div class="value">28 / 36</div><div class="note">8 remaining (DGMD S-17 + capstone sequence)</div></div>
+      <div class="stat outline-blue"><div class="label">MITx MicroMasters</div><div class="value">5 / 5</div><div class="note">Statistics &amp; Data Science (MIT IDSS)</div></div>
+    </div>
+  </section>
+
+  <!-- ───────────── ALM COURSEWORK ───────────── -->
+  <section class="section">
+    <h2>ALM coursework: Data Science</h2>
+    <p class="sub">Courses taken for the ALM in Extension Studies, Data Science field. Listed in reverse chronological order. Cumulative GPA 4.00 / 4.00 with average raw course score 0.9973 across completed coursework. Course catalog requirements are tracked across foundations, data science core, electives, precapstone, and capstone.</p>
+
+    <!-- Credit-progress bar -->
+    <div class="progress" aria-label="Credit progress: 24 completed, 4 in progress, 8 sequenced of 36 total">
+      <div class="bar">
+        <div class="seg done"   style="width: 66.67%;">24 / 36 COMPLETED</div>
+        <div class="seg curr"   style="width: 11.11%;">4 REG</div>
+        <div class="seg future" style="width: 22.22%;">8 SEQUENCED</div>
+      </div>
+      <div class="legend">
+        <span><span class="sw" style="background: var(--accent-green);"></span>Completed &middot; grade A</span>
+        <span><span class="sw" style="background: var(--accent-orange);"></span>Registered &middot; Summer 2026</span>
+        <span><span class="sw" style="background: rgba(110,118,129,0.30);"></span>Sequenced &middot; Spring 2027</span>
+      </div>
+    </div>
+
+    <!-- Term timeline -->
+    <div class="timeline" aria-label="Term-by-term coursework timeline">
+      <div class="term">
+        <div class="lbl">Fall 2024</div>
+        <span class="pill done">CSCI E-101</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Summer 2025</div>
+        <span class="pill done">STAT S-103</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Fall 2025</div>
+        <span class="pill done">CSCI E-108</span>
+        <span class="pill done">CSCI E-89b</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Spring 2026</div>
+        <span class="pill done">CSCI E-104</span>
+        <span class="pill done">CSCI E-116</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Summer 2026</div>
+        <span class="pill curr">DGMD S-17</span>
+      </div>
+      <div class="term">
+        <div class="lbl">Spring 2027</div>
+        <span class="pill future">Precapstone</span>
+        <span class="pill future">Capstone</span>
+      </div>
+    </div>
+
+    <table class="courses">
+      <thead>
+        <tr>
+          <th style="width: 105px;">Code</th>
+          <th>Title and description</th>
+          <th style="width: 150px;">Instructor</th>
+          <th style="width: 105px;">Term</th>
+          <th style="width: 55px;">Cred</th>
+          <th style="width: 78px;">Score</th>
+          <th style="width: 55px;">Grade</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td class="code">CSCI E-104</td>
+          <td class="title">
+            <strong>Advanced Deep Learning</strong>
+            <div class="desc">Advanced research-and-development in AI and deep learning across large language models, generative networks (GANs, stable diffusion, text-to-speech), graph neural networks, drug discovery, and physics-constrained neural networks. Taught in PyTorch with practical case work each lecture. Final project: DeepDDS drug-synergy reproduction with graph-attention networks, reframed as a SNPTX-orchestrated reproducible benchmark.</div>
+            <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e104/e104_finalproject_notebook.ipynb" download>ipynb</a><a href="../assets/projects/e104/e104_finalproject_code.html">html</a><a href="../assets/projects/e104/e104_finalproject_slides.pptx">pptx</a></div>
+          </td>
+          <td class="instructor-cell">Zoran Djordjevic<br><span class="ref-badge pending">Reference requested</span></td>
+          <td>Spring 2026</td>
+          <td>4</td>
+          <td class="score"><strong>1.0000</strong><br><span class="perfect" title="Perfect raw score, no point deductions">perfect</span></td>
+          <td class="grade">A</td>
+        </tr>
+
+        <tr>
+          <td class="code">CSCI E-116</td>
+          <td class="title">
+            <strong>Dynamic Modeling and Forecasting in Big Data</strong>
+            <div class="desc">Time-series and dynamic-systems modeling on data rich in both variables and time: dynamic regression, dynamic-factor and vector-autoregression models, volatility and error-correction models, dimensional reduction for fat datasets, state-space models, and decomposition of trend / cycle / seasonality for high-frequency forecasting. Final project: temporal early-window ICU mortality forecasting on the eICU Collaborative Research Database (demo, v2.0.1), packaged as a self-contained reproducible notebook with environment receipts, dual real-data and synthetic-fallback execution paths, and full provenance via the SNPTX harness.</div>
+            <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e116/e116_finalproject_notebook.ipynb" download>ipynb</a><a href="../assets/projects/e116/e116_finalproject.html">html</a><a href="../assets/projects/e116/e116_finalproject_slides.pptx">pptx</a></div>
+          </td>
+          <td>William Yu</td>
+          <td>Spring 2026</td>
+          <td>4</td>
+          <td class="score"><strong>0.9800</strong></td>
+          <td class="grade">A</td>
+        </tr>
+
+        <tr>
+          <td class="code">CSCI E-108</td>
+          <td class="title">
+            <strong>Data Mining, Discovery, and Exploration</strong>
+            <div class="desc">Unsupervised learning for actionable insight on massive, complex data: graph algorithms, scalable similarity and clustering, recommender systems, and discovery workflows applied to real datasets. Hands-on in Python with NetworkX, Neo4j, scikit-learn-extra, Mlxtend, and Surprise. Graduate-credit independent project required end-to-end against a real-world dataset. Final project: ChEMBL32 bioactivity mining and exploratory graph analysis of medicinal-chemistry data.</div>
+            <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e108/e108_finalproject_chembl32.ipynb" download>ipynb</a><a href="../assets/projects/e108/e108_finalproject_chembl32.html">html</a></div>
+          </td>
+          <td class="instructor-cell">Stephen Elston<br><span class="ref-badge pending">Reference requested</span></td>
+          <td>Fall 2025</td>
+          <td>4</td>
+          <td class="score"><strong>0.9936</strong></td>
+          <td class="grade">A</td>
+        </tr>
+
+        <tr>
+          <td class="code">CSCI E-89b</td>
+          <td class="title">
+            <strong>Introduction to Natural Language Processing</strong>
+            <div class="desc">Modern NLP foundations: text classification, named-entity recognition, parsing, language modeling and text generation, topic modeling, and machine translation. Text-representation methods from tokenization and TF-IDF through Word2Vec / GloVe embeddings, autoencoders, and topic models. Models covered include RNNs / LSTMs, CRFs, BiLSTM-CRF, attention, transformers and BERT, GANs, LDA, NMF, and structural topic modeling. Hands-on in Python plus the R <code>stm</code> package. Final project: hybrid statistical / neural named-entity-recognition pipeline over the BC5CDR biomedical corpus, with a companion visualization suite.</div>
+            <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e89b/e89b_ner_hybrid_report.pdf">pdf</a><a href="../assets/projects/e89b/e89b_ner_hybrid_slides.pptx">pptx</a></div>
+          </td>
+          <td class="instructor-cell">Dmitry Kurochkin<br><span class="ref-badge pending">Reference requested</span></td>
+          <td>Fall 2025</td>
+          <td>4</td>
+          <td class="score"><strong>0.9748</strong></td>
+          <td class="grade">A</td>
+        </tr>
+
+        <tr>
+          <td class="code">STAT S-103</td>
+          <td class="title">
+            <strong>Introduction to Epidemiology and Biostatistics</strong>
+            <div class="desc">Data Science Elective. Foundations of epidemiologic study design and biostatistical inference: study-design types, bias and confounding, effect modification, rates / ratios / proportions, descriptive statistics, measures of association, and regression. Substantial hands-on R component using the NHANES dataset; critical reading of primary public-health literature. Final project: HW5 logistic-regression analysis on NHANES with full results writeup.</div>
+          </td>
+          <td>Amy Tsurumi</td>
+          <td>Summer 2025</td>
+          <td>4</td>
+          <td class="score"><strong>1.0451</strong><span class="sub">incl. extra credit</span></td>
+          <td class="grade">A</td>
+        </tr>
+
+        <tr>
+          <td class="code">CSCI E-101</td>
+          <td class="title">
+            <strong>Foundations of Data Science and Engineering</strong>
+            <div class="desc">Foundations requirement. End-to-end data science: data engineering for movement, transformation, and management of data; exploratory analysis and visualization; statistical thinking and machine-learning intuition; NLP basics; and communication / storytelling with data. Integrated Python, MySQL, Tableau, and big-data analytics platforms.</div>
+          </td>
+          <td>Bruce Huang</td>
+          <td>Fall 2024</td>
+          <td>4</td>
+          <td class="score"><strong>0.9900</strong></td>
+          <td class="grade">A</td>
+        </tr>
+
+        <tr>
+          <td class="code">DGMD S-17</td>
+          <td class="title">
+            <strong>Robotics, Autonomous Vehicles, Drones, and Artificial Intelligence</strong>
+            <div class="desc">Data Science Elective. Sensor technologies, vision-based perception (localization, mapping, tracking, motion planning), AI and ML techniques for embodied agents, mathematical modeling of robotic systems, and engineering-design practice across robotics, autonomous vehicles, and drones.</div>
+          </td>
+          <td>Nabib Ahmed</td>
+          <td>Summer 2026</td>
+          <td>4</td>
+          <td class="score">&mdash;</td>
+          <td class="grade pending">REG</td>
+        </tr>
+
+        <tr>
+          <td class="code">Precapstone</td>
+          <td class="title">
+            <strong>ALM Data Science Precapstone</strong>
+            <div class="desc">Precapstone requirement. Proposal development, methodology framing, and literature anchoring for the capstone research direction.</div>
+          </td>
+          <td>ALM advising</td>
+          <td>Spring 2027</td>
+          <td>4</td>
+          <td class="score">&mdash;</td>
+          <td class="grade future">&mdash;</td>
+        </tr>
+
+        <tr>
+          <td class="code">Capstone</td>
+          <td class="title">
+            <strong>ALM Data Science Capstone</strong>
+            <div class="desc">Capstone requirement. Capstone systems engineering and writeup centered on the SNPTX deterministic orchestration framework. Capstone direction: reproducibility and provenance harness for multi-modal biomedical ML workflows.</div>
+          </td>
+          <td>ALM advising</td>
+          <td>Spring 2027</td>
+          <td>4</td>
+          <td class="score">&mdash;</td>
+          <td class="grade future">&mdash;</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ───────────── MITx COURSEWORK ───────────── -->
+  <section class="section">
+    <h2>MITx MicroMasters: Statistics and Data Science (IDSS)</h2>
+    <p class="sub">Full MicroMasters program awarded by MIT Institute for Data, Systems, and Society.</p>
+
+    <table class="courses">
+      <thead>
+        <tr>
+          <th style="width: 130px;">Code</th>
+          <th>Title and description</th>
+          <th style="width: 250px;">Lead instructors (per MITx)</th>
+          <th style="width: 100px;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td class="code">6.86x</td>
+          <td class="title">
+            <strong>Machine Learning with Python: from Linear Models to Deep Learning</strong>
+            <div class="desc">Linear and nonlinear classification, regression, collaborative filtering, neural networks, unsupervised learning, and reinforcement learning. Multiple graded projects including a collaborative-filtering Gaussian-mixture project and a deep-learning final.</div>
+            <div class="proj-links"><span class="pl-label">Project</span><a href="../assets/projects/mitx-6.86/mitx_6.86_project4_collab_filtering.ipynb" download>ipynb</a><a href="../assets/projects/mitx-6.86/mitx_6.86_project4_collab_filtering.html">html</a></div>
+          </td>
+          <td>Regina Barzilay; Tommi Jaakkola; Karene Chu</td>
+          <td><span class="badge term-done">Completed</span></td>
+        </tr>
+
+        <tr>
+          <td class="code">6.419x</td>
+          <td class="title">
+            <strong>Data Analysis: Statistical Modeling and Computation in Applications</strong>
+            <div class="desc">Applied modules including statistics review, high-dimensional genomics, network analysis, time-series analysis, and environmental data modeled with Gaussian processes. Module-level project deliverables across five domains.</div>
+            <div class="proj-links"><span class="pl-label">Module projects</span><a href="../assets/projects/mitx-6.419/mitx_6.419_module3_network_analysis.ipynb" download>network &middot; ipynb</a><a href="../assets/projects/mitx-6.419/mitx_6.419_module5_gaussian_processes.pdf">gaussian processes &middot; pdf</a></div>
+          </td>
+          <td>Caroline Uhler</td>
+          <td><span class="badge term-done">Completed</span></td>
+        </tr>
+
+        <tr>
+          <td class="code">6.431x</td>
+          <td class="title">
+            <strong>Probability: The Science of Uncertainty and Data</strong>
+            <div class="desc">Probability theory, random variables, Bayesian inference, Markov chains, limit theorems, and an introduction to statistical inference. Foundation for the rest of the IDSS sequence.</div>
+          </td>
+          <td>John Tsitsiklis; Patrick Jaillet</td>
+          <td><span class="badge term-done">Completed</span></td>
+        </tr>
+
+        <tr>
+          <td class="code">18.6501x</td>
+          <td class="title">
+            <strong>Fundamentals of Statistics</strong>
+            <div class="desc">Rigorous mathematical statistics: parametric estimation, method of moments and maximum likelihood, asymptotic and finite-sample inference, hypothesis testing, confidence regions, generalized linear models, and Bayesian inference. Proof-driven problem sets, frequent timed exercises, and a comprehensive final; the most demanding theoretical module in the MicroMasters sequence.</div>
+          </td>
+          <td>Philippe Rigollet</td>
+          <td><span class="badge term-done">Completed</span></td>
+        </tr>
+
+        <tr>
+          <td class="code">MM Capstone</td>
+          <td class="title">
+            <strong>MITx MicroMasters Capstone Exam (Statistics and Data Science)</strong>
+            <div class="desc">Proctored, two-part capstone exam covering the full MicroMasters curriculum: probability, statistics, machine learning, and data analysis.</div>
+          </td>
+          <td>MIT IDSS</td>
+          <td><span class="badge term-done">Completed</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ───────────── CAPSTONE ───────────── -->
+  <section class="section">
+    <h2>Capstone</h2>
+    <p class="sub">The ALM capstone direction is tightly coupled to the SNPTX systems engineering work and is supervised by the assigned capstone advisor.</p>
+    <div class="capstone-card">
+      <h3>SNPTX: deterministic orchestration for multi-modal biomedical ML</h3>
+      <div class="row">
+        <div class="k">Advisor</div><div class="v"><strong>Stephen Elston</strong> &middot; CSCI E-108 instructor (Fall 2025) and assigned ALM Data Science capstone advisor.</div>
+        <div class="k">Sequence</div><div class="v">Precapstone (proposal and methodology framing) and Capstone (defense and final writeup) concurrent in Spring 2027.</div>
+        <div class="k">Direction</div><div class="v">Reproducibility and provenance harness for multi-modal biomedical ML workflows, with content-hashed inputs, deterministic Snakemake DAGs, MLflow-logged runs, and per-experiment lineage. Capstone deliverable centered on a single bounded scientific surface (current candidate: a reproduction-and-provenance pass for a published graph-based therapeutic-prediction model) rather than a horizontal framework demo.</div>
+        <div class="k">Inspection surface</div><div class="v">All artifacts and pages designed to be reviewed end-to-end without chasing follow-up materials. The reviewer-facing entry point is <a href="https://snptx1.github.io/snptx-academic/index.html#for-review" style="color: var(--accent-blue);">snptx-academic/#for-review</a>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── SNPTX SUMMARY ───────────── -->
+  <section class="section">
+    <h2>SNPTX in brief</h2>
+    <p class="sub">SNPTX is a deterministic biomedical ML orchestration framework now entering pilot-phase review with bounded, reproducible lab-facing workflows. Reported numbers on the public site are bounded to declared configurations, datasets, and seeds; nothing on the site is a clinical-performance claim. The four cells below summarize the public inspection surface.</p>
+    <div class="snptx-strip">
+      <div class="cell">
+        <h4>Deterministic harness</h4>
+        <p>Seed pinned at <code style="font-family:var(--font-mono);color:var(--accent-cyan);">seed=42</code> across Python, NumPy, PyTorch, and CUDA. Environment locked via <code style="font-family:var(--font-mono);color:var(--accent-cyan);">pyproject.toml</code> plus lock file.</p>
+        <a href="https://snptx1.github.io/snptx-academic/pages/methodology.html#reproducibility">Methodology &middot; reproducibility &rarr;</a>
+      </div>
+      <div class="cell">
+        <h4>Five-minute reproduction</h4>
+        <p>A carved-out repository reproduces the ChEMBL bioactivity GCN baseline end to end on CPU in roughly five minutes, with stated headline metric.</p>
+        <a href="https://github.com/snptx1/snptx-repro-chembl">snptx-repro-chembl &rarr;</a>
+      </div>
+      <div class="cell">
+        <h4>Inspection orientation</h4>
+        <p>A short orientation page intended for senior technical readers, with three reading paths and an inspection-invariants panel.</p>
+        <a href="https://snptx1.github.io/snptx-academic/index.html#for-review">snptx-academic &middot; for-review &rarr;</a>
+      </div>
+      <div class="cell">
+        <h4>Methodology surface</h4>
+        <p>Architecture, methodology, and references pages organize the design, the reproducibility controls, and the literature the work draws on.</p>
+        <a href="https://snptx1.github.io/snptx-academic/pages/architecture.html">Architecture &rarr;</a>
+      </div>
+    </div>
+    <div class="chips" aria-label="Capability summary">
+      <span class="chip green">Snakemake</span>
+      <span class="chip green">DVC</span>
+      <span class="chip green">MLflow</span>
+      <span class="chip cyan">Deterministic pipelines</span>
+      <span class="chip cyan">Content-hashed data</span>
+      <span class="chip blue">PyTorch</span>
+      <span class="chip blue">Graph neural networks</span>
+      <span class="chip blue">Diffusion models</span>
+      <span class="chip purple">LLM agents</span>
+      <span class="chip purple">LangChain orchestration</span>
+      <span class="chip orange">Clinical time series</span>
+      <span class="chip orange">Drug repurposing</span>
+      <span class="chip">Bayesian inference</span>
+      <span class="chip">NLP &middot; transformers</span>
+    </div>
+  </section>
+
+  <!-- ───────────── COURSE PROFESSOR REFERENCES ───────────── -->
+  <section class="section">
+    <h2>Course professor references</h2>
+    <p class="sub">Reference requests are in progress for three former ALM course instructors whose courses produced graded, project-based evidence directly adjacent to SNPTX. This section is intended for pilot-lab reviewers who need to understand the academic reference layer behind the pilot outreach. Specific review details can be added here after each professor confirms scope and permission.</p>
+
+    <div class="ref-list">
+      <div class="ref-card">
+        <div class="name">Zoran Djordjevic <span class="badge term-done">CSCI E-104</span> <span class="badge confirm">Pending confirmation</span></div>
+        <div class="affil">Advanced Deep Learning &middot; Spring 2026 &middot; raw score 1.0000 &middot; A</div>
+        <div class="reason">Requested reference focus: advanced deep learning execution, graph-attention drug-synergy reproduction, and the extension of course-level work into a deterministic SNPTX benchmark surface. Future update: add confirmed reference scope and any permitted review summary.</div>
+      </div>
+
+      <div class="ref-card secondary">
+        <div class="name">Stephen Elston <span class="badge term-done">CSCI E-108</span> <span class="badge capstone">Capstone advisor</span> <span class="badge confirm">Pending confirmation</span></div>
+        <div class="affil">Data Mining, Discovery, and Exploration &middot; Fall 2025 &middot; raw score 0.9936 &middot; A</div>
+        <div class="reason">Requested reference focus: ChEMBL32 bioactivity mining, graph analytics and discovery workflows, continuation into SNPTX seed datasets, and capstone supervision context. Future update: add confirmed reference scope and any permitted review summary.</div>
+      </div>
+
+      <div class="ref-card">
+        <div class="name">Dmitry Kurochkin <span class="badge term-done">CSCI E-89b</span> <span class="badge confirm">Pending confirmation</span></div>
+        <div class="affil">Introduction to Natural Language Processing &middot; Fall 2025 &middot; raw score 0.9748 &middot; A</div>
+        <div class="reason">Requested reference focus: biomedical NLP execution, hybrid statistical and neural NER over the BC5CDR corpus, and the upstream text-processing components that now feed SNPTX. Future update: add confirmed reference scope and any permitted review summary.</div>
+      </div>
+    </div>
+
+    <div class="note"><strong>Access note:</strong> this page is public only by direct URL and carries <code style="font-family:var(--font-mono);color:var(--accent-cyan);">noindex,nofollow</code>. It should be shared only with intended pilot reviewers and reference writers. It is not linked from the main academic site navigation.</div>
+  </section>
+
+  <footer class="page-footer">
+    <div>SNPTX&trade; &middot; Daniel R. Russell &middot; <a href="mailto:dan@snptx.ai" style="color: var(--accent-blue);">dan@snptx.ai</a></div>
+    <div><a href="../index.html#for-review" style="color: var(--accent-cyan); text-decoration: none;">snptx-academic &middot; for-review &rarr;</a></div>
+    <div>Last updated: 2 June 2026</div>
+  </footer>
+
+</div>
+</body>
+</html>
