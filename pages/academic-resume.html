@@ -22,7 +22,6 @@
     --accent-orange:  #d29922;
     --accent-purple:  #bc8cff;
     --accent-cyan:    #39c5cf;
-    --neon-blue:      #00e5ff;
     --accent-red:     #f85149;
     --font-stack:     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
     --font-mono:      'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
@@ -354,11 +353,13 @@
 
   /* Highlighted at-a-glance stats */
   .stat.highlight-blue {
-    border-color: rgba(0,229,255,0.72);
+    border-color: rgba(88,166,255,0.5);
+    background: rgba(88,166,255,0.10);
   }
   .stat.highlight-blue .label,
-  .stat.highlight-blue .value,
-  .stat.highlight-blue .note { color: var(--neon-blue); }
+  .stat.highlight-blue .value { color: var(--accent-blue); }
+
+  .stat.highlight-blue .note { color: var(--text-secondary); }
 
   /* Credit-progress bar */
   .progress { margin: 4px 0 14px; }
