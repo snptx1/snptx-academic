@@ -23,6 +23,7 @@
     --accent-purple:  #bc8cff;
     --accent-cyan:    #39c5cf;
     --accent-red:     #f85149;
+    --accent-pink:    #f778ba;
     --font-stack:     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
     --font-mono:      'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   }
@@ -253,20 +254,44 @@
     margin-top: 6px;
     font-family: var(--font-mono);
     font-size: 9px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
-    padding: 2px 8px;
+    padding: 2px 9px;
     border-radius: 999px;
-    color: var(--accent-green);
-    border: 1px solid rgba(63,185,80,0.56);
-    background: rgba(63,185,80,0.08);
+    color: var(--accent-pink);
+    border: 1px solid rgba(247,120,186,0.56);
+    background: rgba(247,120,186,0.08);
+    box-shadow: 0 0 8px rgba(247,120,186,0.22);
     white-space: nowrap;
   }
-  .instructor-cell .ref-badge.pending {
-    color: var(--accent-orange);
-    border-color: rgba(210,153,34,0.56);
-    background: rgba(210,153,34,0.08);
+
+  .badge.reference {
+    color: var(--accent-pink);
+    border-color: rgba(247,120,186,0.55);
+    background: rgba(247,120,186,0.10);
+    box-shadow: 0 0 8px rgba(247,120,186,0.22);
   }
+
+  .ref-card.pink { border-left-color: var(--accent-pink); }
+  .ref-card .meta {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 4px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+  }
+  .ref-card .meta .k {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-top: 3px;
+  }
+  .ref-card .meta .v { color: var(--text-secondary); }
+  .ref-card .meta .v strong { color: var(--text-primary); }
+  .ref-card .meta .v a { color: var(--accent-blue); text-decoration: none; font-family: var(--font-mono); }
+  .ref-card .meta .v.placeholder { color: var(--text-muted); font-style: italic; }
 
   .ref-list {
     display: grid;
@@ -507,14 +532,14 @@
   <header class="page-header">
     <div>
       <h1>Daniel R. Russell</h1>
-      <p class="lede">ALM Data Science candidate at the Harvard Extension School (Class of 2027) and MITx MicroMasters holder in Statistics and Data Science (MIT IDSS). Single-author systems engineer behind <a href="https://snptx1.github.io/snptx-academic/index.html#for-review" style="color: var(--accent-blue);">SNPTX</a>, the deterministic, multi-modal biomedical ML orchestration framework that anchors the ALM Data Science capstone. This unlisted variant adds the course-professor reference layer for pilot-lab review.</p>
+      <p class="lede">ALM Data Science candidate at the Harvard Extension School (Class of 2027) and MITx MicroMasters holder in Statistics and Data Science (MIT IDSS). Single-author systems engineer behind <a href="https://snptx1.github.io/snptx-academic/index.html#for-review" style="color: var(--accent-blue);">SNPTX</a>, the deterministic, multi-modal biomedical ML orchestration framework that anchors the ALM Data Science capstone. This variant of the academic resume adds the course-professor reference layer for pilot-lab review.</p>
     </div>
     <div class="identity-card">
       <div><strong>Program</strong> &middot; Harvard ALM, Data Science</div>
       <div><strong>Class</strong> &middot; 2027 (HES)</div>
       <div><strong>Prior credential</strong> &middot; MITx MicroMasters, Statistics &amp; Data Science (IDSS)</div>
       <div><strong>GPA (ALM)</strong> &middot; 4.00 / 4.00</div>
-      <div><strong>Reference layer</strong> &middot; requested, pending confirmation</div>
+      <div><strong>Reference layer</strong> &middot; three course-professor references</div>
       <div><strong>Email</strong> &middot; <a href="mailto:drr508@g.harvard.edu">drr508@g.harvard.edu</a></div>
       <div><strong>Research site</strong> &middot; <a href="https://snptx1.github.io/snptx-academic/index.html#for-review">snptx-academic</a></div>
     </div>
@@ -604,7 +629,7 @@
             <div class="desc">Advanced research-and-development in AI and deep learning across large language models, generative networks (GANs, stable diffusion, text-to-speech), graph neural networks, drug discovery, and physics-constrained neural networks. Taught in PyTorch with practical case work each lecture. Final project: DeepDDS drug-synergy reproduction with graph-attention networks, reframed as a SNPTX-orchestrated reproducible benchmark.</div>
             <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e104/e104_finalproject_notebook.ipynb" download>ipynb</a><a href="../assets/projects/e104/e104_finalproject_code.html">html</a><a href="../assets/projects/e104/e104_finalproject_slides.pptx">pptx</a></div>
           </td>
-          <td class="instructor-cell">Zoran Djordjevic<br><span class="ref-badge pending">Reference requested</span></td>
+          <td class="instructor-cell">Zoran Djordjevic<br><span class="ref-badge">Reference</span></td>
           <td>Spring 2026</td>
           <td>4</td>
           <td class="score"><strong>1.0000</strong><br><span class="perfect" title="Perfect raw score, no point deductions">perfect</span></td>
@@ -632,7 +657,7 @@
             <div class="desc">Unsupervised learning for actionable insight on massive, complex data: graph algorithms, scalable similarity and clustering, recommender systems, and discovery workflows applied to real datasets. Hands-on in Python with NetworkX, Neo4j, scikit-learn-extra, Mlxtend, and Surprise. Graduate-credit independent project required end-to-end against a real-world dataset. Final project: ChEMBL32 bioactivity mining and exploratory graph analysis of medicinal-chemistry data.</div>
             <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e108/e108_finalproject_chembl32.ipynb" download>ipynb</a><a href="../assets/projects/e108/e108_finalproject_chembl32.html">html</a></div>
           </td>
-          <td class="instructor-cell">Stephen Elston<br><span class="ref-badge pending">Reference requested</span></td>
+          <td class="instructor-cell">Stephen Elston<br><span class="ref-badge">Reference</span></td>
           <td>Fall 2025</td>
           <td>4</td>
           <td class="score"><strong>0.9936</strong></td>
@@ -646,7 +671,7 @@
             <div class="desc">Modern NLP foundations: text classification, named-entity recognition, parsing, language modeling and text generation, topic modeling, and machine translation. Text-representation methods from tokenization and TF-IDF through Word2Vec / GloVe embeddings, autoencoders, and topic models. Models covered include RNNs / LSTMs, CRFs, BiLSTM-CRF, attention, transformers and BERT, GANs, LDA, NMF, and structural topic modeling. Hands-on in Python plus the R <code>stm</code> package. Final project: hybrid statistical / neural named-entity-recognition pipeline over the BC5CDR biomedical corpus, with a companion visualization suite.</div>
             <div class="proj-links"><span class="pl-label">Final project</span><a href="../assets/projects/e89b/e89b_ner_hybrid_report.pdf">pdf</a><a href="../assets/projects/e89b/e89b_ner_hybrid_slides.pptx">pptx</a></div>
           </td>
-          <td class="instructor-cell">Dmitry Kurochkin<br><span class="ref-badge pending">Reference requested</span></td>
+          <td class="instructor-cell">Dmitry Kurochkin<br><span class="ref-badge">Reference</span></td>
           <td>Fall 2025</td>
           <td>4</td>
           <td class="score"><strong>0.9748</strong></td>
@@ -856,29 +881,48 @@
   <!-- ───────────── COURSE PROFESSOR REFERENCES ───────────── -->
   <section class="section">
     <h2>Course professor references</h2>
-    <p class="sub">Reference requests are in progress for three former ALM course instructors whose courses produced graded, project-based evidence directly adjacent to SNPTX. This section is intended for pilot-lab reviewers who need to understand the academic reference layer behind the pilot outreach. Specific review details can be added here after each professor confirms scope and permission.</p>
+    <p class="sub">Three former ALM course instructors anchor the academic reference layer behind the SNPTX pilot outreach. Each course produced graded, project-based evidence directly adjacent to SNPTX, and each reference focus below is scoped to what that course and its final project surface.</p>
 
     <div class="ref-list">
-      <div class="ref-card">
-        <div class="name">Zoran Djordjevic <span class="badge term-done">CSCI E-104</span> <span class="badge confirm">Pending confirmation</span></div>
+      <div class="ref-card pink">
+        <div class="name">Zoran Djordjevic <span class="badge term-done">CSCI E-104</span> <span class="badge reference">Reference</span></div>
         <div class="affil">Advanced Deep Learning &middot; Spring 2026 &middot; raw score 1.0000 &middot; A</div>
-        <div class="reason">Requested reference focus: advanced deep learning execution, graph-attention drug-synergy reproduction, and the extension of course-level work into a deterministic SNPTX benchmark surface. Future update: add confirmed reference scope and any permitted review summary.</div>
+        <div class="meta">
+          <div class="k">Email</div><div class="v"><a href="mailto:zdjordj@fas.harvard.edu">zdjordj@fas.harvard.edu</a></div>
+          <div class="k">Salutation</div><div class="v">Professor Djordjevic</div>
+          <div class="k">PhD affiliation</div><div class="v placeholder">[to confirm]</div>
+          <div class="k">Current role</div><div class="v placeholder">[to confirm]</div>
+          <div class="k">Pertinent detail</div><div class="v placeholder">[to confirm]</div>
+        </div>
+        <div class="reason">Reference focus: advanced deep learning execution, graph-attention drug-synergy reproduction, and the extension of course-level work into a deterministic SNPTX benchmark surface, anchored in the CSCI E-104 final-project record.</div>
       </div>
 
-      <div class="ref-card secondary">
-        <div class="name">Stephen Elston <span class="badge term-done">CSCI E-108</span> <span class="badge capstone">Capstone advisor</span> <span class="badge confirm">Pending confirmation</span></div>
+      <div class="ref-card pink">
+        <div class="name">Stephen Elston <span class="badge term-done">CSCI E-108</span> <span class="badge capstone">Capstone advisor</span> <span class="badge reference">Reference</span></div>
         <div class="affil">Data Mining, Discovery, and Exploration &middot; Fall 2025 &middot; raw score 0.9936 &middot; A</div>
-        <div class="reason">Requested reference focus: ChEMBL32 bioactivity mining, graph analytics and discovery workflows, continuation into SNPTX seed datasets, and capstone supervision context. Future update: add confirmed reference scope and any permitted review summary.</div>
+        <div class="meta">
+          <div class="k">Email</div><div class="v"><a href="mailto:stephen_elston@g.harvard.edu">stephen_elston@g.harvard.edu</a></div>
+          <div class="k">Salutation</div><div class="v">Mr. Elston</div>
+          <div class="k">PhD affiliation</div><div class="v placeholder">[to confirm]</div>
+          <div class="k">Current role</div><div class="v placeholder">[to confirm]</div>
+          <div class="k">Pertinent detail</div><div class="v">Assigned ALM Data Science capstone advisor for SNPTX-anchored capstone (Spring 2027).</div>
+        </div>
+        <div class="reason">Reference focus: ChEMBL32 bioactivity mining, graph analytics and discovery workflows, continuation into SNPTX seed datasets, and capstone supervision context.</div>
       </div>
 
-      <div class="ref-card">
-        <div class="name">Dmitry Kurochkin <span class="badge term-done">CSCI E-89b</span> <span class="badge confirm">Pending confirmation</span></div>
+      <div class="ref-card pink">
+        <div class="name">Dmitry Kurochkin <span class="badge term-done">CSCI E-89b</span> <span class="badge reference">Reference</span></div>
         <div class="affil">Introduction to Natural Language Processing &middot; Fall 2025 &middot; raw score 0.9748 &middot; A</div>
-        <div class="reason">Requested reference focus: biomedical NLP execution, hybrid statistical and neural NER over the BC5CDR corpus, and the upstream text-processing components that now feed SNPTX. Future update: add confirmed reference scope and any permitted review summary.</div>
+        <div class="meta">
+          <div class="k">Email</div><div class="v"><a href="mailto:dkurochkin@fas.harvard.edu">dkurochkin@fas.harvard.edu</a></div>
+          <div class="k">Salutation</div><div class="v">Professor Kurochkin</div>
+          <div class="k">PhD affiliation</div><div class="v placeholder">[to confirm]</div>
+          <div class="k">Current role</div><div class="v placeholder">[to confirm]</div>
+          <div class="k">Pertinent detail</div><div class="v placeholder">[to confirm]</div>
+        </div>
+        <div class="reason">Reference focus: biomedical NLP execution, hybrid statistical and neural NER over the BC5CDR corpus, and the upstream text-processing components that now feed SNPTX.</div>
       </div>
     </div>
-
-    <div class="note"><strong>Access note:</strong> this page is public only by direct URL and carries <code style="font-family:var(--font-mono);color:var(--accent-cyan);">noindex,nofollow</code>. It should be shared only with intended pilot reviewers and reference writers. It is not linked from the main academic site navigation.</div>
   </section>
 
   <footer class="page-footer">
