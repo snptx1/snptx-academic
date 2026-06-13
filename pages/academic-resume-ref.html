@@ -45,9 +45,9 @@
     padding-bottom: 22px;
     border-bottom: 1px solid var(--border);
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 18px;
-    align-items: end;
+    align-items: start;
   }
   .page-header h1 {
     font-size: 30px;
@@ -56,7 +56,7 @@
     margin-bottom: 6px;
   }
   .page-header .lede {
-    max-width: 760px;
+    max-width: none;
     color: var(--text-secondary);
     font-size: 14.5px;
   }
@@ -70,10 +70,16 @@
     color: var(--text-secondary);
     display: grid;
     gap: 4px;
-    min-width: 280px;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
+  .identity-card div { min-width: 0; }
   .identity-card strong { color: var(--text-primary); font-weight: 600; }
   .identity-card a { color: var(--accent-blue); text-decoration: none; }
+
+  @media (max-width: 820px) {
+    .page-header { grid-template-columns: 1fr; }
+  }
 
   .section {
     background: rgba(13,17,23,0.72);
@@ -530,7 +536,7 @@
       <p class="lede">ALM in Data Science and Artificial Intelligence (HES '27) candidate at Harvard University and holder of the MITx MicroMasters in Statistics and Data Science, MIT Institute for Data, Systems, and Society (IDSS). Single-author systems engineer behind <a href="https://snptx1.github.io/snptx-academic/index.html#for-review" style="color: var(--accent-blue);">SNPTX</a>, the deterministic, multi-modal biomedical ML orchestration framework that anchors the ALM Data Science and Artificial Intelligence capstone. This variant of the academic resume adds the course-professor reference layer for pilot-lab review.</p>
     </div>
     <div class="identity-card">
-      <div><strong>Program</strong> &middot; Harvard ALM, Data Science and Artificial Intelligence</div>
+      <div><strong>Program</strong> &middot; ALM in Data Science and Artificial Intelligence (HES '27), Harvard University</div>
       <div><strong>Class</strong> &middot; 2027 (HES)</div>
       <div><strong>Prior credential</strong> &middot; MITx MicroMasters in Statistics and Data Science, MIT Institute for Data, Systems, and Society (IDSS)</div>
       <div><strong>GPA (ALM)</strong> &middot; 4.00 / 4.00</div>
