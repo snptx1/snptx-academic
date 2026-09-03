@@ -994,8 +994,8 @@
                   <div class="hero-stat-label">Modality families and active datasets</div>
                 </div>
                 <div class="hero-stat">
-                  <div class="hero-stat-value" style="color:var(--accent-blue);">98.0%</div>
-                  <div class="hero-stat-label">ChEMBL drug-GCN reproducible baseline</div>
+                  <div class="hero-stat-value" style="color:var(--accent-blue);">bit-equal</div>
+                  <div class="hero-stat-label">ChEMBL drug-GCN determinism smoke test (seed=42)</div>
                 </div>
                 <div class="hero-stat">
                   <div class="hero-stat-value" style="color:var(--accent-orange);">104 / 1,100</div>
@@ -1009,7 +1009,7 @@
                 <span><span style="color:var(--accent-blue);">&bull;</span> Snakemake + DVC + MLflow</span>
                 <span><span style="color:var(--accent-blue);">&bull;</span> <a href="pages/methodology.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">deterministic seeding &middot; k-fold leakage gates</a></span>
                 <span><span style="color:var(--accent-purple);">&bull;</span> <a href="pages/intelligence.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">5 implemented + 10 theory-grounded</a></span>
-                <span><span style="color:var(--accent-cyan);">&bull;</span> <a href="pages/results.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">99.3% imaging &middot; 92.8% omics &middot; 98.5% drug-GCN</a></span>
+                <span><span style="color:var(--accent-cyan);">&bull;</span> <a href="pages/results.html" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(139,148,158,0.5);">99.3% imaging &middot; 92.8% omics &middot; reproducible drug-GCN smoke test</a></span>
               </div>
 
               <div class="hero-cta-row">
@@ -1104,7 +1104,7 @@
           <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--accent-green);">
             <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-green);text-transform:uppercase;">Path 2 &middot; Run something</span>
             <h4 style="font-size:16px;line-height:1.3;letter-spacing:-0.01em;">Reproduce a result locally in 5 minutes</h4>
-            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;">A carved-out repository reproduces the ChEMBL bioactivity GCN baseline end to end on CPU, deterministic at <code style="font-family:var(--font-mono);color:var(--accent-cyan);">seed=42</code>. The README states the headline number, the expected runtime, and where to look if you are evaluating the result critically.</p>
+            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;">A carved-out repository reproduces the ChEMBL bioactivity GCN baseline end to end on CPU, deterministic at <code style="font-family:var(--font-mono);color:var(--accent-cyan);">seed=42</code>. The README states the honest structure/context-only number (a determinism smoke test, not a predictive result), the expected runtime, and where to look if you are evaluating the result critically.</p>
             <p style="font-size:11.5px;color:var(--text-secondary);margin-top:auto;padding-top:8px;border-top:1px solid rgba(48,54,61,0.7);">
               <a href="https://github.com/snptx1/snptx-repro-chembl" style="color:var(--accent-green);text-decoration:none;font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;">snptx-repro-chembl &rarr;</a>
             </p>
@@ -1197,7 +1197,7 @@
           <div class="hero-thread-card proof-card">
             <div class="hero-thread-label" style="color:var(--accent-blue);">Public reproducibility path</div>
             <h4>Reproduce the ChEMBL baseline locally</h4>
-            <div class="proof-callout"><span style="color:var(--accent-blue);text-transform:uppercase;letter-spacing:0.06em;font-size:9.5px;">Performance spectrum &middot;</span> <span style="color:var(--accent-green);">99.3%</span> imaging &middot; <span style="color:var(--accent-blue);">92.8%</span> omics &middot; <span style="color:var(--accent-green);">98.5%</span> drug-GCN &mdash; <a href="pages/results.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">full results &rarr;</a></div>
+            <div class="proof-callout"><span style="color:var(--accent-blue);text-transform:uppercase;letter-spacing:0.06em;font-size:9.5px;">Performance spectrum &middot;</span> <span style="color:var(--accent-green);">99.3%</span> imaging &middot; <span style="color:var(--accent-blue);">92.8%</span> omics &middot; <span style="color:var(--accent-green);">reproducible</span> drug-GCN smoke test &mdash; <a href="pages/results.html" style="color:var(--text-primary);text-decoration:none;border-bottom:1px dotted rgba(201,209,217,0.4);">full results &rarr;</a></div>
             <p style="font-size:12px;color:var(--text-secondary);margin:0 0 14px;line-height:1.55;">Deterministic, bit-equal across runs at <code style="font-family:var(--font-mono);color:var(--accent-cyan);">seed=42</code>; CPU-only, no GPU required.</p>
             <div style="position:relative;"><button type="button" onclick="snptxCopySnippet(this)" style="position:absolute;top:6px;right:6px;z-index:2;padding:3px 8px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-secondary);background:rgba(110,118,129,0.15);border:1px solid rgba(110,118,129,0.35);border-radius:4px;cursor:pointer;" aria-label="Copy snippet to clipboard">copy</button>
 <script>function snptxCopySnippet(btn){var p=btn.parentElement.querySelector('pre');navigator.clipboard.writeText(p.innerText).then(function(){var o=btn.textContent;btn.textContent='copied';setTimeout(function(){btn.textContent=o;},1400);});}</script>
@@ -1205,7 +1205,7 @@
 <span class="c"># Prerequisites: apt install python3 python3-venv make git</span>
 <span class="k">git</span> clone https://github.com/snptx1/snptx-repro-chembl.git
 <span class="k">cd</span> snptx-repro-chembl && <span class="k">make</span> install <span class="v">repro-chembl</span>   <span class="c"># &asymp; 3 min install + 15 s run on CPU</span>
-<span class="k">cat</span> results/metrics/drug_discovery_result.json   <span class="c"># expect accuracy = 0.9850586979722519</span></pre></div>
+<span class="k">cat</span> results/metrics/chembl_smoke_result.json   <span class="c"># expect accuracy = 0.6755602988260405</span></pre></div>
           </div>
 
           <div class="hero-thread-card proof-card">
