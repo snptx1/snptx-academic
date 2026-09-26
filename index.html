@@ -1341,7 +1341,7 @@
           <p style="font-size:12px;color:var(--text-secondary);max-width:520px;">Ordered stages with persisted artifacts; downstream analysis attaches through a contract-validated runner; the autonomy surface feeds next-run selection back into training. Full diagram on <a href="pages/architecture.html" style="color:var(--accent-blue);">Architecture</a>.</p>
         </div>
         <div style="background:#0d1117;border:none;border-radius:0;padding:0;overflow:auto;">
-          <svg viewBox="38 34 1032 390" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iarch-title iarch-desc" style="width:100%;height:auto;min-width:760px;display:block;background:#0d1117;">
+          <svg viewBox="24 34 1046 390" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iarch-title iarch-desc" style="width:100%;height:auto;min-width:760px;display:block;background:#0d1117;">
             <title id="iarch-title">SNPTX execution spine, extension runner, autonomy and deployment surfaces</title>
             <desc id="iarch-desc">Four-stage execution spine (ingestion, training, evaluation, reporting) with persisted artifacts; mediated contract-validated extension runner attaches through declared interfaces; an autonomous experimentation surface feeds back into training; a deployment surface receives the evaluation package.</desc>
             <defs>
@@ -1427,7 +1427,7 @@
 
             <!-- Bottom split: autonomy + deployment / evaluation package -->
             <rect class="iarch-autonomy" x="46" y="304" width="500" height="104" rx="12"/>
-            <text class="iarch-note" x="68" y="328">AUTONOMOUS EXPERIMENTATION &middot; EXPERIMENTENGINE</text>
+            <text class="iarch-note" x="68" y="328">AUTONOMOUS EXPERIMENTATION &middot; EXPERIMENT ENGINE</text>
             <text class="iarch-autonomy-text" x="296" y="356">GP surrogate + EI / VoI acquisition</text>
             <text class="iarch-autonomy-text" x="296" y="378">SPRT (&alpha;=&beta;=0.05) &middot; DuckDB experiment catalog</text>
             <text class="iarch-autonomy-text" x="296" y="398">1,037 exp / hr validated throughput</text>
@@ -1439,7 +1439,7 @@
             <text class="iarch-pilot-text" x="810" y="398">lab-hosted via Terraform + Helm</text>
 
             <!-- Feedback: autonomy → training (green dashed, routed left of runner lane) -->
-            <path class="iarch-feedback" d="M58 304 V42 H385 V90"/>
+            <path class="iarch-feedback" d="M46 330 H32 V42 H385 V90"/>
             <text class="iarch-note" x="64" y="34" fill="#3fb950">NEXT-RUN SELECTION</text>
 
             <!-- Runner exit → deployment surface (blue dashed) -->
