@@ -1045,9 +1045,8 @@
       </div>
 
       <section class="section-block">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:14px;margin-top:6px;">
 
-          <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;border-top:2px solid var(--accent-green);">
+        <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;border-top:2px solid var(--accent-green);">
             <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-green);text-transform:uppercase;">Preprint 1 &middot; Decision engine</span>
             <h4 style="font-size:16.5px;line-height:1.3;letter-spacing:-0.01em;">Knowing what to measure and when to stop</h4>
             <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0;">An autonomous, calibrated sequential decision engine for molecular property (ADMET) discovery: decide when to stop measuring, quantify what the model does not know, and abstain wisely.</p>
@@ -1066,7 +1065,14 @@
             </p>
           </div>
 
-          <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;border-top:2px solid var(--accent-purple);">
+        <figure style="margin:18px 0 0;padding:18px;background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;">
+          <h4 style="margin:0 0 12px;font-size:16.5px;line-height:1.3;letter-spacing:-0.01em;color:var(--text-primary);">Small structural change, large property shift</h4>
+          <img src="assets/molecules/cliff_pair_3d_comparison.png" loading="lazy" alt="Two drug-like molecules rendered in an identical 3D scaffold pose, each labeled above: a carboxylic acid (logD -1.28) on the left and a primary amide (logD +1.96) on the right, differing only at the single highlighted functional group." style="width:100%;height:auto;border-radius:8px;display:block;" />
+          <figcaption style="margin-top:12px;font-size:12.5px;color:var(--text-secondary);line-height:1.6;">
+            <strong style="color:var(--text-primary);">Why it matters.</strong> The two structures above are almost the same. Change a single group on the right side, an acid (COOH) into an amide (CONH<sub>2</sub>, highlighted), and the molecule flips from water-loving to fat-loving, a swing large enough to move its measured lipophilicity from one extreme to the other. Drug designers rely on computer models that assume similar molecules behave similarly, so a big jump from a tiny change is exactly where those predictions tend to be wrong. Preprint&nbsp;1 finds <strong style="color:var(--text-primary);">1,398</strong> of these surprise pairs automatically, pointing a scientist to the predictions worth distrusting and the molecules worth testing first.
+          </figcaption>
+        </figure>
+        <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;border-top:2px solid var(--accent-purple);">
             <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-purple);text-transform:uppercase;">Preprint 2 &middot; Learned representations</span>
             <h4 style="font-size:16.5px;line-height:1.3;letter-spacing:-0.01em;">Learned molecular representations with calibrated deep-ensemble uncertainty</h4>
             <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0;">Multi-task graph encoders coupled to deep-ensemble calibration for label-efficient ADMET decisions, under a pre-registered leakage-controlled protocol.</p>
@@ -1085,15 +1091,6 @@
             </p>
           </div>
 
-        </div>
-
-        <figure style="margin:18px 0 0;padding:18px;background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;">
-          <h4 style="margin:0 0 12px;font-size:16.5px;line-height:1.3;letter-spacing:-0.01em;color:var(--text-primary);">Small structural change, large property shift</h4>
-          <img src="assets/molecules/cliff_pair_3d_comparison.png" loading="lazy" alt="Two drug-like molecules rendered in an identical 3D scaffold pose, each labeled above: a carboxylic acid (logD -1.28) on the left and a primary amide (logD +1.96) on the right, differing only at the single highlighted functional group." style="width:100%;height:auto;border-radius:8px;display:block;" />
-          <figcaption style="margin-top:12px;font-size:12.5px;color:var(--text-secondary);line-height:1.6;">
-            <strong style="color:var(--text-primary);">Why it matters.</strong> The two structures above are almost the same. Change a single group on the right side, an acid (COOH) into an amide (CONH<sub>2</sub>, highlighted), and the molecule flips from water-loving to fat-loving, a swing large enough to move its measured lipophilicity from one extreme to the other. Drug designers rely on computer models that assume similar molecules behave similarly, so a big jump from a tiny change is exactly where those predictions tend to be wrong. Preprint&nbsp;1 finds <strong style="color:var(--text-primary);">1,398</strong> of these surprise pairs automatically, pointing a scientist to the predictions worth distrusting and the molecules worth testing first.
-          </figcaption>
-        </figure>
         <figure style="margin:18px 0 0;padding:18px;background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;">
           <h4 style="margin:0 0 12px;font-size:16.5px;line-height:1.3;letter-spacing:-0.01em;color:var(--text-primary);">Sequential decision efficiency with the deep-ensemble oracle</h4>
           <img src="assets/figures/campaign_efficiency.png" loading="lazy" alt="Dot plot comparing a fixed-sample testing budget against the SPRT-driven sequential campaign across four endpoints. The learned-oracle campaign reaches a GO decision on three of four endpoints with fewer measurements, using 150 versus a 213 fixed budget, while HIA remains undecided." style="width:100%;height:auto;border-radius:8px;display:block;" />
