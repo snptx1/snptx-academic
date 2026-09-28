@@ -7808,7 +7808,23 @@ a.anchor-link {
     white-space: normal;
   }
 </style>
-<!-- End of mermaid configuration --></head>
+<!-- End of mermaid configuration --><style id="snptx-github-dark">
+:root, [data-jp-theme-name="JupyterLab Dark"] {
+  --jp-layout-color0: #0d1117 !important;
+  --jp-layout-color1: #0d1117 !important;
+  --jp-layout-color2: #161b22 !important;
+  --jp-layout-color3: #21262d !important;
+  --jp-border-color0: #30363d !important;
+  --jp-border-color1: #30363d !important;
+  --jp-border-color2: #21262d !important;
+  --jp-content-font-color1: #c9d1d9 !important;
+  --jp-ui-font-color1: #c9d1d9 !important;
+}
+body, .jp-Notebook, .jp-NotebookPanel, #notebook, #notebook-container { background-color: #0d1117 !important; }
+.jp-InputArea-editor, .jp-Cell .cm-editor, .highlight, pre { background-color: #161b22 !important; }
+.jp-RenderedHTMLCommon pre, .jp-OutputArea-output pre { background-color: #161b22 !important; }
+</style>
+</head>
 <body class="jp-Notebook" data-jp-theme-light="false" data-jp-theme-name="JupyterLab Dark">
 <main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e64a71a">
@@ -7967,6 +7983,23 @@ manuscript.</p>
 <pre>repo root: /home/snptx/snptx-repro-discovery
 </pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1bfb51c7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="System-architecture">System architecture<a class="anchor-link" href="#System-architecture">¶</a></h2><p>One map before the section-by-section detail. Molecular descriptors feed a RandomForest
+property oracle with split-conformal calibration; the calibrated decision engine (Wald
+SPRT sequential stopping, conformal and selective prediction, and abductive discovery)
+turns the oracle uncertainty into a traceable go/no-go call, with every step logged to a
+DuckDB lineage store. The graph encoder is an alternative pluggable oracle, not the one
+depicted here. Colors group related blocks: blue inputs and feedback, neon yellow the
+oracle and calibration, green decisions and outputs, purple discovery, and grey lineage.</p>
 </div>
 </div>
 </div>
