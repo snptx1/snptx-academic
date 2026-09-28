@@ -116,21 +116,19 @@
         <div class="eyebrow">What to emphasize</div>
         <p class="emph">Your letter is most valuable on the evaluation integrity of the E-116 forecasting work: the temporal-modeling discipline and a validation design built to resist self-deception. Please speak, with concrete examples from the early-window ICU mortality forecasting project, to the leakage-safe window construction, the honest like-for-like model comparison, the hospital-grouped out-of-sample validation, and the calibration and drift diagnostics that closed the study. This is method rather than biology; the clinical and domain signal comes from the preprint and the other letters, not from you.</p>
         <ul class="tight">
-          <li><b>Temporal design</b> — turning time-stamped vitals and laboratory observations into leakage-safe 6, 12, and 24 hour prediction windows, which is where most of the real difficulty lived.</li>
-          <li><b>Honest model comparison</b> — static, dynamic, PCA-factor, and nonlinear reduced-form models compared on the same footing rather than a single model reported favorably.</li>
-          <li><b>Validation integrity</b> — hospital-grouped out-of-sample validation across 186 hospitals, with the 24 hour result read against the base rate rather than in isolation.</li>
-          <li><b>Calibration and drift</b> — calibration and drift diagnostics persisted alongside the metrics, not treated as an afterthought.</li>
-          <li><b>Reproducibility</b> — the project ran inside the SNPTX system, so the data contract, the feature pipeline, and the metric receipts all regenerate from the notebook; the discipline behind the Snakemake + DVC + MLflow spine.</li>
+          <li><b>Temporal design</b>: turning time-stamped vitals and laboratory observations into leakage-safe 6, 12, and 24 hour prediction windows, which is where most of the real difficulty lived.</li>
+          <li><b>Honest model comparison</b>: static, dynamic, PCA-factor, and nonlinear reduced-form models compared on the same footing rather than a single model reported favorably.</li>
+          <li><b>Validation integrity</b>: hospital-grouped out-of-sample validation across 186 hospitals, with the 24 hour result read against the base rate rather than in isolation.</li>
+          <li><b>Calibration and drift</b>: calibration and drift diagnostics persisted alongside the metrics, not treated as an afterthought.</li>
+          <li><b>Reproducibility</b>: the project ran inside the SNPTX system, so the data contract, the feature pipeline, and the metric receipts all regenerate from the notebook; the discipline behind the Snakemake + DVC + MLflow spine.</li>
         </ul>
         <p style="color:var(--text-secondary);font-size:13.5px;">No review is required. The E-116 final project you already graded supplies what the letter needs. This is a coursework-plus-independent-project-plus-reproducibility letter, not a supervised-research letter; the ALM Data Science capstone does not begin until January 2027. The work was submitted in Python rather than the course's RStudio, which the syllabus permits, and is a fair point for a letter to note.</p>
-        <span class="placeholder"><b>To be added after the SOP draft lands</b> — one or two lines aligning this
-        emphasis with the matching statement-of-purpose thread, so the letter and the statement reinforce rather
-        than repeat. Placeholder until the SOP is finalized.</span>
+        <p style="border-left:3px solid var(--accent-blue);padding:4px 0 4px 16px;color:#c9d1d9;font-size:14px;margin-top:14px;"><b style="color:var(--text-primary);">Statement-of-purpose alignment.</b> The applicant's statement of purpose argues one research question: how to build a scientific autopilot that does not lie to itself. Your letter speaks to the exact skill that question rests on, a validation design built to resist self-deception, which is what the E-116 forecasting project demonstrated.</p>
       </section>
 
       <section class="section-block section-divider">
         <div class="eyebrow">The one window, and the review path</div>
-        <p>Now, only a yes in principle is needed. A one-page brief with the final program list follows beforehand, and a short preprint reaches you as background context, not as a task; it builds on separate drug-synergy work and is context rather than anything for you to evaluate.</p>
+        <p>Now, only a yes in principle is needed. A one-page brief with the final program list follows beforehand, and the short preprints, linked at the foot of this page, are background context rather than a task; they build on separate drug-synergy work and are context rather than anything for you to evaluate.</p>
         <p><b style="color:var(--text-primary);">The letter is due 22 October to 1 November 2026.</b> Any point in that window is
         fine; it sits comfortably ahead of every program deadline below. Each program's portal emails you a submission
         link directly once the applicant enters you as a recommender, so there is nothing for the applicant to forward.</p>
@@ -244,10 +242,7 @@
         </tr>
           </tbody>
         </table>
-        <span class="placeholder"><b>Portal invite links — pending</b> — the referee-specific upload links are
-        issued per application once the applicant enters recommender details, and some program portals open in
-        mid-September. Exact links follow in the applicant's consolidated note. Stanford Biomedical Informatics and
-        Stanford Computer Science are mutually exclusive; only one will actually be filed.</span>
+        <p style="color:var(--text-secondary);font-size:13.5px;margin-top:12px;">There are no invite links for you to track. Once the applicant enters you as a recommender in a given application, that program's portal emails you a secure submission link directly, so a letter is only ever requested through the program's own system. Stanford Biomedical Informatics and Stanford Computer Science are mutually exclusive, so only one of those two rows will actually be filed.</p>
       </section>
 
       <section class="section-block section-divider">
@@ -281,9 +276,27 @@
             <span class="d">The public, end-to-end reproducible research repository the applications point at.</span>
           </a>
         </div>
-        <span class="placeholder"><b>Preprint link — pending</b> — the citable drug-synergy robustness and
-        reproducibility preprint is targeted public 18 to 25 September 2026. Its link and identifier will be added here
-        and sent directly once posted.</span>
+        <p style="color:#c9d1d9;font-size:14.5px;margin-top:12px;">Two short preprints, built on the SNPTX experimentation layer, are now public. Each ships a public reproducibility repo, a manuscript, and a runnable notebook.</p>
+        <div style="display:grid;gap:12px;margin-top:8px;">
+          <div style="padding:14px 16px;background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;border-top:2px solid var(--accent-green);">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-green);">Preprint 1</span>
+            <span style="display:block;font-size:14.5px;margin:5px 0 8px;color:var(--text-primary);">Knowing what to measure and when to stop</span>
+            <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em;">
+              <a href="https://github.com/snptx1/snptx-repro-discovery" style="color:var(--accent-green);text-decoration:none;">Repo &rarr;</a> &nbsp;&middot;&nbsp;
+              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/preprint/MANUSCRIPT_calibrated_sequential_discovery.md" style="color:var(--accent-green);text-decoration:none;">Manuscript &rarr;</a> &nbsp;&middot;&nbsp;
+              <a href="../notebooks/walkthrough_calibrated_sequential_discovery.html" style="color:var(--accent-green);text-decoration:none;">Notebook &rarr;</a>
+            </span>
+          </div>
+          <div style="padding:14px 16px;background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;border-top:2px solid var(--accent-purple);">
+            <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-purple);">Preprint 2</span>
+            <span style="display:block;font-size:14.5px;margin:5px 0 8px;color:var(--text-primary);">Learned molecular representations with calibrated deep-ensemble uncertainty</span>
+            <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em;">
+              <a href="https://github.com/snptx1/snptx-repro-discovery/tree/main/preprint/dl_forward" style="color:var(--accent-purple);text-decoration:none;">Repo &rarr;</a> &nbsp;&middot;&nbsp;
+              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/preprint/dl_forward/MANUSCRIPT_learned_representations_admet.md" style="color:var(--accent-purple);text-decoration:none;">Manuscript &rarr;</a> &nbsp;&middot;&nbsp;
+              <a href="../notebooks/walkthrough_learned_representations_admet.html" style="color:var(--accent-purple);text-decoration:none;">Notebook &rarr;</a>
+            </span>
+          </div>
+        </div>
       </section>
     </article>
 
