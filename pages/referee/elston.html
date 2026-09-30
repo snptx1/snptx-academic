@@ -72,6 +72,20 @@
     text-transform: uppercase; color: var(--accent-blue); }
   .linkcard .t { display: block; font-size: 14.5px; margin: 5px 0 3px; }
   .linkcard .d { display: block; font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 20px 0 2px; }
+  .step {
+    display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px;
+    background: rgba(22,27,34,0.7); border: 1px solid var(--border); border-radius: 12px;
+  }
+  .step .n {
+    flex: none; width: 22px; height: 22px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-family: var(--font-mono);
+    font-size: 11px; color: var(--accent-blue); border: 1px solid rgba(88,166,255,0.5); margin-top: 1px;
+  }
+  .step p { margin: 0; color: var(--text-secondary); font-size: 12.5px; line-height: 1.55; }
+  .step p b { color: var(--text-primary); font-weight: 600; display: block; margin-bottom: 2px; font-size: 13px; }
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; align-items: start; }
+  @media (max-width: 900px) { .twocol { grid-template-columns: 1fr; } .steps { grid-template-columns: 1fr; } }
   @media (max-width: 760px) {
     table.mech, table.mech thead, table.mech tbody, table.mech th, table.mech td, table.mech tr { display: block; }
     table.mech th { display: none; }
@@ -86,7 +100,8 @@
       <a href="../../index.html" class="nav-brand">SNPTX</a>
       <a href="../../index.html#for-review">For review</a>
       <a href="../academic-resume-ref.html">Academic CV</a>
-      <a href="../references.html">References</a>
+      <a href="https://snptx1.github.io/professional/">R&eacute;sum&eacute;</a>
+      <a href="statements.html">SOP &amp; PS</a>
       <a href="../results.html">Results</a>
     </nav>
 
@@ -102,9 +117,41 @@
         <span class="fact">To do now <b>nothing</b></span>
         <span class="fact">Course anchor <b>CSCI E-108, Data Mining</b></span>
       </div>
+      <div class="steps" aria-label="How this works">
+        <div class="step"><span class="n">1</span><p><b>Nothing to send or schedule.</b> Each program's portal emails you its own submission link once I list you as a recommender.</p></div>
+        <div class="step"><span class="n">2</span><p><b>Write from the E-108 record.</b> The guidance just below sets out what your letter is uniquely placed to establish.</p></div>
+        <div class="step"><span class="n">3</span><p><b>Submit any time 22 Oct &ndash; 1 Nov 2026.</b> One letter serves every program on this page.</p></div>
+      </div>
     </header>
 
     <article class="draft">
+      <section class="section-block">
+        <div class="eyebrow">Who I am, and the review surface</div>
+        <p>Four links cover everything: the professional background, the academic record, the technical evidence, and the statements the letter will sit alongside. Each stands on its own; none is required.</p>
+        <div class="linkgrid">
+          <a class="linkcard" href="https://snptx1.github.io/professional/">
+            <span class="k">Professional</span>
+            <span class="t">R&eacute;sum&eacute; &amp; background</span>
+            <span class="d">Career history, the SNPTX role, and selected technical work.</span>
+          </a>
+          <a class="linkcard" href="../academic-resume-ref.html">
+            <span class="k">Academic record</span>
+            <span class="t">Academic CV (reference layer)</span>
+            <span class="d">Coursework matrix, raw scores, and the reference layer.</span>
+          </a>
+          <a class="linkcard" href="../../index.html#for-review">
+            <span class="k">Technical evidence</span>
+            <span class="t">SNPTX for-review surface</span>
+            <span class="d">Evidence panel and validation table mapping each claim to a stated artifact.</span>
+          </a>
+          <a class="linkcard" href="statements.html">
+            <span class="k">The statements</span>
+            <span class="t">Statement of purpose &amp; personal statement</span>
+            <span class="d">The Harvard HMS (AIM) pair, the strongest of the set, with a short reading guide.</span>
+          </a>
+        </div>
+      </section>
+
       <div class="draft-meta">
         <div>
           <h2>What your letter is best positioned to establish</h2>
@@ -113,7 +160,7 @@
         <div class="badge">Referee page</div>
       </div>
 
-      <section class="section-block">
+      <section class="section-block section-divider">
         <div class="eyebrow">What to emphasize</div>
         <p class="emph">The letter lands best when it stays close to the E-108 execution: the ChEMBL-32 similarity-search and community-detection project, the data-mining design behind it, the graph analytics, and the reproducible-workflow habits that carried straight into SNPTX. The biomedical science is not your burden &mdash; that signal comes from the preprints and the other letters. What only you can add is how the work looked as it happened, and where it sits among the independent projects you have supervised.</p>
         <ul class="tight">
@@ -125,6 +172,12 @@
         </ul>
         <p style="color:var(--text-secondary);font-size:13.5px;">The E-108 project you already graded supplies everything the letter needs; there is nothing new to review. This is a coursework-plus-independent-project letter rather than a supervised-research one: the ALM capstone you are assigned to advise does not begin until January 2027, though that assignment is itself fair context for the letter to note.</p>
         <p style="border-left:3px solid var(--accent-blue);padding:4px 0 4px 16px;color:#c9d1d9;font-size:14px;margin-top:14px;"><b style="color:var(--text-primary);">Statement-of-purpose alignment.</b> My statement of purpose argues one research question: how to build an autonomous discovery engine whose evidence can be trusted, a system that selects, runs, and validates its own experiments without deceiving itself. Your letter speaks to the methodological habit that makes the question credible in my hands &mdash; reproducible, honestly evaluated work, demonstrated on the E-108 project.</p>
+      </section>
+
+      <section class="section-block section-divider">
+        <div class="eyebrow">The statements, in brief</div>
+        <p>The <a href="statements.html#sop" style="color:var(--accent-blue);">statement of purpose</a> argues one research question: how to build an autonomous discovery engine whose evidence can be trusted &mdash; a system that selects, runs, and validates its own experiments without deceiving itself. It walks through SNPTX, the engine I built as a single author; a train-test leak I caught and publicly corrected; the three doctoral-scale research questions that follow; and the faculty who would hold the work to that standard.</p>
+        <p>The <a href="statements.html#ps" style="color:var(--accent-blue);">personal statement</a> tells the story behind it: where the problem found me, the unconventional route in, and why systems that will not lie about themselves became the through line. The pair linked here is the Harvard HMS (AIM) version, the strongest of the set; each program receives a tuned variant of the same argument, so a letter that speaks to these speaks to all of them.</p>
       </section>
 
       <section class="section-block section-divider">
@@ -140,29 +193,38 @@
       <section class="section-block section-divider">
         <div class="eyebrow">Programs this letter supports</div>
         <p>These are the doctoral programs being filed this cycle. The same letter serves every row: once I enter you as a recommender in a given application, that program's portal emails you its own secure link, so there is nothing for you to track.</p>
-        <table class="mech">
-          <thead>
-            <tr><th>Institution</th><th>Program</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Harvard HMS</td><td>Biomedical Informatics (AIM)</td></tr>
-            <tr><td>Harvard SEAS</td><td>Computer Science</td></tr>
-            <tr><td>MIT</td><td>EECS (CSAIL)</td></tr>
-            <tr><td>Harvard-MIT HST</td><td>Medical Engineering &amp; Medical Physics (MEMP)</td></tr>
-            <tr><td>Columbia</td><td>Computer Science (SEAS)</td></tr>
-            <tr><td>Columbia</td><td>Biomedical Informatics (DBMI)</td></tr>
-            <tr><td>Stanford</td><td>Biomedical Informatics (Biomedical Data Science)</td></tr>
-            <tr><td>Stanford</td><td>Computer Science (SAIL)</td></tr>
-            <tr><td>UC Berkeley</td><td>Electrical Engineering &amp; Computer Sciences (EECS)</td></tr>
-            <tr><td>UC Berkeley / UCSF</td><td>Computational Precision Health</td></tr>
-            <tr><td>Cambridge</td><td>CCAIM / Clinical AI</td></tr>
-            <tr><td>Cambridge</td><td>Computer Laboratory ML</td></tr>
-            <tr><td>Oxford</td><td>Health Data Science (CDT) DPhil</td></tr>
-            <tr><td>Oxford</td><td>Computer Science (OATML) DPhil</td></tr>
-            <tr><td>Imperial College London</td><td>Computing</td></tr>
-            <tr><td>Imperial College London</td><td>AI for Healthcare (CDT route)</td></tr>
-          </tbody>
-        </table>
+        <div class="twocol">
+          <table class="mech">
+            <thead>
+              <tr><th>Institution</th><th>Program</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Harvard HMS</td><td>Biomedical Informatics (AIM)</td></tr>
+              <tr><td>Harvard SEAS</td><td>Computer Science</td></tr>
+              <tr><td>MIT</td><td>EECS (CSAIL)</td></tr>
+              <tr><td>Harvard-MIT HST</td><td>Medical Engineering &amp; Medical Physics (MEMP)</td></tr>
+              <tr><td>Columbia</td><td>Computer Science (SEAS)</td></tr>
+              <tr><td>Columbia</td><td>Biomedical Informatics (DBMI)</td></tr>
+              <tr><td>Stanford</td><td>Biomedical Informatics (Biomedical Data Science)</td></tr>
+              <tr><td>Stanford</td><td>Computer Science (SAIL)</td></tr>
+            </tbody>
+          </table>
+          <table class="mech">
+            <thead>
+              <tr><th>Institution</th><th>Program</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>UC Berkeley</td><td>Electrical Engineering &amp; Computer Sciences (EECS)</td></tr>
+              <tr><td>UC Berkeley / UCSF</td><td>Computational Precision Health</td></tr>
+              <tr><td>Cambridge</td><td>CCAIM / Clinical AI</td></tr>
+              <tr><td>Cambridge</td><td>Computer Laboratory ML</td></tr>
+              <tr><td>Oxford</td><td>Health Data Science (CDT) DPhil</td></tr>
+              <tr><td>Oxford</td><td>Computer Science (OATML) DPhil</td></tr>
+              <tr><td>Imperial College London</td><td>Computing</td></tr>
+              <tr><td>Imperial College London</td><td>AI for Healthcare (CDT route)</td></tr>
+            </tbody>
+          </table>
+        </div>
         <p style="color:var(--text-secondary);font-size:13.5px;margin-top:12px;">A few universities admit only one application per cycle. Where two closely related programs at the same university both appear here (Stanford and UC Berkeley), only one of the pair will finally be filed; the letter simply needs to be ready for whichever I choose.</p>
       </section>
 
@@ -182,34 +244,7 @@
       </section>
 
       <section class="section-block section-divider">
-        <div class="eyebrow">If a letter slot falls through</div>
-        <p>Each Harvard GSAS application takes exactly three letters with no spare, filled by the three course referees.
-        If a slot ever falls through, there is a documented recovery so no application is left short and nothing extra
-        lands on you: Prof. Dmitry Kurochkin (CSCI E-89b, the BC5CDR biomedical NER project) stands by as the fourth,
-        and Dr. Blagoje Djordjevic is a separate academic add-on reachable only through Prof. Zoran Djordjevic. Where
-        other programs accept a fourth or research-weighted letter, the one-page brief will say so program by program.</p>
-      </section>
-
-      <section class="section-block section-divider">
-        <div class="eyebrow">Context, if you want it</div>
-        <p>None of this is required reading. It is here so the work has proper context if you choose to look.</p>
-        <div class="linkgrid">
-          <a class="linkcard" href="../../index.html#for-review">
-            <span class="k">Fast technical read</span>
-            <span class="t">SNPTX for-review surface</span>
-            <span class="d">Evidence panel and validation table mapping each claim to a stated artifact.</span>
-          </a>
-          <a class="linkcard" href="../academic-resume-ref.html">
-            <span class="k">Background</span>
-            <span class="t">Academic CV (reference layer)</span>
-            <span class="d">One-page academic resume with a reference layer for context.</span>
-          </a>
-          <a class="linkcard" href="../references.html">
-            <span class="k">Bibliography</span>
-            <span class="t">Framework references</span>
-            <span class="d">The literature the framework's claims actually invoke.</span>
-          </a>
-        </div>
+        <div class="eyebrow">Background reading, if you want it</div>
         <p style="color:#c9d1d9;font-size:14.5px;margin-top:12px;">Two short preprints, built on the SNPTX experimentation layer, are now public. Each ships a public reproducibility repo, a manuscript, and a runnable notebook.</p>
         <div style="display:grid;gap:12px;margin-top:8px;">
           <div style="padding:14px 16px;background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;border-top:2px solid var(--accent-green);">

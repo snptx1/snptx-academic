@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1117">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Statement of purpose and personal statement, sample of record for referees: the Harvard HMS Biomedical Informatics (AIM) pair.">
+<title>SNPTX - Statement of purpose &amp; personal statement</title>
+<link rel="stylesheet" href="../../assets/css/site.css">
+<style>
+  html { scroll-behavior: smooth; }
+  .page { max-width: 900px; }
+  .lede { color: var(--text-secondary); font-size: 15px; max-width: 860px; }
+  .factbar { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 6px; }
+  .fact {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+    color: var(--text-primary); background: rgba(22,27,34,0.7);
+    border: 1px solid var(--border); border-radius: 999px; padding: 7px 12px;
+  }
+  .fact b { color: var(--accent-blue); font-weight: 600; }
+  .section-block { padding: 26px 30px; }
+  .section-divider { border-top: 1px solid rgba(48,54,61,0.78); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent-blue);
+  }
+  .section-block h3 { font-size: 20px; letter-spacing: -0.02em; margin-bottom: 14px; color: var(--text-primary); }
+  .section-block p { color: #c9d1d9; font-size: 15px; line-height: 1.75; margin-bottom: 16px; }
+  .note {
+    padding: 12px 16px; border-left: 3px solid var(--accent-blue);
+    color: var(--text-secondary); font-size: 13.5px; margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-nav" aria-label="SNPTX sections">
+      <a href="../../index.html" class="nav-brand">SNPTX</a>
+      <a href="../../index.html#for-review">For review</a>
+      <a href="../academic-resume-ref.html">Academic CV</a>
+      <a href="https://snptx1.github.io/professional/">R&eacute;sum&eacute;</a>
+      <a href="../results.html">Results</a>
+    </nav>
+
+    <header class="page-header">
+      <h1>The statements, as a referee would read them</h1>
+      <p class="lede">The statement of purpose and personal statement below are the Harvard HMS
+      Biomedical Informatics (AIM) pair, the strongest of the set and the sample of record. Each program
+      receives a tuned variant of the same argument, so a letter that speaks to these speaks to all of them.
+      &mdash; <b style="color:var(--text-primary);">Daniel R. Russell</b></p>
+      <div class="factbar">
+        <span class="fact">Sample of record <b>Harvard HMS (AIM)</b></span>
+        <span class="fact">SOP <b>~1,000 words</b></span>
+        <span class="fact">Personal statement <b>500 words</b></span>
+      </div>
+    </header>
+
+    <article class="draft">
+      <section class="section-block" id="sop">
+        <div class="eyebrow">Statement of purpose</div>
+        <h3>One research question: an autonomous discovery engine whose evidence can be trusted</h3>
+        <p class="note">The shape of the argument: the field's open problem, the engine already built (and the
+        leak caught and publicly corrected inside it), three doctoral-scale research questions that follow, and the
+        faculty who would hold the work to that standard.</p>
+      <p>Marinka Zitnik and colleagues have charted how AI agents can begin to run the loop of biomedical discovery on their own (Cell, 2024): hypothesizing, prioritizing experiments, reasoning over biomedical tools. Arjun Manrai has named the constraint outright: medical AI has a measurement problem (Nature, 2026), and Pranav Rajpurkar and Isaac Kohane have each pressed the same point from different angles: the binding constraint is no longer capability but whether we can trust what these systems report. The question I want to spend a doctorate on sits exactly between those two claims. How do we build an autonomous discovery engine that runs the experimental loop itself, deciding what to measure, running it, and validating the result, while producing evidence a clinician can actually trust? That's the problem I've spent the last two years building toward, and I want to bring it to AIM because AIM is the one place where both halves of it are already at work.</p>
+      <p>I have built a first version of that engine. SNPTX is a governed, multi-modal machine learning platform I designed and implemented as a single author, spanning 46 datasets and eight modality families behind a contract-validated boundary that lets new data and methods enter without invalidating prior evaluations. Its core is an autonomous campaign controller that closes the discovery loop: it selects the next experiment, runs it, evaluates the result, and updates a shared catalog that informs the following choice; in its latest campaign it ran 1,100 experiments in about an hour and surfaced 104 discoveries with a calibrated surrogate (ECE 0.055). An attention-based fusion layer lets it reason across omics, imaging, and spatial inputs at once. What makes this research rather than infrastructure is the evaluation harness wrapped around the loop: leakage-controlled splits, distribution-free coverage, and selective abstention applied to the controller's own outputs. That discipline earned its place the hard way. Early on, one of my headline results sat near the ceiling of what was possible until I traced it to a leak between training and test; corrected, the honest number fell from 98.5 to 67.6 percent, below the majority-class baseline, and the evaluation gained the leakage checks that would have caught it. The full evidence, validation, and limitations surface is online for inspection (snptx1.github.io/snptx-academic). I raise the episode because it named the question I care about: a system that both runs and reports its own experiments needs evaluation machinery built to catch exactly the mistake I nearly shipped.</p>
+      <p>That agenda opens into three questions I would pursue at AIM. First, when a discovery agent proposes and tests its own hypotheses, how is its self-directed evidence kept trustworthy? An agent that both selects experiments and reports outcomes is running an implicit selection process, and naive confidence in its conclusions will be optimistic. I'd formalize the campaign as a selective-inference problem, adapting conditional selective inference and conformal-under-selection to the sequential case, and ask what coverage guarantee survives when the same system chooses the hypotheses and estimates their effects. Second, how should such an engine reason over biomedical knowledge to decide what to measure next, and prove that its choices were well-founded rather than merely confident? I'd cast controller design as meta-learning across prior campaigns, treating each as one task in a distribution, with regret measured in experiments-to-a-confident-decision, so the engine's efficiency and its calibration are optimized together instead of in sequence. Third, when the engine integrates modalities, when does fusion earn its uncertainty budget? My current fusion layer buys a small, honest lift, 0.2 points over the best single modality, and the smallness is the interesting part: I'd run capacity-controlled, information-theoretic ablations to tell when an added modality supplies complementary signal a clinician can rely on, and when it merely adds capacity a single model would have supplied anyway. Each of these is a first-paper-shaped question, and a doctorate is three or four of them.</p>
+      <p>AIM is where these questions have readers. Marinka Zitnik's AI agents for biomedical discovery, from TxAgent to the self-organizing agent teams her group is now building, are the closest thing in the field to the engine I've prototyped; I'd want to make their self-directed conclusions carry calibrated, auditable guarantees. Arjun Manrai's measurement agenda, from reproducibility as meta-science to his proposed test of medical AI superintelligence (Nat. Med., 2026), is the exact frame for my second question: I'd extend it into the autonomous loop, where the system under test also chose what to report. Pranav Rajpurkar's autonomous-agent benchmarks and clinical certification pathway (Lancet, 2025) meet my calibrated-abstention machinery from two ends of the same problem, certifying not just that an agent finished the loop but that its conclusions carry a stated error budget. And Kun-Hsing Yu's uncertainty-aware multimodal foundation models (Nat. Commun., 2025) are the natural home for the fusion question, where knowing which inputs reduce risk is as important as the prediction itself. Isaac Kohane's insistence that medical AI prove its value in the real world (Nat. Med., 2025) is the standard I want to hold an autonomous engine to.</p>
+      <p>I'm applying now because I've taken this system as far as one person and a set of engineering commitments can carry it, to the point where its most valuable layer is scaffolding that deserves to become validated method. That conversion needs the mentorship, the adversarial peers, and the clinical grounding AIM is built to provide. I've spent two years proving I can build the engine. I want the next five, with this faculty holding me to it, to prove that it tells the truth.</p>
+      </section>
+
+      <section class="section-block section-divider" id="ps">
+        <div class="eyebrow">Personal statement</div>
+        <h3>The road here, and the disposition behind the work</h3>
+        <p class="note">Written to the Harvard Griffin GSAS 500-word prompt: where the problem found me, the
+        unconventional route in, and why systems that will not lie about themselves became the through line.</p>
+      <p>It happened early one morning at a window table inside Building 14 at MIT, before the sun cleared the Boston skyline across the Charles and with public access my only claim to the room. I'd queued a unit on graphical models for an MITx course, where on my screen the instructor was drawing dependencies between variables as edges in a graph, when an ordinary idea landed with extraordinary force: if any set of entities and their relationships can be written as a graph and learned from data, then a molecule is a graph, a tumor is a graph, and human health is, fundamentally, a modeling problem of enormous scale and consequence. I'd only meant to refresh some mathematics. Instead I found the problem worth spending my career solving, and those molecular graphs have not left me since.</p>
+      <p>I didn't arrive by the usual route. After an early career in investments, I moved into startups, where I co-founded a company around an idea I'd originated and turned it into a product people used. By every external measure it ended well: the company was acquired. Then I walked away to start over, a decision that few understood, but money has never held my attention for long. A complex problem does, and I was determined to find one.</p>
+      <p>What I built next became SNPTX, designed and built single-handed, and now an autonomous engine for biomedical discovery that runs its own experimental loop and states confidence that must survive distribution shift. I taught myself what I lacked while also earning a Harvard graduate degree in Data Science. Along the way a promising headline result later proved inflated by a train-test leak. I corrected the evaluation and demoted the claim publicly rather than let it stand. Nobody would've caught it if I hadn't, which is exactly why I did.</p>
+      <p>That episode is the closest thing I have to a creed. Across my career the through-line isn't a topic; it's a disposition. I gravitate toward systems that will not lie about themselves, and in medicine that instinct becomes a duty: an overstated model earns clinical trust it can't repay, and the debt falls to a patient.</p>
+      <p>On a form I'm a set of boxes some might file under obstacle: a disabled veteran, a first-generation student, a nonconventional learner, a career-changer who restarted in a new field and a new country. I've never experienced them that way. Taken individually each could read as a disadvantage; together they're the reason I can sit before an empty repository and build without waiting for permission.</p>
+      <p>What I want to contribute follows from that. I build openly so any lab can rerun a result and extend it without duplicating effort. Having entered this field tangentially, I'd encourage the next veteran or career-changer to believe the non-linear path isn't a deficit but an instrument. My early work was to forecast the future and bet on it; I'd rather build it, in medicine, out of parts that not only won't lie but could one day yield the molecular graphs that answer the most pertinent questions in human health.</p>
+      </section>
+    </article>
+
+    <footer class="site-footer" aria-label="Site footer">
+      <div class="site-footer-grid">
+        <section style="display:grid;gap:6px;align-content:start;">
+          <div class="label">SNPTX&trade;</div>
+          <p>Connecting Data to Discovery</p>
+        </section>
+        <section style="display:grid;gap:8px;">
+          <div class="label">Referee links</div>
+          <div class="sitemap">
+            <a href="../../index.html">Home</a>
+            <a href="../../index.html#for-review">For review</a>
+            <a href="../academic-resume-ref.html">Academic CV</a>
+            <a href="../results.html">Results</a>
+            <a href="../validation.html">Validation</a>
+            <a href="../references.html">References</a>
+          </div>
+        </section>
+        <section style="display:grid;gap:6px;">
+          <div class="label">Contact</div>
+          <p>Reference and review inquiries.</p>
+          <p class="muted">Daniel R. Russell</p>
+          <p class="muted">ALM in Data Science and Artificial Intelligence (HES '27), Harvard University</p>
+          <p class="muted">MITx MicroMasters in Statistics and Data Science, MIT IDSS</p>
+          <p class="muted" style="white-space:normal;"><a href="mailto:drr508@g.harvard.edu" class="muted" style="text-decoration:none;">drr508@g.harvard.edu</a> <span style="color:#8b949e;">|</span> <a href="mailto:dan@snptx.ai" class="muted" style="text-decoration:none;">dan@snptx.ai</a></p>
+        </section>
+      </div>
+      <div class="site-footer-bottom">SNPTX&trade; Academic 2026 &middot; Unlisted referee page</div>
+    </footer>
+  </div>
+  <script>
+    (function () {
+      var nav = document.querySelector('.top-nav');
+      if (!nav) return;
+      function update() { if (window.scrollY > 8) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }
+      update(); window.addEventListener('scroll', update, { passive: true });
+    })();
+  </script>
+</body>
+</html>
