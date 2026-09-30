@@ -7867,27 +7867,25 @@ calls surfaced here as the first candidates worth testing.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">¶</a></h2><div style="display:flex; gap:48px; line-height:1.5;">
+<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">¶</a></h2>
+<div style="display:flex; gap:48px; line-height:1.5;">
 <div style="flex:1;">
-</div></div>
-<p><b></b>4.1  Sequential decision efficiency (SPRT)<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>Knowing when to stop measuring. Wald's log-likelihood-ratio test between boundaries <i></i>A and <i></i>B, with a live decision path plus realized power and average sample number versus the fixed-sample requirement (<code></code>experiment_design.py; fig1, fig6).
-<br/><br/></p>
-<p><b></b>4.2  Calibrated coverage under scaffold shift<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>Knowing what you do not know. Split-conformal coverage is assessed on held-out scaffolds against the nominal target; shift alone does not preserve the guarantee (<code></code>uncertainty.py; fig3, fig4).
-<br/><br/></p>
-<p><b></b>4.3  Selective prediction (risk-coverage)<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>Knowing when to abstain. A confidence threshold that declines the least-confident cases; a live risk-coverage trace showing retained accuracy rise (fig2).</p>
-<div style="flex:1;">
+<p><b>4.1&nbsp;&nbsp;Sequential decision efficiency (SPRT)</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">Knowing when to stop measuring. Wald's log-likelihood-ratio test between boundaries <i>A</i> and <i>B</i>, with a live decision path plus realized power and average sample number versus the fixed-sample requirement (<code>experiment_design.py</code>; fig1, fig6).</span></p>
+<p><b>4.2&nbsp;&nbsp;Calibrated coverage under scaffold shift</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">Knowing what you do not know. Split-conformal coverage is assessed on held-out scaffolds against the nominal target; shift alone does not preserve the guarantee (<code>uncertainty.py</code>; fig3, fig4).</span></p>
+<p><b>4.3&nbsp;&nbsp;Selective prediction (risk-coverage)</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">Knowing when to abstain. A confidence threshold that declines the least-confident cases; a live risk-coverage trace showing retained accuracy rise (fig2).</span></p>
 </div>
-<p><b></b>4.4  Autonomous, interpretable discovery<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>Recovering known drivers and surfacing activity cliffs. The abductive cycle distills a single-feature rule per endpoint (5 of 5) and surfaces 1398 cliffs (<code></code>scientific_discovery.py; fig7, fig8).
-<br/><br/></p>
-<p><b></b>4.5  The value of active learning is regime-dependent<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>A characterized rule, not a headline. Uncertainty-driven acquisition helps only when the passive baseline is unstable (fig5).
-<br/><br/></p>
-<p><b></b>4.6  End-to-end autonomous campaign<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>The wired closed loop over six ADMET endpoints: calibrated oracle, SPRT stopping, abductive rule, and DuckDB lineage (fig9, fig10).</p>
+<div style="flex:1;">
+<p><b>4.4&nbsp;&nbsp;Autonomous, interpretable discovery</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">Recovering known drivers and surfacing activity cliffs. The abductive cycle distills a single-feature rule per endpoint (5 of 5) and surfaces 1398 cliffs (<code>scientific_discovery.py</code>; fig7, fig8).</span></p>
+<p><b>4.5&nbsp;&nbsp;The value of active learning is regime-dependent</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">A characterized rule, not a headline. Uncertainty-driven acquisition helps only when the passive baseline is unstable (fig5).</span></p>
+<p><b>4.6&nbsp;&nbsp;End-to-end autonomous campaign</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">The wired closed loop over six ADMET endpoints: calibrated oracle, SPRT stopping, abductive rule, and DuckDB lineage (fig9, fig10).</span></p>
+</div>
+</div>
 <p>Section 0 sets up the environment and the system architecture; Section 5 is the
 synopsis and how to regenerate every number. A References section mirrors the
 manuscript.</p>
