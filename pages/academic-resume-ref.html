@@ -519,6 +519,25 @@
   .chip.cyan   { color: var(--accent-cyan);   border-color: rgba(57,197,207,0.45); }
   .chip.orange { color: var(--accent-orange); border-color: rgba(210,153,34,0.45); }
 
+  .chip-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+  .chip-key span { display: inline-flex; align-items: center; }
+  .chip-key .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    margin-right: 6px;
+    flex: none;
+  }
+
   footer.page-footer {
     margin-top: 32px;
     padding-top: 18px;
@@ -567,7 +586,7 @@
   <!-- ───────────── SNPTX SUMMARY ───────────── -->
   <section class="section">
     <h2>SNPTX in brief</h2>
-    <p class="sub">SNPTX is a deterministic biomedical ML orchestration framework now entering pilot-phase review with bounded, reproducible lab-facing workflows. Reported numbers on the public site are bounded to declared configurations, datasets, and seeds; nothing on the site is a clinical-performance claim. The four cells below summarize the public inspection surface.</p>
+    <p class="sub">SNPTX is a biomedical ML engine now entering pilot-phase review with bounded, reproducible lab-facing workflows. Reported numbers on the public site are bounded to declared configs, datasets, and seeds; the four cells below summarize the public inspection surface.</p>
     <div class="snptx-strip">
       <div class="cell">
         <h4>Deterministic harness</h4>
@@ -605,6 +624,14 @@
       <span class="chip orange">Drug repurposing</span>
       <span class="chip">Bayesian inference</span>
       <span class="chip">NLP &middot; transformers</span>
+    </div>
+    <div class="chip-key" aria-label="Color key">
+      <span><span class="dot" style="background:var(--accent-green);"></span>Orchestration &amp; tracking</span>
+      <span><span class="dot" style="background:var(--accent-cyan);"></span>Reproducibility controls</span>
+      <span><span class="dot" style="background:var(--accent-blue);"></span>Deep-learning models</span>
+      <span><span class="dot" style="background:var(--accent-purple);"></span>LLM &middot; agentic systems</span>
+      <span><span class="dot" style="background:var(--accent-orange);"></span>Biomedical domains</span>
+      <span><span class="dot" style="background:var(--text-secondary);"></span>Cross-cutting methods</span>
     </div>
   </section>
 
