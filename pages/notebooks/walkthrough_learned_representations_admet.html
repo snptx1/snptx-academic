@@ -7868,33 +7868,29 @@ scripts the manuscript cites.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">¶</a></h2><div style="display:flex; gap:48px; line-height:1.5;">
+<h2 id="Overview">Overview<a class="anchor-link" href="#Overview">¶</a></h2>
+<div style="display:flex; gap:48px; line-height:1.5;">
 <div style="flex:1;">
-</div></div>
-<p><b></b>4.1  Multi-task representation transfer<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>The lead result. One shared GIN encoder across six ADMET endpoints lifts the data-poor tasks at low label budgets; the data-efficiency curve is the evidence (<code></code>train_multitask_gnn.py; fig_transfer_curves).
-<br/><br/></p>
-<p><b></b>4.2  Ablation: self-supervised pretraining<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>Does attribute-mask pretraining [7] add to supervised transfer? Mostly within seed noise; only single-task regression clears it. Reported as a supporting ablation (<code></code>pretrain_ablation.py; fig_pretrain_ablation).
-<br/><br/></p>
-<p><b></b>4.3  Deep-ensemble uncertainty<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>A K=5 deep ensemble [10] with temperature scaling [11] is the best-calibrated graph model on ECE/NLL/Brier; the random forest stays strongest on raw ECE, which we do not contest (<code></code>make_ensemble_uncertainty.py; fig_ensemble_calibration).
-<br/><br/></p>
-<p><b></b>4.4  Sequential decision efficiency (SPRT)<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>Knowing when to stop measuring. Wald's sequential probability ratio test [1,2] driven by the learned ensemble oracle, counting measurements to a confident call (<code></code>e8_campaign_learned.py).</p>
-<div style="flex:1;">
+<p><b>4.1&nbsp;&nbsp;Multi-task representation transfer</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">The lead result. One shared GIN encoder across six ADMET endpoints lifts the data-poor tasks at low label budgets; the data-efficiency curve is the evidence (<code>train_multitask_gnn.py</code>; fig_transfer_curves).</span></p>
+<p><b>4.2&nbsp;&nbsp;Ablation: self-supervised pretraining</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">Does attribute-mask pretraining [7] add to supervised transfer? Mostly within seed noise; only single-task regression clears it. Reported as a supporting ablation (<code>pretrain_ablation.py</code>; fig_pretrain_ablation).</span></p>
+<p><b>4.3&nbsp;&nbsp;Deep-ensemble uncertainty</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">A K=5 deep ensemble [10] with temperature scaling [11] is the best-calibrated graph model on ECE/NLL/Brier; the random forest stays strongest on raw ECE, which we do not contest (<code>make_ensemble_uncertainty.py</code>; fig_ensemble_calibration).</span></p>
+<p><b>4.4&nbsp;&nbsp;Sequential decision efficiency (SPRT)</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">Knowing when to stop measuring. Wald's sequential probability ratio test [1,2] driven by the learned ensemble oracle, counting measurements to a confident call (<code>e8_campaign_learned.py</code>).</span></p>
 </div>
-<p><b></b>4.5  Calibrated coverage and selective prediction<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>Knowing what you do not know. Split-conformal set size at fixed 90% coverage [13,14] and selective accuracy at 70% coverage [15,16] under scaffold shift (fig_conformal_efficiency).
-<br/><br/></p>
-<p><b></b>4.6  Interpretability probe (negative result)<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>Do attention weights recover a descriptor atom-salience rule? They do not, even though the network is predictive [19]. Reported, not hidden (fig_attention_probe).
-<br/><br/></p>
-<p><b></b>4.7  End-to-end autonomous campaign<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>The learned oracle runs a closed go/no-go campaign across the endpoints with DuckDB lineage, spending fewer measurements than a fixed-sample budget.
-<br/><br/></p>
-<p><b></b>4.8  The definitive results table<br/>
-<span style="font-size:0.86em; opacity:0.85;"></span>One table: per-endpoint RF / single / multi point metrics with the ensemble-vs-RF decision columns, the capstone that ties the pillars together.</p>
+<div style="flex:1;">
+<p><b>4.5&nbsp;&nbsp;Calibrated coverage and selective prediction</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">Knowing what you do not know. Split-conformal set size at fixed 90% coverage [13,14] and selective accuracy at 70% coverage [15,16] under scaffold shift (fig_conformal_efficiency).</span></p>
+<p><b>4.6&nbsp;&nbsp;Interpretability probe (negative result)</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">Do attention weights recover a descriptor atom-salience rule? They do not, even though the network is predictive [19]. Reported, not hidden (fig_attention_probe).</span></p>
+<p><b>4.7&nbsp;&nbsp;End-to-end autonomous campaign</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">The learned oracle runs a closed go/no-go campaign across the endpoints with DuckDB lineage, spending fewer measurements than a fixed-sample budget.</span></p>
+<p><b>4.8&nbsp;&nbsp;The definitive results table</b><br/>
+<span style="font-size:0.86em; opacity:0.85;">One table: per-endpoint RF / single / multi point metrics with the ensemble-vs-RF decision columns, the capstone that ties the pillars together.</span></p>
+</div>
+</div>
 <p>Sections 0 and 5 bracket the science: environment setup, then the two reproducibility
 tiers. A References section mirrors the manuscript.</p>
 </div>
