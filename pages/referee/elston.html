@@ -47,6 +47,16 @@
     color: #c9d1d9; font-size: 15px; margin-top: 16px;
   }
   .callout b { color: var(--text-primary); }
+  .weigh {
+    margin: 18px 0 4px; padding: 16px 18px; border: 1px solid rgba(232,255,71,0.35); border-radius: 10px;
+    background: rgba(232,255,71,0.04);
+  }
+  .weigh .k { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-neon); }
+  .weigh .t { display: block; font-size: 16.5px; color: var(--text-primary); margin: 6px 0 8px; }
+  .weigh p { font-size: 14.5px; color: #c9d1d9; margin-bottom: 8px; }
+  .weigh ol { margin: 4px 0 0 20px; }
+  .weigh ol li { font-size: 14.5px; color: #c9d1d9; line-height: 1.55; margin-bottom: 6px; }
+  .weigh ol li b { color: var(--text-primary); }
   ul.tight { margin: 6px 0 4px 20px; }
   ul.tight li { color: #c9d1d9; font-size: 15px; line-height: 1.55; margin-bottom: 9px; }
   ul.tight li b { color: var(--text-primary); font-weight: 600; }
@@ -135,13 +145,13 @@
     html, body, .page { background: #fff !important; color: #111 !important; }
     .top-nav, .site-footer, .step .n, .badge { display: none !important; }
     .page { max-width: 100%; }
-    .section-block, .anchor-card, .linkcard, .pre-card, .step, .delivery, .facts, .fact {
+    .section-block, .anchor-card, .linkcard, .pre-card, .step, .delivery, .facts, .fact, .weigh {
       background: #fff !important; border-color: #bbb !important; box-shadow: none !important;
     }
     .section-block p, ul.tight li, table.mech td, .anchor-card .d, .linkcard .d, .pre-card .d, .step p,
     .lede, .delivery, .callout, .emph, .facts, .anchor-card .t, .linkcard .t, .pre-card .t, .fact, .step p b,
-    .section-block h2, h1, .anchor-card .meta, .facts span { color: #111 !important; }
-    .eyebrow, .fact b, .anchor-card .k, .linkcard .k, .pre-card .k { color: #444 !important; }
+    .section-block h2, h1, .anchor-card .meta, .facts span, .weigh .t, .weigh p, .weigh ol li { color: #111 !important; }
+    .eyebrow, .fact b, .anchor-card .k, .linkcard .k, .pre-card .k, .weigh .k { color: #444 !important; }
     a { color: #111 !important; text-decoration: underline; }
     a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 10px; color: #555; word-break: break-all; }
     details.programs { display: block; } details.programs > *:not(summary) { display: block; }
@@ -227,8 +237,9 @@
       <section class="section-block section-divider" id="emphasis">
         <div class="eyebrow">What to emphasize</div>
         <h2>What your letter is best positioned to establish</h2>
-        <p>I didn't come up through a conventional lab, so my recommendation letters carry the research signal directly. Yours anchors
-        the data-mining and reproducibility case, scoped to the E-108 final project you graded.</p>
+        <p>The research record is public: two preprints and the SNPTX system. What the record cannot show is how the work
+        looked while it was being done, and how it compared with other students' work. That is what your letter uniquely
+        adds. Yours anchors the data-mining and reproducibility case, scoped to the E-108 final project you graded.</p>
         <p class="emph">The letter lands best when it stays close to the E-108 execution: the ChEMBL-32 similarity-search and
         community-detection project, the data-mining design behind it, the graph analytics, and the reproducible-workflow
         habits that carried straight into SNPTX. The biomedical science is not your burden; that signal comes from the
@@ -241,9 +252,22 @@
           <li><b>Reproducible workflow</b>: pinned seeds, versioned data, regenerable results; the discipline behind the SNPTX Snakemake + DVC + MLflow spine.</li>
           <li><b>Trajectory</b>: from a strong E-108 student to single-author builder of a multi-modal biomedical ML engine.</li>
         </ul>
-        <p class="note">This is a coursework-plus-independent-project letter rather than a supervised-research one. The ALM
-        capstone you'll advise begins in January 2027, after this cycle; that assignment is fair context
-        for the letter to note, but nothing in it has started.</p>
+        <p class="note">You saw the work as a graded, independently executed project; that vantage is exactly the one the
+        committee wants from you, and the letter should claim it as such rather than qualify it. The ALM capstone you'll advise
+        begins in January 2027, after this cycle; agreeing to advise it is a fair, forward-looking endorsement to note, though
+        nothing in it has started.</p>
+        <div class="weigh">
+          <span class="k">What committees weigh</span>
+          <span class="t">Five things a selective committee reads for, each worth a sentence where it is accurate</span>
+          <p>Committees discount general praise and credit specifics with a stated reference class. Where the following are true from your vantage, saying so plainly is the most useful thing the letter can do.</p>
+          <ol>
+            <li><b>A comparison with a denominator.</b> Where the E-108 project, or the student, sits relative to the cohort and to prior years of the course (for example, among the strongest final projects you have graded in E-108, or a percentile you are comfortable with). The final grade of A is the record behind it.</li>
+            <li><b>Readiness for doctoral research.</b> Whether the work you graded was at the level you would expect from a student beginning a PhD, and whether you would be comfortable having this student in a doctoral program you were affiliated with.</li>
+            <li><b>Independence and initiative.</b> The project was scoped, built, and evaluated by one person with no lab or advisor behind it; how far it went beyond the assignment's requirements is for you to say.</li>
+            <li><b>One concrete technical judgment.</b> One design choice you judged sound, for instance the exact-versus-approximate similarity-search comparison or the community-detection-versus-k-means contrast, and why it was the right call.</li>
+            <li><b>Intellectual character.</b> Honesty in evaluation, rigor, clarity of the written report, and how the work has been carried forward into citable preprints since the course.</li>
+          </ol>
+        </div>
         <p class="callout"><b>Statement-of-purpose alignment.</b> My SOP argues one research question: how to
         build an autonomous discovery engine whose evidence can be trusted; a system that selects, runs, and validates its
         own experiments without deceiving itself. Your letter speaks to the working habit that makes that question

@@ -47,6 +47,16 @@
     color: #c9d1d9; font-size: 15px; margin-top: 16px;
   }
   .callout b { color: var(--text-primary); }
+  .weigh {
+    margin: 18px 0 4px; padding: 16px 18px; border: 1px solid rgba(232,255,71,0.35); border-radius: 10px;
+    background: rgba(232,255,71,0.04);
+  }
+  .weigh .k { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-neon); }
+  .weigh .t { display: block; font-size: 16.5px; color: var(--text-primary); margin: 6px 0 8px; }
+  .weigh p { font-size: 14.5px; color: #c9d1d9; margin-bottom: 8px; }
+  .weigh ol { margin: 4px 0 0 20px; }
+  .weigh ol li { font-size: 14.5px; color: #c9d1d9; line-height: 1.55; margin-bottom: 6px; }
+  .weigh ol li b { color: var(--text-primary); }
   ul.tight { margin: 6px 0 4px 20px; }
   ul.tight li { color: #c9d1d9; font-size: 15px; line-height: 1.55; margin-bottom: 9px; }
   ul.tight li b { color: var(--text-primary); font-weight: 600; }
@@ -135,13 +145,13 @@
     html, body, .page { background: #fff !important; color: #111 !important; }
     .top-nav, .site-footer, .step .n, .badge { display: none !important; }
     .page { max-width: 100%; }
-    .section-block, .anchor-card, .linkcard, .pre-card, .step, .delivery, .facts, .fact {
+    .section-block, .anchor-card, .linkcard, .pre-card, .step, .delivery, .facts, .fact, .weigh {
       background: #fff !important; border-color: #bbb !important; box-shadow: none !important;
     }
     .section-block p, ul.tight li, table.mech td, .anchor-card .d, .linkcard .d, .pre-card .d, .step p,
     .lede, .delivery, .callout, .emph, .facts, .anchor-card .t, .linkcard .t, .pre-card .t, .fact, .step p b,
-    .section-block h2, h1, .anchor-card .meta, .facts span { color: #111 !important; }
-    .eyebrow, .fact b, .anchor-card .k, .linkcard .k, .pre-card .k { color: #444 !important; }
+    .section-block h2, h1, .anchor-card .meta, .facts span, .weigh .t, .weigh p, .weigh ol li { color: #111 !important; }
+    .eyebrow, .fact b, .anchor-card .k, .linkcard .k, .pre-card .k, .weigh .k { color: #444 !important; }
     a { color: #111 !important; text-decoration: underline; }
     a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 10px; color: #555; word-break: break-all; }
     details.programs { display: block; } details.programs > *:not(summary) { display: block; }
@@ -219,7 +229,7 @@
       <section class="section-block section-divider" id="emphasis">
         <div class="eyebrow">What to emphasize</div>
         <h2>What your letter is best positioned to establish</h2>
-        <p>I didn't come up through a conventional lab, so my recommendation letters carry the research signal directly. Yours anchors the deep-learning case: the E-104 graph-attention drug-synergy project you graded, built and driven alone, and the line from that work to the public preprints.</p>
+        <p>The research record is public: two preprints and the SNPTX system. What the record cannot show is how the work looked while it was being done, and how it compared with other students' work. That is what your letter uniquely adds. Yours anchors the deep-learning case: the E-104 graph-attention drug-synergy project you graded, built and driven alone, and the line from that work to the public preprints.</p>
         <p class="emph">The letter is most valuable on two things: the technical quality of the deep-learning work and the independence of its execution. One concrete example from the E-104 project carries more weight than general praise: the dual graph encoders with cross-drug attention, the training and evaluation loop, a modeling choice you judged sound. The same work now runs inside a reproducible orchestration spine and has grown into citable preprints, which is the arc a committee reads as research capability.</p>
         <ul class="tight">
           <li><b>Deep-learning technical quality</b>: the GNN and graph-attention drug-synergy model (weight-sharing GIN encoders with cross-drug attention), the training and evaluation loop, and the soundness of the modeling choices.</li>
@@ -228,7 +238,19 @@
           <li><b>Capability</b>: a reproducible, deterministic ML orchestration spine (Snakemake + DVC + MLflow) and the capacity to take a method from course project to citable preprint.</li>
           <li><b>Trajectory</b>: from a strong E-104 student to single-author builder of a multi-modal biomedical ML engine.</li>
         </ul>
-        <p class="note">This is a coursework-plus-independent-project letter rather than a supervised-research one; no lab or advisor stood behind the E-104 work. The side offer to extend the DeepDDS reproduction is closed and needs no mention.</p>
+        <p class="note">You saw the work as a graded, independently executed project; that vantage is exactly the one the committee wants from you, and the letter should claim it as such rather than qualify it. The side offer to extend the DeepDDS reproduction is closed and needs no mention.</p>
+        <div class="weigh">
+          <span class="k">What committees weigh</span>
+          <span class="t">Five things a selective committee reads for, each worth a sentence where it is accurate</span>
+          <p>Committees discount general praise and credit specifics with a stated reference class. Where the following are true from your vantage, saying so plainly is the most useful thing the letter can do.</p>
+          <ol>
+            <li><b>A comparison with a denominator.</b> Where the E-104 project, or the student, sits relative to the cohort and to prior offerings of the course. The raw course score of 1.0000 and final grade of A are the record behind whatever placement you judge accurate.</li>
+            <li><b>Readiness for doctoral research.</b> Whether the deep-learning work was at the level you would expect from a student beginning a PhD, and whether you would be comfortable having this student in a doctoral program you were affiliated with.</li>
+            <li><b>Independence and initiative.</b> A published method rebuilt from scratch and packaged for repetition, by one person with no lab or advisor behind it; how far it went beyond the assignment is for you to say.</li>
+            <li><b>One concrete technical judgment.</b> One modeling choice you judged sound, for instance the weight-sharing GIN encoders or the cross-drug attention block, and why it was the right call.</li>
+            <li><b>Intellectual character.</b> Faithful reproduction over flattering results, rigor, clarity of the written report, and how the work has been carried forward into citable preprints since the course.</li>
+          </ol>
+        </div>
         <p class="callout"><b>Statement-of-purpose alignment.</b> My SOP argues one research question: how to build an autonomous discovery engine whose evidence can be trusted; a system that selects, runs, and validates its own experiments without deceiving itself. Your letter underwrites the research-maturity claim at the center of that argument: that the deep-learning work behind it was built to a real standard, independently, as you saw in the E-104 project.</p>
       </section>
 

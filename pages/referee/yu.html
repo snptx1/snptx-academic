@@ -47,6 +47,16 @@
     color: #c9d1d9; font-size: 15px; margin-top: 16px;
   }
   .callout b { color: var(--text-primary); }
+  .weigh {
+    margin: 18px 0 4px; padding: 16px 18px; border: 1px solid rgba(232,255,71,0.35); border-radius: 10px;
+    background: rgba(232,255,71,0.04);
+  }
+  .weigh .k { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-neon); }
+  .weigh .t { display: block; font-size: 16.5px; color: var(--text-primary); margin: 6px 0 8px; }
+  .weigh p { font-size: 14.5px; color: #c9d1d9; margin-bottom: 8px; }
+  .weigh ol { margin: 4px 0 0 20px; }
+  .weigh ol li { font-size: 14.5px; color: #c9d1d9; line-height: 1.55; margin-bottom: 6px; }
+  .weigh ol li b { color: var(--text-primary); }
   ul.tight { margin: 6px 0 4px 20px; }
   ul.tight li { color: #c9d1d9; font-size: 15px; line-height: 1.55; margin-bottom: 9px; }
   ul.tight li b { color: var(--text-primary); font-weight: 600; }
@@ -135,13 +145,13 @@
     html, body, .page { background: #fff !important; color: #111 !important; }
     .top-nav, .site-footer, .step .n, .badge { display: none !important; }
     .page { max-width: 100%; }
-    .section-block, .anchor-card, .linkcard, .pre-card, .step, .delivery, .facts, .fact {
+    .section-block, .anchor-card, .linkcard, .pre-card, .step, .delivery, .facts, .fact, .weigh {
       background: #fff !important; border-color: #bbb !important; box-shadow: none !important;
     }
     .section-block p, ul.tight li, table.mech td, .anchor-card .d, .linkcard .d, .pre-card .d, .step p,
     .lede, .delivery, .callout, .emph, .facts, .anchor-card .t, .linkcard .t, .pre-card .t, .fact, .step p b,
-    .section-block h2, h1, .anchor-card .meta, .facts span { color: #111 !important; }
-    .eyebrow, .fact b, .anchor-card .k, .linkcard .k, .pre-card .k { color: #444 !important; }
+    .section-block h2, h1, .anchor-card .meta, .facts span, .weigh .t, .weigh p, .weigh ol li { color: #111 !important; }
+    .eyebrow, .fact b, .anchor-card .k, .linkcard .k, .pre-card .k, .weigh .k { color: #444 !important; }
     a { color: #111 !important; text-decoration: underline; }
     a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 10px; color: #555; word-break: break-all; }
     details.programs { display: block; } details.programs > *:not(summary) { display: block; }
@@ -219,7 +229,7 @@
       <section class="section-block section-divider" id="emphasis">
         <div class="eyebrow">What to emphasize</div>
         <h2>What your letter is best positioned to establish</h2>
-        <p>I didn't come up through a conventional lab, so my recommendation letters carry the research signal directly. Yours anchors the temporal-modeling and evaluation-integrity case, scoped to the E-116 final project you graded.</p>
+        <p>The research record is public: two preprints and the SNPTX system. What the record cannot show is how the work looked while it was being done, and how it compared with other students' work. That is what your letter uniquely adds. Yours anchors the temporal-modeling and evaluation-integrity case, scoped to the E-116 final project you graded.</p>
         <p class="emph">The letter is most valuable on evaluation integrity: the temporal-modeling discipline of the E-116 forecasting work and a validation design built to resist self-deception. Concrete examples carry the weight here: the leakage-safe window construction, the like-for-like model comparison, the hospital-grouped validation, and the diagnostics that closed the study. What only you can add is how the work looked as it happened, and where it sits among the projects you have graded.</p>
         <ul class="tight">
           <li><b>Temporal design</b>: turning time-stamped vitals and laboratory observations into leakage-safe prediction windows, which is where most of the real difficulty lived.</li>
@@ -228,7 +238,19 @@
           <li><b>Calibration and drift</b>: diagnostics persisted alongside the metrics, not treated as an afterthought.</li>
           <li><b>Reproducibility</b>: the project ran inside SNPTX, so the data contract, the feature pipeline, and the metric receipts all regenerate from the notebook; the discipline behind the Snakemake + DVC + MLflow spine.</li>
         </ul>
-        <p class="note">This is a coursework-plus-independent-project letter rather than a supervised-research one; the ALM capstone does not begin until January 2027. One fair point worth a sentence: the work was submitted in Python rather than the course's RStudio, which the syllabus permits.</p>
+        <p class="note">You saw the work as a graded, independently executed project; that vantage is exactly the one the committee wants from you, and the letter should claim it as such rather than qualify it. The ALM capstone does not begin until January 2027.</p>
+        <div class="weigh">
+          <span class="k">What committees weigh</span>
+          <span class="t">Five things a selective committee reads for, each worth a sentence where it is accurate</span>
+          <p>Committees discount general praise and credit specifics with a stated reference class. Where the following are true from your vantage, saying so plainly is the most useful thing the letter can do.</p>
+          <ol>
+            <li><b>A comparison with a denominator.</b> Where the E-116 project, or the student, sits relative to the cohort and to prior offerings of the course. The raw course score of 0.9800 and final grade of A are the record behind whatever placement you judge accurate.</li>
+            <li><b>Readiness for doctoral research.</b> Whether the forecasting and validation work was at the level you would expect from a student beginning a PhD, and whether you would be comfortable having this student in a doctoral program you were affiliated with.</li>
+            <li><b>Independence and initiative.</b> A clinical forecasting study designed, built, and validated by one person with no lab or advisor behind it, delivered in Python where the course defaulted to RStudio; how far it went beyond the assignment is for you to say.</li>
+            <li><b>One concrete technical judgment.</b> One design choice you judged sound, for instance the leakage-safe window construction or the hospital-grouped validation, and why it was the right call.</li>
+            <li><b>Intellectual character.</b> A validation design built to resist self-deception, rigor, clarity of the written report, and how the work has been carried forward into citable preprints since the course.</li>
+          </ol>
+        </div>
         <p class="callout"><b>Statement-of-purpose alignment.</b> My SOP argues one research question: how to build an autonomous discovery engine whose evidence can be trusted; a system that selects, runs, and validates its own experiments without deceiving itself. Your letter speaks to the exact skill that question rests on, a validation design built to resist self-deception, as you saw it in the E-116 forecasting project.</p>
       </section>
 
