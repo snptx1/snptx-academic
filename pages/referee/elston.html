@@ -12,6 +12,7 @@
 <style>
   html { scroll-behavior: smooth; }
   .page { max-width: 1080px; }
+  .top-nav { padding-left: 18px; padding-right: 18px; }
   .top-nav .nav-due {
     margin-left: auto; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
     color: var(--accent-blue); border: 1px solid rgba(88,166,255,0.45); border-radius: 999px;
@@ -149,9 +150,9 @@
 </style>
 </head>
 <body>
-  <div class="page">
+  <div class="page" id="top">
     <nav class="top-nav" aria-label="Page sections">
-      <a href="../../index.html" class="nav-brand">SNPTX</a>
+      <a href="#top" class="nav-brand">SNPTX</a>
       <a href="#scope">Scope</a>
       <a href="#emphasis">Emphasis</a>
       <a href="#preprints">Preprints</a>
