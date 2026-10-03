@@ -103,9 +103,15 @@
   .pre-card.yellow .k, .pre-card.yellow a { color: var(--accent-neon); }
   .pre-card .t { display: block; font-size: 15.5px; margin: 5px 0 6px; color: var(--text-primary); }
   .pre-card .d { display: block; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 8px; }
-  .pre-card .links { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.04em; }
-  .pre-card .links a { text-decoration: none; }
-  .pre-card .links a:hover { text-decoration: underline; }
+  .pre-card .links { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pre-card .links a {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 5px; text-decoration: none;
+  }
+  .pre-card.green .links a { color: var(--accent-green); border: 1px solid rgba(63,185,80,0.4); background: rgba(63,185,80,0.08); }
+  .pre-card.green .links a:hover { background: rgba(63,185,80,0.18); border-color: rgba(63,185,80,0.7); }
+  .pre-card.yellow .links a { color: var(--accent-neon); border: 1px solid rgba(227,255,0,0.4); background: rgba(227,255,0,0.08); }
+  .pre-card.yellow .links a:hover { background: rgba(227,255,0,0.18); border-color: rgba(227,255,0,0.7); }
   .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 20px 0 2px; }
   .step {
     display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px;
@@ -280,23 +286,23 @@
             <span class="k">Preprint 1 &middot; Calibrated sequential discovery</span>
             <span class="t">Knowing what to measure and when to stop</span>
             <span class="d">Sequential stopping (SPRT), scaffold-robust conformal coverage, and selective prediction for molecular property screening.</span>
-            <span class="links">
-              <a href="https://github.com/snptx1/snptx-repro-discovery">Repo &rarr;</a> &nbsp;&middot;&nbsp;
-              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/preprint/MANUSCRIPT_calibrated_sequential_discovery.md">Manuscript &rarr;</a> &nbsp;&middot;&nbsp;
-              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/notebooks/walkthrough_calibrated_sequential_discovery.ipynb">Notebook (ipynb) &rarr;</a> &nbsp;&middot;&nbsp;
-              <a href="../notebooks/walkthrough_calibrated_sequential_discovery.html">Notebook (html) &rarr;</a>
-            </span>
+            <div class="links">
+              <a href="https://github.com/snptx1/snptx-repro-discovery">repo</a>
+              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/preprint/MANUSCRIPT_calibrated_sequential_discovery.md">manuscript</a>
+              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/notebooks/walkthrough_calibrated_sequential_discovery.ipynb">notebook (ipynb)</a>
+              <a href="../notebooks/walkthrough_calibrated_sequential_discovery.html">notebook (html)</a>
+            </div>
           </div>
           <div class="pre-card yellow">
             <span class="k">Preprint 2 &middot; Learned representations</span>
             <span class="t">Learned molecular representations with calibrated deep-ensemble uncertainty</span>
             <span class="d">Murcko scaffold cold splits, calibrated (conformal) uncertainty, and bootstrap confidence intervals on ADMET property tasks.</span>
-            <span class="links">
-              <a href="https://github.com/snptx1/snptx-repro-discovery/tree/main/preprint/dl_forward">Repo &rarr;</a> &nbsp;&middot;&nbsp;
-              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/preprint/dl_forward/MANUSCRIPT_learned_representations_admet.md">Manuscript &rarr;</a> &nbsp;&middot;&nbsp;
-              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/preprint/dl_forward/walkthrough_learned_representations_admet.ipynb">Notebook (ipynb) &rarr;</a> &nbsp;&middot;&nbsp;
-              <a href="../notebooks/walkthrough_learned_representations_admet.html">Notebook (html) &rarr;</a>
-            </span>
+            <div class="links">
+              <a href="https://github.com/snptx1/snptx-repro-discovery/tree/main/preprint/dl_forward">repo</a>
+              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/preprint/dl_forward/MANUSCRIPT_learned_representations_admet.md">manuscript</a>
+              <a href="https://github.com/snptx1/snptx-repro-discovery/blob/main/preprint/dl_forward/walkthrough_learned_representations_admet.ipynb">notebook (ipynb)</a>
+              <a href="../notebooks/walkthrough_learned_representations_admet.html">notebook (html)</a>
+            </div>
           </div>
         </div>
         <!-- bioRxiv DOI line: add here once posted (backstop 8 October 2026). -->
