@@ -7860,15 +7860,15 @@ result, including what it does <em>not</em> establish.</p>
 <span style="font-size:0.86em; opacity:0.85;">Recovering known drivers and surfacing property cliffs. The abductive cycle distills a one-split rule per endpoint (5 of 5 probed) and surfaces 1398 cliffs on two regression endpoints (<code>scientific_discovery.py</code>; Figures 5-7).</span>
 <br/><br/></p>
 <p><b>4.5  The value of active learning is regime-dependent</b><br/>
-<span style="font-size:0.86em; opacity:0.85;">A characterized rule, not a headline. Uncertainty-driven acquisition helps only when the passive baseline is unstable (Figure 8).</span>
+<span style="font-size:0.86em; opacity:0.85;">A characterized, conditional rule. Uncertainty-driven acquisition helps only when the passive baseline is unstable (Figure 8).</span>
 <br/><br/></p>
 <p><b>4.6  End-to-end autonomous campaign</b><br/>
 <span style="font-size:0.86em; opacity:0.85;">The wired closed loop over six ADMET endpoints: calibrated oracle, SPRT stopping, abductive rule, and DuckDB lineage, with the protocol details needed to read the six GO calls correctly (Figures 9, 10).</span></p>
 </div>
 </div>
-<p>Section 0 sets up the environment and shows the system architecture (Figure 0);
-Section 5 is the synopsis, the limitations, and how to regenerate every number.
-References follow.</p>
+<p>The opening System architecture section sets up the environment and shows the full
+pipeline (Figure 0); the closing Synopsis gathers the limitations and shows how to
+regenerate every number. References follow.</p>
 </div>
 </div>
 </div>
@@ -7971,7 +7971,7 @@ References follow.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="0.-System-architecture">0. System architecture<a class="anchor-link" href="#0.-System-architecture">¶</a></h2><p>One map before the section-by-section detail. Molecular descriptors (RDKit
+<h2 id="System-architecture">System architecture<a class="anchor-link" href="#System-architecture">¶</a></h2><p>One map before the section-by-section detail. Molecular descriptors (RDKit
 physicochemical descriptors and Morgan fingerprints computed from the Therapeutics Data
 Commons ADMET benchmarks) feed a RandomForest property oracle with split-conformal
 calibration. The decision engine turns the oracle's predictions and uncertainty into a
@@ -7982,7 +7982,7 @@ discovery cycle extracts <em>what can be read</em> from the data as a one-split 
 (Section 4.4). Every stage is logged to a DuckDB lineage store, and acquired labels can
 loop back to the substrate, a benefit characterized as regime-dependent in Section 4.5.
 The graph-neural-network encoder in the wider codebase is an alternative pluggable
-oracle, not the one depicted here.</p>
+oracle; the diagram shows the RandomForest path.</p>
 </div>
 </div>
 </div>
@@ -8262,8 +8262,9 @@ size in the sweep. At the empirical operating point it needs <strong>65.0 versus
 measurements, a <strong>34%</strong> saving; the mean saving across effect sizes is <strong>23%</strong>. The
 saving is largest in relative terms at small effects, exactly where measurement budgets
 hurt most. Two caveats carry through the rest of the document: the model is Gaussian
-with known $\sigma$ (estimated from the pool), and the realized operating
-characteristics, not the asymptotic bound, are what we report.</p>
+with known $\sigma$ (estimated from the pool), and the operating characteristics we
+quote are the ones the procedure actually realizes, measured by Monte Carlo, with Wald's
+asymptotic bound serving only as an upper limit.</p>
 </div>
 </div>
 </div>
@@ -8669,8 +8670,8 @@ Uncertainty-driven acquisition beat random <strong>only when the passive baselin
 unstable</strong> (solubility: mean paired AULC gap +0.276, bootstrap CI [−0.102, +0.445],
 not significant at n=3 seeds), and was significantly <em>negative</em> when the baseline was
 already stable (lipophilicity: gap −0.026, CI [−0.070, −0.022]). So we
-treat active learning as a characterized, regime-dependent decision rule, not a headline
-win (Settles 2012; Frazier 2018). The figure is drawn from the committed deep-ensemble
+treat active learning as a characterized, regime-dependent decision rule and make no
+claim of a universal advantage (Settles 2012; Frazier 2018). The figure is drawn from the committed deep-ensemble
 curves (<code>g1_harden_curves.npz</code>), which were trained on GPU; plotting them needs no GPU.</p>
 </div>
 </div>
@@ -8714,8 +8715,8 @@ curves (<code>g1_harden_curves.npz</code>), which were trained on GPU; plotting 
 general law; what they do support is a rule the engine can act on: run uncertainty-driven
 acquisition when a cheap passive pilot is unstable, and do not pay for it when the
 passive baseline is already learning smoothly. Note also that the acquisition score here
-is the deep-ensemble oracle's own predictive variance, not the Gaussian-process surrogate
-that the wider codebase provides for Bayesian optimization.</p>
+is the deep-ensemble oracle's own predictive variance; the Gaussian-process surrogate
+the wider codebase provides for Bayesian optimization is a separate acquisition path.</p>
 </div>
 </div>
 </div>
@@ -8846,7 +8847,7 @@ sets. The raw provenance is in <code>e8_campaign_lineage.duckdb</code> and the r
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="5.-Synopsis,-limitations,-and-how-to-regenerate">5. Synopsis, limitations, and how to regenerate<a class="anchor-link" href="#5.-Synopsis,-limitations,-and-how-to-regenerate">¶</a></h2><p><strong>What was shown.</strong> Treating molecular property discovery as a calibrated sequential
+<h2 id="Synopsis,-limitations,-and-how-to-regenerate">Synopsis, limitations, and how to regenerate<a class="anchor-link" href="#Synopsis,-limitations,-and-how-to-regenerate">¶</a></h2><p><strong>What was shown.</strong> Treating molecular property discovery as a calibrated sequential
 decision problem yields an engine whose three decisions each hold up on real ADMET data
 under leakage-controlled evaluation, and which compose into a working closed loop.</p>
 <ul>
@@ -8863,8 +8864,9 @@ shift breaks. BBB random-split ECE 0.044.</li>
 <li><strong>What you can read (abductive discovery, 4.4).</strong> Textbook drivers recovered on 5 of 5
 probed endpoints (four independent plus one closely related reference), with 1398
 property cliffs on the two regression endpoints.</li>
-<li><strong>Active learning (4.5).</strong> Helps only when the passive baseline is unstable; a
-regime-dependent decision rule, not a general win.</li>
+<li><strong>Active learning (4.5).</strong> Uncertainty-driven acquisition helps when the passive
+baseline is unstable and costs accuracy when it is already stable: a conditional,
+regime-dependent decision rule with no evidence of a universal advantage.</li>
 <li><strong>Provenance (4.6).</strong> Every campaign decision is logged to DuckDB and traceable from
 task to oracle to SPRT verdict to rule.</li>
 </ul>
@@ -8876,14 +8878,15 @@ and no clinical or prospective claim is made.</li>
 conformal methods are not applied.</li>
 <li>The campaign's go/no-go test sets its direction from the realized subgroup mean and
 tests the oracle's own top-ranked subgroup, so its realized Type I error is bounded by
-$2\alpha$ and six GO calls say that the oracles carry signal, not that any particular
-chemistry is validated.</li>
+$2\alpha$; the six GO calls certify that each oracle separates its top-ranked molecules
+from the pool, and stop short of validating any particular chemistry.</li>
 <li>The active-learning comparison rests on two regression endpoints and three seeds.</li>
 <li>SPRT assumes an approximately Gaussian per-measurement model with known $\sigma$, and
-the campaign draws measurements without replacement from a finite subgroup; realized
-operating characteristics, not asymptotic bounds, are what is reported.</li>
+the campaign draws measurements without replacement from a finite subgroup. Throughout,
+we report the realized, simulated operating characteristics; the asymptotic Wald bounds
+serve as upper limits only.</li>
 <li>Drift monitoring and substructure-level uncertainty attribution did not pass a cheap
-feasibility probe and are scoped as future work, not claims.</li>
+feasibility probe and are carried as open future work, with no claim attached.</li>
 </ul>
 <p><strong>What would change the conclusions.</strong> A pre-registered test direction (restoring
 one-sided $\alpha$); shift-weighted conformal calibration; a prospective loop in which
