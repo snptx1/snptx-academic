@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0d1117">
-<meta name="description" content="SNPTX intelligence layer: bounded adaptive experimentation modules, current operational components, and literature-backed roadmap elements kept distinct from validated runtime behavior.">
+<meta name="description" content="SNPTX intelligence layer: a shared experiment catalog, rule-invoked hypothesis templates and campaign-selection components, a unit-tested Phase B and B.6 analytical library, and open integration work, each labeled by integration status.">
 <title>SNPTX - Intelligence</title>
 <style>
   :root {
@@ -307,11 +307,11 @@
   }
 
   .signal-card:nth-child(1) .label {
-    color: var(--accent-blue);
+    color: var(--accent-green);
   }
 
   .signal-card:nth-child(2) .label {
-    color: var(--accent-green);
+    color: var(--accent-blue);
   }
 
   .signal-card:nth-child(3) .label {
@@ -424,6 +424,15 @@
 
   .intelligence-table tbody tr:first-child td {
     border-top: none;
+  }
+
+  .draft code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    color: var(--text-primary);
+    background: rgba(110,118,129,0.16);
+    border-radius: 5px;
+    padding: 1px 5px;
   }
 
   .section-note {
@@ -585,7 +594,7 @@
       <div class="draft-meta">
         <div>
           <h2>Adaptive experimentation layer</h2>
-          <p>SNPTX includes a bounded intelligence surface for experiment memory, ranking, feedback, and design scaffolding. This page separates modules present in the current framework build from literature-backed modules specified for later integration.</p>
+          <p>SNPTX maintains a cumulative experiment catalog and a set of modules that rank, select, and propose from it. This page sorts those modules by integration status: in the runtime path, implemented as a tested library, or still open.</p>
         </div>
         <div class="badge">Intelligence view</div>
       </div>
@@ -593,50 +602,50 @@
       <section class="intelligence-hero section-block" id="overview">
         <div class="hero-grid">
           <div>
-            <div class="eyebrow">Adaptive experimentation without autonomous overclaim</div>
-            <h3>Bounded intelligence for cumulative experimentation, explicit roadmap, and disciplined scope.</h3>
-            <p class="lead">The intelligence layer is not presented as a general autonomous research agent. In the current SNPTX framework build it refers to concrete support for persistent experiment memory, cross-run ranking, Bayesian feedback updates, dataset-aware defaults, and reusable hypothesis templates. A separate roadmap identifies additional modules grounded in optimization, causal inference, continual learning, and information theory, but those modules are specified rather than validated runtime behavior.</p>
+            <div class="eyebrow">Experiment memory, selection, and hypothesis scaffolding</div>
+            <h3>A shared experiment catalog, two rule-driven paths that use it, and a tested analytical library around them.</h3>
+            <p class="lead">In the current SNPTX core build, the intelligence layer is a DuckDB experiment catalog plus the modules that read from and write to it. Two Snakemake paths use it today. The pipeline feedback rules import runs, evaluate declarative hypothesis templates, and record proposal decisions. The <code>autonomous_run</code> rule drives a campaign controller whose selection step uses Bayesian-optimization, value-of-information, and novelty-search components from the B.6 set. The remaining Phase B and B.6 modules are implemented and unit-tested, but no rule schedules them yet.</p>
           </div>
 
           <aside class="summary-card">
             <div class="label">Page structure</div>
             <h4>How to read this page</h4>
             <ul class="summary-list">
-              <li>This page first defines the operational role of intelligence inside the framework.</li>
-              <li>It then shows which components are active in the present build and what they do.</li>
-              <li>Roadmap components remain cited design intent, not empirical evidence of deployed autonomy.</li>
-              <li>Limits are stated explicitly so intelligence claims remain aligned with the rest of the site.</li>
+              <li style="--dot-color: var(--accent-green);">Green marks components invoked by Snakemake rules in the current build.</li>
+              <li style="--dot-color: var(--accent-blue);">Blue marks implemented, unit-tested modules that are called on demand.</li>
+              <li style="--dot-color: var(--accent-orange);">Orange marks integration work that remains open.</li>
+              <li style="--dot-color: var(--accent-purple);">Run-level campaign evidence is reported on the <a href="autonomous.html" style="color:var(--accent-blue);">Autonomous</a> page rather than repeated here.</li>
             </ul>
           </aside>
         </div>
 
         <div class="status-grid" aria-label="Intelligence status summary">
           <div class="signal-card">
-            <div class="label">Implemented now</div>
-            <h4>Five operational modules</h4>
-            <p>The current build exposes experiment cataloging, cross-run analysis, feedback updating, adaptive defaults, and hypothesis templates as the active intelligence surface.</p>
+            <div class="label">In the runtime path</div>
+            <h4>Catalog, templates, and three B.6 components</h4>
+            <p>The experiment catalog is written by three rules. Hypothesis templates run inside feedback generation. GP-surrogate selection, value-of-information prioritization, and the novelty archive run inside autonomous campaigns.</p>
           </div>
           <div class="signal-card">
-            <div class="label">Specified next</div>
-            <h4>Ten roadmap modules</h4>
-            <p>The roadmap extends the layer toward experiment design, optimization, causal analysis, continual learning, and information-theoretic ranking, with citations retained for each module.</p>
+            <div class="label">Implemented library</div>
+            <h4>Phase B and B.6 modules called on demand</h4>
+            <p>Meta-analysis, Feedback Loop v2, adaptive defaults, and the B.6 analytical methods (causal, Bayesian testing, rule mining, multi-objective, continual learning, information theory) are tested code paths that query the catalog when called.</p>
           </div>
           <div class="signal-card">
-            <div class="label">Out of scope</div>
-            <h4>No claim of autonomous science</h4>
-            <p>The page does not imply autonomous discovery, clinical decision-making, or universally validated closed-loop experimentation beyond the bounded modules listed here.</p>
+            <div class="label">Open</div>
+            <h4>Three integration gaps</h4>
+            <p>Outcome linkage and Thompson re-ranking are not yet scheduled after re-runs. The extension feedback schema is not yet a stable public contract. Surrogate updates are not bytewise reproducible across hardware.</p>
           </div>
         </div>
 
         <div class="visual-card" id="layer-map">
           <div class="visual-head">
             <div class="label">Intelligence architecture</div>
-            <h4>Operational modules, experiment memory, and the declared roadmap boundary</h4>
-            <p>The current build centers on cumulative experiment state and bounded decision support. Roadmap modules are shown as future analytical attachments rather than active control claims.</p>
+            <h4>Runtime paths, the shared experiment catalog, and the on-demand library</h4>
+            <p>Both rule-driven paths converge on one catalog. Library modules sit beneath it as analytical consumers, and the open items mark where library behavior has not yet been promoted into scheduled execution.</p>
           </div>
 
           <div class="diagram-scroll">
-          <svg viewBox="0 0 1180 620" xmlns="http://www.w3.org/2000/svg" aria-label="SNPTX intelligence layer map">
+          <svg viewBox="0 0 1180 762" xmlns="http://www.w3.org/2000/svg" aria-label="SNPTX intelligence layer map by integration status">
             <defs>
               <linearGradient id="intelFrame" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#0f1620"/>
@@ -650,10 +659,6 @@
                 <stop offset="0%" stop-color="#3fb950" stop-opacity="0.18"/>
                 <stop offset="100%" stop-color="#3fb950" stop-opacity="0.06"/>
               </linearGradient>
-              <linearGradient id="intelPurple" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#bc8cff" stop-opacity="0.18"/>
-                <stop offset="100%" stop-color="#bc8cff" stop-opacity="0.06"/>
-              </linearGradient>
               <linearGradient id="intelOrange" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="#d29922" stop-opacity="0.18"/>
                 <stop offset="100%" stop-color="#d29922" stop-opacity="0.06"/>
@@ -663,16 +668,15 @@
                 .lane{fill:#111821;stroke:#30363d;stroke-width:1}
                 .card-blue{fill:url(#intelBlue);stroke:#58a6ff;stroke-width:1.1}
                 .card-green{fill:url(#intelGreen);stroke:#3fb950;stroke-width:1.1}
-                .card-purple{fill:url(#intelPurple);stroke:#bc8cff;stroke-width:1.1}
+                .card-hub{fill:url(#intelGreen);stroke:#3fb950;stroke-width:1.8}
                 .card-orange{fill:url(#intelOrange);stroke:#d29922;stroke-width:1.1}
                 .title{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:14px;font-weight:700}
-                .copy{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:11px}
                 .copy-small{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px}
                 .note{fill:#8b949e;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;letter-spacing:1.2px}
                 .chip{fill:#e6edf3;font-family:'SFMono-Regular',Consolas,monospace;font-size:10px;font-weight:700;text-anchor:middle}
-                .link{stroke:#58a6ff;stroke-width:2.1;fill:none;marker-end:url(#intelArrowBlue)}
-                .feedback{stroke:#3fb950;stroke-width:1.8;fill:none;stroke-dasharray:7 5;marker-end:url(#intelArrowGreen)}
-                .spec-link{stroke:#bc8cff;stroke-width:1.6;fill:none;stroke-dasharray:6 4;marker-end:url(#intelArrowPurple)}
+                .link{stroke:#3fb950;stroke-width:2;fill:none;marker-end:url(#intelArrowGreen)}
+                .refit{stroke:#3fb950;stroke-width:1.8;fill:none;stroke-dasharray:7 5;marker-end:url(#intelArrowGreen)}
+                .query{stroke:#58a6ff;stroke-width:1.8;fill:none;stroke-dasharray:6 4;marker-end:url(#intelArrowBlue)}
               </style>
               <marker id="intelArrowBlue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                 <path d="M0,0 L8,3 L0,6" fill="#58a6ff"/>
@@ -680,237 +684,275 @@
               <marker id="intelArrowGreen" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
                 <path d="M0,0 L8,3 L0,6" fill="#3fb950"/>
               </marker>
-              <marker id="intelArrowPurple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                <path d="M0,0 L8,3 L0,6" fill="#bc8cff"/>
-              </marker>
             </defs>
 
-            <rect class="frame-shell" x="16" y="16" width="1148" height="588" rx="18"/>
-            <text class="note" x="56" y="54">CURRENT FRAMEWORK BUILD</text>
+            <rect class="frame-shell" x="16" y="16" width="1148" height="730" rx="18"/>
 
-            <rect class="lane" x="54" y="74" width="1072" height="236" rx="16"/>
-
-            <rect class="card-blue" x="84" y="108" width="238" height="82" rx="14"/>
-            <text class="title" x="104" y="134">Experiment Catalog</text>
-            <text class="copy-small" x="104" y="154">DuckDB-backed cumulative record</text>
-            <text class="copy-small" x="104" y="168">of prior runs; indexed state and</text>
-            <text class="copy-small" x="104" y="182">outcomes</text>
-
-            <rect class="card-blue" x="342" y="108" width="238" height="82" rx="14"/>
-            <text class="title" x="362" y="134">Meta-Analysis Engine</text>
-            <text class="copy-small" x="362" y="154">cross-run ranking and pattern</text>
-            <text class="copy-small" x="362" y="168">extraction; best-configuration</text>
-            <text class="copy-small" x="362" y="182">comparison across experiments</text>
-
-            <rect class="card-green" x="600" y="108" width="238" height="82" rx="14"/>
-            <text class="title" x="620" y="134">Feedback Loop v2</text>
-            <text class="copy-small" x="620" y="154">Bayesian confidence updates and</text>
-            <text class="copy-small" x="620" y="168">Thompson-style selection support</text>
-
-            <rect class="card-green" x="858" y="108" width="238" height="82" rx="14"/>
-            <text class="title" x="878" y="134">Adaptive Defaults</text>
-            <text class="copy-small" x="878" y="154">dataset-aware initialization and</text>
-            <text class="copy-small" x="878" y="168">starting points before tuning</text>
-
-            <rect class="card-orange" x="342" y="218" width="238" height="62" rx="14"/>
-            <text class="title" x="362" y="240">Hypothesis Templates</text>
-            <text class="copy-small" x="362" y="258">reusable trigger-driven prompts</text>
-            <text class="copy-small" x="362" y="272">for experimental follow-up</text>
-
-            <rect x="600" y="218" width="496" height="62" rx="14" fill="rgba(88,166,255,0.08)" stroke="#58a6ff" stroke-width="1"/>
-            <text class="title" x="620" y="240">Execution Interface</text>
-            <text class="copy-small" x="620" y="258">selection support returns signals to the experiment spine,</text>
-            <text class="copy-small" x="620" y="272">not a self-governing lab loop</text>
-
-            <!-- forward chain across the top row -->
-            <path class="link" d="M322 149 H342"/>
-            <path class="link" d="M580 149 H600"/>
-            <path class="link" d="M838 149 H858"/>
-
-            <!-- Meta-Analysis feeds Hypothesis Templates; Adaptive Defaults feeds Execution Interface -->
-            <path class="link" d="M461 190 V218"/>
-            <path class="link" d="M977 190 V218"/>
-
-            <!-- Hypothesis Templates -> Execution Interface -->
-            <path class="link" d="M580 249 H600"/>
-
-            <!-- Closing the loop: Execution Interface returns to Experiment Catalog -->
-            <path class="feedback" d="M848 280 V296 H203 V190"/>
-
+            <!-- Lane 1: runtime path -->
+            <text class="note" x="56" y="54">RUNTIME PATH &#183; INVOKED BY SNAKEMAKE RULES</text>
             <rect x="936" y="38" width="180" height="24" rx="12" fill="rgba(63,185,80,0.12)" stroke="#3fb950"/>
-            <text class="chip" x="1026" y="54">OPERATIONAL TODAY</text>
+            <text class="chip" x="1026" y="54">IN RUNTIME PATH</text>
+            <rect class="lane" x="54" y="74" width="1072" height="266" rx="16"/>
 
-            <text class="note" x="56" y="340">SPECIFIED ROADMAP SURFACE</text>
-            <rect class="lane" x="54" y="360" width="1072" height="206" rx="16"/>
+            <text class="note" x="84" y="96">PIPELINE FEEDBACK RULES</text>
+            <text class="note" x="796" y="96">RULE autonomous_run</text>
 
-            <rect class="card-purple" x="84" y="392" width="320" height="68" rx="14"/>
-            <text class="title" x="104" y="417">Experiment Design and Optimization</text>
-            <text class="copy-small" x="104" y="435">meta-features, surrogates, active design,</text>
-            <text class="copy-small" x="104" y="449">multi-objective search</text>
+            <rect class="card-green" x="84" y="104" width="300" height="62" rx="14"/>
+            <text class="title" x="104" y="128">Registry Import</text>
+            <text class="copy-small" x="104" y="146">rule build_registry appends runs</text>
+            <text class="copy-small" x="104" y="159">to the experiment catalog</text>
 
-            <rect class="card-purple" x="430" y="392" width="320" height="68" rx="14"/>
-            <text class="title" x="450" y="417">Causal and Statistical Inference</text>
-            <text class="copy-small" x="450" y="435">causal feedback, Bayesian testing,</text>
-            <text class="copy-small" x="450" y="449">rule mining, information theory</text>
+            <rect class="card-green" x="84" y="182" width="300" height="62" rx="14"/>
+            <text class="title" x="104" y="206">Hypothesis Templates</text>
+            <text class="copy-small" x="104" y="224">7 declarative templates (B.5) run</text>
+            <text class="copy-small" x="104" y="237">inside rule generate_feedback</text>
 
-            <rect class="card-purple" x="776" y="392" width="320" height="68" rx="14"/>
-            <text class="title" x="796" y="417">Continual and Discovery Modules</text>
-            <text class="copy-small" x="796" y="435">continual learning, novelty search,</text>
-            <text class="copy-small" x="796" y="449">symbolic discovery components</text>
+            <rect class="card-green" x="84" y="260" width="300" height="62" rx="14"/>
+            <text class="title" x="104" y="284">Feedback Decisions</text>
+            <text class="copy-small" x="104" y="302">rule apply_feedback gates proposals</text>
+            <text class="copy-small" x="104" y="315">and records each decision</text>
 
-            <rect x="230" y="482" width="720" height="76" rx="14" fill="rgba(188,140,255,0.08)" stroke="#bc8cff" stroke-width="1"/>
-            <text class="title" x="590" y="506" text-anchor="middle">Declared boundary</text>
-            <text class="copy-small" x="590" y="526" text-anchor="middle">cited modules remain design intent until integrated</text>
-            <text class="copy-small" x="590" y="542" text-anchor="middle">and validated in the framework runtime</text>
+            <rect class="card-hub" x="470" y="162" width="240" height="118" rx="14"/>
+            <text class="title" x="490" y="190">Experiment Catalog</text>
+            <text class="copy-small" x="490" y="210">DuckDB store (B.1)</text>
+            <text class="copy-small" x="490" y="228">experiments &#183; 18 columns</text>
+            <text class="copy-small" x="490" y="244">feedback_history</text>
+            <text class="copy-small" x="490" y="260">meta_features</text>
 
-            <path class="spec-link" d="M244 460 V482"/>
-            <path class="spec-link" d="M590 460 V482"/>
-            <path class="spec-link" d="M936 460 V482"/>
+            <rect class="card-green" x="796" y="104" width="300" height="62" rx="14"/>
+            <text class="title" x="816" y="128">Campaign Scheduler</text>
+            <text class="copy-small" x="816" y="146">VoI dataset priority (B.6.4) and</text>
+            <text class="copy-small" x="816" y="159">novelty-archive exploration (B.6.10)</text>
 
-            <rect x="936" y="324" width="180" height="24" rx="12" fill="rgba(188,140,255,0.12)" stroke="#bc8cff"/>
-            <text class="chip" x="1026" y="340">SPECIFIED ONLY</text>
+            <rect class="card-green" x="796" y="182" width="300" height="62" rx="14"/>
+            <text class="title" x="816" y="206">GP Surrogate</text>
+            <text class="copy-small" x="816" y="224">expected-improvement selection over</text>
+            <text class="copy-small" x="816" y="237">sampled configurations (B.6.2)</text>
+
+            <rect class="card-green" x="796" y="260" width="300" height="62" rx="14"/>
+            <text class="title" x="816" y="284">Execute and Record</text>
+            <text class="copy-small" x="816" y="302">pipeline run, patience-based dataset</text>
+            <text class="copy-small" x="816" y="315">stopping, periodic surrogate refit</text>
+
+            <path class="link" d="M384 135 H427 V190 H468"/>
+            <path class="link" d="M234 244 V258"/>
+            <path class="link" d="M384 291 H427 V252 H468"/>
+            <path class="link" d="M946 166 V180"/>
+            <path class="link" d="M946 244 V258"/>
+            <path class="link" d="M796 291 H753 V252 H712"/>
+            <path class="refit" d="M1096 291 H1112 V135 H1098"/>
+
+            <!-- Lane 2: library -->
+            <text class="note" x="56" y="378">LIBRARY &#183; IMPLEMENTED AND UNIT-TESTED, CALLED ON DEMAND</text>
+            <rect x="936" y="362" width="180" height="24" rx="12" fill="rgba(88,166,255,0.12)" stroke="#58a6ff"/>
+            <text class="chip" x="1026" y="378">TESTED LIBRARY</text>
+            <rect class="lane" x="54" y="394" width="1072" height="176" rx="16"/>
+
+            <path class="query" d="M590 418 V284"/>
+            <text class="copy-small" x="600" y="360">queries the catalog when called</text>
+
+            <rect class="card-blue" x="84" y="418" width="330" height="62" rx="14"/>
+            <text class="title" x="104" y="442">Meta-Analysis Engine</text>
+            <text class="copy-small" x="104" y="460">B.2 &#183; best-config ranking, warm-start,</text>
+            <text class="copy-small" x="104" y="473">cross-dataset patterns</text>
+
+            <rect class="card-blue" x="425" y="418" width="330" height="62" rx="14"/>
+            <text class="title" x="445" y="442">Feedback Loop v2</text>
+            <text class="copy-small" x="445" y="460">B.3 &#183; outcome linkage, Beta-Binomial</text>
+            <text class="copy-small" x="445" y="473">confidence, Thompson re-ranking</text>
+
+            <rect class="card-blue" x="766" y="418" width="330" height="62" rx="14"/>
+            <text class="title" x="786" y="442">Adaptive Defaults</text>
+            <text class="copy-small" x="786" y="460">B.4 &#183; dataset-aware starting configs</text>
+            <text class="copy-small" x="786" y="473">with sigmoid evidence confidence</text>
+
+            <rect class="card-blue" x="84" y="494" width="330" height="62" rx="14"/>
+            <text class="title" x="104" y="518">Inference and Testing</text>
+            <text class="copy-small" x="104" y="536">causal feedback (B.6.3), Bayesian</text>
+            <text class="copy-small" x="104" y="549">testing (B.6.8), info theory (B.6.9)</text>
+
+            <rect class="card-blue" x="425" y="494" width="330" height="62" rx="14"/>
+            <text class="title" x="445" y="518">Design and Optimization</text>
+            <text class="copy-small" x="445" y="536">meta-features (B.6.1), BO extensions,</text>
+            <text class="copy-small" x="445" y="549">active learning, SPRT, multi-objective</text>
+
+            <rect class="card-blue" x="766" y="494" width="330" height="62" rx="14"/>
+            <text class="title" x="786" y="518">Knowledge and Adaptation</text>
+            <text class="copy-small" x="786" y="536">rule mining (B.6.5), continual learning</text>
+            <text class="copy-small" x="786" y="549">(B.6.7), symbolic discovery (B.6.10)</text>
+
+            <!-- Lane 3: open integration work -->
+            <text class="note" x="56" y="606">OPEN INTEGRATION WORK</text>
+            <rect x="936" y="590" width="180" height="24" rx="12" fill="rgba(210,153,34,0.12)" stroke="#d29922"/>
+            <text class="chip" x="1026" y="606">NOT YET IN PLACE</text>
+            <rect class="lane" x="54" y="622" width="1072" height="104" rx="16"/>
+
+            <rect class="card-orange" x="84" y="642" width="330" height="66" rx="14"/>
+            <text class="title" x="104" y="667">Scheduled Outcome Linkage</text>
+            <text class="copy-small" x="104" y="686">close_loop and Thompson re-ranking</text>
+            <text class="copy-small" x="104" y="699">are not yet invoked by a rule</text>
+
+            <rect class="card-orange" x="425" y="642" width="330" height="66" rx="14"/>
+            <text class="title" x="445" y="667">Generalized Feedback Contract</text>
+            <text class="copy-small" x="445" y="686">extension-emitted feedback schema is</text>
+            <text class="copy-small" x="445" y="699">not yet a stable public interface</text>
+
+            <rect class="card-orange" x="766" y="642" width="330" height="66" rx="14"/>
+            <text class="title" x="786" y="667">Cross-Hardware Determinism</text>
+            <text class="copy-small" x="786" y="686">surrogate updates are seeded and logged</text>
+            <text class="copy-small" x="786" y="699">but not bytewise reproducible</text>
           </svg>
           </div>
 
           <div class="visual-caption">
             <div class="callout-card">
               <div class="label">Interpretation</div>
-              <h4>What the layer actually does today</h4>
-              <p>In the present build, intelligence functions as a bounded experimental memory and decision-support surface. It accumulates prior runs, updates confidence, ranks candidate configurations, proposes reusable follow-up structures, and hands those outputs back to the broader execution framework.</p>
+              <h4>What the layer does today</h4>
+              <p>Two paths write to one catalog. The pipeline feedback rules import completed runs, generate hypotheses from declarative templates, and record which proposals were approved and executed. The <code>autonomous_run</code> rule prioritizes datasets by value of information, selects configurations by expected improvement under a GP surrogate, reserves a share of selections for novelty-driven exploration, and writes each result back before the next round. The broader analytical library reads the same catalog but runs only when called.</p>
             </div>
 
             <aside class="legend-card">
-              <div class="label">Boundary discipline</div>
+              <div class="label">Legend</div>
               <ul class="legend-list">
-                <li style="--dot-color: var(--accent-blue);">Blue cards identify operational modules present in the current build.</li>
-                <li style="--dot-color: var(--accent-green);">Green cards identify adaptive support affecting selection and defaults.</li>
-                <li style="--dot-color: var(--accent-orange);">Orange identifies reusable hypothesis scaffolding, not autonomous interpretation.</li>
-                <li style="--dot-color: var(--accent-blue);">The execution interface returns support signals to the framework rather than bypassing it.</li>
-                <li style="--dot-color: var(--accent-green);">The dashed return line marks the closed feedback path: execution outcomes are written back into the experiment catalog.</li>
-                <li style="--dot-color: var(--accent-purple);">Purple roadmap clusters remain declared future work until validated in the runtime system.</li>
+                <li style="--dot-color: var(--accent-green);">Green cards are invoked by Snakemake rules in the current core build.</li>
+                <li style="--dot-color: var(--accent-green);">Solid arrows show writes into the catalog and step order within each path.</li>
+                <li style="--dot-color: var(--accent-green);">The dashed green return marks the per-campaign surrogate refit inside <code>autonomous_run</code>.</li>
+                <li style="--dot-color: var(--accent-blue);">Blue cards are implemented and unit-tested; the dashed blue line marks on-demand catalog queries.</li>
+                <li style="--dot-color: var(--accent-orange);">Orange cards are integration gaps, not implemented behavior.</li>
               </ul>
             </aside>
           </div>
         </div>
       </section>
 
-      <section class="section-block section-divider" id="operational-modules">
+      <section class="section-block section-divider" id="runtime-path">
         <div style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px;">
-          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Operational modules in the current build</h3>
-          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">This table is the active intelligence surface. Each row describes a module currently represented in the framework rather than a purely conceptual addition.</p>
+          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Components in the runtime path</h3>
+          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">Each row is imported by a script that a Snakemake rule invokes. The rule column names the entry point.</p>
         </div>
 
         <div class="table-card">
           <div class="table-head">
-            <div class="label">Implemented intelligence</div>
-            <h4>Operational modules (B1-B5)</h4>
-            <p>The present build supports cumulative experiment memory, ranking, feedback updates, and templated follow-up logic without claiming a fully autonomous experimentation engine.</p>
+            <div class="label">Runtime path</div>
+            <h4>Rule-invoked intelligence components</h4>
+            <p>The catalog and hypothesis templates come from the original Phase B set. The selection components come from B.6 and run inside the autonomous campaign controller.</p>
           </div>
 
-          <table class="intelligence-table" aria-label="Implemented intelligence modules">
+          <table class="intelligence-table" aria-label="Rule-invoked intelligence components">
             <thead>
               <tr>
-                <th>Module</th>
+                <th>Component</th>
+                <th>Phase</th>
+                <th>Invoked by</th>
                 <th>Function</th>
-                <th>Theory</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>Experiment Catalog</td><td>DuckDB-backed persistent store, 16 columns, indexed</td><td>Cumulative experimentation</td></tr>
-              <tr><td>Meta-Analysis Engine</td><td>Cross-experiment pattern discovery, best-config ranking</td><td>Bayesian rank aggregation</td></tr>
-              <tr><td>Feedback Loop v2</td><td>Bayesian confidence updating, Thompson sampling</td><td>Beta-Binomial posterior (Agrawal &amp; Goyal, 2012)</td></tr>
-              <tr><td>Adaptive Defaults</td><td>Dataset-aware starting configuration</td><td>Sigmoid confidence scoring</td></tr>
-              <tr><td>Hypothesis Templates</td><td>7 declarative templates with trigger conditions</td><td>Declarative hypothesis systems</td></tr>
+              <tr><td>Experiment Catalog</td><td>B.1</td><td><code>build_registry</code>, <code>apply_feedback</code>, <code>autonomous_run</code></td><td>DuckDB store with an 18-column experiments table (including surrogate prediction and uncertainty), a feedback history table, and a meta-features table</td></tr>
+              <tr><td>Hypothesis Templates</td><td>B.5</td><td><code>generate_feedback</code></td><td>Seven declarative templates with trigger conditions, evaluated against pipeline observations and merged into the proposed hypotheses; YAML-loadable</td></tr>
+              <tr><td>Feedback decision record</td><td>B.3 (record only)</td><td><code>apply_feedback</code></td><td>Proposals pass an approval gate (per-proposal flag or impact threshold); approval and execution status are written to the catalog</td></tr>
+              <tr><td>GP surrogate with expected improvement</td><td>B.6.2</td><td><code>autonomous_run</code></td><td>Scores sampled configurations by expected improvement, skips repeatedly failing regions, and refits on accumulated observations</td></tr>
+              <tr><td>Value of information</td><td>B.6.4</td><td><code>autonomous_run</code></td><td>Per-dataset value-of-information scores prioritize under-explored or uncertain datasets</td></tr>
+              <tr><td>Novelty archive</td><td>B.6.10</td><td><code>autonomous_run</code></td><td>Bounded archive (500 entries, k = 15) supplies the exploration share of selections and flags novel configurations</td></tr>
             </tbody>
           </table>
         </div>
 
         <div class="section-note">
-          <div class="label">Why this matters</div>
-          <p>These modules move the framework beyond one-off benchmarking by allowing runs to accumulate state across experiments. The claim is modest but important: SNPTX can retain and reuse experimental information. It does not claim to replace researcher judgment or wet-lab confirmation.</p>
+          <div class="label">Stopping rule</div>
+          <p>Campaign datasets are retired by a no-improvement patience rule. The formal sequential probability ratio test in the experiment-design module is implemented and tested but is not the stopping rule used in campaigns.</p>
         </div>
       </section>
 
-      <section class="section-block section-divider" id="roadmap-modules">
+      <section class="section-block section-divider" id="library-modules">
         <div style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px;">
-          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Specified roadmap and cited research basis</h3>
-          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">The roadmap remains useful because it states intended analytical directions precisely, but it must be read as literature-backed specification until the modules are integrated and validated.</p>
+          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Implemented library modules</h3>
+          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">These modules are implemented and covered by unit tests. They query the catalog when called but no Snakemake rule schedules them.</p>
         </div>
 
         <div class="roadmap-summary-grid">
           <div class="callout-card">
             <div class="label">Selection and design</div>
             <h4>Choosing what to run next</h4>
-            <p>Meta-features, surrogates, experiment design, and multi-objective search would extend the current ranking surface toward more explicit experiment selection under competing objectives.</p>
+            <p>Meta-features, the extended acquisition set, active learning, and multi-objective search broaden the selection logic that the campaign controller already uses in narrower form.</p>
           </div>
           <div class="callout-card">
             <div class="label">Inference and evaluation</div>
             <h4>Interpreting what a run means</h4>
-            <p>Causal feedback, Bayesian testing, rule mining, and information-theoretic analysis would make the layer more explicit about uncertainty, attribution, and evidence quality.</p>
+            <p>Causal feedback, Bayesian testing, rule mining, and information-theoretic analysis make attribution, uncertainty, and evidence quality explicit when invoked over catalog contents.</p>
           </div>
           <div class="callout-card">
             <div class="label">Adaptation over time</div>
             <h4>Responding to drift and novelty</h4>
-            <p>Continual learning and scientific discovery modules would extend the layer toward adaptation across non-stationary settings, but these remain roadmap items rather than active claims.</p>
+            <p>Continual-learning and discovery modules cover drift detection, replay, and interpretable meta-rules. Only the novelty archive from this group currently runs in campaigns.</p>
           </div>
         </div>
 
         <div class="table-card">
           <div class="table-head">
-            <div class="label">Specified roadmap</div>
-            <h4>Roadmap modules (B.6.1-B.6.10)</h4>
-            <p>The roadmap table is retained because it anchors future work in named methods and citations rather than in vague references to intelligence.</p>
+            <div class="label">Tested library</div>
+            <h4>Phase B and B.6 modules called on demand</h4>
+            <p>Where a module has a component in the runtime path, this table lists the remaining functionality that is library-only.</p>
           </div>
 
-          <table class="intelligence-table" aria-label="Specified intelligence roadmap modules">
+          <table class="intelligence-table" aria-label="Implemented library intelligence modules">
             <thead>
               <tr>
                 <th>Module</th>
-                <th>Theory</th>
-                <th>Citation</th>
+                <th>Phase</th>
+                <th>Implemented functionality</th>
+                <th>Basis</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>Meta-Features</td><td>Algorithm selection from dataset characteristics</td><td>Rice, 1976</td></tr>
-              <tr><td>Surrogates</td><td>GP-based Bayesian optimization with acquisition functions</td><td>Snoek et al., 2012</td></tr>
-              <tr><td>Causal Feedback</td><td>ATE, IPW, interrupted time series validation</td><td>Pearl, 2009</td></tr>
-              <tr><td>Experiment Design</td><td>Information gain, SPRT, active learning</td><td>Chaloner &amp; Verdinelli, 1995</td></tr>
-              <tr><td>Rule Mining</td><td>ILP rules with probabilistic calibration, Bayesian networks</td><td>Muggleton &amp; de Raedt, 1994</td></tr>
-              <tr><td>Multi-Objective</td><td>NSGA-II Pareto optimization with fairness constraints</td><td>Deb et al., 2002</td></tr>
-              <tr><td>Continual Learning</td><td>EWC, drift detection, experience replay</td><td>Kirkpatrick et al., 2017</td></tr>
-              <tr><td>Bayesian Testing</td><td>Signed-rank with ROPE, Friedman, bootstrap</td><td>Benavoli et al., 2017</td></tr>
-              <tr><td>Information Theory</td><td>Entropy, MI, MDL, KL divergence, feature ranking</td><td>Cover &amp; Thomas, 2006</td></tr>
-              <tr><td>Scientific Discovery</td><td>Surprise detection, symbolic regression, novelty search</td><td>Peirce, 1903</td></tr>
+              <tr><td>Meta-Analysis Engine</td><td>B.2</td><td>Best-config ranking, hyperparameter ranges, cross-dataset patterns, hypothesis effectiveness, warm-start, learning-curve extrapolation, performance-matrix completion</td><td>Feurer et al., 2015</td></tr>
+              <tr><td>Feedback Loop v2</td><td>B.3</td><td>Outcome linkage after re-runs, Beta-Binomial confidence updates, Thompson-sampling hypothesis re-ranking, causal validation hook</td><td>Thompson, 1933; Agrawal &amp; Goyal, 2012</td></tr>
+              <tr><td>Adaptive Defaults</td><td>B.4</td><td>Dataset-aware model and hyperparameter suggestions with sigmoid evidence-scaled confidence</td><td>Rice, 1976; Feurer et al., 2022</td></tr>
+              <tr><td>Meta-Features</td><td>B.6.1</td><td>Extraction of 50+ dataset features across five categories and similarity for warm-starting</td><td>Rice, 1976</td></tr>
+              <tr><td>Surrogates (extended)</td><td>B.6.2</td><td>UCB, knowledge-gradient, and Thompson acquisitions; multi-task surrogate; contextual bandit</td><td>Snoek et al., 2012</td></tr>
+              <tr><td>Causal Feedback</td><td>B.6.3</td><td>ATE, IPW, interrupted time series, counterfactual prediction, Benjamini-Hochberg correction</td><td>Pearl, 2009</td></tr>
+              <tr><td>Experiment Design (extended)</td><td>B.6.4</td><td>Information gain, uncertainty sampling, query-by-committee, expected model change, SPRT stopping</td><td>Chaloner &amp; Verdinelli, 1995</td></tr>
+              <tr><td>Rule Mining</td><td>B.6.5</td><td>Rule induction with calibrated confidence, pipeline Bayesian network, ontology-based transfer</td><td>Muggleton &amp; de Raedt, 1994</td></tr>
+              <tr><td>Multi-Objective</td><td>B.6.6</td><td>Non-dominated sorting, Pareto tracking, expected hypervolume improvement, fairness gaps, scalarization</td><td>Deb et al., 2002</td></tr>
+              <tr><td>Continual Learning</td><td>B.6.7</td><td>Page-Hinkley and ADWIN drift detection, prioritized replay, EWC, curriculum ordering</td><td>Kirkpatrick et al., 2017</td></tr>
+              <tr><td>Bayesian Testing</td><td>B.6.8</td><td>Bayesian signed-rank and correlated t-test, Friedman with Nemenyi, effect sizes, bootstrap intervals, multi-seed validation</td><td>Benavoli et al., 2017</td></tr>
+              <tr><td>Information Theory</td><td>B.6.9</td><td>Entropy, mutual information, MDL, KL- and JS-divergence, gain ratio, compression distance, posterior-entropy stopping</td><td>Cover &amp; Thomas, 2006</td></tr>
+              <tr><td>Scientific Discovery (extended)</td><td>B.6.10</td><td>Surprise detection, abductive hypotheses, knowledge distillation, symbolic-regression meta-rules</td><td>Schmidt &amp; Lipson, 2009</td></tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="section-note">
+          <div class="label">Verification basis</div>
+          <p>Status assignments reflect which modules are imported by rule-invoked scripts in the SNPTX core repository as of October 2026. The 17 intelligence and autonomy test files (613 tests) pass in that build. Campaign-level measures for <code>autonomous_run</code> are reported on the <a href="autonomous.html" style="color:var(--accent-blue);">Autonomous</a> page.</p>
         </div>
       </section>
 
       <section class="section-block section-divider" id="claims">
         <div style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:14px;">
-          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Claims, inferences, and explicit limits</h3>
-          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">The page distinguishes what is demonstrated in the framework build from what is reasonably inferred and what remains out of scope.</p>
+          <h3 style="font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);font-weight:600;">Claims by integration status</h3>
+          <p style="font-size:12px;color:var(--text-secondary);max-width:560px;">Each claim is tied to the strongest status its supporting module has reached.</p>
         </div>
 
         <div class="boundary-grid">
           <div class="boundary-card">
-            <div class="label">Demonstrated</div>
-            <h4>Implemented support for adaptive experimentation</h4>
+            <div class="label">Demonstrated in runtime</div>
+            <h4>Cumulative memory and guided campaign selection</h4>
             <ul class="boundary-list">
-              <li style="--dot-color: var(--accent-blue);">Persistent experiment memory across runs.</li>
-              <li style="--dot-color: var(--accent-blue);">Cross-experiment ranking and Bayesian feedback updates.</li>
-              <li style="--dot-color: var(--accent-blue);">Dataset-aware defaults and reusable hypothesis scaffolding.</li>
+              <li style="--dot-color: var(--accent-green);">A persistent catalog written by three rules.</li>
+              <li style="--dot-color: var(--accent-green);">Template-driven hypotheses with recorded approval decisions.</li>
+              <li style="--dot-color: var(--accent-green);">Surrogate, value-of-information, and novelty-guided campaign selection.</li>
             </ul>
           </div>
           <div class="boundary-card">
-            <div class="label">Inferred but bounded</div>
-            <h4>A platform that can accumulate experimental knowledge</h4>
-            <p>The implemented modules support a credible claim that SNPTX is structured for cumulative experimentation rather than isolated benchmark runs. That inference depends on the concrete modules above, not on unimplemented roadmap items.</p>
+            <div class="label" style="color:var(--accent-blue);">Implemented, not yet scheduled</div>
+            <h4>Tested behavior awaiting rule-level integration</h4>
+            <p>Claims about meta-analysis, Feedback Loop v2, adaptive defaults, and the extended B.6 methods concern behavior verified under unit test, not effects observed in scheduled pipeline runs.</p>
           </div>
           <div class="boundary-card">
-            <div class="label">Out of scope</div>
-            <h4>No claim of closed-loop autonomous discovery</h4>
-            <p>This page does not claim independent scientific reasoning, diagnosis, therapeutic recommendation, or deployment-ready autonomous control of laboratory or clinical workflows.</p>
+            <div class="label" style="color:var(--accent-orange);">Not claimed</div>
+            <h4>No independent research direction</h4>
+            <p>Hypotheses come from declared templates and pass an approval gate, and campaigns search declared spaces. The layer does not set research questions or interpret results beyond those structures.</p>
           </div>
         </div>
       </section>
