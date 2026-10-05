@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Notebook</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>walkthrough_learned_representations_admet</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7827,7 +7827,7 @@ body, .jp-Notebook, .jp-NotebookPanel, #notebook, #notebook-container { backgrou
 </head>
 <body class="jp-Notebook" data-jp-theme-light="false" data-jp-theme-name="JupyterLab Dark">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=61ee7047">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=251b10ac">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7835,40 +7835,44 @@ body, .jp-Notebook, .jp-NotebookPanel, #notebook, #notebook-container { backgrou
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Molecular-graph-models-for-ADMET:-multitask-comparisons,-ensemble-probabilities,-and-retrospective-sequential-testing">Molecular graph models for ADMET: multitask comparisons, ensemble probabilities, and retrospective sequential testing<a class="anchor-link" href="#Molecular-graph-models-for-ADMET:-multitask-comparisons,-ensemble-probabilities,-and-retrospective-sequential-testing">¶</a></h1><p style="font-size:1.0em; font-style:italic; opacity:0.8; margin-top:2px; margin-bottom:25px;">Guided walkthrough: model comparisons, probability assessment, and sequential testing from committed results.</p>
 <p style="font-size:0.95em; opacity:0.85; margin-top:2px; margin-bottom:25px;">Daniel R. Russell · Autonomous Discovery Systems, SNPTX · October 2026</p>
-<h3 id="Abstract">Abstract<a class="anchor-link" href="#Abstract">¶</a></h3><p>We compare single-task and multi-task Graph Isomorphism Networks [5], assess ensemble
-probabilities, and connect them to a companion sequential decision engine [20]. Across six
-Therapeutics Data Commons endpoints [17] and five within-endpoint scaffold-split seeds [18],
-multi-task Caco2 MAE is lower by 0.11 to 0.17 at every retained training-scaffold fraction
-(18 of 20 seed-fraction pairs), and HIA AUROC is higher by 0.071 at fraction 0.50 (5 of 5
-seeds). AMES and Solubility perform worse at full data. These comparisons do not isolate
-representation transfer: smaller task loaders are repeatedly sampled, and at full data
-10-23% of each endpoint's test records appear as the same canonical molecule in another
-endpoint's training set. No pretraining comparison survives Holm correction [31]. On one
-fixed split, a five-member temperature-scaled [11] ensemble [10] has lower mean NLL than a
-single network or Monte Carlo dropout [12] (0.482 versus 0.505 and 0.532), but not lower ECE.
-The RF comparator leads on accuracy and proper scores. The ensemble's nominal 90% prediction
-sets [13,14] have mean coverage 0.877; temperature fitting and conformal calibration reuse
-validation labels, and individual-molecule exchangeability is not established. A retrospective
-SPRT [1,2] uses 105 measurements on BBB and AMES against a continuous fixed-sample requirement
-of 137.4 under the Gaussian working model. Probability rankings determine the subgroups;
-uncertainty metrics are logged separately. HIA's 31-record budget cannot reach GO under the
-implemented test. A GAT [4] implementation diagnostic finds that the proposed incoming-attention
-sum is constant by normalization, so its stored rule-agreement results cannot establish
-interpretability. The walkthrough reconstructs summaries and checks stored test predictions
-on CPU; full retraining is a separate tier.</p>
-<h3 id="How-to-read-this-document">How to read this document<a class="anchor-link" href="#How-to-read-this-document">¶</a></h3><p>This notebook is self-contained. It is also the executable companion to the manuscript of the
-same title: its section numbers follow the manuscript's results sections (4.1-4.7) and its
-figure and table numbers are the manuscript's (Figures 0-6, Tables 1-6 and A1), so the two can be
-cross-referenced, but nothing here assumes the manuscript has been read. Each section states
-the question, defines the quantities involved, reconstructs the result from committed
-artifacts, shows the figure with its caption, and states the limits of the interpretation.
-Code cells identify which summaries are recomputed and which metrics are read from stored
-results. Bracketed numbers refer to the References at the end.</p>
+<h3 id="Abstract">Abstract<a class="anchor-link" href="#Abstract">¶</a></h3><p>A companion study [20] built a sequential decision engine around a random-forest oracle.
+This walkthrough asks what learned graph models add when they take the oracle's place, and
+answers by audit as much as by benchmark. Across six Therapeutics Data Commons endpoints [17]
+and five within-endpoint scaffold-split seeds [18], a multi-task Graph Isomorphism Network
+[5] lowers Caco2 MAE by 0.11 to 0.17 at every retained training-scaffold fraction (18 of 20
+seed-fraction pairs) and lifts HIA AUROC by 0.071 at fraction 0.50 (5 of 5 seeds), while
+AMES and Solubility come out worse at full data. We read these as comparisons of training
+protocols rather than measurements of transfer: multi-task training recycles the smaller
+task loaders, and at full data 10-23% of each endpoint's test records appear as the same
+canonical molecule in another endpoint's training set. No pretraining comparison survives
+Holm correction [31]. Turning from accuracy to uncertainty, a five-member temperature-scaled
+[11] ensemble [10] has lower mean NLL on one fixed split than a single network or Monte
+Carlo dropout [12] (0.482 versus 0.505 and 0.532), but not lower ECE, and the RF comparator
+leads on accuracy and proper scores. The ensemble's nominal 90% prediction sets [13,14]
+cover 0.877 of test labels on average, a figure reported as empirical rather than
+guaranteed, since temperature fitting and conformal calibration reuse the same validation
+labels and group splitting does not establish molecule-level exchangeability. Wired into
+the engine, a retrospective SPRT [1,2] reaches GO on BBB and AMES after 105 measurements
+against a continuous fixed-sample requirement of 137.4 under a Gaussian working model;
+probability rankings define the subgroups, uncertainty metrics are logged alongside, and
+HIA's 31-record budget cannot reach GO at all. Finally, a GAT [4] implementation diagnostic
+finds that the proposed incoming-attention sum is constant by normalization, so its stored
+rule-agreement results say nothing about interpretability. Every table below is
+reconstructed from committed artifacts on CPU; full retraining is a separate tier.</p>
+<h3 id="How-to-read-this-document">How to read this document<a class="anchor-link" href="#How-to-read-this-document">¶</a></h3><p>This notebook is self-contained, and it is also the executable companion to the manuscript
+of the same title. Its section numbers follow the manuscript's results sections (4.1-4.7)
+and its figure and table numbers are the manuscript's (Figures 0-6, Tables 1-6 and A1), so
+the two can be read side by side, but nothing here assumes the manuscript has been read.
+Each section opens with the question it answers, defines the quantities involved,
+reconstructs the result from committed artifacts, shows the figure with its caption, and
+closes with what the result does and doesn't establish. Code cells say which summaries are
+recomputed and which metrics are read from stored results. Bracketed numbers refer to the
+References at the end.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=317e97a5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fea0598a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7877,35 +7881,35 @@ results. Bracketed numbers refer to the References at the end.</p>
 <h2 id="Overview">Overview<a class="anchor-link" href="#Overview">¶</a></h2><div style="display:flex; gap:48px; line-height:1.5;">
 <div style="flex:1;">
 <p><b>4.1  Multitask and single-task performance across endpoints</b><br/>
-<span style="font-size:0.86em; opacity:0.85;">Paired differences over four retained training-scaffold fractions and five seeds. Caco2 has lower multi-task MAE, while other comparisons vary. Different update exposure and cross-endpoint structural overlap limit attribution (Table 1, Table A1, Figure 1).</span>
+<span style="font-size:0.86em; opacity:0.85;">Does one shared trunk help any of six endpoints? Caco2 yes, at every fraction; others mixed. Unequal update exposure and cross-endpoint structural overlap keep the gains from being called transfer (Table 1, Table A1, Figure 1).</span>
 <br/><br/></p>
 <p><b>4.2  Ablation: self-supervised pretraining</b><br/>
-<span style="font-size:0.86em; opacity:0.85;">Does attribute-mask pretraining add to supervised sharing? None of 36 paired comparisons survives a Holm correction (Table 2, Figure 2).</span>
+<span style="font-size:0.86em; opacity:0.85;">Would a self-supervised warm start help further? None of 36 paired comparisons survives a Holm correction (Table 2, Figure 2).</span>
 <br/><br/></p>
 <p><b>4.3  Deep-ensemble uncertainty: scoring rules and calibration</b><br/>
-<span style="font-size:0.86em; opacity:0.85;">A K = 5 ensemble is the best graph model on NLL, Brier score, and AURC on average, but not on ECE; the RF leads overall (Table 3, Figure 3).</span>
+<span style="font-size:0.86em; opacity:0.85;">From accuracy to probabilities. A K = 5 ensemble is the best graph model on NLL, Brier score, and AURC on average, but not on ECE; the RF leads overall (Table 3, Figure 3).</span>
 <br/><br/></p>
 <p><b>4.4  Conformal coverage and selective prediction under scaffold shift</b><br/>
-<span style="font-size:0.86em; opacity:0.85;">Realized coverage, set sizes, and accuracy on the most confident 70%, with calibration-reuse and retained-subset majority diagnostics (Table 4, Figure 4).</span></p>
+<span style="font-size:0.86em; opacity:0.85;">What a nominal 90% set actually covers, what set size costs in coverage, and what selective accuracy owes to class balance (Table 4, Figure 4).</span></p>
 </div>
 <div style="flex:1;">
 <p><b>4.5  Sequential go/no-go campaign with the learned oracle</b><br/>
-<span style="font-size:0.86em; opacity:0.85;">A retrospective run using ensemble probability rankings: 3 of 4 GO; 105 measurements versus a continuous fixed-sample requirement of 137.4 on BBB and AMES. HIA cannot reach GO within its budget (Table 5, Figure 5).</span>
+<span style="font-size:0.86em; opacity:0.85;">The ensemble goes to work inside the engine: 3 of 4 GO; 105 measurements versus a continuous fixed-sample requirement of 137.4 on BBB and AMES. HIA cannot reach GO within its budget (Table 5, Figure 5).</span>
 <br/><br/></p>
 <p><b>4.6  Attention-score implementation diagnostic</b><br/>
-<span style="font-size:0.86em; opacity:0.85;">The GAT has predictive AUROC, but its incoming-attention sum is constant to numerical precision. The proposed salience probe is therefore invalid (Figure 6).</span>
+<span style="font-size:0.86em; opacity:0.85;">The result we did not plan to report: the GAT predicts, but its incoming-attention sum is constant to numerical precision, so the salience probe is withdrawn (Figure 6).</span>
 <br/><br/></p>
 <p><b>4.7  Summary of results</b><br/>
-<span style="font-size:0.86em; opacity:0.85;">Full-data accuracy for all three model families with the ensemble's decision metrics, per endpoint (Table 6).</span></p>
+<span style="font-size:0.86em; opacity:0.85;">Full-data accuracy for all three model families with the ensemble's decision metrics, per endpoint, in one table (Table 6).</span></p>
 </div>
 </div>
-<p>Before the results, <em>Data, models, and protocol</em> summarizes the experimental design and
+<p>Before the results, <em>Data, models, and protocol</em> lays out the experimental design and
 <em>System architecture</em> shows how the pieces connect. The closing <em>Synopsis</em> collects what was
-shown, its limitations, and the separate reconstruction and retraining commands.</p>
+shown, what it doesn't establish, and the separate reconstruction and retraining commands.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=39abea3a">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8a61f6da">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7998,7 +8002,7 @@ shown, its limitations, and the separate reconstruction and retraining commands.
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=aa84b0ec">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e156a8ff">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8006,53 +8010,56 @@ shown, its limitations, and the separate reconstruction and retraining commands.
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Data,-models,-and-protocol">Data, models, and protocol<a class="anchor-link" href="#Data,-models,-and-protocol">¶</a></h2><p><strong>Endpoints.</strong> Six ADMET endpoints from the Therapeutics Data Commons [17]: BBB (Martins) [32],
 AMES [33], hERG [34], and HIA (Hou) [35] as binary classification, scored by AUROC, and
-Solubility (AqSolDB) [36] and Caco2 (Wang) [37] as regression, scored by MAE on their TDC target scales, with 2030, 7278,
-655, 578, 9982, and 910 labeled records. These contain 1975, 7255, 648, 578, 9982, and 906
-unique canonical molecules, respectively. TDC removes exact duplicate rows; the study does
-not collapse repeated structures or conflicting labels. Record counts are used throughout
-the tables. Positive labels denote the dataset phenotype: BBB penetration and HIA absorption,
-but AMES mutagenicity and hERG blockade. Enrichment in the latter two is an adverse phenotype.</p>
+Solubility (AqSolDB) [36] and Caco2 (Wang) [37] as regression, scored by MAE on their TDC
+target scales, with 2030, 7278, 655, 578, 9982, and 910 labeled records. Those records hold
+1975, 7255, 648, 578, 9982, and 906 unique canonical molecules respectively; TDC removes
+exact duplicate rows, and we don't go further by collapsing repeated structures or
+conflicting labels. Record counts are used throughout the tables. One point of sign
+convention matters later: positive labels denote the dataset phenotype, which is BBB
+penetration and HIA absorption but AMES mutagenicity and hERG blockade. Enrichment in the
+latter two is an adverse phenotype.</p>
 <p><strong>Splits.</strong> Every split is a Murcko scaffold cold-split [18]: unique scaffolds are randomly
 permuted and assigned whole to test (20% of scaffolds), validation (20%), and training, so
-within an endpoint no evaluation scaffold is seen in training. Splits are drawn independently
-per endpoint, so models trained on several endpoints also see other endpoints' training
-molecules, some of which overlap a target's test set (measured in §4.1). Fractions of 0.10,
-0.25, 0.50, and 1.00 retain whole training scaffolds, rather than those fractions of training
-records. Large scaffold groups, including one group for all acyclic structures, make record
-fractions vary substantially between seeds. The transfer and pretraining studies (§4.1-§4.2) repeat
-everything over five seeds, each drawing a new split and initialization. The uncertainty
-study and the campaign (§4.3-§4.5) use one fixed split (seed 0). Models train for a fixed 150
-epochs with no early stopping, apart from GAT checkpoint selection by validation AUROC.
-The same validation labels fit temperatures and calibrate conformal thresholds; this reuse
-violates the ordinary held-out split-conformal setup (§4.4).</p>
+within an endpoint no evaluation scaffold is seen in training. The word <em>within</em> carries
+weight. Splits are drawn independently per endpoint, so a model trained on several endpoints
+also sees the other endpoints' training molecules, some of which overlap a target's test set
+(measured in §4.1). Fractions of 0.10, 0.25, 0.50, and 1.00 retain whole training scaffolds
+rather than those fractions of training records, and because scaffold groups vary enormously
+in size (one group holds every acyclic structure), record fractions swing substantially
+between seeds. The transfer and pretraining studies (§4.1-§4.2) repeat everything over five
+seeds, each drawing a new split and initialization; the uncertainty study and the campaign
+(§4.3-§4.5) use one fixed split (seed 0). Models train for a fixed 150 epochs with no early
+stopping, apart from GAT checkpoint selection by validation AUROC. The same validation labels
+fit temperatures and calibrate conformal thresholds, a reuse that departs from the ordinary
+held-out split-conformal setup and that §4.4 returns to.</p>
 <p><strong>Models.</strong> Molecules are graphs with nine atom features (atomic number as a scalar, degree,
 formal charge, explicit hydrogens, aromatic and ring flags, one-hot sp/sp2/sp3
-hybridization) connected by bonds; bond attributes are computed but the GIN ignores them. The
-encoder is a four-layer Graph Isomorphism Network (GIN) [5] with
-hidden width 128, BatchNorm inside each MLP and after each convolution, sum pooling,
-per-graph PairNorm [8], and DropEdge [9]. Directed message edges are dropped independently;
-the two directions of a chemical bond are not removed together.
-The <em>single-task</em> model trains one encoder per endpoint; the <em>multi-task</em> model shares one
-encoder across all six endpoints with a head per endpoint, visiting endpoints round-robin.
-Each epoch has as many rounds as the largest task loader; shorter loaders are restarted.
-Single-task training traverses its own loader once per epoch, so target-label exposure is
-not matched between these protocols.
-Classification losses use inverse-frequency class weights; regression targets are
-standardized to reduce scale differences, without ensuring equal gradient scales. The
+hybridization) connected by bonds; bond attributes are computed but the GIN ignores them.
+The encoder is a four-layer Graph Isomorphism Network (GIN) [5] with hidden width 128,
+BatchNorm inside each MLP and after each convolution, sum pooling, per-graph PairNorm [8],
+and DropEdge [9], which drops directed message edges independently so that the two
+directions of a chemical bond need not go together. The <em>single-task</em> model trains one
+encoder per endpoint. The <em>multi-task</em> model shares one encoder across all six endpoints
+with a head per endpoint, visiting endpoints round-robin; each epoch has as many rounds as
+the largest task loader, shorter loaders restart, and single-task training traverses its own
+loader once per epoch, so target-label exposure is not matched between the two protocols.
+Classification losses use inverse-frequency class weights, and regression targets are
+standardized to reduce scale differences without ensuring equal gradient scales. The
 descriptor baseline is a 300-tree random forest with balanced class weights on ten RDKit
 descriptors plus a 1024-bit Morgan fingerprint of radius 2 [30]. It adapts the companion RF
-approach [20]; the companion classification campaign uses fingerprints alone, different
-splits, and unweighted classes.</p>
+approach [20], whose classification campaign used fingerprints alone, different splits, and
+unweighted classes.</p>
 <p><strong>Uncertainty methods.</strong> On the four classification endpoints, the <em>deep ensemble</em> [10]
-averages five single-task GINs trained with different seeds (initialization, minibatch order,
-dropout and DropEdge masks), each temperature-scaled [11] on the validation set. The <em>single GIN</em> is member 0 with its own temperature. <em>MC
-dropout</em> [12] averages 30 stochastic passes of member 0 in training mode, without temperature
-scaling. Its training-mode passes also activate DropEdge and BatchNorm batch statistics and
-update running statistics; it is therefore a combined stochastic baseline, not a controlled
-dropout-only comparison. RF probabilities are used as produced.</p>
+averages five single-task GINs trained with different seeds (initialization, minibatch
+order, dropout and DropEdge masks), each temperature-scaled [11] on the validation set. Two
+single-model baselines sit beside it. The <em>single GIN</em> is member 0 with its own temperature.
+<em>MC dropout</em> [12] averages 30 stochastic passes of member 0 in training mode, without
+temperature scaling; because training mode also activates DropEdge and BatchNorm batch
+statistics and updates running statistics, it is a combined stochastic baseline rather than
+a controlled dropout-only comparison. RF probabilities are used as produced.</p>
 <p><strong>Statistics.</strong> Paired differences between conditions that share a split are reported as
-mean ± sample s.d. over seeds, with the number of seeds favoring one condition. With five
-seeds a single cell is underpowered, so consistency of direction is read alongside the mean.
+mean ± sample s.d. over seeds, with the number of seeds favoring one condition. Five seeds
+leave a single cell underpowered, so consistency of direction is read alongside the mean.
 The single-split uncertainty results carry no seed-level error bars.</p>
 <table style="margin-left:0; margin-right:auto;">
 <thead><tr><th style="text-align:left">group</th><th style="text-align:left">setting</th><th style="text-align:left">value</th></tr></thead>
@@ -8069,21 +8076,21 @@ The single-split uncertainty results carry no seed-level error bars.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8b18e571">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4457dd1c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="System-architecture">System architecture<a class="anchor-link" href="#System-architecture">¶</a></h2><p>Figure 0 distinguishes model comparisons, probability assessment, and the retrospective
-campaign. The campaign reuses the companion SPRT rule with ensemble probabilities defining
-its subgroup. Conformal and selective metrics are reported and logged separately; they do
-not govern acquisition or stopping. The companion study's abductive rule-discovery component
-is not re-run here.</p>
+<h2 id="System-architecture">System architecture<a class="anchor-link" href="#System-architecture">¶</a></h2><p>Figure 0 shows how the pieces connect and, just as usefully, what stays separate. The
+learned oracle takes the RF's place at the head of the companion engine, and the campaign
+reuses the companion SPRT rule with ensemble probabilities defining its subgroup. Conformal
+and selective metrics are reported and logged alongside, but they don't govern acquisition
+or stopping. The companion study's abductive rule-discovery component isn't re-run here.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=83377379">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ebda25d2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8111,7 +8118,7 @@ is not re-run here.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=85705270">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=eb2663ad">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8122,35 +8129,35 @@ is not re-run here.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=609259b7">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=30c5b419">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.1-Multitask-and-single-task-performance-across-endpoints">4.1 Multitask and single-task performance across endpoints<a class="anchor-link" href="#4.1-Multitask-and-single-task-performance-across-endpoints">¶</a></h2><p><strong>Question.</strong> How does the implemented multi-task protocol compare with a single-task GIN
-on each endpoint under the same within-endpoint splits?</p>
-<p><strong>Objective and comparison limits.</strong> Let $\phi_\theta$ be the shared encoder
+<h2 id="4.1-Multitask-and-single-task-performance-across-endpoints">4.1 Multitask and single-task performance across endpoints<a class="anchor-link" href="#4.1-Multitask-and-single-task-performance-across-endpoints">¶</a></h2><p><strong>Question.</strong> Does sharing one encoder trunk across six endpoints help any of them, compared
+with a single-task GIN trained under the same within-endpoint splits?</p>
+<p><strong>Objective, and why the answer needs qualifying.</strong> Let $\phi_\theta$ be the shared encoder
 and $h_t$ the head for endpoint $t$. The multi-task objective is the task-weighted risk</p>
 <p>$$
 \mathcal{L}(\theta) \;=\; \sum_{t} w_t \, \mathbb{E}_{(x,y)\sim\mathcal{D}_t}
       \big[\ell_t\!\left(h_t(\phi_\theta(x)),\, y\right)\big], \qquad w_t = 1,
 $$</p>
 <p>optimized by round-robin task batches. Multi-task learning can share information or incur
-conflicting task gradients [24], but these experiments do not identify that mechanism.
-Smaller task loaders are restarted until the largest finishes each epoch, whereas a
-single-task loader is visited once. At full data, seed 0, HIA receives 7,650 target-task
-updates versus 450 single-task updates, and Caco2 receives 7,650 versus 750. The shared trunk
-also sees auxiliary records, including target test structures (Table A1). Task size, chemistry,
-and training exposure vary together, so the observed pattern cannot establish an
-endpoint-size cause or isolate representation transfer.</p>
+conflicting task gradients [24], and these experiments don't identify which. Two details of
+the implementation matter more. First, smaller task loaders are restarted until the largest
+finishes each epoch, whereas a single-task loader is visited once; at full data, seed 0, HIA
+receives 7,650 target-task updates against 450 single-task updates, and Caco2 7,650 against
+750. Second, the shared trunk also sees auxiliary records, including target test structures
+(Table A1). Task size, chemistry, and training exposure all move together, so whatever
+pattern appears can't be pinned on endpoint size or on representation transfer alone.</p>
 <p>The cell below recomputes Table 1 from per-seed metrics and checks where the RF fails to
-lead. The following diagnostics reconstruct record counts and update exposure from stored
+lead. The diagnostics that follow reconstruct record counts and update exposure from stored
 training counts, and Table A1 displays the committed overlap measurements.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5f6ceca9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ee6be354">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8295,7 +8302,7 @@ RF fails to lead at: HIA at f = 0.50 (RF 0.900, single 0.833, multi 0.904)
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=cdf63cbf">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e033d010">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8538,26 +8545,28 @@ RF fails to lead at: HIA at f = 0.50 (RF 0.900, single 0.833, multi 0.904)
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b438d2e4">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fe8fc5b7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Reading Table 1.</strong> Caco2 has lower multi-task MAE at every retained training-scaffold
-fraction (18 of 20 seed-fraction pairs), with its largest difference at full data. HIA is
-higher consistently at f = 0.50 (+0.071 ± 0.032, 5 of 5 seeds) and slightly lower at f = 0.10
-and full data. hERG differences are positive on average but small relative to seed spread
-(13 of 20 pairs). At full data, multi-task AMES AUROC is lower by 0.049 and Solubility MAE
-higher by 0.145; no seed improves in either comparison. BBB AUROC is lower at small scaffold
-fractions (−0.030 at f = 0.10, 0 of 5 seeds) and similar at full data. These are descriptive
-protocol comparisons across five split/initialization seeds, not estimates of a pure
-sharing effect. For example, Solubility at f = 0.10 retains 3,330 of 7,938 full-training
-records in seed 1 (42.0%); equal scaffold fractions do not imply equal label fractions.</p>
+<p><strong>Reading Table 1.</strong> The answer is: some endpoints, and not the ones a dataset-size story
+would predict. Caco2 is the clear beneficiary, with lower multi-task MAE at every retained
+training-scaffold fraction (18 of 20 seed-fraction pairs) and its largest difference at full
+data. HIA is higher consistently only at f = 0.50 (+0.071 ± 0.032, 5 of 5 seeds) and slightly
+lower at f = 0.10 and at full data. hERG leans positive at every fraction but by amounts
+small against their seed spread (13 of 20 pairs). At full data the shared trunk costs the two
+largest endpoints: multi-task AMES AUROC is lower by 0.049 and Solubility MAE higher by
+0.145, with no seed improving in either. BBB starts behind at small scaffold fractions
+(−0.030 at f = 0.10, 0 of 5 seeds) and is level by full data. These are descriptive protocol
+comparisons across five split/initialization seeds, not estimates of a pure sharing effect,
+and the fractions themselves are not label budgets: Solubility at f = 0.10 retains 3,330 of
+7,938 full-training records in seed 1 (42.0%).</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e345f33c">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=228b3b83">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8672,7 +8681,7 @@ records in seed 1 (42.0%); equal scaffold fractions do not imply equal label fra
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=975ff001">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=aac52f41">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8681,15 +8690,15 @@ records in seed 1 (42.0%); equal scaffold fractions do not imply equal label fra
 <p><strong>Reading Table A1.</strong> The single-task baseline never sees these molecules; the multi-task
 trunk does, though never with the target endpoint's labels. Exposure grows with the training
 fraction, from 1-4% of test molecules seen verbatim at f = 0.10 (4-14% sharing a scaffold) to
-10-23% (38-65%) at full data. The multi-task gains in Table 1 therefore can't be attributed
-to transfer alone and may be optimistic; a globally scaffold-disjoint split could show smaller
-or, in principle, larger differences. Low overlap fractions do not establish that exposure
-cannot influence a result: molecule identity, scaffold overlap, auxiliary-task labels, and
-unequal update exposure act together. The present design does not separate their effects.</p>
+10-23% (38-65%) at full data. That is why the gains in Table 1 can't be attributed to transfer
+alone and may be optimistic; a globally scaffold-disjoint split could show smaller
+differences or, in principle, larger ones. Nor do low overlap fractions settle the matter on
+their own: molecule identity, scaffold overlap, auxiliary-task labels, and unequal update
+exposure act together, and the present design doesn't separate them.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2a33b3f8">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=25b3f6cc">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8717,37 +8726,38 @@ unequal update exposure act together. The present design does not separate their
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9f13ada4">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2f29bfea">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><sub><strong>Figure 1.</strong> Performance versus retained training-scaffold fraction for RF (grey), single-task GIN (yellow), and multi-task GIN (cyan) on six endpoints. Classification uses AUROC and regression uses MAE on the respective TDC target scale. Points are five-seed means and bands are ±1 sample s.d. Table 1 gives paired differences. Record fractions and target-task update counts are not matched between protocols.</sub></p>
-<p><strong>Against the baseline.</strong> RF leads the seed-mean accuracy comparison at every scaffold
-fraction on every endpoint except HIA at f = 0.50, where multi-task (0.904)
-and the RF (0.900) have a small difference relative to seed variability. The result concerns
-these specified model and training configurations; it does not establish an accuracy
+<p><strong>Against the baseline.</strong> Whatever multi-task training buys, it buys within a graph-model
+family that still trails a well-built descriptor model. The RF leads the seed-mean accuracy
+comparison at every scaffold fraction on every endpoint except HIA at f = 0.50, where
+multi-task (0.904) and the RF (0.900) differ by less than the seed variability. The result
+concerns these specified model and training configurations; it doesn't settle the accuracy
 ordering for graph representations in general [21,22].</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e8453e2f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8e8fd8dc">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.2-Ablation:-self-supervised-attribute-mask-pretraining">4.2 Ablation: self-supervised attribute-mask pretraining<a class="anchor-link" href="#4.2-Ablation:-self-supervised-attribute-mask-pretraining">¶</a></h2><p><strong>Question.</strong> Does a node-only attribute-masking adaptation of Hu et al. [7] improve the
-specified supervised protocols? Each atom is masked independently with probability 0.15 by
-zeroing its feature row; the trunk trains for 40 epochs to predict masked atomic numbers.
-The unlabeled corpus concatenates the six endpoints' training graph lists for each seed and
-fraction, retaining repeated structures. Each endpoint contributes its own training graphs,
-but those graphs may coincide with another endpoint's validation or test structures (Table A1).
-We then fine-tune under the same supervised settings and compare
-pretrained against from-scratch training for single- and multi-task models at the three
-low-data fractions.</p>
+<h2 id="4.2-Ablation:-self-supervised-attribute-mask-pretraining">4.2 Ablation: self-supervised attribute-mask pretraining<a class="anchor-link" href="#4.2-Ablation:-self-supervised-attribute-mask-pretraining">¶</a></h2><p><strong>Question.</strong> If a shared trunk helps some endpoints, would a self-supervised warm start help
+it further? We adapted the node-level attribute-masking objective of Hu et al. [7]: each
+atom is masked independently with probability 0.15 by zeroing its feature row, and the trunk
+trains for 40 epochs to predict the masked atomic numbers. The unlabeled corpus concatenates
+the six endpoints' training graph lists for each seed and fraction, repeated structures and
+all. Each endpoint contributes its own training graphs, though those graphs may coincide
+with another endpoint's validation or test structures (Table A1). We then fine-tune under
+the same supervised settings and compare pretrained against from-scratch training for
+single- and multi-task models at the three low-data fractions.</p>
 <p>The batch loss averages cross-entropy over all masked atoms in a minibatch $B$, with
 $M_B$ the selected atoms and $\mathcal{V}$ the corpus's atomic-number vocabulary:</p>
 <p>$$
@@ -8756,14 +8766,15 @@ $M_B$ the selected atoms and $\mathcal{V}$ the corpus's atomic-number vocabulary
        \log p_\theta\!\left(z_i \mid \widetilde{x(i)}\right), \qquad z_i \in \mathcal{V},
 $$</p>
 <p>where $\widetilde{x(i)}$ is atom $i$'s corrupted graph. Batches with no masked atoms are
-skipped; individual molecules may have none. Larger molecules contribute more masked atoms
-in expectation, so this is not an equal-weight per-molecule loss. This limited objective
-does not reproduce the full pretraining strategy studied by Hu et al. With 36 comparisons, some will look
-significant by chance, which is why the cell below applies a Holm correction [31].</p>
+skipped, and individual molecules may have none. Larger molecules contribute more masked
+atoms in expectation, so this is not an equal-weight per-molecule loss, and the objective is
+deliberately narrower than the full pretraining strategy Hu et al. studied. With 36
+comparisons, some will look significant by chance, which is why the cell below applies a
+Holm correction [31].</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7a8f0c99">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=35f9e840">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8970,24 +8981,25 @@ mean AUROC change over classification endpoints at f = 0.10, multi-task: +0.005
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=665b8fb0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1c98ced7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Reading Table 2.</strong> No comparison survives Holm correction. Seven of the 36 comparisons reach
-an uncorrected p &lt; 0.05, with mixed signs (pretraining helps hERG single-task at f = 0.25 and
-hurts AMES single-task at the same fraction), and none survives the Holm correction. The most
-consistent direction is single-task Solubility, where pretraining lowers MAE at all three
-fractions (−0.126 ± 0.060 at f = 0.10). Averaged over the classification endpoints at the
-lowest fraction, pretraining moves AUROC by +0.002 (single-task) and +0.005 (multi-task).
-This does not establish equivalence or absence of a pretraining effect: five seeds provide
-limited precision, and the conclusion applies to this masking variant and training protocol.</p>
+<p><strong>Reading Table 2.</strong> The short answer is that nothing survives scrutiny. Seven of the 36
+comparisons reach an uncorrected p &lt; 0.05, with mixed signs (pretraining helps hERG
+single-task at f = 0.25 and hurts AMES single-task at the same fraction), and none survives
+the Holm correction. The most consistent direction is single-task Solubility, where
+pretraining lowers MAE at all three fractions (−0.126 ± 0.060 at f = 0.10). Averaged over the
+classification endpoints at the lowest fraction, pretraining moves AUROC by +0.002
+(single-task) and +0.005 (multi-task). We resist reading this as equivalence or as the
+absence of a pretraining effect: five seeds give limited precision, and the conclusion
+applies to this masking variant and training protocol.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d732358d">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=48ce6756">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9015,7 +9027,7 @@ limited precision, and the conclusion applies to this masking variant and traini
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8a1b959e">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=07bf3034">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9026,20 +9038,21 @@ limited precision, and the conclusion applies to this masking variant and traini
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=59ce7e05">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7056a567">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.3-Deep-ensemble-uncertainty:-scoring-rules-and-calibration">4.3 Deep-ensemble uncertainty: scoring rules and calibration<a class="anchor-link" href="#4.3-Deep-ensemble-uncertainty:-scoring-rules-and-calibration">¶</a></h2><p><strong>Question.</strong> The second half of the study turns from accuracy to uncertainty. Which graph
-uncertainty method produces the most useful probabilities, and how does it compare with the
-RF? We compare a single temperature-scaled GIN, Monte Carlo dropout, and a K = 5 deep
-ensemble on the four classification endpoints, on one fixed scaffold split.</p>
+<h2 id="4.3-Deep-ensemble-uncertainty:-scoring-rules-and-calibration">4.3 Deep-ensemble uncertainty: scoring rules and calibration<a class="anchor-link" href="#4.3-Deep-ensemble-uncertainty:-scoring-rules-and-calibration">¶</a></h2><p><strong>Question.</strong> The second half of the study turns from accuracy to the quality of the
+probabilities, which is where a decision engine actually lives. Which graph uncertainty
+method produces the most useful probabilities, and how does it compare with the RF? We
+compare a single temperature-scaled GIN, Monte Carlo dropout, and a K = 5 deep ensemble on
+the four classification endpoints, on one fixed scaffold split.</p>
 <p><strong>The ensemble's predictive distribution.</strong> For temperature-scaled member probabilities
 $p^{(k)}(y\mid x)$, the ensemble predicts $\bar p(y\mid x)=\tfrac1K\sum_k p^{(k)}(y\mid x)$,
 whose entropy decomposes into mean member entropy and the mutual information between label
-and member index, which vanishes when member distributions agree:</p>
+and member index, a term that vanishes when the members agree:</p>
 <p>$$
 \underbrace{\mathcal{H}[\bar p]}_{\text{total}}
   \;=\;
@@ -9047,10 +9060,9 @@ and member index, which vanishes when member distributions agree:</p>
   \;+\;
 \underbrace{\mathcal{H}[\bar p]-\tfrac1K\textstyle\sum_k \mathcal{H}[p^{(k)}]}_{\text{mutual information}} .
 $$</p>
-<p>These terms are often interpreted as aleatoric and epistemic uncertainty, respectively,
-under additional modeling assumptions. That interpretation is not empirically validated
-here, and member-level arrays are not committed. The reported metrics use $\bar p$ directly,
-not mutual information.</p>
+<p>These terms are often read as aleatoric and epistemic uncertainty under additional modeling
+assumptions. We don't validate that reading here, and member-level arrays aren't committed;
+the reported metrics use $\bar p$ directly rather than the mutual information.</p>
 <p><strong>How the probabilities are scored.</strong> Temperature scaling fits one scalar $T&gt;0$ per member on
 the validation set to minimize the NLL of $\mathrm{softmax}(z/T)$, changing confidence but not
 the predicted class. Calibration is the top-label expected calibration error over $B = 10$
@@ -9061,14 +9073,14 @@ equal-width confidence bins,</p>
 $$</p>
 <p>alongside two proper scoring rules, the negative log-likelihood
 $-\frac1N\sum_i\log\hat p(y_i\mid x_i)$ and the Brier score
-$\frac1N\sum_i(\hat p(y{=}1\mid x_i)-y_i)^2$. Proper scores reward both calibration and
-discrimination. ECE estimates a binned calibration gap, depends on the binning, and is noisy
-on these small test sets. Its absolute differences do not identify underconfidence versus
+$\frac1N\sum_i(\hat p(y{=}1\mid x_i)-y_i)^2$. Proper scores reward calibration and
+discrimination together. ECE estimates a binned calibration gap, depends on the binning, is
+noisy on test sets this small, and, being unsigned, can't tell underconfidence from
 overconfidence.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=76950aea">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=1a05887f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9205,7 +9217,7 @@ test AUROC, RF vs ensemble: BBB 0.881 vs 0.768, AMES 0.864 vs 0.833, hERG 0.871 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a0963dd3">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=df828613">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9269,31 +9281,32 @@ Temperature fitting and conformal calibration cannot be reconstructed from these
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5d5d400e">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f1b5ff6c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Reading Table 3.</strong> Among the graph models the ensemble has the best mean NLL (0.482 versus
-0.505 single and 0.532 MC dropout), Brier score, AURC, selective accuracy, and conformal set
-size. Per endpoint, it has the best NLL, Brier score, and AURC on BBB, AMES, and hERG; on HIA,
-the smallest test set (106 molecules, 13 negatives), the single network and MC dropout are
-better on all three. The ensemble is <em>not</em> the best-calibrated graph model by ECE: its mean
-ECE (0.068) is above both the single temperature-scaled network (0.052) and the RF (0.053), and
-it has the lowest ECE on no endpoint. Averaging individually calibrated members can produce
-underconfidence [26,27], but higher unsigned ECE alone does not establish that explanation
-in these results. Inverse-frequency class weights also change the learning objective, and
-a scalar temperature cannot generally undo a class-prior shift. Calibration after averaging
-is a plausible future comparison, not a demonstrated correction of the observed test ECE.</p>
-<p>Against the RF the comparison is not close: the RF has the higher test AUROC on every endpoint
-and better mean NLL, Brier score, AURC, and selective accuracy. All of these values come from
-one split with no seed-level error bars, so gaps of a few thousandths, such as the ensemble's
-and RF's mean set sizes, are unresolved.</p>
+<p><strong>Reading Table 3.</strong> Among the graph models the ensemble is the one to beat: it has the best
+mean NLL (0.482 versus 0.505 single and 0.532 MC dropout), Brier score, AURC, selective
+accuracy, and conformal set size. Per endpoint it has the best NLL, Brier score, and AURC on
+BBB, AMES, and hERG. HIA is the exception: on that smallest test set (106 molecules, 13
+negatives) the single network and MC dropout are better on all three. The ensemble is <em>not</em>
+the best-calibrated graph model by ECE. Its mean ECE (0.068) sits above both the single
+temperature-scaled network (0.052) and the RF (0.053), and it has the lowest ECE on no
+endpoint. Averaging individually calibrated members can produce underconfidence [26,27], but
+a higher unsigned ECE doesn't by itself establish that explanation; inverse-frequency class
+weights also change the learning objective, and a scalar temperature can't generally undo a
+class-prior shift. Calibrating after averaging is the obvious next comparison, listed as
+such rather than as a demonstrated correction of the observed test ECE.</p>
+<p>Against the RF the comparison is not close. The RF has the higher test AUROC on every
+endpoint and the better mean NLL, Brier score, AURC, and selective accuracy. One split means
+no seed-level error bars, so gaps of a few thousandths, such as the ensemble's and RF's mean
+set sizes, stay unresolved.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=640bd24d">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=31d7802e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9321,7 +9334,7 @@ and RF's mean set sizes, are unresolved.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2747a951">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c3a5168c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9332,15 +9345,16 @@ and RF's mean set sizes, are unresolved.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5394fe39">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=677ec6b2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.4-Conformal-coverage-and-selective-prediction-under-scaffold-shift">4.4 Conformal coverage and selective prediction under scaffold shift<a class="anchor-link" href="#4.4-Conformal-coverage-and-selective-prediction-under-scaffold-shift">¶</a></h2><p><strong>Question.</strong> How do prediction-set coverage, set size, and selective accuracy behave in the
-implemented probability pipeline? The nominal set-coverage target is 90%; actual coverage
-must be assessed alongside set size.</p>
+<h2 id="4.4-Conformal-coverage-and-selective-prediction-under-scaffold-shift">4.4 Conformal coverage and selective prediction under scaffold shift<a class="anchor-link" href="#4.4-Conformal-coverage-and-selective-prediction-under-scaffold-shift">¶</a></h2><p><strong>Question.</strong> A prediction set that promises 90% coverage is only as good as the assumptions
+behind the promise. How do coverage, set size, and selective accuracy actually behave in the
+implemented probability pipeline? The nominal target is 90%; realized coverage has to be read
+alongside set size.</p>
 <p><strong>Split-conformal prediction</strong> [13,14] scores each validation molecule by
 $s_i = 1-\hat p(y_i\mid x_i)$ and takes $\hat q$, the
 $\lceil(1-\alpha)(n+1)\rceil/n$ empirical quantile of the scores. The set
@@ -9348,32 +9362,32 @@ $C(x)=\{y: 1-\hat p(y\mid x)\le \hat q\}$ satisfies the standard marginal guaran
 <p>$$
 \Pr\big(y_{\text{test}} \in C(x_{\text{test}})\big) \;\ge\; 1-\alpha
 $$</p>
-<p>marginally, <em>if</em> the scoring function is fixed independently of calibration labels and
-calibration/test scores are exchangeable; here $\alpha = 0.10$. (The
-implementation interpolates the quantile, which returns a value at or above the exact order
-statistic whenever $\lceil(1-\alpha)(n+1)\rceil \le n$, as for every calibration set here, so
-it is slightly conservative under the stated assumptions. If the rank exceeds n, exact
-conformal calibration would return all labels; the current code instead caps the quantile.)
-The graph pipeline fits temperatures on the same validation labels used for conformal scores,
-so its scoring function is not independent of calibration labels. For a single binary
-network, scalar temperature scaling preserves score order, and exact order-statistic
-conformal sets are invariant to that scaling; the interpolation used here contains those
-exact sets. That special rank argument does not justify the individually scaled and averaged
-ensemble. Random assignment of whole
-scaffold groups does not establish individual-molecule exchangeability; unequal group sizes
-and grouped sampling require their own justification. Correlation alone neither proves nor
-disproves exchangeability. These issues prevent claiming the ordinary guarantee for
-the implemented ensemble pipeline. The RF does not reuse validation labels for model fitting,
-but the group-sampling issue remains. Coverage is therefore reported empirically for all
-methods. Shift-aware methods [28] were not applied.</p>
+<p><em>if</em> the scoring function is fixed independently of the calibration labels and the
+calibration and test scores are exchangeable; here $\alpha = 0.10$. (The implementation
+interpolates the quantile, which returns a value at or above the exact order statistic
+whenever $\lceil(1-\alpha)(n+1)\rceil \le n$, as for every calibration set here, so it is
+slightly conservative under the stated assumptions. If the rank exceeded $n$, exact conformal
+calibration would return all labels; the code instead caps the quantile.)</p>
+<p>Both assumptions are in doubt here, for different reasons. The graph pipeline fits
+temperatures on the same validation labels it uses for conformal scores, so its scoring
+function isn't independent of them. A single binary network gets a reprieve: scalar
+temperature scaling preserves score order, exact order-statistic conformal sets are
+invariant to it, and the interpolation used here contains those exact sets. The ensemble
+gets no such reprieve, since individually scaled and averaged members aren't a monotone
+transformation of a fixed score. Then there is exchangeability. Random assignment of whole
+scaffold groups doesn't establish individual-molecule exchangeability; unequal group sizes
+and grouped sampling need their own justification, and correlation alone neither proves nor
+disproves the condition. The RF avoids the label-reuse problem but not the group-sampling
+one. So we claim no guarantee for any method and report coverage as what it is: an
+empirical outcome. Shift-aware methods [28] weren't applied.</p>
 <p><strong>Selective prediction</strong> [15,16] ranks test molecules by $\max_y \hat p(y\mid x)$ and reports
 accuracy on the most confident 70%, together with the area under the risk-coverage curve
-(AURC, in Table 3). On imbalanced endpoints this should be read against the majority-class
-rate.</p>
+(AURC, in Table 3). On imbalanced endpoints this has to be read against the majority-class
+rate in the retained subset.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=64d7c48e">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c78143dc">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9658,38 +9672,37 @@ rate.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b7ec49f3">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=67cd7206">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Reading Table 4.</strong> Realized coverage of the ensemble's nominal 90% sets is 0.906, 0.883,
-0.830, and 0.887 on BBB, AMES, hERG, and HIA. On hERG the shortfall is about 2.9 binomial
-standard errors under an independence benchmark. This is not a group-aware test of the
-shortfall, nor does it identify which assumption failure caused it. Nominal coverage should
-not be presumed for this pipeline. The RF covers at or above target on
-all four endpoints (mean 0.918).
-The single network and the ensemble differ in realized coverage by less than 0.01 on every endpoint,
-and the ensemble's sets are smaller on all four at approximately similar observed coverage. These
-descriptive comparisons do not establish matched-coverage efficiency with statistical
-precision. Against the RF the
-comparison is confounded: the ensemble's sets are smaller on AMES, hERG, and HIA, but each
-time at lower realized coverage, so part of the reduction is bought with coverage. On BBB,
-where coverage matches, the RF's sets are much smaller (1.024 versus 1.299).</p>
-<p>Selective accuracy is mixed. The ensemble is the best graph model on BBB and AMES, the worst on
-hERG (0.785 versus 0.804 single and 0.794 MC dropout), and ties the single network below MC
-dropout on HIA; its higher mean in Table 3 comes from the first two endpoints. BBB and HIA are
-83% and 88% positive overall, but retained-subset prevalence is the relevant comparison.
-For HIA the RF retains 74 records, 73 of them positive, and predicts 73 correctly: an
-always-positive rule on that subset has the same accuracy, 73/74 = 0.986. The ensemble
-retains a different subset with 65 positives among 74 records and predicts 69 correctly
-(0.932). Subset composition and prediction quality both affect these comparisons. The RF has the
-highest selective accuracy on all four endpoints.</p>
+<p><strong>Reading Table 4.</strong> The promise is 90%; the delivery is 0.906, 0.883, 0.830, and 0.887 on
+BBB, AMES, hERG, and HIA for the ensemble. hERG is where the promise slips: the shortfall is
+about 2.9 binomial standard errors under an independence benchmark, which is a flag rather
+than a group-aware test, and it doesn't say which assumption failed. Nominal coverage simply
+can't be presumed for this pipeline. The RF, by contrast, covers at or above target on all
+four endpoints (mean 0.918). The single network and the ensemble land within 0.01 of each
+other on realized coverage everywhere, and the ensemble's sets are smaller on all four at
+roughly the same observed coverage, though we read that as descriptive rather than as
+matched-coverage efficiency. Against the RF the comparison is confounded: the ensemble's sets
+are smaller on AMES, hERG, and HIA, but each time at lower realized coverage, so part of the
+reduction is bought with coverage. On BBB, where coverage matches, the RF's sets are much
+smaller (1.024 versus 1.299).</p>
+<p>Selective accuracy is the mixed result. The ensemble is the best graph model on BBB and AMES,
+the worst on hERG (0.785 versus 0.804 single and 0.794 MC dropout), and ties the single
+network below MC dropout on HIA; its higher mean in Table 3 rides on the first two endpoints.
+BBB and HIA are 83% and 88% positive overall, so retained-subset prevalence is the honest
+comparison. For HIA the RF retains 74 records, 73 of them positive, and predicts 73 correctly,
+which an always-positive rule on that subset also achieves: 73/74 = 0.986. The ensemble
+retains a different subset, 65 positives among 74 records, and predicts 69 correctly (0.932).
+Subset composition and prediction quality both move these numbers. The RF has the highest
+selective accuracy on all four endpoints.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a6f4b04f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c9776191">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9717,7 +9730,7 @@ highest selective accuracy on all four endpoints.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b9025054">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1508e5b2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9728,14 +9741,14 @@ highest selective accuracy on all four endpoints.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=24c8a458">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bb4d9f13">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.5-Sequential-go/no-go-campaign-with-the-learned-oracle">4.5 Sequential go/no-go campaign with the learned oracle<a class="anchor-link" href="#4.5-Sequential-go/no-go-campaign-with-the-learned-oracle">¶</a></h2><p><strong>Question.</strong> With the ensemble probabilities defining a subgroup, how
-many measurements does the companion engine's sequential test need to reach a go/no-go call,
+<h2 id="4.5-Sequential-go/no-go-campaign-with-the-learned-oracle">4.5 Sequential go/no-go campaign with the learned oracle<a class="anchor-link" href="#4.5-Sequential-go/no-go-campaign-with-the-learned-oracle">¶</a></h2><p><strong>Question.</strong> The companion engine now gets a turn. With the ensemble probabilities defining a
+subgroup, how many measurements does its sequential test need to reach a go/no-go call,
 compared with a fixed-sample design?</p>
 <p><strong>The test.</strong> For each classification endpoint, test molecules are ranked by the ensemble's
 probability of the positive class and the top 30% form the candidate subgroup. Labels are
@@ -9748,32 +9761,32 @@ and tests $H_0:\theta=0$ against $H_1:\theta=\theta_1=0.30$, accumulating</p>
 B=\log\frac{\beta}{1-\alpha} \;&lt;\; \Lambda_n \;&lt;\; A=\log\frac{1-\beta}{\alpha},
 $$</p>
 <p>and stopping with GO when $\Lambda_n \ge A$ or NO-GO when $\Lambda_n \le B$, at
-$(\alpha,\beta)=(0.05,0.20)$. In the simple-hypothesis i.i.d. setting, the SPRT has an
-expected-sample-size optimality result [2]; the present campaign does not satisfy that
-setting. The comparator is the one-sided fixed-sample $z$-test's continuous sample-size requirement,
+$(\alpha,\beta)=(0.05,0.20)$. In the simple-hypothesis i.i.d. setting the SPRT carries an
+expected-sample-size optimality result [2], which the present campaign does not satisfy. The
+comparator is the one-sided fixed-sample $z$-test's continuous sample-size requirement,
 $n_{\text{fixed}} = \big((z_{1-\alpha}+z_{1-\beta})/\theta_1\big)^2 \approx 68.7$. Only subgroups of
-at least $\lceil n_{\text{fixed}}\rceil=69$ records can run that design. We retain the
-continuous approximation, 68.7, for comparison with the stored artifacts; it is not an
-attainable count of measurements. For smaller subgroups the stored comparator caps the
-approximation at subgroup size, yielding less than nominal power under the working model.</p>
+at least $\lceil n_{\text{fixed}}\rceil=69$ records can run that design. We keep the continuous
+approximation, 68.7, for comparison with the stored artifacts; it is not an attainable count of
+measurements. For smaller subgroups the stored comparator caps the approximation at subgroup
+size, which yields less than nominal power under the working model.</p>
 <p><strong>What a GO means, and what this run is.</strong> A GO means that, in this measurement order, the
-working-model likelihood ratio crossed the boundary favoring a 0.30 s.d. shift over no shift.
-The subgroup's full-data label mean describes its enrichment relative to the pool; the GO
-boundary crossing is not a validated discovery claim. Positive labels for AMES and hERG
-denote mutagenicity and blockade, so GO there denotes adverse-phenotype enrichment, not a
-desirable drug-selection outcome. The
-run is retrospective: labels are standardized with the test pool's mean and standard
-deviation, and the test direction is taken from the whole subgroup's mean, both of which use
-labels a real campaign wouldn't yet have. The measurements are standardized binary labels
-drawn without replacement, so the Gaussian likelihood is a working model and Wald's error
-bounds are nominal. The probability ranking determines the subgroup; conformal, calibration,
-and selective metrics are logged separately and do not determine measurements or stopping.
-There is no matched campaign comparison between uncertainty methods. Each stopping count
-is one realization from one random order, subject to the HIA feasibility constraint below.</p>
+working-model likelihood ratio crossed the boundary favoring a 0.30 s.d. shift over no shift,
+and nothing more. The subgroup's full-data label mean describes its enrichment relative to the
+pool; the boundary crossing is not a validated discovery claim. Positive labels for AMES and
+hERG denote mutagenicity and blockade, so a GO there flags adverse-phenotype enrichment, not a
+desirable drug-selection outcome. And the run is retrospective through and through: labels are
+standardized with the test pool's mean and standard deviation, and the test direction is taken
+from the whole subgroup's mean, both of which use labels a real campaign wouldn't yet have.
+The measurements are standardized binary labels drawn without replacement, so the Gaussian
+likelihood is a working model and Wald's error bounds are nominal. The probability ranking
+determines the subgroup; conformal, calibration, and selective metrics are logged separately
+and do not determine measurements or stopping. There is no matched campaign comparison between
+uncertainty methods. Each stopping count is one realization from one random order, subject to
+the HIA feasibility constraint below.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7256dd2c">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=9a53f0bb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -9966,34 +9979,34 @@ DuckDB lineage (regenerated by e8_campaign_learned.py; experiment IDs recorded i
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7d196bd9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8efbd2b3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Reading Table 5.</strong> The SPRT returns GO on BBB, AMES, and hERG. On BBB and AMES it uses 105
-measurements, 23.6% below their continuous fixed-sample requirement of 137.4. AMES accounts
-for the reduction (20 versus 68.7); BBB uses 85 against the same approximation. Its observed
-subgroup shift, 0.254, is below the design alternative of 0.30, illustrating that a GO does
-not certify an effect above the design value. hERG reaches GO after 14 of 45 subgroup records.</p>
-<p>HIA's indecision is structurally forced under this implementation. With 93 positives among
-106 pool records, a positive standardized label is at most $\sqrt{13/93}=0.374$. Thirty-one
-positives could accumulate at most 2.082 log likelihood units, below the GO boundary
-$\log16=2.773$; even an all-positive stream needs at least 42 measurements. The actual
-subgroup has 30 positives and one negative and cannot reach either boundary in any order.
-Its 31-record exhaustion therefore says nothing about order-dependent stopping efficiency.</p>
-<p>The capped total is 150 measurements against an approximate requirement of 213.4 (29.7%
-below), with lower-power hERG and HIA comparators. It is not a comparison at the same nominal
-power. The chosen direction is positive on every endpoint, so these realized decisions equal
-those using a pre-specified positive direction; the test-pool standardization still looks
-ahead. DuckDB logs summary parameters and experiment IDs. The stored probability spread
-across pool records is not ensemble epistemic uncertainty, and the log does not contain
-member checkpoints or a measurement-by-measurement likelihood-ratio trace.</p>
+<p><strong>Reading Table 5.</strong> The SPRT returns GO on BBB, AMES, and hERG. On BBB and AMES it spends 105
+measurements, 23.6% below their continuous fixed-sample requirement of 137.4, and AMES carries
+the reduction (20 against 68.7) while BBB uses 85. Its observed subgroup shift, 0.254, sits
+below the design alternative of 0.30, a useful reminder that a GO does not certify an effect
+above the design value. hERG reaches GO after 14 of 45 subgroup records.</p>
+<p>HIA's indecision isn't bad luck; it is structurally forced under this implementation. With 93
+positives among 106 pool records, a positive standardized label is at most $\sqrt{13/93}=0.374$.
+Thirty-one positives could accumulate at most 2.082 log likelihood units, below the GO boundary
+$\log16=2.773$, and even an all-positive stream needs at least 42 measurements. The actual
+subgroup has 30 positives and one negative and cannot reach either boundary in any order. Its
+31-record exhaustion therefore says nothing about order-dependent stopping efficiency.</p>
+<p>The capped total is 150 measurements against an approximate requirement of 213.4 (29.7% below),
+with lower-power hERG and HIA comparators, so it is not a comparison at the same nominal power.
+The chosen direction is positive on every endpoint, so these realized decisions equal those
+using a pre-specified positive direction; the test-pool standardization still looks ahead.
+DuckDB logs summary parameters and experiment IDs. The stored probability spread across pool
+records is not ensemble epistemic uncertainty, and the log holds neither member checkpoints nor
+a measurement-by-measurement likelihood-ratio trace.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b79ccf40">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b020a6e4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10021,7 +10034,7 @@ member checkpoints or a measurement-by-measurement likelihood-ratio trace.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0b5be22c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=368498cf">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10032,32 +10045,32 @@ member checkpoints or a measurement-by-measurement likelihood-ratio trace.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=97a1326a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2735827a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.6-Attention-score-implementation-diagnostic">4.6 Attention-score implementation diagnostic<a class="anchor-link" href="#4.6-Attention-score-implementation-diagnostic">¶</a></h2><p><strong>Question.</strong> Does the proposed atom score contain a meaningful ranking? The historical
-probe trained a separate three-layer GAT [4] on hERG and BBB (hidden width 64; four heads in
-the first two layers and one in the last), selected by validation AUROC in an unseeded run.
-It defined each atom's score as the sum of incoming final-layer attention coefficients and
+<h2 id="4.6-Attention-score-implementation-diagnostic">4.6 Attention-score implementation diagnostic<a class="anchor-link" href="#4.6-Attention-score-implementation-diagnostic">¶</a></h2><p><strong>Question.</strong> Does the proposed atom score actually rank anything? The historical probe
+trained a separate three-layer GAT [4] on hERG and BBB (hidden width 64; four heads in the
+first two layers and one in the last), selected by validation AUROC in an unseeded run. It
+defined each atom's score as the sum of incoming final-layer attention coefficients and
 compared that score with an aromatic-or-nitrogen rule.</p>
 <p>In evaluation mode, GAT normalizes those incoming coefficients over each destination's
-neighborhood, including its self-loop [38]. Consequently,</p>
+neighborhood, including its self-loop [38]. So</p>
 <p>$$
 a_i = \sum_{j\in\mathcal{N}(i)\cup\{i\}} \alpha_{ji}^{(L)} = 1.
 $$</p>
-<p>The score is constant by construction. The saved arrays show deviations from one only at
+<p>The score is constant by construction; the saved arrays depart from one only at
 floating-point precision. The archived rule AUROCs and top-three enrichments therefore
-reflect roundoff and tie-breaking, and are withdrawn as evidence about salience or attention
-faithfulness [19,29]. This diagnosis does not invalidate the separate GAT predictive AUROC.
+reflect roundoff and tie-breaking, and we withdraw them as evidence about salience or
+attention faithfulness [19,29]. None of this touches the separate GAT's predictive AUROC.
 The saved atoms come from 148 of 153 hERG and 370 of 458 BBB test records after the original
 small-graph and uniform-rule exclusions; no corrected attribution experiment was run.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7a12b6fe">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=40c6aa27">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10153,21 +10166,22 @@ small-graph and uniform-rule exclusions; no corrected attribution experiment was
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3cbb85c3">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4f743f9b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Reading the diagnostic.</strong> The 3,709 saved hERG scores have population standard deviation
-$3.58\times10^{-8}$ and the 8,454 BBB scores have $3.33\times10^{-8}$, centered near one.
-Those tiny differences are not learned atom importance. GAT test AUROC remains 0.770 on
-hERG and 0.756 on BBB, from one unseeded split. Predictive performance and attribution
-validity are distinct questions; this implementation supplies no interpretable atom ranking.</p>
+$3.58\times10^{-8}$ and the 8,454 BBB scores have $3.33\times10^{-8}$, both pinned near one.
+That is numerical dust, not learned atom importance. The GAT's predictive AUROC is untouched,
+0.770 on hERG and 0.756 on BBB, from one unseeded split. Predictive performance and
+attribution validity are separate questions, and this implementation answers only the first:
+it supplies no interpretable atom ranking.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=92ce78e0">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=bd66f748">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10195,7 +10209,7 @@ validity are distinct questions; this implementation supplies no interpretable a
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=252d0442">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9242489c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10206,7 +10220,7 @@ validity are distinct questions; this implementation supplies no interpretable a
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=23184897">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=915e11db">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10218,7 +10232,7 @@ metrics on the fixed split. The fraction-resolved transfer differences are in Ta
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=15c392e3">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7d755a0d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10370,25 +10384,25 @@ metrics on the fixed split. The fraction-resolved transfer differences are in Ta
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=45fbbfbe">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1628585f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Reading the summary.</strong> RF has the best mean full-data accuracy on every endpoint in this
-comparison. The multi-task protocol has lower Caco2 MAE and some higher HIA AUROCs, but
-unequal update exposure and cross-endpoint structural overlap prevent isolating transfer.
-The ensemble has the best mean graph-model proper scores and AURC on the fixed split, while
-ECE and selective accuracy vary by endpoint. Its prediction sets lack the ordinary
-split-conformal validity conditions. The campaign logs retrospective SPRT outcomes from
-probability-ranked subgroups; it does not demonstrate a causal benefit of calibrated
-uncertainty for stopping. HIA is analytically undecidable within its subgroup budget.</p>
+<p><strong>Reading the summary.</strong> One model wins the accuracy column outright: the RF has the best mean
+full-data accuracy on every endpoint here. The multi-task protocol earns lower Caco2 MAE and
+some higher HIA AUROCs, but unequal update exposure and cross-endpoint structural overlap keep
+us from crediting transfer. The ensemble takes the best mean graph-model proper scores and
+AURC on the fixed split, while ECE and selective accuracy swing by endpoint, and its prediction
+sets lack the ordinary split-conformal validity conditions. The campaign logs retrospective
+SPRT outcomes from probability-ranked subgroups; it does not demonstrate a causal benefit of
+calibrated uncertainty for stopping. HIA is analytically undecidable within its subgroup budget.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a389bc6a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6370313d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10492,7 +10506,7 @@ switches for CPU file regeneration and full model retraining.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b318174e">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=aea7dd87">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10534,7 +10548,7 @@ switches for CPU file regeneration and full model retraining.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4abfd04c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a7ab1c2c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -10549,7 +10563,7 @@ implementation problems are reported rather than treated as validated scientific
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=baa96671">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ff37bea3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
