@@ -982,7 +982,7 @@
               <div class="hero-eyebrow">Research framework &middot; Pilot brief</div>
               <h1 class="hero-title">An Experimentation Layer for Multi-Modal Biomedical Machine Learning</h1>
               <p style="max-width:720px;margin:0 0 18px;font-size:11.5px;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:0.02em;line-height:1.55;">Built during MITx Micromasters (Statistics &amp; Data Science) and Harvard ALM (Data Science).<br>Integrates Hetionet, Open Targets, ChEMBL, TCGA, GTEx, MIMIC-IV, AlphaFold, and PubMed-class corpora.</p>
-              <p class="hero-subhead">At its center is a calibrated, autonomous decision engine for molecular discovery: it decides when to stop measuring, reports coverage-guaranteed uncertainty under scaffold shift, and abstains on its least-confident cases; documented in two preprints with runnable notebooks. That engine runs on a governed experimentation layer: ordered pipeline stages, persisted artifacts, contract-validated extensions, and leakage-controlled evaluation, spanning eight modality families across 46 datasets.</p>
+              <p class="hero-subhead">At its center is an autonomous decision engine for molecular discovery: it explores when to stop measuring, reports empirical prediction-set coverage on scaffold splits, and evaluates selective prediction; documented in two preprints with runnable notebooks. That engine runs on a governed experimentation layer: ordered pipeline stages, persisted artifacts, contract-validated extensions, and evaluation protocols, spanning eight modality families across 46 datasets.</p>
 
               <div class="hero-stat-strip" aria-label="Key proof points">
                 <div class="hero-stat">
@@ -1039,7 +1039,7 @@
       <div class="draft-meta">
         <div>
           <h2 id="preprints-title">Preprints &amp; reproducible notebooks</h2>
-          <p>Two write-ups built on the SNPTX experimentation layer. Each ships a PDF, a public reproducibility repo, and a runnable notebook.</p>
+          <p>Two write-ups built on the SNPTX experimentation layer. Each ships a manuscript, a public reproducibility repo, and a runnable notebook.</p>
         </div>
         <span class="badge">Primary evidence</span>
       </div>
@@ -1076,13 +1076,13 @@
         </figure>
         <div style="background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;border-top:2px solid var(--accent-purple);">
             <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;color:var(--accent-purple);text-transform:uppercase;">Preprint 2 &middot; Learned representations</span>
-            <h4 style="font-size:16.5px;line-height:1.3;letter-spacing:-0.01em;">Learned molecular representations with calibrated deep-ensemble uncertainty</h4>
-            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0;">Multi-task graph encoders coupled to deep-ensemble calibration for label-efficient ADMET decisions, under a pre-registered leakage-controlled protocol.</p>
+            <h4 style="font-size:16.5px;line-height:1.3;letter-spacing:-0.01em;">Molecular graph models for ADMET: multitask comparisons, ensemble probabilities, and retrospective sequential testing</h4>
+            <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0;">Six-endpoint graph-model comparisons, probability quality on one classification split, and a retrospective sequential campaign. Structural overlap and unequal training exposure limit transfer claims.</p>
             <ul style="list-style:none;display:grid;gap:6px;font-size:12px;color:var(--text-secondary);line-height:1.5;margin:2px 0 0;padding:0;">
-              <li><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:10.5px;">XFER</span>&nbsp; multi-task transfer lifts data-poor endpoints (hERG +0.027, HIA +0.058&ndash;0.071 at 25&ndash;50% data)</li>
-              <li><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:10.5px;">CAL&nbsp;</span>&nbsp; best-calibrated graph model: lowest NLL, Brier, and risk&ndash;coverage AURC</li>
-              <li><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:10.5px;">SETS</span>&nbsp; sharpest 90% conformal sets of any graph model tested</li>
-              <li><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:10.5px;">PROT</span>&nbsp; Murcko cold-splits, 5 seeds, 2000-resample bootstrap CIs, every endpoint reported</li>
+              <li><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:10.5px;">XFER</span>&nbsp; multi-task Caco2 MAE is lower by 0.11&ndash;0.17; sharing is not isolated from training-exposure differences</li>
+              <li><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:10.5px;">CAL&nbsp;</span>&nbsp; ensemble has the lowest mean graph-model NLL, Brier, and AURC; single GIN has lower ECE</li>
+              <li><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:10.5px;">SETS</span>&nbsp; ensemble coverage is 0.830&ndash;0.906 at a nominal 90% target; coverage guarantees are not established for this protocol</li>
+              <li><span style="color:var(--accent-purple);font-family:var(--font-mono);font-size:10.5px;">PROT</span>&nbsp; five split seeds for transfer and pretraining, one uncertainty split, live artifact checks, every endpoint reported</li>
             </ul>
             <p style="font-size:11.5px;color:var(--text-secondary);margin:auto 0 0;padding-top:10px;border-top:1px solid rgba(48,54,61,0.7);">
               <a href="https://github.com/snptx1/snptx-repro-discovery/tree/main/preprint/dl_forward" style="color:var(--accent-purple);text-decoration:none;font-family:var(--font-mono);letter-spacing:0.04em;text-transform:uppercase;font-size:10.5px;">Repo &rarr;</a>
@@ -1096,13 +1096,13 @@
           </div>
 
         <figure style="margin:18px 0 0;padding:18px;background:rgba(22,27,34,0.82);border:1px solid var(--border);border-radius:12px;">
-          <h4 style="margin:0 0 12px;font-size:16.5px;line-height:1.3;letter-spacing:-0.01em;color:var(--text-primary);">Sequential decision efficiency with the deep-ensemble oracle</h4>
-          <img src="assets/figures/campaign_efficiency.png" loading="lazy" alt="Dot plot comparing a fixed-sample testing budget against the SPRT-driven sequential campaign across four endpoints. The learned-oracle campaign reaches a GO decision on three of four endpoints with fewer measurements, using 150 versus a 213 fixed budget, while HIA remains undecided." style="width:100%;height:auto;border-radius:8px;display:block;" />
+          <h4 style="margin:0 0 12px;font-size:16.5px;line-height:1.3;letter-spacing:-0.01em;color:var(--text-primary);">Retrospective sequential testing with the ensemble ranking</h4>
+          <img src="assets/figures/campaign_efficiency.png" loading="lazy" alt="Retrospective SPRT measurement counts and analytic fixed-sample requirements across four endpoints. BBB and AMES use 105 measurements against an approximately 137.4-observation requirement; smaller subgroup caps for hERG and HIA do not preserve nominal power. HIA exhausts its budget without a reachable decision boundary." style="width:100%;height:auto;border-radius:8px;display:block;" />
           <figcaption style="margin-top:12px;font-size:12.5px;color:var(--text-secondary);line-height:1.6;">
-            <strong style="color:var(--text-primary);">Fewer experiments, same confident answer.</strong> Testing molecules in the lab is slow and costly, so you want to run as few tests as possible before committing to a yes or no. Here the system reached a confident call on <strong style="color:var(--text-primary);">3 of 4</strong> endpoints using <strong style="color:var(--text-primary);">150</strong> measurements instead of the usual <strong style="color:var(--text-primary);">213</strong>, about <strong style="color:var(--text-primary);">30% fewer</strong>. Just as important, when the evidence was not strong enough it said so (HIA, undecided) rather than guessing. Preprint&nbsp;2 pairs a graph neural network with a calibrated sense of its own uncertainty, and that honest confidence is what makes stopping early safe.
+            <strong style="color:var(--text-primary);">A measurement-saving replay, with limits.</strong> On BBB and AMES, the retrospective campaign used <strong style="color:var(--text-primary);">105</strong> measurements against an analytic fixed-sample requirement of approximately <strong style="color:var(--text-primary);">137.4</strong>, or <strong style="color:var(--text-primary);">23.6% fewer</strong>. AMES accounts for the saving; BBB used more measurements than its analytic requirement. hERG crossed the working-model GO boundary, while HIA's 31-record subgroup could not reach either decision boundary. Ensemble probabilities rank candidates, and uncertainty metrics are logged separately. Test-pool label statistics and a Gaussian working model make this a retrospective demonstration; prospective stopping error rates have not been validated.
           </figcaption>
         </figure>
-        <p style="margin-top:14px;font-size:11.5px;color:var(--text-secondary);line-height:1.6;">Both results regenerate from a tagged commit on CPU over public libraries. See <a href="pages/limitations.html" style="color:var(--accent-blue);">limitations</a>.</p>
+        <p style="margin-top:14px;font-size:11.5px;color:var(--text-secondary);line-height:1.6;">Both provide public code and executable walkthroughs. Preprint 2 separates CPU artifact reconstruction from model retraining. See <a href="pages/limitations.html" style="color:var(--accent-blue);">limitations</a>.</p>
       </section>
     </article>
 
