@@ -69,6 +69,11 @@
     text-transform: uppercase; color: var(--text-secondary); background: rgba(22,27,34,0.6);
   }
   table.mech td { color: #c9d1d9; }
+  table.mech tr.group-row td {
+    padding: 13px 10px 7px; border-bottom: 2px solid var(--accent-blue);
+    color: var(--accent-blue); background: rgba(22,27,34,0.4);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
+  }
   .anchor-card {
     display: block; padding: 20px 22px; margin-top: 8px;
     background: rgba(22,27,34,0.85); border: 1px solid var(--border);
@@ -312,29 +317,31 @@
 
       <section class="section-block section-divider" id="programs">
         <div class="eyebrow">Programs this letter supports</div>
-        <p>One letter serves every program. 16 listed (more or less) in order of preference; perhaps half of which
-        will ultimately be filed.</p>
+        <p>One letter can support the eight doctoral applications planned for this cycle. Other doctoral
+        options are listed separately below and are not yet underway.</p>
         <details class="programs" open>
           <summary>Doctoral programs</summary>
           <div class="twocol">
             <table class="mech">
               <thead><tr><th>Institution</th><th>Program</th></tr></thead>
               <tbody>
+                <tr class="group-row"><td colspan="2">Applications this cycle (Fall 2026)</td></tr>
                 <tr><td>Harvard HMS</td><td>Biomedical Informatics (AIM)</td></tr>
                 <tr><td>Harvard SEAS</td><td>Computer Science</td></tr>
                 <tr><td>MIT</td><td>EECS (CSAIL)</td></tr>
                 <tr><td>Harvard-MIT HST</td><td>Medical Engineering &amp; Medical Physics (MEMP)</td></tr>
                 <tr><td>Columbia</td><td>Computer Science (SEAS)</td></tr>
                 <tr><td>Columbia</td><td>Biomedical Informatics (DBMI)</td></tr>
-                <tr><td>Stanford</td><td>Biomedical Informatics (Biomedical Data Science) *</td></tr>
-                <tr><td>Stanford</td><td>Computer Science (SAIL) *</td></tr>
+                <tr><td>Stanford</td><td>Computer Science (SAIL)</td></tr>
+                <tr><td>UC Berkeley</td><td>Electrical Engineering &amp; Computer Sciences (EECS)</td></tr>
               </tbody>
             </table>
             <table class="mech">
               <thead><tr><th>Institution</th><th>Program</th></tr></thead>
               <tbody>
-                <tr><td>UC Berkeley</td><td>Electrical Engineering &amp; Computer Sciences (EECS) *</td></tr>
-                <tr><td>UC Berkeley / UCSF</td><td>Computational Precision Health *</td></tr>
+                <tr class="group-row"><td colspan="2">Not yet underway or deferred</td></tr>
+                <tr><td>Stanford</td><td>Biomedical Informatics (Biomedical Data Science)</td></tr>
+                <tr><td>UC Berkeley / UCSF</td><td>Computational Precision Health</td></tr>
                 <tr><td>Cambridge</td><td>CCAIM / Clinical AI</td></tr>
                 <tr><td>Cambridge</td><td>Computer Laboratory ML</td></tr>
                 <tr><td>Oxford</td><td>Health Data Science (CDT) DPhil</td></tr>
@@ -344,21 +351,21 @@
               </tbody>
             </table>
           </div>
-          <p class="note" style="margin-top:12px;">* Some universities accept only one application per cycle. Where two closely
-          related programs at the same university both appear (Stanford and UC Berkeley), only one of the pair will finally be
-          filed. The program list is current and will be updated as I progress through each application.</p>
+          <p class="note" style="margin-top:12px;">Stanford CS (SAIL) and UC Berkeley EECS are the current-cycle choices from pairs at universities that limit simultaneous applications. The alternatives shown in the second table are not underway.</p>
         </details>
         <details class="programs">
-          <summary>Additional master's programs (alternatives and contingencies)</summary>
+          <summary>Master's programs</summary>
           <table class="mech">
             <thead><tr><th>Institution</th><th>Program</th><th>Application status</th></tr></thead>
             <tbody>
+              <tr class="group-row"><td colspan="3">Applications planned for Fall 2026</td></tr>
               <tr><td>Harvard HMS</td><td>MMSc Biomedical Informatics (MBI-AIM)</td><td>Apply Fall 26</td></tr>
               <tr><td>Cambridge</td><td>MPhil Machine Learning &amp; Machine Intelligence</td><td>Apply Fall 26</td></tr>
               <tr><td>Cambridge</td><td>MSt in Healthcare Data Science</td><td>Apply Fall 26</td></tr>
               <tr><td>Johns Hopkins</td><td>MS Applied Biomedical Engineering - AI in Medicine</td><td>Apply Fall 26</td></tr>
               <tr><td>Johns Hopkins</td><td>MS Bioinformatics</td><td>Apply Fall 26</td></tr>
               <tr><td>University of Chicago</td><td>MS Biomedical Informatics</td><td>Apply Fall 26</td></tr>
+              <tr class="group-row"><td colspan="3">Deferred to a later cycle</td></tr>
               <tr><td>Columbia</td><td>CVN MS Biomedical Engineering</td><td>Deferred until Spring 28 (PhD takes precedence for Fall 2027)</td></tr>
               <tr><td>UC Berkeley</td><td>Master of Molecular Science &amp; Software Engineering</td><td>Deferred until Spring 28 (PhD takes precedence for Fall 2027)</td></tr>
               <tr><td>Stanford</td><td>MS Biomedical Data Science</td><td>Deferred until Spring 28 (PhD takes precedence for Fall 2027)</td></tr>
