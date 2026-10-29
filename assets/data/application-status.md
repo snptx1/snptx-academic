@@ -39,7 +39,7 @@ Milestone meanings, in display order:
 4. `portal_ready`: all applicant inputs and required pre-submission checks complete.
    Do not infer this from completion of individual content pages.
 5. `submitted`: application submission confirmed.
-6. `references_submitted`: all required letters confirmed received by the portal.
+6. `references_submitted`: reference submission confirmed by the portal.
 
 These are independent checkpoints. Letters may arrive before application submission.
 The static HTML keeps the full program list and milestone headings visible without
