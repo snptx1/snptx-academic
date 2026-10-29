@@ -60,8 +60,8 @@
       if (!response.ok) throw new Error('Status source unavailable');
       const payload = await response.text();
       const candidate = validate(JSON.parse(payload));
-      updateLabel.textContent = candidate.updated ? `Updated ${formatDate(candidate.updated)}` : 'Awaiting verified updates';
-      host.querySelector('.as-sync').textContent = 'Shared across all four referee pages · Refreshes every 60 seconds';
+      updateLabel.textContent = candidate.updated ? `Updated ${formatDate(candidate.updated)}` : 'Update date unavailable';
+      host.querySelector('.as-sync').textContent = '';
       if (payload === lastPayload) return;
       data = candidate;
       candidate.programs.forEach(program => {
