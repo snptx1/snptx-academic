@@ -393,9 +393,9 @@
           "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "complete",
+          "status": "in_progress",
           "checked": "2026-10-29",
-          "note": "Applicant confirmed portal inputs complete; written statements tracked separately."
+          "note": "Applicant confirmed portal inputs in progress."
         },
         "submitted": {
           "status": "pending",
