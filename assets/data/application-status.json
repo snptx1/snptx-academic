@@ -1,0 +1,413 @@
+{
+  "version": 1,
+  "updated": null,
+  "programs": [
+    {
+      "id": "harvard-hms-aim",
+      "institution": "Harvard HMS",
+      "program": "Biomedical Informatics (AIM)",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "harvard-seas-cs",
+      "institution": "Harvard SEAS",
+      "program": "Computer Science",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "mit-eecs",
+      "institution": "MIT",
+      "program": "EECS (CSAIL)",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "hst-memp",
+      "institution": "Harvard-MIT HST",
+      "program": "Medical Engineering & Medical Physics (MEMP)",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "columbia-cs",
+      "institution": "Columbia",
+      "program": "Computer Science (SEAS)",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "columbia-dbmi",
+      "institution": "Columbia",
+      "program": "Biomedical Informatics (DBMI)",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "stanford-cs",
+      "institution": "Stanford",
+      "program": "Computer Science (SAIL)",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "berkeley-eecs",
+      "institution": "UC Berkeley",
+      "program": "Electrical Engineering & Computer Sciences (EECS)",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "uchicago-cs",
+      "institution": "University of Chicago",
+      "program": "Computer Science",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "uchicago-ds",
+      "institution": "University of Chicago",
+      "program": "Data Science",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    },
+    {
+      "id": "harvard-hms-mmsc",
+      "institution": "Harvard HMS",
+      "program": "MMSc Biomedical Informatics (MBI-AIM)",
+      "milestones": {
+        "documents": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "reference_requests": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "statements": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "portal_ready": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        },
+        "references_submitted": {
+          "status": "unknown",
+          "checked": null,
+          "note": ""
+        }
+      }
+    }
+  ]
+}

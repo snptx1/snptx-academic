@@ -1,0 +1,106 @@
+/* Shared referee application matrix. Keep selectors separate from table.mech. */
+#programs { scroll-margin-top: 100px; }
+.application-status {
+  --status-complete: #39ff88;
+  --status-pending: #ff6b7a;
+  --status-progress: #e8ff47;
+  --status-unknown: #8b949e;
+  margin: 4px 0 24px;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0d1117;
+}
+.application-status .as-header {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 8px 20px; padding: 18px 20px 12px;
+}
+.application-status .as-title { font-size: 17px; font-weight: 600; color: #e6edf3; }
+.application-status .as-count, .application-status .as-updated {
+  font: 10px/1.6 var(--font-mono); color: #8b949e; letter-spacing: .04em;
+}
+.application-status .as-count { color: #58a6ff; margin-left: 12px; white-space: nowrap; }
+.application-status .as-legend {
+  display: flex; flex-wrap: wrap; gap: 10px 20px; padding: 0 20px 16px;
+  font: 10px/1.5 var(--font-mono); color: #c9d1d9;
+}
+.application-status .as-legend span { display: inline-flex; gap: 8px; align-items: center; }
+.application-status .as-bulb {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 15px; height: 15px; flex: none; border-radius: 50%;
+  font: bold 10px/1 var(--font-mono); color: #0d1117;
+  background: var(--bulb-color); border: 1px solid var(--bulb-color);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--bulb-color) 55%, transparent),
+              0 0 16px color-mix(in srgb, var(--bulb-color) 18%, transparent);
+}
+.application-status [data-status="complete"] { --bulb-color: var(--status-complete); }
+.application-status [data-status="pending"] { --bulb-color: var(--status-pending); }
+.application-status [data-status="in_progress"] { --bulb-color: var(--status-progress); }
+.application-status [data-status="unknown"] { --bulb-color: var(--status-unknown); }
+.application-status [data-status="unknown"] .as-bulb,
+.application-status .as-bulb[data-status="unknown"] {
+  background: #0d1117; color: #8b949e; box-shadow: none; border-style: dashed;
+}
+.application-status .as-scroll { overflow-x: auto; scrollbar-color: #30363d #0d1117; }
+.application-status .as-scroll:focus-visible { outline: 2px solid #58a6ff; outline-offset: -2px; }
+.application-status .as-table { width: 100%; min-width: 900px; table-layout: fixed; border-collapse: separate; border-spacing: 0; }
+.application-status .as-table col:first-child { width: 27%; }
+.application-status .as-table th, .application-status .as-table td { border-top: 1px solid #21262d; }
+.application-status .as-table thead th {
+  padding: 14px 8px 16px; text-align: center; vertical-align: top;
+  font: 10px/1.6 var(--font-mono); color: #a5adb7; background: #161b22; font-weight: normal;
+}
+.application-status .as-table thead th:first-child { text-align: left; padding-left: 20px; vertical-align: bottom; }
+.application-status .as-stage-number { display: block; color: #6e7681; margin-bottom: 6px; font-size: 9px; letter-spacing: .1em; }
+.application-status .as-table tbody th {
+  position: sticky; left: 0; z-index: 1; background: #0d1117; text-align: left;
+  padding: 12px 16px 12px 20px; box-shadow: 1px 0 #21262d;
+}
+.application-status .as-institution { display: block; font-size: 12px; color: #e6edf3; font-weight: 600; line-height: 1.5; }
+.application-status .as-program { display: block; font-size: 11px; color: #a5adb7; font-weight: normal; line-height: 1.5; }
+.application-status .as-table td { position: relative; text-align: center; padding: 0; }
+.application-status .as-table td::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: #21262d;
+}
+.application-status .as-table td:nth-child(2)::before { left: 50%; }
+.application-status .as-table td:last-child::before { right: 50%; }
+.application-status .as-cell {
+  position: relative; display: inline-flex; justify-content: center; align-items: center;
+  width: 42px; height: 42px; padding: 0; border: 0; border-radius: 8px; cursor: pointer;
+  background: transparent;
+}
+.application-status .as-cell .as-bulb { outline: 5px solid #0d1117; }
+.application-status .as-cell:hover, .application-status .as-cell:focus-visible,
+.application-status .as-cell[aria-pressed="true"] { outline: 1px solid #58a6ff; background: #161b22; }
+.application-status .as-table tr:hover th { background: #111820; }
+.application-status .as-detail {
+  border-top: 1px solid #30363d; padding: 14px 20px; min-height: 72px;
+  background: #161b22; font: 11px/1.7 var(--font-mono); color: #a5adb7;
+}
+.application-status .as-detail strong { color: #e6edf3; font-weight: 500; }
+.application-status .as-detail p { font: inherit; color: inherit; margin: 0; }
+.application-status .as-footer {
+  padding: 10px 20px; font: 10px/1.7 var(--font-mono); color: #8b949e; border-top: 1px solid #21262d;
+}
+.application-status noscript { display: block; padding: 12px 20px; color: #a5adb7; font-size: 12px; }
+@media (max-width: 760px) {
+  .application-status .as-table { min-width: 840px; }
+  .application-status .as-table col:first-child { width: 190px; }
+  .application-status .as-header { align-items: flex-start; }
+  .application-status .as-count { display: block; margin-left: 0; margin-top: 4px; }
+  .application-status .as-table tbody th { padding-left: 12px; }
+}
+@media print {
+  .application-status { border-color: #aaa; background: #fff !important; break-inside: avoid; }
+  .application-status .as-scroll { overflow: visible; }
+  .application-status .as-table { min-width: 0; }
+  .application-status .as-table th, .application-status .as-detail,
+  .application-status .as-cell { background: #fff !important; }
+  .application-status .as-title, .application-status .as-institution,
+  .application-status .as-program, .application-status .as-table thead th,
+  .application-status .as-detail strong, .application-status .as-detail,
+  .application-status .as-legend, .application-status .as-footer,
+  .application-status .as-count, .application-status .as-updated { color: #222 !important; }
+  .application-status .as-bulb { background: #fff !important; border: 1px solid #555 !important; color: #111 !important; box-shadow: none !important; outline: none !important; }
+  .application-status .as-table tbody th { position: static; }
+}
