@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": null,
+  "updated": "2026-10-29",
   "programs": [
     {
       "id": "harvard-hms-aim",
@@ -8,34 +8,34 @@
       "program": "Biomedical Informatics (AIM)",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs complete; written statements tracked separately."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -45,34 +45,34 @@
       "program": "Computer Science",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs complete; written statements tracked separately."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -82,34 +82,34 @@
       "program": "EECS (CSAIL)",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs complete; written statements tracked separately."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -119,34 +119,34 @@
       "program": "Medical Engineering & Medical Physics (MEMP)",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs complete; written statements tracked separately."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -156,34 +156,34 @@
       "program": "Computer Science (SEAS)",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs complete; written statements tracked separately."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -193,34 +193,34 @@
       "program": "Biomedical Informatics (DBMI)",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs complete; written statements tracked separately."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -230,34 +230,34 @@
       "program": "Computer Science (SAIL)",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs in progress."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -267,34 +267,34 @@
       "program": "Electrical Engineering & Computer Sciences (EECS)",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs in progress."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -304,34 +304,34 @@
       "program": "Computer Science",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs in progress."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -341,34 +341,34 @@
       "program": "Data Science",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs in progress."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     },
@@ -378,34 +378,34 @@
       "program": "MMSc Biomedical Informatics (MBI-AIM)",
       "milestones": {
         "documents": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application documents complete."
         },
         "reference_requests": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal reference requests sent."
         },
         "statements": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed SOP and written statements in progress."
         },
         "portal_ready": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed portal inputs complete; written statements tracked separately."
         },
         "submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed application not yet submitted."
         },
         "references_submitted": {
-          "status": "unknown",
-          "checked": null,
-          "note": ""
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Applicant confirmed all references not yet submitted."
         }
       }
     }

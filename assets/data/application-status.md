@@ -6,8 +6,9 @@ Elston, Yu and Huang referee pages. Each page checks this file on load, every
 changes with the site to update all four pages. This does not connect to the
 application portals or infer completion from a local document or uploaded CV.
 
-The initial 66 milestones are `unknown`, pending confirmation of their current
-status. A page-level audit does not establish a whole-application milestone.
+The applicant confirmed the current 66 milestone statuses on October 29, 2026.
+Notes identify these as applicant-confirmed, rather than independently audited.
+A page-level audit does not establish a whole-application milestone.
 
 For an update, keep program IDs and the six milestone keys unchanged. Set:
 
