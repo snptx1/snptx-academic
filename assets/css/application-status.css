@@ -58,6 +58,11 @@
 }
 .application-status .as-institution { display: block; font-size: 12px; color: #e6edf3; font-weight: 600; line-height: 1.5; }
 .application-status .as-program { display: block; font-size: 11px; color: #a5adb7; font-weight: normal; line-height: 1.5; }
+.application-status .as-track {
+  display: block; margin-bottom: 4px; font: 9px/1.5 var(--font-mono); color: #8b949e;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.application-status .as-nonphd th, .application-status .as-nonphd td { border-top: 2px dashed #30363d; }
 .application-status .as-table td { position: relative; text-align: center; padding: 0; }
 .application-status .as-table td::before {
   content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: #21262d;
@@ -100,7 +105,8 @@
   .application-status .as-program, .application-status .as-table thead th,
   .application-status .as-detail strong, .application-status .as-detail,
   .application-status .as-legend, .application-status .as-footer,
-  .application-status .as-count, .application-status .as-updated { color: #222 !important; }
+  .application-status .as-count, .application-status .as-updated,
+  .application-status .as-track { color: #222 !important; }
   .application-status .as-bulb { background: #fff !important; border: 1px solid #555 !important; color: #111 !important; box-shadow: none !important; outline: none !important; }
   .application-status .as-table tbody th { position: static; }
 }
