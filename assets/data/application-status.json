@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-04",
+  "updated": "2026-11-03",
   "programs": [
     {
       "id": "harvard-hms-aim",
@@ -107,9 +107,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "complete",
-          "checked": "2026-11-04",
-          "note": "Reference submitted to portal."
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
         }
       }
     },
@@ -144,9 +144,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "complete",
-          "checked": "2026-11-04",
-          "note": "Reference submitted to portal."
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
         }
       }
     },
@@ -181,9 +181,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "complete",
-          "checked": "2026-11-04",
-          "note": "Reference submitted to portal."
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
         }
       }
     },
@@ -218,9 +218,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "complete",
-          "checked": "2026-11-04",
-          "note": "Reference submitted to portal."
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
         }
       }
     },
@@ -255,9 +255,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "complete",
-          "checked": "2026-11-04",
-          "note": "Reference submitted to portal."
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
         }
       }
     },
@@ -292,9 +292,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "complete",
-          "checked": "2026-11-04",
-          "note": "Reference submitted to portal."
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
         }
       }
     },
@@ -329,9 +329,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "complete",
-          "checked": "2026-11-04",
-          "note": "Reference submitted to portal."
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
         }
       }
     },
@@ -366,9 +366,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "complete",
-          "checked": "2026-11-04",
-          "note": "Reference submitted to portal."
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
         }
       }
     },
@@ -403,9 +403,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "complete",
-          "checked": "2026-11-04",
-          "note": "Reference submitted to portal."
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
         }
       }
     }

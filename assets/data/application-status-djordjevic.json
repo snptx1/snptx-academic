@@ -1,0 +1,413 @@
+{
+  "version": 1,
+  "updated": "2026-11-04",
+  "programs": [
+    {
+      "id": "harvard-hms-aim",
+      "institution": "Harvard HMS",
+      "program": "Biomedical Informatics (AIM)",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "SOP and written statements in progress."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "harvard-seas-cs",
+      "institution": "Harvard SEAS",
+      "program": "Computer Science",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "SOP and written statements in progress."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Reference not yet submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "mit-eecs",
+      "institution": "MIT",
+      "program": "EECS (CSAIL)",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "SOP and written statements in progress."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "hst-memp",
+      "institution": "Harvard-MIT HST",
+      "program": "Medical Engineering & Medical Physics (MEMP)",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "SOP and written statements in progress."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "columbia-cs",
+      "institution": "Columbia",
+      "program": "Computer Science (SEAS)",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "SOP and written statements in progress."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "columbia-dbmi",
+      "institution": "Columbia",
+      "program": "Biomedical Informatics (DBMI)",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "SOP and written statements in progress."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "stanford-cs",
+      "institution": "Stanford",
+      "program": "Computer Science (SAIL)",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "SOP and written statements in progress."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-30",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "berkeley-eecs",
+      "institution": "UC Berkeley",
+      "program": "Electrical Engineering & Computer Sciences (EECS)",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "SOP and written statements in progress."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-30",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "uchicago-cs",
+      "institution": "University of Chicago",
+      "program": "Computer Science",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "complete",
+          "checked": "2026-11-03",
+          "note": "SOP and written statements complete."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-30",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "uchicago-ds",
+      "institution": "University of Chicago",
+      "program": "Data Science",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "complete",
+          "checked": "2026-10-31",
+          "note": "SOP and written statements complete."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-31",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
+        }
+      }
+    },
+    {
+      "id": "harvard-hms-mmsc",
+      "institution": "Harvard HMS",
+      "program": "MMSc Biomedical Informatics (MBI-AIM)",
+      "milestones": {
+        "documents": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Application documents complete."
+        },
+        "reference_requests": {
+          "status": "complete",
+          "checked": "2026-10-29",
+          "note": "Portal reference requests sent."
+        },
+        "statements": {
+          "status": "in_progress",
+          "checked": "2026-10-29",
+          "note": "SOP and written statements in progress."
+        },
+        "portal_ready": {
+          "status": "complete",
+          "checked": "2026-10-30",
+          "note": "Portal inputs complete; written statements tracked separately."
+        },
+        "submitted": {
+          "status": "pending",
+          "checked": "2026-10-29",
+          "note": "Application not yet submitted."
+        },
+        "references_submitted": {
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
+        }
+      }
+    }
+  ]
+}
