@@ -33,9 +33,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "pending",
-          "checked": "2026-10-29",
-          "note": "Reference not yet submitted to portal."
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
         }
       }
     },
@@ -70,9 +70,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "pending",
-          "checked": "2026-10-29",
-          "note": "Reference not yet submitted to portal."
+          "status": "complete",
+          "checked": "2026-11-04",
+          "note": "Reference submitted to portal."
         }
       }
     },
