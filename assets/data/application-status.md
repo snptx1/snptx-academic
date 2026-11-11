@@ -1,10 +1,16 @@
 # Application status
 
-`application-status.json` is the single public data source for the Djordjevic,
-Elston, Yu and Huang referee pages. Each page checks this file on load, every
-60 seconds while visible, and when the tab becomes visible again. Publish data
-changes with the site to update all four pages. This does not connect to the
-application portals or infer completion from a local document or uploaded CV.
+`application-status.json` supplies shared application milestones and the Yu and Huang
+referee pages. Referee-specific letter receipts are kept in
+`application-status-djordjevic.json` and `application-status-elston.json`, selected
+by each page's `data-source`. A receipt update for one referee must change only
+that referee's file. When updating common application milestones, keep those
+milestones synchronized across all three data files.
+
+Each page checks its source on load, every 60 seconds while visible, and when the
+tab becomes visible again. Publish data changes with the site to update the
+corresponding pages. This does not connect to application portals or infer
+completion from a local document or uploaded CV.
 
 The applicant confirmed the current 66 milestone statuses on October 29, 2026.
 These statuses are applicant-confirmed, rather than independently audited.
@@ -38,8 +44,8 @@ Milestone meanings, in display order:
    and entered or uploaded.
 4. `portal_ready`: all applicant inputs and required pre-submission checks complete.
    Do not infer this from completion of individual content pages.
-5. `submitted`: application submission confirmed.
-6. `references_submitted`: reference submission confirmed by the portal.
+5. `references_submitted`: this referee's letter confirmed received by the portal.
+6. `submitted`: application submission confirmed.
 
 These are independent checkpoints. Letters may arrive before application submission.
 The static HTML keeps the full program list and milestone headings visible without
