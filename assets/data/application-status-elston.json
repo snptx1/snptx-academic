@@ -33,9 +33,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "pending",
-          "checked": "2026-11-10",
-          "note": "Your letter has not yet been received by the portal."
+          "status": "complete",
+          "checked": "2026-11-12",
+          "note": "Your letter has been received by the portal."
         }
       }
     },
@@ -144,9 +144,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "pending",
-          "checked": "2026-11-10",
-          "note": "Your letter has not yet been received by the portal."
+          "status": "complete",
+          "checked": "2026-11-12",
+          "note": "Your letter has been received by the portal."
         }
       }
     },
@@ -366,9 +366,9 @@
           "note": "Application not yet submitted."
         },
         "references_submitted": {
-          "status": "pending",
-          "checked": "2026-11-10",
-          "note": "Your letter has not yet been received by the portal."
+          "status": "complete",
+          "checked": "2026-11-12",
+          "note": "Your letter has been received by the portal."
         }
       }
     },
