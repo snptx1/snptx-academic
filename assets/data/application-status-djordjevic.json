@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-09",
+  "updated": "2026-11-12",
   "programs": [
     {
       "id": "harvard-hms-aim",
@@ -203,9 +203,9 @@
           "note": "Portal reference requests sent."
         },
         "statements": {
-          "status": "in_progress",
-          "checked": "2026-11-08",
-          "note": "SOP and written statements in progress."
+          "status": "complete",
+          "checked": "2026-11-12",
+          "note": "SOP and written statements complete."
         },
         "portal_ready": {
           "status": "complete",
