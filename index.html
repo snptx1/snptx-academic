@@ -982,20 +982,20 @@
               <div class="hero-eyebrow">Research framework &middot; Pilot brief</div>
               <h1 class="hero-title">An Experimentation Layer for Multi-Modal Biomedical Machine Learning</h1>
               <p style="max-width:720px;margin:0 0 18px;font-size:11.5px;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:0.02em;line-height:1.55;">Built during MITx Micromasters (Statistics &amp; Data Science) and Harvard ALM (Data Science).<br>Integrates Hetionet, Open Targets, ChEMBL, TCGA, GTEx, MIMIC-IV, AlphaFold, and PubMed-class corpora.</p>
-              <p class="hero-subhead">At its center is an autonomous decision engine for molecular discovery: it explores when to stop measuring, reports empirical prediction-set coverage on scaffold splits, and evaluates selective prediction; documented in two preprints with runnable notebooks. That engine runs on a governed experimentation layer: ordered pipeline stages, persisted artifacts, contract-validated extensions, and evaluation protocols, spanning eight modality families across 46 datasets.</p>
+              <p class="hero-subhead">At its center is an autonomous decision engine for molecular discovery: it explores when to stop measuring, reports empirical prediction-set coverage on scaffold splits, and evaluates selective prediction; documented in two preprints with runnable notebooks. That engine runs on a governed experimentation layer: ordered pipeline stages, persisted artifacts, contract-validated extensions, and evaluation protocols, spanning 37 integrated datasets in eight modality families.</p>
 
               <div class="hero-stat-strip" aria-label="Key proof points">
                 <div class="hero-stat">
-                  <div class="hero-stat-value" style="color:var(--accent-purple);">1,037</div>
-                  <div class="hero-stat-label">Validated experiments per hour</div>
+                  <div class="hero-stat-value" style="color:var(--accent-purple);">0.864 &rarr; 0.94</div>
+                  <div class="hero-stat-label">Retained accuracy with selective prediction at 70% coverage</div>
                 </div>
                 <div class="hero-stat">
-                  <div class="hero-stat-value" style="color:var(--accent-green);">8 / 46</div>
-                  <div class="hero-stat-label">Modality families and active datasets</div>
+                  <div class="hero-stat-value" style="color:var(--accent-green);">8 / 37</div>
+                  <div class="hero-stat-label">Modality families and integrated datasets</div>
                 </div>
                 <div class="hero-stat">
-                  <div class="hero-stat-value" style="color:var(--accent-blue);">23&ndash;34%</div>
-                  <div class="hero-stat-label">Fewer measurements to a confident go/no-go call (calibrated SPRT)</div>
+                  <div class="hero-stat-value" style="color:var(--accent-blue);">23% / 34%</div>
+                  <div class="hero-stat-label">Fewer measurements to a go/no-go call (SPRT, simulated): mean / operating point</div>
                 </div>
                 <div class="hero-stat">
                   <div class="hero-stat-value" style="color:var(--accent-orange);">104 / 1,100</div>
@@ -1052,7 +1052,7 @@
             <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:-4px 0 0;font-style:italic;">Russell, D. R. (2026). Knowing what to measure and when to stop: an autonomous decision engine for molecular property discovery. Public preprint, SNPTX.</p>
             <p style="font-size:12.5px;color:var(--text-secondary);line-height:1.55;margin:0;">An autonomous, calibrated sequential decision engine for molecular property (ADMET) discovery: decide when to stop measuring, quantify what the model does not know, and abstain wisely.</p>
             <ul style="list-style:none;display:grid;gap:6px;font-size:12px;color:var(--text-secondary);line-height:1.5;margin:2px 0 0;padding:0;">
-              <li><span style="color:var(--accent-green);font-family:var(--font-mono);font-size:10.5px;">SPRT</span>&nbsp; 23&ndash;34% fewer measurements to a confident go/no-go call</li>
+              <li><span style="color:var(--accent-green);font-family:var(--font-mono);font-size:10.5px;">SPRT</span>&nbsp; 23% fewer measurements on average (34% at the empirical operating point) to a go/no-go call in simulation</li>
               <li><span style="color:var(--accent-green);font-family:var(--font-mono);font-size:10.5px;">COV&nbsp;</span>&nbsp; conformal coverage near 0.90 under Murcko-scaffold shift (ECE 0.044)</li>
               <li><span style="color:var(--accent-green);font-family:var(--font-mono);font-size:10.5px;">SEL&nbsp;</span>&nbsp; selective accuracy 0.864 &rarr; 0.94 at 70% coverage</li>
               <li><span style="color:var(--accent-green);font-family:var(--font-mono);font-size:10.5px;">RULE</span>&nbsp; 1,398 interpretable structure&ndash;property cliffs; driver recovered on 5/5 endpoints</li>
@@ -1207,7 +1207,7 @@
             <span class="hero-lead-chip">&starf; Lead capability</span>
             <div class="hero-card-label">Capability</div>
             <h5>Autonomous experimentation</h5>
-            <p>Bayesian optimization daemon (<code>ExperimentEngine</code>) with GP surrogates, expected-improvement plus value-of-information acquisition, SPRT stopping (&alpha;=&beta;=0.05), and DuckDB experiment catalog. Validated at 1,037 experiments per hour.</p>
+            <p>Bayesian optimization daemon (<code>ExperimentEngine</code>) with GP surrogates, expected-improvement plus value-of-information acquisition, SPRT stopping (&alpha;=&beta;=0.05), and DuckDB experiment catalog.</p>
             <span class="hero-status-chip hero-status-chip--operational">&bull; Operational today</span>
           </div>
           <div class="hero-capability-card">
@@ -1308,7 +1308,7 @@
         </div>
 
         <details class="hero-toggle section-detail-toggle">
-          <summary>Named datasets per modality <span class="hero-toggle-hint">&mdash; what sits behind the 8 / 46 surface</span></summary>
+          <summary>Named datasets per modality <span class="hero-toggle-hint">&mdash; what sits behind the 8 / 37 surface</span></summary>
           <div style="margin-top:10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:rgba(13,17,23,0.6);text-transform:none;letter-spacing:0;font-family:var(--font-stack);font-size:12px;color:var(--text-secondary);line-height:1.65;max-width:860px;">
             <div><strong style="color:var(--text-primary);">Knowledge graphs &amp; pathways:</strong> hetionet, open_targets, gene_ontology, reactome_pathways <span style="color:#6e7681;">(planned: string_human, primekg)</span></div>
             <div><strong style="color:var(--text-primary);">Molecular graphs &amp; structure:</strong> chembl_subset, moleculenet_tox21, alphafold_targets</div>
@@ -1428,7 +1428,7 @@
             <text class="iarch-note" x="68" y="328">AUTONOMOUS EXPERIMENTATION &middot; EXPERIMENT ENGINE</text>
             <text class="iarch-autonomy-text" x="296" y="356">GP surrogate + EI / VoI acquisition</text>
             <text class="iarch-autonomy-text" x="296" y="378">SPRT (&alpha;=&beta;=0.05) &middot; DuckDB experiment catalog</text>
-            <text class="iarch-autonomy-text" x="296" y="398">1,037 exp / hr validated throughput</text>
+            <text class="iarch-autonomy-text" x="296" y="398">conformal prediction sets &middot; selective prediction</text>
 
             <rect class="iarch-pilot" x="566" y="304" width="488" height="104" rx="13"/>
             <text class="iarch-note" x="588" y="328">DEPLOYMENT SURFACE &middot; EVALUATION PACKAGE</text>
